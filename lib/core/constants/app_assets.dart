@@ -1,12 +1,9 @@
 class AppAssets {
   static const String _basePath = 'assets/images';
-  static const String _iconPath = 'assets/icons';
+  static const String _iconPath = '$_basePath/icons';
+  static const String _pngPath = '$_iconPath/png';
+  // static const String _svgPath = '$_iconPath/svg';
 
-  // Şəkillər
-  static const String logo = '$_basePath/logo.png';
-  static const String profilePlaceholder = '$_basePath/user.png';
-
-  // İkonlar (SVG)
-  static const String icHome = '$_iconPath/home.svg';
-  static const String icSettings = '$_iconPath/settings.svg';
+  static const String logo = '$_pngPath/logo.png';
+  static const String appLogo = '$_pngPath/app_logo.png';
 }

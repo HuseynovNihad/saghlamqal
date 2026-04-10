@@ -1,5 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+
+import '../storage/token_storage.dart';
+import '../di/injection_container.dart';
+
 import 'interceptors/auth_interceptor.dart';
 import 'interceptors/log_interceptor.dart';
 import 'models/network_exceptions.dart';
@@ -8,6 +12,8 @@ class NetworkManager {
   late final Dio _dio;
 
   NetworkManager() {
+    final tokenStorage = sl<TokenStorage>();
+
     _dio = Dio(
       BaseOptions(
         baseUrl: 'https://api.saglamqal.az/v1/',
@@ -21,7 +27,7 @@ class NetworkManager {
     );
 
     _dio.interceptors.addAll([
-      AuthInterceptor(),
+      AuthInterceptor(tokenStorage),
       if (kDebugMode) AppLogInterceptor(),
     ]);
   }

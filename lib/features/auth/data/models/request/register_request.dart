@@ -1,19 +1,4 @@
-abstract class AuthEvent {
-  const AuthEvent();
-}
-
-class AppStarted extends AuthEvent {}
-
-class LogoutRequested extends AuthEvent {}
-
-class LoginSubmitted extends AuthEvent {
-  final String email;
-  final String password;
-
-  const LoginSubmitted({required this.email, required this.password});
-}
-
-class RegisterSubmitted extends AuthEvent {
+class RegisterRequest {
   final String email;
   final String firstName;
   final String lastName;
@@ -25,7 +10,7 @@ class RegisterSubmitted extends AuthEvent {
   final String password;
   final String confirmPassword;
 
-  const RegisterSubmitted({
+  RegisterRequest({
     required this.email,
     required this.firstName,
     required this.lastName,
@@ -37,4 +22,19 @@ class RegisterSubmitted extends AuthEvent {
     required this.password,
     required this.confirmPassword,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      "email": email,
+      "firstName": firstName,
+      "lastName": lastName,
+      "age": age,
+      "weight": weight,
+      "height": height,
+      "gender": gender,
+      "activityLevel": activityLevel,
+      "password": password,
+      "confirmPassword": confirmPassword,
+    };
+  }
 }

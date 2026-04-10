@@ -2,7 +2,20 @@ class UserEntity {
   final String id;
   final String email;
   final String? name;
-  final String? token;
+  final int? age;
+  final double? weight;
+  final double? height;
+  final String? gender;
+  final String? activityLevel;
 
-  UserEntity({required this.id, required this.email, this.name, this.token});
+  const UserEntity({
+    required this.id,
+    required this.email,
+    this.name,
+    this.age,
+    this.weight,
+    this.height,
+    this.gender,
+    this.activityLevel,
+  });
 }

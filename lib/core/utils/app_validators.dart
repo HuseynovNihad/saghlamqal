@@ -7,32 +7,64 @@ class AppValidators {
   }
 
   static String? email(String? value) {
-    if (value == null || value.isEmpty) {
+    final v = value?.trim();
+
+    if (v == null || v.isEmpty) {
       return "E-poçt daxil edin";
     }
-    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-    if (!emailRegex.hasMatch(value)) {
+
+    final regex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,}$');
+
+    if (!regex.hasMatch(v)) {
       return "Düzgün e-poçt ünvanı daxil edin";
     }
+
     return null;
   }
 
   static String? password(String? value) {
-    if (value == null || value.isEmpty) {
+    final v = value?.trim();
+
+    if (v == null || v.isEmpty) {
       return "Şifrə daxil edin";
     }
-    if (value.length < 6) {
+
+    if (v.length < 6) {
       return "Şifrə ən az 6 simvoldan ibarət olmalıdır";
     }
+
     return null;
   }
 
   static String? phone(String? value) {
-    if (value == null || value.isEmpty) {
+    final v = value?.trim();
+
+    if (v == null || v.isEmpty) {
       return "Telefon nömrəsi daxil edin";
     }
-    if (value.length < 9) {
+
+    final digitsOnly = RegExp(r'^\d+$');
+
+    if (!digitsOnly.hasMatch(v)) {
+      return "Telefon yalnız rəqəmlərdən ibarət olmalıdır";
+    }
+
+    if (v.length < 9 || v.length > 15) {
       return "Düzgün telefon nömrəsi daxil edin";
+    }
+
+    return null;
+  }
+
+  static String? combine(
+    String? value,
+    List<String? Function(String?)> validators,
+  ) {
+    for (final validator in validators) {
+      final result = validator(value);
+      if (result != null) {
+        return result;
+      }
     }
     return null;
   }

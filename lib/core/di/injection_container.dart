@@ -1,13 +1,25 @@
 import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../features/auth/auth_di.dart';
 import '../network/network_manager.dart';
+import '../storage/token_storage.dart';
 
 final sl = GetIt.instance;
 
 Future<void> init() async {
-  // --- CORE LAYER (Qlobal Servislər) ---
+  // ================= CORE =================
   sl.registerLazySingleton<NetworkManager>(() => NetworkManager());
 
-  // --- FEATURES LAYER (Modul DI-lar) ---
-  initAuth();
+  // ================= LOCAL STORAGE =================
+
+  // SharedPreferences init
+  final prefs = await SharedPreferences.getInstance();
+  sl.registerLazySingleton(() => prefs);
+
+  // Token storage
+  sl.registerLazySingleton<TokenStorage>(() => TokenStorage(sl()));
+
+  // ================= FEATURES =================
+  await initAuth(sl);
 }

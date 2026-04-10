@@ -7,10 +7,11 @@ import '../../core/utils/radius_extension.dart';
 
 class CustomElevatedButton extends StatelessWidget {
   final String text;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final Color? backgroundColor;
   final Color? foregroundColor;
   final double? width;
+  final bool isLoading;
 
   const CustomElevatedButton({
     super.key,
@@ -19,6 +20,7 @@ class CustomElevatedButton extends StatelessWidget {
     this.backgroundColor,
     this.foregroundColor,
     this.width,
+    this.isLoading = false,
   });
 
   @override
@@ -27,19 +29,28 @@ class CustomElevatedButton extends StatelessWidget {
       width: width ?? double.infinity,
       height: 50.h,
       child: ElevatedButton(
-        onPressed: onPressed,
+        onPressed: isLoading ? null : onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: backgroundColor ?? AppColors.primary,
           foregroundColor: foregroundColor ?? Colors.white,
           shape: RoundedRectangleBorder(borderRadius: 12.br),
           elevation: 0,
         ),
-        child: Text(
-          text,
-          style: AppTextStyles.h3.copyWith(
-            color: foregroundColor ?? Colors.white,
-          ),
-        ),
+        child: isLoading
+            ? const SizedBox(
+                width: 22,
+                height: 22,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: Colors.white,
+                ),
+              )
+            : Text(
+                text,
+                style: AppTextStyles.h3.copyWith(
+                  color: foregroundColor ?? Colors.white,
+                ),
+              ),
       ),
     );
   }
