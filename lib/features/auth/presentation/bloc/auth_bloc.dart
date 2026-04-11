@@ -60,6 +60,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           email: event.email,
           firstName: event.firstName,
           lastName: event.lastName,
+          birthday: event.birthday,
           age: event.age,
           weight: event.weight,
           height: event.height,

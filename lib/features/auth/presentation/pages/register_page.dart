@@ -16,6 +16,11 @@ import '../../../../shared/widgets/custom_text_field.dart';
 import '../bloc/auth_bloc.dart';
 import '../bloc/auth_event.dart';
 import '../bloc/auth_state.dart';
+import '../widgets/activity_level_field.dart';
+import '../widgets/birthday_field.dart';
+import '../widgets/gender_field.dart';
+import '../widgets/name_field.dart';
+import '../widgets/weight_height_field.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -30,7 +35,6 @@ class _RegisterPageState extends State<RegisterPage> {
   final _emailController = TextEditingController();
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
-  final _ageController = TextEditingController();
   final _weightController = TextEditingController();
   final _heightController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -38,29 +42,49 @@ class _RegisterPageState extends State<RegisterPage> {
 
   String? _selectedGender;
   String? _selectedActivityLevel;
+  DateTime? _selectedBirthday;
 
-  final List<Map<String, String>> _genders = [
-    {'value': 'male', 'label': 'Kişi'},
-    {'value': 'female', 'label': 'Qadın'},
-  ];
+  String? _genderError;
+  String? _activityLevelError;
+  String? _birthdayError;
 
-  final List<Map<String, String>> _activityLevels = [
-    {'value': 'sedentary', 'label': 'Oturaq'},
-    {'value': 'lightly_active', 'label': 'Az aktiv'},
-    {'value': 'moderately_active', 'label': 'Orta aktiv'},
-    {'value': 'very_active', 'label': 'Çox aktiv'},
-    {'value': 'extra_active', 'label': 'Həddindən çox aktiv'},
-  ];
+  int? get _calculatedAge {
+    if (_selectedBirthday == null) return null;
+    final today = DateTime.now();
+    int age = today.year - _selectedBirthday!.year;
+    if (today.month < _selectedBirthday!.month ||
+        (today.month == _selectedBirthday!.month &&
+            today.day < _selectedBirthday!.day)) {
+      age--;
+    }
+    return age;
+  }
 
   void _register() {
+    setState(() {
+      _genderError = _selectedGender == null ? 'Cins seçin' : null;
+      _activityLevelError = _selectedActivityLevel == null
+          ? 'Aktivlik səviyyəsi seçin'
+          : null;
+      _birthdayError = _selectedBirthday == null
+          ? 'Doğum tarixini seçin'
+          : null;
+    });
+
     if (!_formKey.currentState!.validate()) return;
+    if (_selectedGender == null ||
+        _selectedActivityLevel == null ||
+        _selectedBirthday == null) {
+      return;
+    }
 
     context.read<AuthBloc>().add(
       RegisterSubmitted(
         email: _emailController.text.trim(),
         firstName: _firstNameController.text.trim(),
         lastName: _lastNameController.text.trim(),
-        age: int.parse(_ageController.text.trim()),
+        age: _calculatedAge!,
+        birthday: _selectedBirthday!,
         weight: double.parse(_weightController.text.trim()),
         height: double.parse(_heightController.text.trim()),
         gender: _selectedGender!,
@@ -76,7 +100,6 @@ class _RegisterPageState extends State<RegisterPage> {
     _emailController.dispose();
     _firstNameController.dispose();
     _lastNameController.dispose();
-    _ageController.dispose();
     _weightController.dispose();
     _heightController.dispose();
     _passwordController.dispose();
@@ -111,7 +134,6 @@ class _RegisterPageState extends State<RegisterPage> {
                         Text("SağlamQal", style: AppTextStyles.h1),
                       ],
                     ),
-                    20.hs,
                     Container(
                       padding: 20.p,
                       decoration: BoxDecoration(
@@ -121,12 +143,15 @@ class _RegisterPageState extends State<RegisterPage> {
                       child: Form(
                         key: _formKey,
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text("Qeydiyyat", style: AppTextStyles.h2),
                             20.hs,
-
-                            // Email
+                            const _SectionHeader(
+                              icon: '👤',
+                              title: 'Şəxsi məlumat',
+                            ),
+                            12.hs,
                             CustomTextField(
                               label: "Email",
                               hintText: "Emailinizi daxil edin",
@@ -138,145 +163,59 @@ class _RegisterPageState extends State<RegisterPage> {
                               ),
                             ),
                             16.hs,
-
-                            // Ad & Soyad
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: CustomTextField(
-                                    label: "Ad",
-                                    hintText: "Adınızı daxil edin",
-                                    controller: _firstNameController,
-                                    validator: (value) => AppValidators.combine(
-                                      value,
-                                      [AppValidators.isNotEmpty],
-                                    ),
-                                  ),
-                                ),
-                                12.hw,
-                                Expanded(
-                                  child: CustomTextField(
-                                    label: "Soyad",
-                                    hintText: "Soyadınızı daxil edin",
-                                    controller: _lastNameController,
-                                    validator: (value) => AppValidators.combine(
-                                      value,
-                                      [AppValidators.isNotEmpty],
-                                    ),
-                                  ),
-                                ),
-                              ],
+                            NameField(
+                              firstNameController: _firstNameController,
+                              lastNameController: _lastNameController,
                             ),
                             16.hs,
-
-                            // Yaş
-                            CustomTextField(
-                              label: "Yaş",
-                              hintText: "Yaşınızı daxil edin",
-                              controller: _ageController,
-                              keyboardType: TextInputType.number,
-                              validator: (value) => AppValidators.combine(
-                                value,
-                                [AppValidators.isNotEmpty],
-                              ),
+                            BirthdayField(
+                              selectedBirthday: _selectedBirthday,
+                              calculatedAge: _calculatedAge,
+                              errorText: _birthdayError,
+                              onChanged: (date) => setState(() {
+                                _selectedBirthday = date;
+                                _birthdayError = null;
+                              }),
+                            ),
+                            24.hs,
+                            const _SectionHeader(
+                              icon: '📏',
+                              title: 'Fiziki məlumat',
+                            ),
+                            12.hs,
+                            WeightHeightField(
+                              weightController: _weightController,
+                              heightController: _heightController,
                             ),
                             16.hs,
-
-                            // Çəki & Boy
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: CustomTextField(
-                                    label: "Çəki (kg)",
-                                    hintText: "00.0",
-                                    controller: _weightController,
-                                    keyboardType:
-                                        const TextInputType.numberWithOptions(
-                                          decimal: true,
-                                        ),
-                                    validator: (value) => AppValidators.combine(
-                                      value,
-                                      [AppValidators.isNotEmpty],
-                                    ),
-                                  ),
-                                ),
-                                12.hw,
-                                Expanded(
-                                  child: CustomTextField(
-                                    label: "Boy (cm)",
-                                    hintText: "000",
-                                    controller: _heightController,
-                                    keyboardType:
-                                        const TextInputType.numberWithOptions(
-                                          decimal: true,
-                                        ),
-                                    validator: (value) => AppValidators.combine(
-                                      value,
-                                      [AppValidators.isNotEmpty],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            16.hs,
-
-                            // Cins
-                            Text("Cins", style: AppTextStyles.bodyMedium),
-                            8.hs,
-                            DropdownButtonFormField<String>(
+                            GenderField(
                               value: _selectedGender,
-                              decoration: InputDecoration(
-                                hintText: "Cinsinizi seçin",
-                                border: OutlineInputBorder(borderRadius: 12.br),
-                                contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: 16,
-                                  vertical: 14,
-                                ),
-                              ),
-                              items: _genders.map((g) {
-                                return DropdownMenuItem(
-                                  value: g['value'],
-                                  child: Text(g['label']!),
-                                );
-                              }).toList(),
-                              onChanged: (val) =>
-                                  setState(() => _selectedGender = val),
-                              validator: (val) =>
-                                  val == null ? 'Cins seçin' : null,
+                              errorText: _genderError,
+                              onChanged: (val) => setState(() {
+                                _selectedGender = val;
+                                _genderError = null;
+                              }),
                             ),
-                            16.hs,
-
-                            // Aktivlik səviyyəsi
-                            Text(
-                              "Aktivlik səviyyəsi",
-                              style: AppTextStyles.bodyMedium,
+                            24.hs,
+                            const _SectionHeader(
+                              icon: '🏃',
+                              title: 'Aktivlik səviyyəsi',
                             ),
-                            8.hs,
-                            DropdownButtonFormField<String>(
+                            12.hs,
+                            ActivityLevelField(
                               value: _selectedActivityLevel,
-                              decoration: InputDecoration(
-                                hintText: "Aktivlik səviyyənizi seçin",
-                                border: OutlineInputBorder(borderRadius: 12.br),
-                                contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: 16,
-                                  vertical: 14,
-                                ),
-                              ),
-                              items: _activityLevels.map((level) {
-                                return DropdownMenuItem(
-                                  value: level['value'],
-                                  child: Text(level['label']!),
-                                );
-                              }).toList(),
-                              onChanged: (val) =>
-                                  setState(() => _selectedActivityLevel = val),
-                              validator: (val) => val == null
-                                  ? 'Aktivlik səviyyəsi seçin'
-                                  : null,
+                              errorText: _activityLevelError,
+                              onChanged: (val) => setState(() {
+                                _selectedActivityLevel = val;
+                                _activityLevelError = null;
+                              }),
                             ),
-                            16.hs,
-
-                            // Şifrə
+                            24.hs,
+                            const _SectionHeader(
+                              icon: '🔒',
+                              title: 'Təhlükəsizlik',
+                            ),
+                            12.hs,
                             CustomTextField(
                               label: "Şifrə",
                               hintText: "Şifrənizi daxil edin",
@@ -289,8 +228,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                   ]),
                             ),
                             16.hs,
-
-                            // Şifrə təkrar
                             CustomTextField(
                               label: "Şifrəni təsdiqlə",
                               hintText: "Şifrənizi təkrar daxil edin",
@@ -306,16 +243,20 @@ class _RegisterPageState extends State<RegisterPage> {
                               },
                             ),
                             20.hs,
-
-                            // Qeydiyyat düyməsi
                             CustomElevatedButton(
                               text: "Qeydiyyatdan keç",
                               isLoading: state is AuthLoading,
                               onPressed: _register,
                             ),
                             12.hs,
-
-                            // Login-ə keç
+                            Row(
+                              children: [
+                                const Expanded(child: Divider(thickness: 1)),
+                                Padding(padding: 8.px, child: Text("və ya")),
+                                const Expanded(child: Divider(thickness: 1)),
+                              ],
+                            ),
+                            12.hs,
                             Center(
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -333,6 +274,14 @@ class _RegisterPageState extends State<RegisterPage> {
                                 ],
                               ),
                             ),
+                            12.hs,
+                            Text(
+                              "Sağlam həyat sənin əlindədir 💚",
+                              textAlign: TextAlign.center,
+                              style: AppTextStyles.bodySmall.copyWith(
+                                color: Colors.grey,
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -343,15 +292,31 @@ class _RegisterPageState extends State<RegisterPage> {
             );
           },
         ),
-        bottomNavigationBar: Padding(
-          padding: const EdgeInsets.only(bottom: 20),
-          child: Text(
-            "Sağlam həyat sənin əlindədir 💚",
-            textAlign: TextAlign.center,
-            style: AppTextStyles.bodySmall.copyWith(color: Colors.grey),
-          ),
-        ),
       ),
+    );
+  }
+}
+
+class _SectionHeader extends StatelessWidget {
+  final String icon;
+  final String title;
+
+  const _SectionHeader({required this.icon, required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const Expanded(child: Divider(thickness: 1)),
+        Text(icon, style: const TextStyle(fontSize: 16)),
+        6.hw,
+        Text(
+          title,
+          style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.w600),
+        ),
+        6.hw,
+        const Expanded(child: Divider(thickness: 1)),
+      ],
     );
   }
 }

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_text_styles.dart';
 import '../../core/utils/border_extension.dart';
-import '../../core/utils/padding_extension.dart';
 import '../../core/utils/sized_box_extension.dart';
+import 'required_widget.dart';
 
 class CustomTextField extends StatefulWidget {
   final String hintText;
@@ -15,6 +16,11 @@ class CustomTextField extends StatefulWidget {
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final String? Function(String?)? validator;
+  final bool required;
+  final List<TextInputFormatter>? inputFormatters;
+  final int maxLines;
+  final bool enabled;
+  final ValueChanged<String>? onChanged;
 
   const CustomTextField({
     super.key,
@@ -26,6 +32,11 @@ class CustomTextField extends StatefulWidget {
     this.prefixIcon,
     this.suffixIcon,
     this.validator,
+    this.required = false,
+    this.inputFormatters,
+    this.maxLines = 1,
+    this.enabled = true,
+    this.onChanged,
   });
 
   @override
@@ -47,12 +58,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (widget.label != null) ...[
-          Text(
-            widget.label!,
-            style: AppTextStyles.bodyMedium.copyWith(
-              fontWeight: FontWeight.w600,
-              color: AppColors.headline,
-            ),
+          Row(
+            children: [
+              Text(widget.label!, style: AppTextStyles.fieldLabel),
+              if (widget.required) RequiredWidget(),
+            ],
           ),
           8.hs,
         ],
@@ -63,10 +73,15 @@ class _CustomTextFieldState extends State<CustomTextField> {
           keyboardType: widget.keyboardType,
           validator: widget.validator,
           style: AppTextStyles.bodyMedium,
+          inputFormatters: widget.inputFormatters,
+          maxLines: widget.maxLines,
+          enabled: widget.enabled,
+          onChanged: widget.onChanged,
           decoration: InputDecoration(
             hintText: widget.hintText,
-            hintStyle: AppTextStyles.bodyMedium.copyWith(color: Colors.grey),
+            hintStyle: AppTextStyles.fieldHintText,
             prefixIcon: widget.prefixIcon,
+
             suffixIcon: widget.isPassword
                 ? IconButton(
                     onPressed: () {
@@ -85,12 +100,12 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 : widget.suffixIcon,
             filled: true,
             fillColor: AppColors.surface,
-            contentPadding: 16.p,
-            enabledBorder: AppColors.bodyText.withOpacity(0.1).border(),
+            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            enabledBorder: AppColors.borderColor.border(),
             focusedBorder: AppColors.primary.border(width: 1.5),
-            errorBorder: Colors.redAccent.border(),
-            focusedErrorBorder: Colors.redAccent.border(width: 1.5),
-            border: AppColors.bodyText.withOpacity(0.1).border(),
+            errorBorder: AppColors.error.border(),
+            focusedErrorBorder: AppColors.error.border(width: 1.5),
+            border: AppColors.borderColor.border(),
           ),
         ),
       ],

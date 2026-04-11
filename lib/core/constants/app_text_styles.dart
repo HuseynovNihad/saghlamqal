@@ -78,4 +78,31 @@ class AppTextStyles {
     fontFamily: AppFonts.poppins,
     color: AppColors.primary,
   );
+
+  // ================= FİELD LABEL =================
+
+  static TextStyle fieldLabel = TextStyle(
+    fontSize: 14.sp,
+    fontWeight: FontWeight.w500,
+    fontFamily: AppFonts.poppins,
+    color: AppColors.headline,
+  );
+
+  // ================= FİELD HİNT TEXT STYLE =================
+
+  static TextStyle fieldHintText = TextStyle(
+    fontSize: 14.sp,
+    fontWeight: FontWeight.w400,
+    fontFamily: AppFonts.poppins,
+    color: Colors.grey,
+  );
+
+  // ================= ERROR TEXT STYLE =================
+
+  static TextStyle errorText = TextStyle(
+    fontSize: 12.sp,
+    fontWeight: FontWeight.w400,
+    fontFamily: AppFonts.poppins,
+    color: AppColors.error,
+  );
 }
