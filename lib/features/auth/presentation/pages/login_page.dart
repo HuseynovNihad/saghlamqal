@@ -15,7 +15,6 @@ import '../../../../shared/widgets/custom_snackbar.dart';
 import '../../../../shared/widgets/custom_text_button.dart';
 import '../../../../shared/widgets/custom_text_field.dart';
 import '../bloc/auth_bloc.dart';
-import '../bloc/auth_event.dart';
 import '../bloc/auth_state.dart';
 
 class LoginPage extends StatefulWidget {
@@ -31,15 +30,19 @@ class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  void _login() {
-    if (!_formKey.currentState!.validate()) return;
+  // void _login() {
+  //   if (!_formKey.currentState!.validate()) return;
 
-    context.read<AuthBloc>().add(
-      LoginSubmitted(
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim(),
-      ),
-    );
+  //   context.read<AuthBloc>().add(
+  //     LoginSubmitted(
+  //       email: _emailController.text.trim(),
+  //       password: _passwordController.text.trim(),
+  //     ),
+  //   );
+  // }
+
+  void _login() {
+    context.go(AppRoutes.home);
   }
 
   @override

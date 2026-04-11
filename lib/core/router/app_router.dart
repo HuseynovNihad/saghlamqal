@@ -10,16 +10,18 @@ import '../../features/auth/presentation/bloc/auth_event.dart';
 import '../../features/auth/presentation/bloc/auth_state.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/register_page.dart';
+import '../../features/home/presentation/pages/main_page.dart';
+import '../../features/scan/presentation/scan_page.dart';
 import '../../features/splash/presentation/splash_page.dart';
+import '../../shared/widgets/error_page.dart';
+import '../enums/error_type.dart';
 import 'app_routes.dart';
 
 class GoRouterRefreshStream extends ChangeNotifier {
   late final StreamSubscription _subscription;
 
   GoRouterRefreshStream(Stream stream) {
-    _subscription = stream.listen((_) {
-      notifyListeners();
-    });
+    _subscription = stream.listen((_) => notifyListeners());
   }
 
   @override
@@ -35,15 +37,16 @@ class AppRouter {
   static final GoRouter router = GoRouter(
     initialLocation: AppRoutes.splash,
     debugLogDiagnostics: true,
-
     refreshListenable: GoRouterRefreshStream(_authBloc.stream),
+    errorBuilder: (context, state) => ErrorPage(
+      type: ErrorType.notFound,
+      onBack: () => context.go(AppRoutes.home),
+    ),
 
     redirect: (context, state) {
       final authState = _authBloc.state;
-
       final isLoggedIn = authState is AuthAuthenticated;
       final isLoading = authState is AuthInitial || authState is AuthLoading;
-
       final location = state.matchedLocation;
 
       if (isLoading) {
@@ -51,48 +54,43 @@ class AppRouter {
       }
 
       if (!isLoggedIn) {
-        final allowedRoutes = [AppRoutes.login, AppRoutes.register];
-        return allowedRoutes.contains(location) ? null : AppRoutes.login;
+        const guestAllowed = [
+          AppRoutes.login,
+          AppRoutes.register,
+          AppRoutes.home,
+          AppRoutes.scan,
+        ];
+        return guestAllowed.contains(location) ? null : AppRoutes.home;
       }
 
-      if (location == AppRoutes.login ||
-          location == AppRoutes.register ||
-          location == AppRoutes.splash) {
-        return AppRoutes.home;
-      }
+      const authPages = [AppRoutes.login, AppRoutes.register, AppRoutes.splash];
+      if (authPages.contains(location)) return AppRoutes.home;
 
       return null;
     },
 
     routes: [
-      GoRoute(
-        path: AppRoutes.splash,
-        builder: (context, state) => const SplashPage(),
-      ),
+      GoRoute(path: AppRoutes.splash, builder: (_, __) => const SplashPage()),
 
       GoRoute(
         path: AppRoutes.login,
-        builder: (context, state) {
-          return BlocProvider.value(value: _authBloc, child: const LoginPage());
-        },
+        builder: (_, __) =>
+            BlocProvider.value(value: _authBloc, child: const LoginPage()),
       ),
 
       GoRoute(
         path: AppRoutes.register,
-        builder: (context, state) {
-          return BlocProvider.value(
-            value: _authBloc,
-            child: const RegisterPage(),
-          );
-        },
+        builder: (_, __) =>
+            BlocProvider.value(value: _authBloc, child: const RegisterPage()),
       ),
 
       GoRoute(
         path: AppRoutes.home,
-        builder: (context, state) {
-          return const Scaffold(body: Center(child: Text("Home")));
-        },
+        builder: (_, __) =>
+            BlocProvider.value(value: _authBloc, child: const MainPage()),
       ),
+
+      GoRoute(path: AppRoutes.scan, builder: (_, __) => const ScanPage()),
     ],
   );
 }

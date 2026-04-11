@@ -19,6 +19,7 @@ dependencies:
   dio: ^5.9.2
   get_it: ^9.2.1
   shared_preferences: ^2.5.3
+  mobile_scanner: ^7.2.0
 
 dev_dependencies:
   flutter_test:
