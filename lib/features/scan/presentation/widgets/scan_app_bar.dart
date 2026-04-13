@@ -1,9 +1,9 @@
 // lib/features/scan/presentation/widgets/scan_app_bar.dart
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import '../../../../core/constants/app_text_styles.dart';
-import '../../../../core/utils/padding_extension.dart';
-import '../../../../core/utils/radius_extension.dart';
+import '../../../../../core/constants/app_text_styles.dart';
+import '../../../../../core/utils/padding_extension.dart';
+import '../../../../../core/utils/radius_extension.dart';
 
 class ScanAppBar extends StatelessWidget {
   final MobileScannerController controller;

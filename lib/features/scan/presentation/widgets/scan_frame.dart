@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../../../core/constants/app_colors.dart';
-import '../../../../core/constants/app_text_styles.dart';
-import '../../../../core/utils/radius_extension.dart';
-import '../../../../core/utils/sized_box_extension.dart';
+import '../../../../../core/constants/app_colors.dart';
+import '../../../../../core/constants/app_text_styles.dart';
+import '../../../../../core/utils/radius_extension.dart';
+import '../../../../../core/utils/sized_box_extension.dart';
 import 'scan_line.dart';
 
 class ScanFrame extends StatelessWidget {

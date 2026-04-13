@@ -6,5 +6,7 @@ class AppAssets {
 
   static const String logo = '$_pngPath/logo.png';
   static const String appLogo = '$_pngPath/app_logo.png';
+  static const String logoNoBackground = '$_pngPath/logo_nobackground.png';
+
   static const String barcodeScanner = '$_svgPath/barcode_scanner.svg';
 }

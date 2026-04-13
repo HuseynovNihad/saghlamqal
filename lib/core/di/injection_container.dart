@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../features/auth/auth_di.dart';
+import '../../features/scan/scan_di.dart';
 import '../network/network_manager.dart';
 import '../storage/token_storage.dart';
 
@@ -22,4 +23,5 @@ Future<void> init() async {
 
   // ================= FEATURES =================
   await initAuth(sl);
+  await initScan(sl);
 }
