@@ -81,7 +81,7 @@ class ActivityLevelField extends StatelessWidget {
               child: Row(
                 children: [
                   Text(level['icon']!, style: const TextStyle(fontSize: 24)),
-                  12.hw,
+                  12.ws,
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,7 +109,7 @@ class ActivityLevelField extends StatelessWidget {
                       ],
                     ),
                   ),
-                  4.hw,
+                  4.ws,
                   AnimatedContainer(
                     duration: const Duration(milliseconds: 200),
                     width: 20,

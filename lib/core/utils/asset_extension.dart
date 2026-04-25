@@ -22,15 +22,16 @@ extension AssetExtension on String {
     double? width,
     double? height,
     Color? color,
+    ColorFilter? colorFilter,
     BoxFit fit = BoxFit.contain,
   }) {
     return SvgPicture.asset(
       this,
       width: width?.w,
       height: height?.h,
-      colorFilter: color != null
-          ? ColorFilter.mode(color, BlendMode.srcIn)
-          : null,
+      colorFilter:
+          colorFilter ??
+          (color != null ? ColorFilter.mode(color, BlendMode.srcIn) : null),
       fit: fit,
     );
   }

@@ -56,7 +56,7 @@ class GenderField extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(g['icon']!, style: const TextStyle(fontSize: 20)),
-                      8.hw,
+                      8.ws,
                       Text(
                         g['label']!,
                         style: AppTextStyles.bodyMedium.copyWith(

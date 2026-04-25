@@ -23,7 +23,7 @@ class RecentProductsSection extends StatelessWidget {
             Row(
               children: [
                 const Text("🕐", style: TextStyle(fontSize: 16)),
-                6.hw,
+                6.ws,
                 Text(
                   "Son oxudulanlar",
                   style: AppTextStyles.bodyMedium.copyWith(

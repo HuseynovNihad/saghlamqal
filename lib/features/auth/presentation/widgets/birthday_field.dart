@@ -53,7 +53,7 @@ class BirthdayField extends StatelessWidget {
                   size: 18,
                   color: Colors.grey,
                 ),
-                8.hw,
+                8.ws,
                 Expanded(
                   child: Text(
                     selectedBirthday != null

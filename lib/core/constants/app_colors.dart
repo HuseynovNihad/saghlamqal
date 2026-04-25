@@ -2,23 +2,25 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   // Brand Colors
-  static const Color primary = Color(0xFF68A33E);
-  static const Color secondary = Color(0xFF3D7AB5);
-  static const Color accent = Color(0xFFA3D133);
+  static const Color primary = Color(0xFF006218);
+  static const Color secondary = Color(0xFF2196F3);
+  static const Color accent = Color(0xFFA3D14D);
 
   // Background & Surface
-  static const Color background = Color(0xFFF8FCFA);
+  static const Color background = Color(0xFFF2FBFB);
   static const Color surface = Color(0xFFFFFFFF);
 
   // Text Colors
-  static const Color headline = Color(0xFF234232);
-  static const Color bodyText = Color(0xFF4A5D53);
+  static const Color headline = Color(0xFF1B3F49);
+  static const Color bodyText = Color(0xFF455A64);
 
-  static const success = Color(0xFF10B981);
-  static const error = Color(0xFFEF4444);
-  static const warning = Color(0xFFFBBF24);
-  static const info = Color(0xFF29B6F6);
+  // Status Colors
+  static const Color success = Color(0xFF59A846);
+  static const Color error = Color(0xFFD32F2F);
+  static const Color warning = Color(0xFFFFA000);
+  static const Color info = Color(0xFF72C6C8);
 
-  static const textfieldColor = Color(0xFFEAEDEB);
-  static const borderColor = Color(0xFFE0E0E0);
+  // UI Elements
+  static const Color textfieldColor = Color(0xFFE8F1F2);
+  static const Color borderColor = Color(0xFFCFD8DC);
 }

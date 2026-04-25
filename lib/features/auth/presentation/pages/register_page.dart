@@ -309,12 +309,12 @@ class _SectionHeader extends StatelessWidget {
       children: [
         const Expanded(child: Divider(thickness: 1)),
         Text(icon, style: const TextStyle(fontSize: 16)),
-        6.hw,
+        6.ws,
         Text(
           title,
           style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.w600),
         ),
-        6.hw,
+        6.ws,
         const Expanded(child: Divider(thickness: 1)),
       ],
     );

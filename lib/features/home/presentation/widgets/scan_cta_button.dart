@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kalori_tracker/core/constants/app_assets.dart';
-import 'package:kalori_tracker/core/utils/asset_extension.dart';
 
+import '../../../../core/constants/app_assets.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/utils/asset_extension.dart';
 import '../../../../core/utils/padding_extension.dart';
 import '../../../../core/utils/radius_extension.dart';
 import '../../../../core/utils/sized_box_extension.dart';
@@ -18,55 +18,44 @@ class ScanCtaButton extends StatelessWidget {
       onTap: () => context.push('/scan'),
       child: Container(
         width: double.infinity,
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 24),
+        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 18),
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [AppColors.primary, AppColors.primary.withOpacity(0.8)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-          borderRadius: 16.br,
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.primary.withOpacity(0.3),
-              blurRadius: 12,
-              offset: const Offset(0, 6),
-            ),
-          ],
+          color: AppColors.primary,
+          borderRadius: 20.br,
         ),
-        child: Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              padding: 12.p,
+              padding: 8.p,
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.2),
-                borderRadius: 16.br,
+                color: Colors.white.withOpacity(0.18),
+                borderRadius: 12.br,
               ),
-              child: AppAssets.barcodeScanner.svg(width: 24, height: 24),
-            ),
-            16.hw,
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Barkod Oxut",
-                    style: AppTextStyles.h3.copyWith(color: Colors.white),
-                  ),
-                  4.hs,
-                  Text(
-                    "Məhsulun kalorisini dərhal öyrən",
-                    style: AppTextStyles.bodySmall.copyWith(
-                      color: Colors.white.withOpacity(0.85),
-                    ),
-                  ),
-                ],
+              child: AppAssets.barcodeScanner.svg(
+                width: 24,
+                height: 24,
+                colorFilter: const ColorFilter.mode(
+                  Colors.white,
+                  BlendMode.srcIn,
+                ),
               ),
             ),
-            Icon(
-              Icons.arrow_forward_ios_rounded,
-              color: Colors.white.withOpacity(0.7),
-              size: 16,
+            16.hs,
+            Text(
+              "Barkod Oxut",
+              style: AppTextStyles.h2.copyWith(
+                color: Colors.white,
+                fontWeight: FontWeight.w800,
+                height: 1.15,
+              ),
+            ),
+            6.hs,
+            Text(
+              "Məhsulun kalorisini dərhal öyrən",
+              style: AppTextStyles.bodySmall.copyWith(
+                color: Colors.white.withOpacity(0.75),
+              ),
             ),
           ],
         ),

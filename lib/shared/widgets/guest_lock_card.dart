@@ -38,7 +38,7 @@ class GuestLockCard extends StatelessWidget {
               size: 22,
             ),
           ),
-          12.hw,
+          12.ws,
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,7 +49,7 @@ class GuestLockCard extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                4.hw,
+                4.ws,
                 Text(
                   message,
                   style: AppTextStyles.bodySmall.copyWith(

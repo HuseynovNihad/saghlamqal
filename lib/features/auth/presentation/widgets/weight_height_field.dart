@@ -27,7 +27,7 @@ class WeightHeightField extends StatelessWidget {
                 AppValidators.combine(value, [AppValidators.isNotEmpty]),
           ),
         ),
-        12.hw,
+        12.ws,
         Expanded(
           child: CustomTextField(
             label: "Boy (sm)",

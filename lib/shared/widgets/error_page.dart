@@ -183,7 +183,7 @@ class _ErrorButton extends StatelessWidget {
               size: 18,
               color: isPrimary ? Colors.white : AppColors.primary,
             ),
-            8.hw,
+            8.ws,
             Text(
               label,
               style: AppTextStyles.bodyMedium.copyWith(

@@ -60,7 +60,7 @@ class ScanResultSheet extends StatelessWidget {
                     color: Colors.white,
                     size: 18,
                   ),
-                  8.hw,
+                  8.ws,
                   Text(
                     "Yenidən scan et",
                     style: AppTextStyles.bodyMedium.copyWith(
