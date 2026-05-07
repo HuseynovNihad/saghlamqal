@@ -17,7 +17,7 @@ class MealOfTheDayCard extends StatelessWidget {
 
   const MealOfTheDayCard({
     super.key,
-    this.tag = 'NUTRIENT RICH',
+    this.tag = 'QİDA MADDƏLƏRİ İLƏ ZƏNGİN',
     required this.mealTitle,
     required this.imageUrl,
     required this.kcal,
@@ -79,7 +79,7 @@ class MealOfTheDayCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'MEAL OF THE DAY',
+                  'GÜNÜN YEMƏYİ',
                   style: AppTextStyles.bodySmall.copyWith(
                     color: AppColors.primary,
                     fontWeight: FontWeight.w700,
@@ -98,14 +98,14 @@ class MealOfTheDayCard extends StatelessWidget {
                 14.hs,
                 Row(
                   children: [
-                    _StatItem(label: 'ENERGY', value: '$kcal kcal'),
+                    _StatItem(label: 'ENERJİ', value: '$kcal kcal'),
                     Container(
                       width: 1,
                       height: 32,
                       color: Colors.grey.shade200,
                       margin: const EdgeInsets.symmetric(horizontal: 16),
                     ),
-                    _StatItem(label: 'TIME', value: '$timeMinutes mins'),
+                    _StatItem(label: 'MÜDDƏT', value: '$timeMinutes dəq'),
                   ],
                 ),
                 14.hs,
@@ -123,7 +123,7 @@ class MealOfTheDayCard extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        'Get Recipe',
+                        'Reseptə baxın',
                         style: AppTextStyles.bodySmall.copyWith(
                           color: AppColors.primary,
                           fontWeight: FontWeight.w600,

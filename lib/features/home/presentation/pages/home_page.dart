@@ -38,13 +38,13 @@ class HomePage extends StatelessWidget {
                 const RecentProductsSection(),
                 20.hs,
                 MealOfTheDayCard(
-                  mealTitle: 'Avocado & Salmon Power Bowl',
+                  mealTitle: 'Avokado və Qızılbalıq Güclü Qabı',
                   imageUrl:
                       'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&q=80',
                   kcal: 420,
                   timeMinutes: 15,
                   description:
-                      'High in Omega-3s and fiber to sustain your energy levels through the afternoon slump.',
+                      'Günortadan sonra yuxu zamanı enerji səviyyənizi qorumaq üçün Omega-3 və liflə zəngindir.',
                   onGetRecipe: () {
                     // naviqasiya
                   },
