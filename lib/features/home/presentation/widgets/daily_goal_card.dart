@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kalori_tracker/core/constants/app_colors.dart';
 
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/utils/padding_extension.dart';
@@ -42,7 +43,7 @@ class _LoggedInCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: 20.br,
-        border: Border.all(color: Colors.grey.withOpacity(0.12), width: 0.5),
+        border: Border.all(color: AppColors.borderColor, width: 0.8),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

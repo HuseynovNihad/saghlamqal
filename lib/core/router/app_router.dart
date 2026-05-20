@@ -10,6 +10,7 @@ import '../../features/auth/presentation/bloc/auth_event.dart';
 import '../../features/auth/presentation/bloc/auth_state.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/register_page.dart';
+import '../../features/favorites/presentation/pages/favorite_page.dart';
 import '../../features/home/presentation/pages/main_page.dart';
 import '../../features/scan/presentation/scan_page.dart';
 import '../../features/splash/presentation/splash_page.dart';
@@ -91,6 +92,11 @@ class AppRouter {
       ),
 
       GoRoute(path: AppRoutes.scan, builder: (_, __) => const ScanPage()),
+
+      GoRoute(
+        path: AppRoutes.favorites,
+        builder: (_, __) => const FavoritesPage(),
+      ),
     ],
   );
 }

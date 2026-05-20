@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
-import '../../../profile/presentation/pages/profile_page.dart';
-import '../../../favorites/presentation/pages/favorites_page.dart';
+import '../../../profile/pages/profile_page.dart';
+import '../../../favorites/presentation/pages/favorite_page.dart';
 import 'home_page.dart';
 
 class MainPage extends StatefulWidget {

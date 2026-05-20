@@ -36,6 +36,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w600,
     fontFamily: AppFonts.inter,
     color: AppColors.bodyText,
+    height: 20 / 16,
   );
 
   static TextStyle bodyMedium = TextStyle(
@@ -43,6 +44,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w500,
     fontFamily: AppFonts.inter,
     color: AppColors.bodyText,
+    height: 18 / 14,
   );
 
   static TextStyle bodySmall = TextStyle(

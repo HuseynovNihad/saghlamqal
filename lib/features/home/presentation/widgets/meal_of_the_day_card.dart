@@ -30,7 +30,11 @@ class MealOfTheDayCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      decoration: BoxDecoration(color: Colors.white, borderRadius: 20.br),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: 16.br,
+        border: Border.all(color: AppColors.borderColor, width: 0.8),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

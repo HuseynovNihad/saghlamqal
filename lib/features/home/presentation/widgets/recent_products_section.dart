@@ -72,15 +72,11 @@ class RecentProductsSection extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: 16.br,
-              border: Border.all(
-                color: AppColors.borderColor,
-                style: BorderStyle.solid,
-              ),
+              border: Border.all(color: AppColors.borderColor, width: 0.8),
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                // QR ikon + plus badge
                 Stack(
                   clipBehavior: Clip.none,
                   children: [

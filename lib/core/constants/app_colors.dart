@@ -22,5 +22,5 @@ class AppColors {
 
   // UI Elements
   static const Color textfieldColor = Color(0xFFE8F1F2);
-  static const Color borderColor = Color(0xFFCFD8DC);
+  static const Color borderColor = Color(0xFFD8E4ED);
 }
