@@ -1,30 +1,50 @@
 import 'dart:math';
-import 'package:flutter/material.dart';
-import 'package:kalori_tracker/core/constants/app_text_styles.dart';
 
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/utils/radius_extension.dart';
 import '../../../../core/utils/sized_box_extension.dart';
 import '../../../../shared/widgets/guest_lock_card.dart';
+import '../../domain/entities/hydration_entity.dart';
+import '../bloc/home_bloc.dart';
 
 class HydrationCard extends StatelessWidget {
   final bool isLoggedIn;
+  final HomeState state;
 
-  const HydrationCard({super.key, required this.isLoggedIn});
+  const HydrationCard({
+    super.key,
+    required this.isLoggedIn,
+    required this.state,
+  });
 
   @override
   Widget build(BuildContext context) {
-    if (isLoggedIn) {
+    if (!isLoggedIn) {
       return const GuestLockCard(
-        title: "Hidrasiya",
-        message: "Daxil ol, gündəlik su istehlakını izləyək.",
+        title: 'Hidrasiya',
+        message: 'Daxil ol, gündəlik su istehlakını izləyək.',
       );
     }
-    return const _HydrationContent();
+
+    if (state is HomeLoading) {
+      return const _HydrationSkeleton();
+    }
+
+    if (state is HomeLoaded) {
+      return _HydrationContent(hydration: (state as HomeLoaded).hydration);
+    }
+
+    return const SizedBox.shrink();
   }
 }
 
 class _HydrationContent extends StatefulWidget {
-  const _HydrationContent();
+  final HydrationEntity hydration;
+
+  const _HydrationContent({required this.hydration});
 
   @override
   State<_HydrationContent> createState() => _HydrationContentState();
@@ -32,11 +52,6 @@ class _HydrationContent extends StatefulWidget {
 
 class _HydrationContentState extends State<_HydrationContent>
     with TickerProviderStateMixin {
-  static const double _recommended = 3.5;
-  static const double _addAmount = 0.25;
-
-  double _tracked = 1.8;
-
   late final AnimationController _waveController;
   late final AnimationController _fillController;
   late Animation<double> _fillAnimation;
@@ -55,23 +70,26 @@ class _HydrationContentState extends State<_HydrationContent>
       duration: const Duration(milliseconds: 700),
     );
 
-    _fillAnimation = AlwaysStoppedAnimation(_tracked / _recommended);
+    _fillAnimation = AlwaysStoppedAnimation(
+      widget.hydration.tracked / widget.hydration.recommended,
+    );
   }
 
-  void _addWater() {
-    final newVal = (_tracked + _addAmount).clamp(0.0, _recommended);
-    final oldFill = _tracked / _recommended;
-    final newFill = newVal / _recommended;
+  @override
+  void didUpdateWidget(_HydrationContent oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.hydration.tracked != widget.hydration.tracked) {
+      final oldFill =
+          oldWidget.hydration.tracked / oldWidget.hydration.recommended;
+      final newFill = widget.hydration.tracked / widget.hydration.recommended;
 
-    setState(() => _tracked = newVal);
-
-    _fillAnimation = Tween<double>(
-      begin: oldFill,
-      end: newFill,
-    ).animate(CurvedAnimation(parent: _fillController, curve: Curves.easeOut));
-    _fillController
-      ..reset()
-      ..forward();
+      _fillAnimation = Tween<double>(begin: oldFill, end: newFill).animate(
+        CurvedAnimation(parent: _fillController, curve: Curves.easeOut),
+      );
+      _fillController
+        ..reset()
+        ..forward();
+    }
   }
 
   @override
@@ -82,10 +100,12 @@ class _HydrationContentState extends State<_HydrationContent>
   }
 
   String _fmt(double v) =>
-      v == v.roundToDouble() ? "${v.toInt()}L" : "${v.toStringAsFixed(1)}L";
+      v == v.roundToDouble() ? '${v.toInt()}L' : '${v.toStringAsFixed(1)}L';
 
   @override
   Widget build(BuildContext context) {
+    final hydration = widget.hydration;
+
     return Container(
       width: double.infinity,
       clipBehavior: Clip.hardEdge,
@@ -135,8 +155,8 @@ class _HydrationContentState extends State<_HydrationContent>
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        _fmt(_tracked),
-                        style: AppTextStyles.h1.copyWith(
+                        _fmt(hydration.tracked),
+                        style: AppTextStyles.h2.copyWith(
                           fontWeight: FontWeight.w600,
                           color: Colors.white,
                           height: 1,
@@ -145,8 +165,9 @@ class _HydrationContentState extends State<_HydrationContent>
                       ),
                       4.hs,
                       Text(
-                        "Tövsiyə: ${_fmt(_recommended)}",
+                        'Tövsiyə: ${_fmt(hydration.recommended)}',
                         style: AppTextStyles.bodySmall.copyWith(
+                          fontSize: 11,
                           color: Colors.white.withOpacity(0.7),
                         ),
                       ),
@@ -156,7 +177,7 @@ class _HydrationContentState extends State<_HydrationContent>
               ),
               16.hs,
               Text(
-                "Hidrasiya",
+                'Hidrasiya',
                 style: AppTextStyles.h3.copyWith(
                   fontWeight: FontWeight.w700,
                   color: Colors.white,
@@ -176,14 +197,16 @@ class _HydrationContentState extends State<_HydrationContent>
                 child: Row(
                   children: [
                     Text(
-                      "${_fmt(_tracked)} tracked today",
+                      '${_fmt(hydration.tracked)} izlənilir',
                       style: AppTextStyles.bodySmall.copyWith(
                         color: Colors.white.withOpacity(0.85),
                       ),
                     ),
                     const Spacer(),
                     GestureDetector(
-                      onTap: _addWater,
+                      onTap: () => context.read<HomeBloc>().add(
+                        const HomeAddWaterPressed(),
+                      ),
                       child: Container(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 12,
@@ -194,11 +217,11 @@ class _HydrationContentState extends State<_HydrationContent>
                           borderRadius: 8.br,
                         ),
                         child: Text(
-                          "ƏLAVƏ ET 250ML",
+                          'ƏLAVƏ ET ${hydration.addAmount.toInt()}ML',
                           style: AppTextStyles.bodySmall.copyWith(
                             fontSize: 11,
                             fontWeight: FontWeight.w600,
-                            color: Color(0xFF1A3A8F),
+                            color: const Color(0xFF1A3A8F),
                             letterSpacing: 0.3,
                           ),
                         ),
@@ -215,8 +238,6 @@ class _HydrationContentState extends State<_HydrationContent>
   }
 }
 
-// ─── Wave Painter ─────────────────────────────────────────────────────────────
-
 class _WavePainter extends CustomPainter {
   final double progress;
   final double fillRatio;
@@ -227,7 +248,6 @@ class _WavePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final waterTop = size.height * (1 - fillRatio.clamp(0.0, 1.0));
 
-    // Arxa dalğa
     _drawWave(
       canvas,
       size,
@@ -238,7 +258,6 @@ class _WavePainter extends CustomPainter {
       wavelengthFactor: 0.7,
     );
 
-    // Ön dalğa
     _drawWave(
       canvas,
       size,
@@ -280,4 +299,20 @@ class _WavePainter extends CustomPainter {
   @override
   bool shouldRepaint(_WavePainter old) =>
       old.progress != progress || old.fillRatio != fillRatio;
+}
+
+class _HydrationSkeleton extends StatelessWidget {
+  const _HydrationSkeleton();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: 180,
+      decoration: BoxDecoration(
+        color: Colors.grey.shade100,
+        borderRadius: 20.br,
+      ),
+    );
+  }
 }

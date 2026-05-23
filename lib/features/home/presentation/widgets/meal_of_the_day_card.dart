@@ -1,30 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/router/app_routes.dart';
 import '../../../../core/utils/padding_extension.dart';
 import '../../../../core/utils/radius_extension.dart';
 import '../../../../core/utils/sized_box_extension.dart';
+import '../../domain/entities/meal_of_the_day_entity.dart';
+import '../bloc/home_bloc.dart';
 
 class MealOfTheDayCard extends StatelessWidget {
-  final String tag;
-  final String mealTitle;
-  final String imageUrl;
-  final int kcal;
-  final int timeMinutes;
-  final String description;
-  final VoidCallback? onGetRecipe;
+  final HomeState state;
 
-  const MealOfTheDayCard({
-    super.key,
-    this.tag = 'QİDA MADDƏLƏRİ İLƏ ZƏNGİN',
-    required this.mealTitle,
-    required this.imageUrl,
-    required this.kcal,
-    required this.timeMinutes,
-    required this.description,
-    this.onGetRecipe,
-  });
+  const MealOfTheDayCard({super.key, required this.state});
+
+  @override
+  Widget build(BuildContext context) {
+    if (state is HomeLoading) {
+      return const _MealSkeleton();
+    }
+
+    if (state is! HomeLoaded) return const SizedBox.shrink();
+
+    final meal = (state as HomeLoaded).mealOfTheDay;
+    if (meal == null) return const SizedBox.shrink();
+
+    return _MealContent(meal: meal);
+  }
+}
+
+class _MealContent extends StatelessWidget {
+  final MealOfTheDayEntity meal;
+
+  const _MealContent({required this.meal});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +41,7 @@ class MealOfTheDayCard extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: 16.br,
+        borderRadius: 20.br,
         border: Border.all(color: AppColors.borderColor, width: 0.8),
       ),
       child: Column(
@@ -42,39 +51,41 @@ class MealOfTheDayCard extends StatelessWidget {
             clipBehavior: Clip.none,
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(20),
+                ),
                 child: AspectRatio(
                   aspectRatio: 4 / 3,
                   child: Image.network(
-                    imageUrl,
+                    meal.imageUrl,
                     width: double.infinity,
                     fit: BoxFit.cover,
                   ),
                 ),
               ),
-              Positioned(
-                top: 12,
-                left: 12,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 5,
-                  ),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF006218),
-                    borderRadius: 20.br,
-                  ),
-                  child: Text(
-                    tag,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-                      fontWeight: FontWeight.w700,
-                      letterSpacing: 0.8,
-                    ),
-                  ),
-                ),
-              ),
+              // Positioned(
+              //   top: 12,
+              //   left: 12,
+              //   child: Container(
+              //     padding: const EdgeInsets.symmetric(
+              //       horizontal: 10,
+              //       vertical: 5,
+              //     ),
+              //     decoration: BoxDecoration(
+              //       color: AppColors.primary.withOpacity(0.7),
+              //       borderRadius: 20.br,
+              //     ),
+              //     child: Text(
+              //       meal.tag,
+              //       style: AppTextStyles.bodySmall.copyWith(
+              //         color: Colors.white,
+              //         fontSize: 10,
+              //         fontWeight: FontWeight.w500,
+              //         letterSpacing: 0.6,
+              //       ),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
           Padding(
@@ -93,7 +104,7 @@ class MealOfTheDayCard extends StatelessWidget {
                 ),
                 8.hs,
                 Text(
-                  mealTitle,
+                  meal.title,
                   style: AppTextStyles.h2.copyWith(
                     fontWeight: FontWeight.w800,
                     height: 1.2,
@@ -102,19 +113,22 @@ class MealOfTheDayCard extends StatelessWidget {
                 14.hs,
                 Row(
                   children: [
-                    _StatItem(label: 'ENERJİ', value: '$kcal kcal'),
+                    _StatItem(label: 'ENERJİ', value: '${meal.kcal} kcal'),
                     Container(
                       width: 1,
                       height: 32,
                       color: Colors.grey.shade200,
                       margin: const EdgeInsets.symmetric(horizontal: 16),
                     ),
-                    _StatItem(label: 'MÜDDƏT', value: '$timeMinutes dəq'),
+                    _StatItem(
+                      label: 'MÜDDƏT',
+                      value: '${meal.timeMinutes} dəq',
+                    ),
                   ],
                 ),
                 14.hs,
                 Text(
-                  description,
+                  meal.description,
                   style: AppTextStyles.bodySmall.copyWith(
                     color: Colors.grey.shade600,
                     height: 1.5,
@@ -122,7 +136,7 @@ class MealOfTheDayCard extends StatelessWidget {
                 ),
                 14.hs,
                 GestureDetector(
-                  onTap: onGetRecipe,
+                  onTap: () => context.push(AppRoutes.recipe, extra: meal),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -181,6 +195,22 @@ class _StatItem extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _MealSkeleton extends StatelessWidget {
+  const _MealSkeleton();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: 320,
+      decoration: BoxDecoration(
+        color: Colors.grey.shade100,
+        borderRadius: 16.br,
+      ),
     );
   }
 }

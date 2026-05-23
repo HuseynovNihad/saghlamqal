@@ -1,39 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:kalori_tracker/core/constants/app_colors.dart';
 
+import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/utils/padding_extension.dart';
 import '../../../../core/utils/radius_extension.dart';
 import '../../../../core/utils/sized_box_extension.dart';
 import '../../../../shared/widgets/guest_lock_card.dart';
+import '../../domain/entities/daily_goal_entity.dart';
+import '../bloc/home_bloc.dart';
 
 class DailyGoalCard extends StatelessWidget {
   final bool isLoggedIn;
+  final HomeState state;
 
-  const DailyGoalCard({super.key, required this.isLoggedIn});
+  const DailyGoalCard({
+    super.key,
+    required this.isLoggedIn,
+    required this.state,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return !isLoggedIn
-        ? const _LoggedInCard()
-        : const GuestLockCard(
-            title: "Gündəlik Kalori Ehtiyacı",
-            message:
-                "Daxil ol, sənin üçün gündəlik kalori ehtiyacını hesablayaq.",
-          );
+    if (!isLoggedIn) {
+      return const GuestLockCard(
+        title: 'Gündəlik Kalori Ehtiyacı',
+        message: 'Daxil ol, sənin üçün gündəlik kalori ehtiyacını hesablayaq.',
+      );
+    }
+
+    if (state is HomeLoading) {
+      return const _DailyGoalSkeleton();
+    }
+
+    if (state is HomeLoaded) {
+      return _LoggedInCard(dailyGoal: (state as HomeLoaded).dailyGoal);
+    }
+
+    return const SizedBox.shrink();
   }
 }
 
 class _LoggedInCard extends StatelessWidget {
-  const _LoggedInCard();
+  final DailyGoalEntity dailyGoal;
 
-  static const int _dailyKcal = 2200;
-
-  static const int _proteinRec = 165;
-
-  static const int _carbsRec = 275;
-
-  static const int _fatsRec = 73;
+  const _LoggedInCard({required this.dailyGoal});
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +59,7 @@ class _LoggedInCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "GÜNDƏLIK TÖVSIYƏ",
+            'GÜNDƏLIK TÖVSIYƏ',
             style: AppTextStyles.bodySmall.copyWith(
               color: Colors.grey.shade500,
               fontSize: 11,
@@ -62,7 +72,7 @@ class _LoggedInCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                "$_dailyKcal",
+                '${dailyGoal.dailyKcal}',
                 style: AppTextStyles.h1.copyWith(
                   fontSize: 32,
                   fontWeight: FontWeight.w600,
@@ -72,7 +82,7 @@ class _LoggedInCard extends StatelessWidget {
               Padding(
                 padding: 8.pb,
                 child: Text(
-                  "kcal",
+                  'kcal',
                   style: AppTextStyles.bodyMedium.copyWith(
                     fontSize: 18,
                     fontWeight: FontWeight.w400,
@@ -85,11 +95,23 @@ class _LoggedInCard extends StatelessWidget {
           20.hs,
           const Divider(thickness: 0.5, height: 1),
           20.hs,
-          _MacroRow(label: "ZÜLAL", recommended: _proteinRec, unit: "g"),
+          _MacroRow(
+            label: 'ZÜLAL',
+            recommended: dailyGoal.protein.recommended,
+            unit: dailyGoal.protein.unit,
+          ),
           16.hs,
-          _MacroRow(label: "KARBOHİDRAT", recommended: _carbsRec, unit: "g"),
+          _MacroRow(
+            label: 'KARBOHİDRAT',
+            recommended: dailyGoal.carbs.recommended,
+            unit: dailyGoal.carbs.unit,
+          ),
           16.hs,
-          _MacroRow(label: "YAĞ", recommended: _fatsRec, unit: "g"),
+          _MacroRow(
+            label: 'YAĞ',
+            recommended: dailyGoal.fats.recommended,
+            unit: dailyGoal.fats.unit,
+          ),
         ],
       ),
     );
@@ -126,14 +148,14 @@ class _MacroRow extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Text(
-              "$recommended$unit",
+              '$recommended$unit',
               style: AppTextStyles.h2.copyWith(fontWeight: FontWeight.w600),
             ),
             4.ws,
             Padding(
               padding: 3.pb,
               child: Text(
-                "töv.",
+                'töv.',
                 style: AppTextStyles.bodySmall.copyWith(
                   color: Colors.grey.shade400,
                 ),
@@ -142,6 +164,22 @@ class _MacroRow extends StatelessWidget {
           ],
         ),
       ],
+    );
+  }
+}
+
+class _DailyGoalSkeleton extends StatelessWidget {
+  const _DailyGoalSkeleton();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: 200,
+      decoration: BoxDecoration(
+        color: Colors.grey.shade100,
+        borderRadius: 20.br,
+      ),
     );
   }
 }

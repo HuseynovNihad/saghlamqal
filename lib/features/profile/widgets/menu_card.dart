@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../../core/constants/app_colors.dart';
 import '../../../core/utils/radius_extension.dart';
-import 'menu_item.dart';
 
 class MenuCard extends StatelessWidget {
-  final List<MenuItem> items;
+  final List<Widget> items;
 
   const MenuCard({super.key, required this.items});
 

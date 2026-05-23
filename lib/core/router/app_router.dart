@@ -5,13 +5,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/di/injection_container.dart';
+import '../../features/ai_photo_scan/presentation/pages/photo_scan_page.dart';
 import '../../features/auth/presentation/bloc/auth_bloc.dart';
 import '../../features/auth/presentation/bloc/auth_event.dart';
 import '../../features/auth/presentation/bloc/auth_state.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/register_page.dart';
 import '../../features/favorites/presentation/pages/favorite_page.dart';
+import '../../features/home/domain/entities/meal_of_the_day_entity.dart';
+import '../../features/home/domain/entities/recent_product_entity.dart';
 import '../../features/home/presentation/pages/main_page.dart';
+import '../../features/home/presentation/pages/recent_products_page.dart';
+import '../../features/home/presentation/pages/recipe_page.dart';
 import '../../features/scan/presentation/scan_page.dart';
 import '../../features/splash/presentation/splash_page.dart';
 import '../../shared/widgets/error_page.dart';
@@ -60,6 +65,9 @@ class AppRouter {
           AppRoutes.register,
           AppRoutes.home,
           AppRoutes.scan,
+          AppRoutes.photoScan,
+          AppRoutes.recentProducts,
+          AppRoutes.recipe,
         ];
         return guestAllowed.contains(location) ? null : AppRoutes.home;
       }
@@ -96,6 +104,27 @@ class AppRouter {
       GoRoute(
         path: AppRoutes.favorites,
         builder: (_, __) => const FavoritesPage(),
+      ),
+
+      GoRoute(
+        path: AppRoutes.recentProducts,
+        builder: (_, state) {
+          final products = state.extra as List<RecentProductEntity>;
+          return RecentProductsPage(products: products);
+        },
+      ),
+
+      GoRoute(
+        path: AppRoutes.photoScan,
+        builder: (_, __) => const PhotoScanPage(),
+      ),
+
+      GoRoute(
+        path: AppRoutes.recipe,
+        builder: (_, state) {
+          final meal = state.extra as MealOfTheDayEntity;
+          return RecipePage(meal: meal);
+        },
       ),
     ],
   );

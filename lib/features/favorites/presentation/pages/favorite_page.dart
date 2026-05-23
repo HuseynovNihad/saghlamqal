@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:kalori_tracker/core/utils/padding_extension.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/di/injection_container.dart';
+import '../../../../core/utils/padding_extension.dart';
 import '../../../../core/utils/radius_extension.dart';
+import '../../../../shared/widgets/unauthenticated_view.dart';
+import '../../../auth/presentation/bloc/auth_bloc.dart';
+import '../../../auth/presentation/bloc/auth_state.dart';
 import '../bloc/favorites_bloc.dart';
 import '../widgets/favorite_collection_card.dart';
 import '../widgets/favorite_item_card.dart';
@@ -31,43 +34,70 @@ class _FavoritesView extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildHeader(context),
-            _buildFilterChips(),
-            Expanded(
-              child: BlocBuilder<FavoritesBloc, FavoritesState>(
-                builder: (context, state) {
-                  return switch (state) {
-                    FavoritesInitial() => const SizedBox.shrink(),
-                    FavoritesLoading() => const Center(
-                      child: CircularProgressIndicator(
-                        color: AppColors.primary,
-                      ),
-                    ),
-                    FavoritesLoaded s => _buildContent(context, s),
-                    FavoriteActionLoading s => _buildContent(
-                      context,
-                      FavoritesLoaded(
-                        favorites: s.favorites,
-                        collections: s.collections,
-                      ),
-                      isActionLoading: true,
-                    ),
-                    FavoriteActionSuccess s => _buildContent(
-                      context,
-                      FavoritesLoaded(
-                        favorites: s.favorites,
-                        collections: s.collections,
-                      ),
-                    ),
-                    FavoritesError s => _buildError(context, s.message),
-                  };
-                },
-              ),
-            ),
-          ],
+        child: BlocBuilder<AuthBloc, AuthState>(
+          builder: (context, authState) {
+            if (authState is AuthAuthenticated) {
+              return const UnauthenticatedView(
+                headerIcon: Icons.favorite_border_rounded,
+                title: 'Sağlam seçimlərini\nsaxla',
+                subtitle:
+                    'Oxutduğun məhsulları əlavə et,\nkalori və dəyərlərini izlə.',
+                features: [
+                  UnauthFeatureItem(
+                    icon: Icons.bookmark_border_rounded,
+                    label: 'Məhsulları saxla',
+                  ),
+                  UnauthFeatureItem(
+                    icon: Icons.folder_outlined,
+                    label: 'Kolleksiyalar yarat',
+                  ),
+                  UnauthFeatureItem(
+                    icon: Icons.search_rounded,
+                    label: 'İstənilən vaxt tap',
+                  ),
+                ],
+              );
+            }
+
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildHeader(context),
+                _buildFilterChips(),
+                Expanded(
+                  child: BlocBuilder<FavoritesBloc, FavoritesState>(
+                    builder: (context, state) {
+                      return switch (state) {
+                        FavoritesInitial() => const SizedBox.shrink(),
+                        FavoritesLoading() => const Center(
+                          child: CircularProgressIndicator(
+                            color: AppColors.primary,
+                          ),
+                        ),
+                        FavoritesLoaded s => _buildContent(context, s),
+                        FavoriteActionLoading s => _buildContent(
+                          context,
+                          FavoritesLoaded(
+                            favorites: s.favorites,
+                            collections: s.collections,
+                          ),
+                          isActionLoading: true,
+                        ),
+                        FavoriteActionSuccess s => _buildContent(
+                          context,
+                          FavoritesLoaded(
+                            favorites: s.favorites,
+                            collections: s.collections,
+                          ),
+                        ),
+                        FavoritesError s => _buildError(context, s.message),
+                      };
+                    },
+                  ),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
@@ -190,9 +220,7 @@ class _FavoritesView extends StatelessWidget {
                           RemoveFavoriteEvent(state.favorites[index].id),
                         );
                       },
-                      onAdd: () {
-                        // günlüyə əlavə et
-                      },
+                      onAdd: () {},
                     );
                   },
                 ),
@@ -287,6 +315,8 @@ class _FavoritesView extends StatelessWidget {
     );
   }
 }
+
+// ─── Shared Widgets ───────────────────────────────────────────────────────────
 
 class _SearchButton extends StatelessWidget {
   @override

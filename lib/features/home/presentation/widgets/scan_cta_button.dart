@@ -18,43 +18,51 @@ class ScanCtaButton extends StatelessWidget {
       onTap: () => context.push('/scan'),
       child: Container(
         width: double.infinity,
-        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 18),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 18),
         decoration: BoxDecoration(
-          color: AppColors.primary,
+          color: Colors.white,
           borderRadius: 20.br,
+          border: Border.all(color: AppColors.borderColor, width: 1),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Row(
           children: [
             Container(
-              padding: 8.p,
+              padding: 10.p,
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.18),
+                color: AppColors.primary.withOpacity(0.08),
                 borderRadius: 12.br,
               ),
               child: AppAssets.barcodeScanner.svg(
-                width: 24,
-                height: 24,
-                colorFilter: const ColorFilter.mode(
-                  Colors.white,
+                width: 22,
+                height: 22,
+                colorFilter: ColorFilter.mode(
+                  AppColors.primary,
                   BlendMode.srcIn,
                 ),
               ),
             ),
-            16.hs,
-            Text(
-              "Barkod Oxut",
-              style: AppTextStyles.h2.copyWith(
-                color: Colors.white,
-                fontWeight: FontWeight.w800,
-                height: 1.15,
-              ),
-            ),
-            6.hs,
-            Text(
-              "Məhsulun kalorisini dərhal öyrən",
-              style: AppTextStyles.bodySmall.copyWith(
-                color: Colors.white.withOpacity(0.75),
+            16.ws,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Barkod Oxut',
+                    style: AppTextStyles.bodyMedium.copyWith(
+                      color: AppColors.primary,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 16,
+                    ),
+                  ),
+                  4.hs,
+                  Text(
+                    'Məhsulun kalorisini dərhal öyrən',
+                    style: AppTextStyles.bodySmall.copyWith(
+                      color: Colors.grey.shade500,
+                      fontSize: 13,
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

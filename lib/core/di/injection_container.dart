@@ -1,9 +1,12 @@
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../features/ai_photo_scan/photo_scan_di.dart';
 import '../../features/auth/auth_di.dart';
 import '../../features/favorites/favorite_di.dart';
+import '../../features/home/home_di.dart';
 import '../../features/scan/scan_di.dart';
+import '../../features/water_reminder/water_reminder_di.dart';
 import '../network/network_manager.dart';
 import '../storage/token_storage.dart';
 
@@ -21,6 +24,9 @@ Future<void> init() async {
 
   // ================= FEATURES =================
   await initAuth(sl);
+  await initHome(sl);
   await initScan(sl);
   await initFavorites(sl);
+  await initPhotoScan(sl);
+  await initWaterReminder(sl);
 }
