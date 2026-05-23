@@ -7,7 +7,7 @@ import '../network/models/network_exceptions.dart';
 class GeminiManager {
   late final Dio _dio;
 
-  static const _apiKey = 'AIzaSyD9FkmMXpF-h0M_bWhfJt8y7S41QyPeDnQ';
+  static const _apiKey = 'API KEY';
   static const _baseUrl = 'https://generativelanguage.googleapis.com/v1beta/';
 
   GeminiManager() {
