@@ -1,4 +1,7 @@
-# 🥦 SağlamQal
+<p align="left">
+  <img src="assets/images/icons/png/logo.png" width="40" height="40" />
+  <strong>SağlamQal</strong>
+</p>
 
 > Şəkil çəkərək qida məlumatlarını öyrən, su xatırlatması ilə sağlam qal.
 
