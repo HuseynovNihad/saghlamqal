@@ -1,7 +1,7 @@
-<p align="left">
-  <img src="assets/images/icons/png/logo.png" width="40" height="40" />
-  <strong>SağlamQal</strong>
-</p>
+<h1>
+  <img src="assets/images/icons/png/logo.png" width="55" height="55" valign="middle" />
+  SağlamQal
+</h1>
 
 > Şəkil çəkərək qida məlumatlarını öyrən, su xatırlatması ilə sağlam qal.
 
