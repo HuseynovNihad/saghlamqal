@@ -1,5 +1,5 @@
 <h1>
-  <img src="assets/images/icons/png/logo.png" width="55" height="55" valign="middle" />
+  <img src="assets/images/logo/png/logo.png" width="55" height="55" valign="middle" />
   SağlamQal
 </h1>
 
