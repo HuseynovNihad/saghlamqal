@@ -6,6 +6,7 @@ import '../../../../core/di/injection_container.dart';
 import '../../../../core/utils/sized_box_extension.dart';
 import '../../../auth/presentation/bloc/auth_bloc.dart';
 import '../../../auth/presentation/bloc/auth_state.dart';
+import '../../../water_reminder/presentation/widgets/water_reminder_card.dart';
 import '../bloc/home_bloc.dart';
 import '../widgets/daily_goal_card.dart';
 import '../widgets/guest_preview_section.dart';
@@ -50,17 +51,19 @@ class _HomeView extends StatelessWidget {
                     _Header(name: name),
                     24.hs,
                     const PhotoScanCtaButton(),
-                    20.hs,
+                    16.hs,
                     if (isLoggedIn) ...[
                       const GuestPreviewSection(),
                     ] else ...[
                       DailyGoalCard(isLoggedIn: true, state: homeState),
-                      20.hs,
+                      16.hs,
+                      const WaterReminderCard(),
+                      16.hs,
                       HydrationCard(isLoggedIn: true, state: homeState),
-                      20.hs,
+                      16.hs,
                       RecentProductsSection(isLoggedIn: true, state: homeState),
                     ],
-                    20.hs,
+                    16.hs,
                     MealOfTheDayCard(state: homeState),
                   ],
                 ),

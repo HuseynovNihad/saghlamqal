@@ -36,7 +36,7 @@ Future<void> initWaterReminder(GetIt sl) async {
   // CUBIT
   // ─────────────────────────────────────────────────────────────
 
-  sl.registerFactory(
+  sl.registerLazySingleton(
     () => WaterReminderCubit(service: sl<WaterReminderService>()),
   );
 }

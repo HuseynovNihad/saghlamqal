@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../core/constants/app_colors.dart';
 import '../../../../../core/constants/app_text_styles.dart';
+import '../../../../core/utils/asset_extension.dart';
+import '../../../../core/utils/sized_box_extension.dart';
 
 class SectionTitle extends StatelessWidget {
-  final IconData icon;
+  final String icon;
   final String label;
 
   const SectionTitle({super.key, required this.icon, required this.label});
@@ -13,8 +14,8 @@ class SectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, size: 18, color: AppColors.primary),
-        const SizedBox(width: 7),
+        icon.svg(height: 16, width: 16),
+        4.ws,
         Text(
           label,
           style: AppTextStyles.bodySmall.copyWith(

@@ -9,7 +9,8 @@ final class HomeStarted extends HomeEvent {
 }
 
 final class HomeAddWaterPressed extends HomeEvent {
-  const HomeAddWaterPressed();
+  final int amount;
+  const HomeAddWaterPressed({required this.amount});
 }
 
 final class HomeRecentProductsRequested extends HomeEvent {

@@ -55,11 +55,11 @@ class FavoriteRepositoryImpl implements FavoriteRepository {
   @override
   Future<FavoriteCollectionEntity> createCollection({
     required String name,
-    required String emoji,
+    required String iconAsset,
   }) async {
     final model = await _remoteDatasource.createCollection(
       name: name,
-      emoji: emoji,
+      iconAsset: iconAsset,
     );
     return FavoriteMapper.toCollectionEntity(model);
   }
@@ -68,12 +68,12 @@ class FavoriteRepositoryImpl implements FavoriteRepository {
   Future<FavoriteCollectionEntity> updateCollection({
     required String id,
     required String name,
-    required String emoji,
+    required String iconAsset,
   }) async {
     final model = await _remoteDatasource.updateCollection(
       id: id,
       name: name,
-      emoji: emoji,
+      iconAsset: iconAsset,
     );
     return FavoriteMapper.toCollectionEntity(model);
   }

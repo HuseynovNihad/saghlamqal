@@ -39,20 +39,20 @@ final class GetCollectionsEvent extends FavoritesEvent {}
 
 final class CreateCollectionEvent extends FavoritesEvent {
   final String name;
-  final String emoji;
+  final String iconAsset;
 
-  const CreateCollectionEvent({required this.name, required this.emoji});
+  const CreateCollectionEvent({required this.name, required this.iconAsset});
 }
 
 final class UpdateCollectionEvent extends FavoritesEvent {
   final String id;
   final String name;
-  final String emoji;
+  final String iconAsset;
 
   const UpdateCollectionEvent({
     required this.id,
     required this.name,
-    required this.emoji,
+    required this.iconAsset,
   });
 }
 

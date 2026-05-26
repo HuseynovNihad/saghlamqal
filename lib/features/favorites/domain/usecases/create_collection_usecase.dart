@@ -8,6 +8,6 @@ class CreateCollectionUsecase {
 
   Future<FavoriteCollectionEntity> call({
     required String name,
-    required String emoji,
-  }) => _repository.createCollection(name: name, emoji: emoji);
+    required String iconAsset,
+  }) => _repository.createCollection(name: name, iconAsset: iconAsset);
 }

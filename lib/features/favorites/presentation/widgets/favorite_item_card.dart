@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../core/constants/app_assets.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/utils/asset_extension.dart';
 import '../../../../core/utils/radius_extension.dart';
 import '../../domain/entities/favorite_item_entity.dart';
 
@@ -113,11 +115,7 @@ class FavoriteItemCard extends StatelessWidget {
               ),
             );
           },
-          child: const Icon(
-            Icons.favorite_rounded,
-            color: AppColors.error,
-            size: 24,
-          ),
+          child: AppAssets.favoriteFill.svg(height: 20, width: 20),
         ),
       ],
     );

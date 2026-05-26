@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:kalori_tracker/core/utils/asset_extension.dart';
 import 'package:kalori_tracker/core/utils/radius_extension.dart';
 
+import '../../../../core/constants/app_assets.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/router/app_routes.dart';
 import '../../../../core/utils/padding_extension.dart';
@@ -38,17 +40,17 @@ class GuestPreviewSection extends StatelessWidget {
           ),
           24.hs,
           const _FeatureItem(
-            icon: Icons.track_changes_rounded,
+            iconAsset: AppAssets.trackChanges,
             label: 'Gündəlik kalori & makro izləmə',
           ),
           12.hs,
           const _FeatureItem(
-            icon: Icons.water_drop_rounded,
+            iconAsset: AppAssets.hydration,
             label: 'Su istehlakı monitorinqi',
           ),
           12.hs,
           const _FeatureItem(
-            icon: Icons.history_rounded,
+            iconAsset: AppAssets.history,
             label: 'Oxuduğun məhsulların tarixi',
           ),
           28.hs,
@@ -76,10 +78,10 @@ class GuestPreviewSection extends StatelessWidget {
 }
 
 class _FeatureItem extends StatelessWidget {
-  final IconData icon;
+  final String iconAsset;
   final String label;
 
-  const _FeatureItem({required this.icon, required this.label});
+  const _FeatureItem({required this.iconAsset, required this.label});
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +94,9 @@ class _FeatureItem extends StatelessWidget {
             color: Colors.white.withOpacity(0.15),
             borderRadius: 8.br,
           ),
-          child: Icon(icon, color: Colors.white, size: 17),
+          child: Center(
+            child: iconAsset.svg(width: 16, height: 16, color: Colors.white),
+          ),
         ),
         12.ws,
         Text(

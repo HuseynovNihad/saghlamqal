@@ -1,7 +1,7 @@
 class HydrationModel {
   final double tracked;
   final double recommended;
-  final double addAmount;
+  final int addAmount;
 
   const HydrationModel({
     required this.tracked,
@@ -13,7 +13,7 @@ class HydrationModel {
     return HydrationModel(
       tracked: (json['tracked'] as num).toDouble(),
       recommended: (json['recommended'] as num).toDouble(),
-      addAmount: (json['add_amount'] as num).toDouble(),
+      addAmount: (json['add_amount'] as num).toInt(),
     );
   }
 

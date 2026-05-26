@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:kalori_tracker/core/constants/app_colors.dart';
 
 import '../../../../core/constants/app_assets.dart';
 import '../../../../core/constants/app_text_styles.dart';
@@ -148,7 +149,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             Text("Qeydiyyat", style: AppTextStyles.h2),
                             20.hs,
                             const _SectionHeader(
-                              icon: '👤',
+                              icon: AppAssets.profile,
                               title: 'Şəxsi məlumat',
                             ),
                             12.hs,
@@ -179,7 +180,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                             24.hs,
                             const _SectionHeader(
-                              icon: '📏',
+                              icon: AppAssets.gym,
                               title: 'Fiziki məlumat',
                             ),
                             12.hs,
@@ -198,7 +199,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                             24.hs,
                             const _SectionHeader(
-                              icon: '🏃',
+                              icon: AppAssets.personActive,
                               title: 'Aktivlik səviyyəsi',
                             ),
                             12.hs,
@@ -212,7 +213,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                             24.hs,
                             const _SectionHeader(
-                              icon: '🔒',
+                              icon: AppAssets.security,
                               title: 'Təhlükəsizlik',
                             ),
                             12.hs,
@@ -308,7 +309,7 @@ class _SectionHeader extends StatelessWidget {
     return Row(
       children: [
         const Expanded(child: Divider(thickness: 1)),
-        Text(icon, style: const TextStyle(fontSize: 16)),
+        icon.svg(width: 16, height: 16,color: AppColors.primary),
         6.ws,
         Text(
           title,

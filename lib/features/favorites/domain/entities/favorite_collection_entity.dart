@@ -1,14 +1,14 @@
 class FavoriteCollectionEntity {
   final String id;
   final String name;
-  final String emoji;
+  final String iconAsset;
   final int itemCount;
   final DateTime createdAt;
 
   const FavoriteCollectionEntity({
     required this.id,
     required this.name,
-    required this.emoji,
+    required this.iconAsset,
     required this.itemCount,
     required this.createdAt,
   });
@@ -16,14 +16,14 @@ class FavoriteCollectionEntity {
   FavoriteCollectionEntity copyWith({
     String? id,
     String? name,
-    String? emoji,
+    String? iconAsset,
     int? itemCount,
     DateTime? createdAt,
   }) {
     return FavoriteCollectionEntity(
       id: id ?? this.id,
       name: name ?? this.name,
-      emoji: emoji ?? this.emoji,
+      iconAsset: iconAsset ?? this.iconAsset,
       itemCount: itemCount ?? this.itemCount,
       createdAt: createdAt ?? this.createdAt,
     );

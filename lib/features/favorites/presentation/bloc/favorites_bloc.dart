@@ -169,7 +169,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
     try {
       final newCollection = await _createCollection(
         name: event.name,
-        emoji: event.emoji,
+        iconAsset: event.iconAsset,
       );
       final updated = [..._currentCollections, newCollection];
       emit(
@@ -197,7 +197,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
       final updatedCollection = await _updateCollection(
         id: event.id,
         name: event.name,
-        emoji: event.emoji,
+        iconAsset: event.iconAsset,
       );
       final updated = _currentCollections
           .map((c) => c.id == event.id ? updatedCollection : c)

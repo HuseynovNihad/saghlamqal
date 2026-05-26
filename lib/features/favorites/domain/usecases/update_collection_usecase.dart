@@ -9,6 +9,6 @@ class UpdateCollectionUsecase {
   Future<FavoriteCollectionEntity> call({
     required String id,
     required String name,
-    required String emoji,
-  }) => _repository.updateCollection(id: id, name: name, emoji: emoji);
+    required String iconAsset,
+  }) => _repository.updateCollection(id: id, name: name, iconAsset: iconAsset);
 }

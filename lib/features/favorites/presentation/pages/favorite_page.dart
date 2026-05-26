@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../core/constants/app_assets.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/di/injection_container.dart';
@@ -38,21 +39,21 @@ class _FavoritesView extends StatelessWidget {
           builder: (context, authState) {
             if (authState is AuthAuthenticated) {
               return const UnauthenticatedView(
-                headerIcon: Icons.favorite_border_rounded,
+                headerIcon: AppAssets.favorite,
                 title: 'Sağlam seçimlərini\nsaxla',
                 subtitle:
                     'Oxutduğun məhsulları əlavə et,\nkalori və dəyərlərini izlə.',
                 features: [
                   UnauthFeatureItem(
-                    icon: Icons.bookmark_border_rounded,
+                    icon: AppAssets.favorite,
                     label: 'Məhsulları saxla',
                   ),
                   UnauthFeatureItem(
-                    icon: Icons.folder_outlined,
+                    icon: AppAssets.collections,
                     label: 'Kolleksiyalar yarat',
                   ),
                   UnauthFeatureItem(
-                    icon: Icons.search_rounded,
+                    icon: AppAssets.search,
                     label: 'İstənilən vaxt tap',
                   ),
                 ],
@@ -316,7 +317,6 @@ class _FavoritesView extends StatelessWidget {
   }
 }
 
-// ─── Shared Widgets ───────────────────────────────────────────────────────────
 
 class _SearchButton extends StatelessWidget {
   @override

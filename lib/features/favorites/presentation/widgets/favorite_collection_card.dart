@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kalori_tracker/core/utils/asset_extension.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
@@ -44,7 +45,7 @@ class FavoriteCollectionCard extends StatelessWidget {
               borderRadius: 10.br,
             ),
             child: Center(
-              child: Text(collection.emoji, style: TextStyle(fontSize: 18.sp)),
+              child: collection.iconAsset.svg(width: 20, height: 20),
             ),
           ),
 

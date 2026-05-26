@@ -24,13 +24,13 @@ abstract interface class FavoriteRemoteDatasource {
 
   Future<FavoriteCollectionModel> createCollection({
     required String name,
-    required String emoji,
+    required String iconAsset,
   });
 
   Future<FavoriteCollectionModel> updateCollection({
     required String id,
     required String name,
-    required String emoji,
+    required String iconAsset,
   });
 
   Future<void> deleteCollection(String id);
@@ -104,11 +104,11 @@ class FavoriteRemoteDatasourceImpl implements FavoriteRemoteDatasource {
   @override
   Future<FavoriteCollectionModel> createCollection({
     required String name,
-    required String emoji,
+    required String iconAsset,
   }) async {
     final response = await _networkManager.post<Map<String, dynamic>>(
       Endpoints.createCollection,
-      data: {'name': name, 'emoji': emoji},
+      data: {'name': name, 'iconAsset': iconAsset},
     );
 
     return FavoriteCollectionModel.fromJson(response.data!);
@@ -118,11 +118,11 @@ class FavoriteRemoteDatasourceImpl implements FavoriteRemoteDatasource {
   Future<FavoriteCollectionModel> updateCollection({
     required String id,
     required String name,
-    required String emoji,
+    required String iconAsset,
   }) async {
     final response = await _networkManager.put<Map<String, dynamic>>(
       Endpoints.updateCollection(id),
-      data: {'name': name, 'emoji': emoji},
+      data: {'name': name, 'emoji': iconAsset},
     );
 
     return FavoriteCollectionModel.fromJson(response.data!);

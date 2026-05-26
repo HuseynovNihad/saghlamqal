@@ -21,13 +21,13 @@ abstract interface class FavoriteRepository {
 
   Future<FavoriteCollectionEntity> createCollection({
     required String name,
-    required String emoji,
+    required String iconAsset,
   });
 
   Future<FavoriteCollectionEntity> updateCollection({
     required String id,
     required String name,
-    required String emoji,
+    required String iconAsset,
   });
 
   Future<void> deleteCollection(String id);

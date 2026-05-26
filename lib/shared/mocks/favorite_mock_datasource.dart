@@ -1,5 +1,7 @@
 // lib/data/datasources/mock/favorite_mock_datasource.dart
 
+import 'package:kalori_tracker/core/constants/app_assets.dart';
+
 import '../../features/favorites/data/datasources/remote/favorite_remote_datasource.dart';
 import '../../features/favorites/data/models/favorite_collection_model.dart';
 import '../../features/favorites/data/models/favorite_item_model.dart';
@@ -50,19 +52,19 @@ class FavoriteMockDatasource implements FavoriteRemoteDatasource {
     FavoriteCollectionModel(
       id: 'col_1',
       name: 'Gym',
-      emoji: '💪',
+      iconAsset: AppAssets.gym,
       createdAt: DateTime.now().toIso8601String(),
     ),
     FavoriteCollectionModel(
       id: 'col_2',
       name: 'Breakfast',
-      emoji: '🍳',
+      iconAsset: AppAssets.breakfast,
       createdAt: DateTime.now().toIso8601String(),
     ),
     FavoriteCollectionModel(
       id: 'col_3',
       name: 'Snacks',
-      emoji: '🍫',
+      iconAsset: AppAssets.snacks,
       createdAt: DateTime.now().toIso8601String(),
     ),
   ];
@@ -122,14 +124,14 @@ class FavoriteMockDatasource implements FavoriteRemoteDatasource {
   @override
   Future<FavoriteCollectionModel> createCollection({
     required String name,
-    required String emoji,
+    required String iconAsset,
   }) async {
     await Future.delayed(const Duration(milliseconds: 300));
 
     final collection = FavoriteCollectionModel(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       name: name,
-      emoji: emoji,
+      iconAsset: iconAsset,
       createdAt: DateTime.now().toIso8601String(),
     );
 
@@ -142,7 +144,7 @@ class FavoriteMockDatasource implements FavoriteRemoteDatasource {
   Future<FavoriteCollectionModel> updateCollection({
     required String id,
     required String name,
-    required String emoji,
+    required String iconAsset,
   }) async {
     await Future.delayed(const Duration(milliseconds: 300));
 
@@ -155,7 +157,7 @@ class FavoriteMockDatasource implements FavoriteRemoteDatasource {
     final updated = FavoriteCollectionModel(
       id: _collections[index].id,
       name: name,
-      emoji: emoji,
+      iconAsset: iconAsset,
       createdAt: _collections[index].createdAt,
     );
 

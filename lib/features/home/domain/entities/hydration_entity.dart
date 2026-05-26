@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 class HydrationEntity extends Equatable {
   final double tracked;
   final double recommended;
-  final double addAmount;
+  final int addAmount;
 
   const HydrationEntity({
     required this.tracked,

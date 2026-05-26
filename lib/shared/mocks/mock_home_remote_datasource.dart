@@ -30,13 +30,9 @@ class MockHomeRemoteDataSource implements HomeRemoteDataSource {
   }
 
   @override
-  Future<HydrationModel> addWater() async {
+  Future<HydrationModel> addWater(int amount) async {
     await MockDelay.wait();
-    return const HydrationModel(
-      tracked: 1450,
-      recommended: 2500,
-      addAmount: 250,
-    );
+    return HydrationModel(tracked: 1450, recommended: 2500, addAmount: amount);
   }
 
   @override

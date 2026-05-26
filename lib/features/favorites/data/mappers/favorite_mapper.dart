@@ -45,7 +45,7 @@ class FavoriteMapper {
     return FavoriteCollectionEntity(
       id: model.id,
       name: model.name,
-      emoji: model.emoji,
+      iconAsset: model.iconAsset,
       itemCount: itemCount,
       createdAt: DateTime.parse(model.createdAt),
     );
@@ -57,7 +57,7 @@ class FavoriteMapper {
     return FavoriteCollectionModel(
       id: entity.id,
       name: entity.name,
-      emoji: entity.emoji,
+      iconAsset: entity.iconAsset,
       createdAt: entity.createdAt.toIso8601String(),
     );
   }

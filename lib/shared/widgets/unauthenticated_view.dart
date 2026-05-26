@@ -5,17 +5,18 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../core/router/app_routes.dart';
+import '../../core/utils/asset_extension.dart';
 import '../../core/utils/radius_extension.dart';
 
 class UnauthFeatureItem {
-  final IconData icon;
+  final String icon;
   final String label;
 
   const UnauthFeatureItem({required this.icon, required this.label});
 }
 
 class UnauthenticatedView extends StatelessWidget {
-  final IconData headerIcon;
+  final String headerIcon;
   final String title;
   final String subtitle;
   final List<UnauthFeatureItem> features;
@@ -43,7 +44,13 @@ class UnauthenticatedView extends StatelessWidget {
                 color: AppColors.primary.withOpacity(0.1),
                 shape: BoxShape.circle,
               ),
-              child: Icon(headerIcon, size: 44, color: AppColors.primary),
+              child: Center(
+                child: headerIcon.svg(
+                  width: 36,
+                  height: 36,
+                  color: AppColors.primary,
+                ),
+              ),
             ),
             24.verticalSpace,
             Text(
@@ -113,7 +120,7 @@ class UnauthenticatedView extends StatelessWidget {
 }
 
 class _FeatureRow extends StatelessWidget {
-  final IconData icon;
+  final String icon;
   final String label;
 
   const _FeatureRow({required this.icon, required this.label});
@@ -126,10 +133,16 @@ class _FeatureRow extends StatelessWidget {
           width: 36,
           height: 36,
           decoration: BoxDecoration(
-            color: AppColors.primary.withOpacity(0.1),
+            color: const Color(0xFFF5F7FA),
             borderRadius: 12.br,
           ),
-          child: Icon(icon, size: 18, color: AppColors.primary),
+          child: Center(
+            child: icon.svg(
+              width: 18,
+              height: 18,
+              color: const Color(0xFF888888),
+            ),
+          ),
         ),
         12.horizontalSpace,
         Text(
@@ -138,12 +151,6 @@ class _FeatureRow extends StatelessWidget {
             color: AppColors.headline,
             fontWeight: FontWeight.w500,
           ),
-        ),
-        const Spacer(),
-        const Icon(
-          Icons.check_circle_rounded,
-          size: 18,
-          color: AppColors.primary,
         ),
       ],
     );

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:kalori_tracker/core/constants/app_assets.dart';
 import 'package:kalori_tracker/core/constants/app_text_styles.dart';
+import 'package:kalori_tracker/core/utils/asset_extension.dart';
 import 'package:kalori_tracker/core/utils/padding_extension.dart';
 
 import '../../../core/utils/radius_extension.dart';
@@ -17,11 +19,7 @@ class LogoutButton extends StatelessWidget {
         width: double.infinity,
         child: OutlinedButton.icon(
           onPressed: onPressed ?? () {},
-          icon: const Icon(
-            Icons.logout_rounded,
-            color: Color(0xFFE53935),
-            size: 20,
-          ),
+          icon: AppAssets.logout.svg(width: 16, height: 16),
           label: Text(
             'Çıxış',
             style: AppTextStyles.bodyMedium.copyWith(color: Color(0xFFE53935)),

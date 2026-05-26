@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kalori_tracker/core/constants/app_assets.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
@@ -141,7 +142,7 @@ class RecipePage extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SectionTitle(icon: Icons.shopping_basket_outlined, label: 'Tərkiblər'),
+        SectionTitle(icon: AppAssets.ingredient, label: 'Tərkiblər'),
         12.hs,
         Container(
           decoration: BoxDecoration(
@@ -215,10 +216,7 @@ class RecipePage extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SectionTitle(
-          icon: Icons.checklist_rounded,
-          label: 'Hazırlama mərhələləri',
-        ),
+        SectionTitle(icon: AppAssets.list, label: 'Hazırlama mərhələləri'),
         12.hs,
         Column(
           children: List.generate(meal.steps.length, (i) {

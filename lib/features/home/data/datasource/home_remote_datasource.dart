@@ -8,7 +8,7 @@ import '../models/recent_product_model.dart';
 abstract class HomeRemoteDataSource {
   Future<DailyGoalModel> getDailyGoal();
   Future<HydrationModel> getHydration();
-  Future<HydrationModel> addWater();
+  Future<HydrationModel> addWater(int amount);
   Future<List<RecentProductModel>> getRecentProducts();
   Future<MealOfTheDayModel> getMealOfTheDay();
 }
@@ -35,9 +35,10 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   }
 
   @override
-  Future<HydrationModel> addWater() async {
+  Future<HydrationModel> addWater(int amount) async {
     final response = await _networkManager.post<Map<String, dynamic>>(
       Endpoints.addWater,
+      data: {'amount': amount},
     );
     return HydrationModel.fromJson(response.data!);
   }

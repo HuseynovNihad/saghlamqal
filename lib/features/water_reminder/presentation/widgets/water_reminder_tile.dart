@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/constants/app_assets.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/di/injection_container.dart';
+import '../../../../core/utils/asset_extension.dart';
 import '../../../../core/utils/radius_extension.dart';
 import '../../../../core/utils/sized_box_extension.dart';
 import '../cubit/water_reminder_cubit.dart';
@@ -16,8 +18,8 @@ class WaterReminderTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => WaterReminderCubit(service: sl()),
+    return BlocProvider.value(
+      value: sl<WaterReminderCubit>(),
       child: _Tile(isLast: isLast),
     );
   }
@@ -55,13 +57,15 @@ class _Tile extends StatelessWidget {
                     width: 36,
                     height: 36,
                     decoration: BoxDecoration(
-                      color: AppColors.primary.withOpacity(0.10),
+                      color: Color(0xFFF5F5F5),
                       borderRadius: 12.br,
                     ),
-                    child: Icon(
-                      Icons.water_drop_outlined,
-                      color: AppColors.primary,
-                      size: 20,
+                    child: Center(
+                      child: AppAssets.hydrationPrimary.svg(
+                        width: 16,
+                        height: 16,
+                        color: Color(0xFF888888),
+                      ),
                     ),
                   ),
                   12.ws,

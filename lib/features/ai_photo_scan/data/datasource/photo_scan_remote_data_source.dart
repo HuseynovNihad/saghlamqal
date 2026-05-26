@@ -23,6 +23,7 @@ QAYDA: Əgər şəkildə aydın şəkildə yeyəcək və ya içəcək yoxdursa �
   "protein": null,
   "carbs": null,
   "fat": null,
+  "vitamins": null,
   "advice": null,
   "is_food": false
 }
@@ -34,6 +35,14 @@ QAYDA: Əgər şəkildə aydın şəkildə yeyəcək və ya içəcək yoxdursa �
   "protein": 5.2,
   "carbs": 30.1,
   "fat": 8.4,
+  "vitamins": {
+    "A": 12.5,
+    "C": 48.0,
+    "D": null,
+    "E": 1.2,
+    "B12": null,
+    "K": 3.4
+  },
   "advice": "bu məhsul haqqında 2-3 cümlə sağlamlıq məsləhəti Azərbaycan dilində",
   "is_food": true
 }
@@ -42,6 +51,8 @@ QAYDA: Əgər şəkildə aydın şəkildə yeyəcək və ya içəcək yoxdursa �
 - Yalnız JSON qaytar, başqa heç nə yazma
 - Markdown işarəsi (```), izah və ya əlavə mətn yazma
 - Kalori və makro dəyərlər 100 qram üçün olsun
+- Vitaminlər: yalnız həmin qidada mövcud olanları qaytar, bilinməyənlər null olsun
+- Vitamin dəyərləri milivramla (mg) olsun, A və D vitamini isə mikrogram (mcg)
 - Şəkil bulanıq və ya qida olub-olmadığı bəlli deyilsə is_food: false qaytar
 ''';
 

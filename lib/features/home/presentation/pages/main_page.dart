@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:kalori_tracker/core/utils/padding_extension.dart';
+
+import '../../../../core/constants/app_assets.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
-import '../../../profile/pages/profile_page.dart';
+import '../../../../core/utils/asset_extension.dart';
+import '../../../../core/utils/radius_extension.dart';
+import '../../../../core/utils/sized_box_extension.dart';
 import '../../../favorites/presentation/pages/favorite_page.dart';
+import '../../../profile/pages/profile_page.dart';
 import 'home_page.dart';
 
 class MainPage extends StatefulWidget {
@@ -45,9 +51,17 @@ class _BottomNavBar extends StatelessWidget {
   const _BottomNavBar({required this.currentIndex, required this.onTap});
 
   static const _items = [
-    (icon: Icons.home_rounded, label: 'Ana səhifə'),
-    (icon: Icons.favorite_rounded, label: 'Favoritlər'),
-    (icon: Icons.person_rounded, label: 'Profilim'),
+    (icon: AppAssets.home, iconFill: AppAssets.homeFill, label: 'Ana səhifə'),
+    (
+      icon: AppAssets.favorite,
+      iconFill: AppAssets.favoriteFill,
+      label: 'Favoritlər',
+    ),
+    (
+      icon: AppAssets.profile,
+      iconFill: AppAssets.profileFill,
+      label: 'Profilim',
+    ),
   ];
 
   @override
@@ -55,60 +69,63 @@ class _BottomNavBar extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(color: Colors.white),
       child: SafeArea(
-        child: SizedBox(
-          height: 64,
-          child: Row(
-            children: List.generate(_items.length, (i) {
-              final item = _items[i];
-              final isSelected = currentIndex == i;
-              return Expanded(
-                child: GestureDetector(
-                  onTap: () => onTap(i),
-                  behavior: HitTestBehavior.opaque,
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 200),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        AnimatedContainer(
-                          duration: const Duration(milliseconds: 200),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 6,
+        child: Padding(
+          padding: 8.px,
+          child: SizedBox(
+            height: 64,
+            child: Row(
+              children: List.generate(_items.length, (i) {
+                final item = _items[i];
+                final isSelected = currentIndex == i;
+                return Expanded(
+                  child: GestureDetector(
+                    onTap: () => onTap(i),
+                    behavior: HitTestBehavior.opaque,
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 200),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          AnimatedContainer(
+                            duration: const Duration(milliseconds: 200),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 6,
+                            ),
+                            decoration: BoxDecoration(
+                              color: isSelected
+                                  ? AppColors.primary.withValues(alpha: 0.12)
+                                  : Colors.transparent,
+                              borderRadius: 20.br,
+                            ),
+                            child: (isSelected ? item.iconFill : item.icon).svg(
+                              width: 20,
+                              height: 20,
+                              color: isSelected
+                                  ? AppColors.primary
+                                  : Colors.grey.shade400,
+                            ),
                           ),
-                          decoration: BoxDecoration(
-                            color: isSelected
-                                ? AppColors.primary.withValues(alpha: 0.12)
-                                : Colors.transparent,
-                            borderRadius: BorderRadius.circular(20),
+                          2.hs,
+                          Text(
+                            item.label,
+                            style: AppTextStyles.bodySmall.copyWith(
+                              color: isSelected
+                                  ? AppColors.primary
+                                  : Colors.grey.shade400,
+                              fontWeight: isSelected
+                                  ? FontWeight.w600
+                                  : FontWeight.normal,
+                              fontSize: 10,
+                            ),
                           ),
-                          child: Icon(
-                            item.icon,
-                            color: isSelected
-                                ? AppColors.primary
-                                : Colors.grey.shade400,
-                            size: 24,
-                          ),
-                        ),
-                        const SizedBox(height: 2),
-                        Text(
-                          item.label,
-                          style: AppTextStyles.bodySmall.copyWith(
-                            color: isSelected
-                                ? AppColors.primary
-                                : Colors.grey.shade400,
-                            fontWeight: isSelected
-                                ? FontWeight.w600
-                                : FontWeight.normal,
-                            fontSize: 10,
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              );
-            }),
+                );
+              }),
+            ),
           ),
         ),
       ),

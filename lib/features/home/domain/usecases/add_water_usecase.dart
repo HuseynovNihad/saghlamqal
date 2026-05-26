@@ -6,5 +6,5 @@ class AddWater {
 
   const AddWater(this._repository);
 
-  Future<HydrationEntity> call() => _repository.addWater();
+  Future<HydrationEntity> call(int amount) => _repository.addWater(amount);
 }

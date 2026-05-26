@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/constants/app_colors.dart';
+import '../../../core/constants/app_assets.dart';
 import '../../../core/constants/app_text_styles.dart';
 import '../../../shared/widgets/unauthenticated_view.dart';
 import '../../auth/presentation/bloc/auth_bloc.dart';
@@ -24,21 +24,21 @@ class ProfilePage extends StatelessWidget {
           builder: (context, authState) {
             if (authState is AuthAuthenticated) {
               return const UnauthenticatedView(
-                headerIcon: Icons.person_outline_rounded,
+                headerIcon: AppAssets.profile,
                 title: 'Profilinə\ndaxil ol',
                 subtitle:
                     'Profil məlumatlarını idarə et,\ntənzimləmələrini öz zövqünə uyğunlaşdır.',
                 features: [
                   UnauthFeatureItem(
-                    icon: Icons.history_rounded,
+                    icon: AppAssets.edit,
                     label: 'Profil məlumatlarını redaktə et',
                   ),
                   UnauthFeatureItem(
-                    icon: Icons.settings_outlined,
+                    icon: AppAssets.settings,
                     label: 'Parametrləri idarə et',
                   ),
                   UnauthFeatureItem(
-                    icon: Icons.notifications_outlined,
+                    icon: AppAssets.privacyTip,
                     label: 'Məxfilik və təhlükəsizliyi idarə et',
                   ),
                 ],
@@ -62,35 +62,27 @@ class ProfilePage extends StatelessWidget {
                         MenuCard(
                           items: [
                             MenuItem(
-                              icon: Icons.edit_outlined,
-                              iconColor: AppColors.primary,
+                              svgAsset: AppAssets.edit,
                               label: 'Profili redaktə et',
                             ),
                             MenuItem(
-                              icon: Icons.shield_outlined,
-                              iconColor: AppColors.primary,
+                              svgAsset: AppAssets.privacyTip,
                               label: 'Məxfilik və təhlükəsizlik',
                             ),
                             MenuItem(
-                              icon: Icons.tune_rounded,
-                              iconColor: AppColors.primary,
+                              svgAsset: AppAssets.settings,
                               label: 'Tənzimləmələr',
                               isLast: true,
                             ),
                           ],
                         ),
                         const SectionLabel(label: 'Bildirişlər'),
-                        MenuCard(
-                          items: [
-                            WaterReminderTile(isLast: true),
-                          ],
-                        ),
+                        MenuCard(items: [WaterReminderTile(isLast: true)]),
                         const SectionLabel(label: 'Dəstək'),
                         MenuCard(
                           items: [
                             MenuItem(
-                              icon: Icons.info_outline_rounded,
-                              iconColor: AppColors.primary,
+                              svgAsset: AppAssets.about,
                               label: 'Haqqımızda',
                               isLast: true,
                             ),

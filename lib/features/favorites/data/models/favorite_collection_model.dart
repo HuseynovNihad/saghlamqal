@@ -1,13 +1,13 @@
 class FavoriteCollectionModel {
   final String id;
   final String name;
-  final String emoji;
+  final String iconAsset;
   final String createdAt;
 
   const FavoriteCollectionModel({
     required this.id,
     required this.name,
-    required this.emoji,
+    required this.iconAsset,
     required this.createdAt,
   });
 
@@ -15,7 +15,7 @@ class FavoriteCollectionModel {
     return FavoriteCollectionModel(
       id: json['id'] as String,
       name: json['name'] as String,
-      emoji: json['emoji'] as String,
+      iconAsset: json['icon_asset'] as String,
       createdAt: json['created_at'] as String,
     );
   }
@@ -23,7 +23,7 @@ class FavoriteCollectionModel {
   Map<String, dynamic> toJson() => {
     'id': id,
     'name': name,
-    'emoji': emoji,
+    'icon_asset': iconAsset,
     'created_at': createdAt,
   };
 }

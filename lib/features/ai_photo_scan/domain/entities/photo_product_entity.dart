@@ -4,6 +4,7 @@ class PhotoProductEntity {
   final double? protein;
   final double? carbs;
   final double? fat;
+  final Map<String, double?>? vitamins;
   final String advice;
   final bool isFood;
 
@@ -13,6 +14,7 @@ class PhotoProductEntity {
     this.protein,
     this.carbs,
     this.fat,
+    this.vitamins,
     required this.advice,
     this.isFood = true,
   });

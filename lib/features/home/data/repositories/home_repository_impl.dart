@@ -27,8 +27,8 @@ class HomeRepositoryImpl implements HomeRepository {
   }
 
   @override
-  Future<HydrationEntity> addWater() async {
-    final model = await _remoteDataSource.addWater();
+  Future<HydrationEntity> addWater(int amount) async {
+    final model = await _remoteDataSource.addWater(amount);
     return HydrationMapper.toEntity(model);
   }
 

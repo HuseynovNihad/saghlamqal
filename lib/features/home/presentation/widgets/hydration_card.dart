@@ -2,8 +2,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kalori_tracker/core/constants/app_assets.dart';
 
 import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/utils/asset_extension.dart';
 import '../../../../core/utils/radius_extension.dart';
 import '../../../../core/utils/sized_box_extension.dart';
 import '../../../../shared/widgets/guest_lock_card.dart';
@@ -144,10 +146,10 @@ class _HydrationContentState extends State<_HydrationContent>
                       color: Colors.white.withOpacity(0.15),
                       borderRadius: 10.br,
                     ),
-                    child: const Icon(
-                      Icons.water_drop_rounded,
+                    child: AppAssets.hydration.svg(
+                      width: 20,
+                      height: 20,
                       color: Colors.white,
-                      size: 20,
                     ),
                   ),
                   const Spacer(),
@@ -195,39 +197,33 @@ class _HydrationContentState extends State<_HydrationContent>
                   borderRadius: 12.br,
                 ),
                 child: Row(
-                  children: [
-                    Text(
-                      '${_fmt(hydration.tracked)} izlənilir',
-                      style: AppTextStyles.bodySmall.copyWith(
-                        color: Colors.white.withOpacity(0.85),
-                      ),
-                    ),
-                    const Spacer(),
-                    GestureDetector(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [250, 500, 750].map((amount) {
+                    return GestureDetector(
                       onTap: () => context.read<HomeBloc>().add(
-                        const HomeAddWaterPressed(),
+                        HomeAddWaterPressed(amount: amount),
                       ),
                       child: Container(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 6,
+                          horizontal: 14,
+                          vertical: 7,
                         ),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: 8.br,
                         ),
                         child: Text(
-                          'ƏLAVƏ ET ${hydration.addAmount.toInt()}ML',
+                          '+${amount}ml',
                           style: AppTextStyles.bodySmall.copyWith(
-                            fontSize: 11,
+                            fontSize: 12,
                             fontWeight: FontWeight.w600,
                             color: const Color(0xFF1A3A8F),
                             letterSpacing: 0.3,
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    );
+                  }).toList(),
                 ),
               ),
             ],

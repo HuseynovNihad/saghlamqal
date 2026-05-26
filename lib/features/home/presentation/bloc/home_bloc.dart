@@ -72,7 +72,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     if (current is! HomeLoaded) return;
 
     try {
-      final hydration = await _addWater();
+      final hydration = await _addWater(event.amount);
       emit(current.copyWith(hydration: hydration));
     } catch (e) {
       emit(HomeError(message: e.toString()));

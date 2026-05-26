@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/constants/app_text_styles.dart';
+import '../../../core/utils/asset_extension.dart';
 import '../../../core/utils/radius_extension.dart';
 import '../../../core/utils/sized_box_extension.dart';
 
 class MenuItem extends StatelessWidget {
-  final IconData icon;
+  final String svgAsset;
   final Color iconColor;
+  final Color bgColor;
   final String label;
   final String? badge;
   final bool isLast;
@@ -14,9 +16,10 @@ class MenuItem extends StatelessWidget {
 
   const MenuItem({
     super.key,
-    required this.icon,
-    required this.iconColor,
+    required this.svgAsset,
     required this.label,
+    this.iconColor = const Color(0xFF888888),
+    this.bgColor = const Color(0xFFF5F5F5),
     this.badge,
     this.isLast = false,
     this.onTap,
@@ -40,10 +43,16 @@ class MenuItem extends StatelessWidget {
                   width: 36,
                   height: 36,
                   decoration: BoxDecoration(
-                    color: iconColor.withOpacity(0.10),
+                    color: bgColor,
                     borderRadius: 12.br,
                   ),
-                  child: Icon(icon, color: iconColor, size: 20),
+                  child: Center(
+                    child: svgAsset.svg(
+                      width: 16,
+                      height: 16,
+                      color: iconColor,
+                    ),
+                  ),
                 ),
                 12.ws,
                 Expanded(child: Text(label, style: AppTextStyles.bodySmall)),
@@ -56,7 +65,7 @@ class MenuItem extends StatelessWidget {
             ),
           ),
         ),
-        if (!isLast) Divider(height: 1, color: Color(0xFFF3F3F3)),
+        if (!isLast) const Divider(height: 1, color: Color(0xFFF3F3F3)),
       ],
     );
   }

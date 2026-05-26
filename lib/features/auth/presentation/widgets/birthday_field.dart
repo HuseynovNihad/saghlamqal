@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:kalori_tracker/core/constants/app_assets.dart';
+import 'package:kalori_tracker/core/utils/asset_extension.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
@@ -48,9 +50,9 @@ class BirthdayField extends StatelessWidget {
             ),
             child: Row(
               children: [
-                const Icon(
-                  Icons.calendar_today_outlined,
-                  size: 18,
+                AppAssets.calendar.svg(
+                  height: 16,
+                  width: 16,
                   color: Colors.grey,
                 ),
                 8.ws,
