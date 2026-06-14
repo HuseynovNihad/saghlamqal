@@ -12,6 +12,9 @@ class RecentProductMapper {
       protein: model.protein,
       carbs: model.carbs,
       fat: model.fat,
+      vitamins: model.vitamins,
+      advice: model.advice,
+      isFood: model.isFood,
     );
   }
 
@@ -23,6 +26,9 @@ class RecentProductMapper {
       protein: entity.protein,
       carbs: entity.carbs,
       fat: entity.fat,
+      vitamins: entity.vitamins,
+      advice: entity.advice,
+      isFood: entity.isFood,
     );
   }
 }

@@ -7,6 +7,8 @@ class PhotoProductEntity {
   final Map<String, double?>? vitamins;
   final String advice;
   final bool isFood;
+  final int? servingSize;
+  final String? servingUnit;
 
   const PhotoProductEntity({
     required this.name,
@@ -17,5 +19,7 @@ class PhotoProductEntity {
     this.vitamins,
     required this.advice,
     this.isFood = true,
+    this.servingSize,
+    this.servingUnit,
   });
 }

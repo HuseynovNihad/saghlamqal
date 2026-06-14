@@ -58,59 +58,66 @@ class _LoggedInCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'GÜNDƏLIK TÖVSIYƏ',
-            style: AppTextStyles.bodySmall.copyWith(
-              color: Colors.grey.shade500,
-              fontSize: 11,
-              fontWeight: FontWeight.w600,
-              letterSpacing: 0.8,
-            ),
-          ),
-          6.hs,
           Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                '${dailyGoal.dailyKcal}',
-                style: AppTextStyles.h1.copyWith(
-                  fontSize: 32,
-                  fontWeight: FontWeight.w600,
+                'Gündəlik tövsiyə',
+                style: AppTextStyles.bodySmall.copyWith(
+                  color: Colors.grey.shade500,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 0.3,
                 ),
               ),
-              6.ws,
-              Padding(
-                padding: 8.pb,
-                child: Text(
-                  'kcal',
-                  style: AppTextStyles.bodyMedium.copyWith(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.grey.shade500,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.baseline,
+                textBaseline: TextBaseline.alphabetic,
+                children: [
+                  Text(
+                    '${dailyGoal.dailyKcal}',
+                    style: AppTextStyles.h1.copyWith(
+                      fontSize: 28,
+                      fontWeight: FontWeight.w600,
+                      height: 1,
+                    ),
                   ),
-                ),
+                  const SizedBox(width: 4),
+                  Text(
+                    'kcal',
+                    style: AppTextStyles.bodyMedium.copyWith(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.grey.shade400,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
-          20.hs,
-          const Divider(thickness: 0.5, height: 1),
-          20.hs,
-          _MacroRow(
-            label: 'ZÜLAL',
-            recommended: dailyGoal.protein.recommended,
-            unit: dailyGoal.protein.unit,
-          ),
-          16.hs,
-          _MacroRow(
-            label: 'KARBOHİDRAT',
-            recommended: dailyGoal.carbs.recommended,
-            unit: dailyGoal.carbs.unit,
-          ),
-          16.hs,
-          _MacroRow(
-            label: 'YAĞ',
-            recommended: dailyGoal.fats.recommended,
-            unit: dailyGoal.fats.unit,
+          18.hs,
+          Row(
+            children: [
+              _MacroChip(
+                label: 'Zülal',
+                value:
+                    '${dailyGoal.protein.recommended}${dailyGoal.protein.unit}',
+                color: const Color(0xFF4ADE80),
+              ),
+              const SizedBox(width: 10),
+              _MacroChip(
+                label: 'Karbohidrat',
+                value: '${dailyGoal.carbs.recommended}${dailyGoal.carbs.unit}',
+                color: const Color(0xFFFBBF24),
+              ),
+              const SizedBox(width: 10),
+              _MacroChip(
+                label: 'Yağ',
+                value: '${dailyGoal.fats.recommended}${dailyGoal.fats.unit}',
+                color: const Color(0xFFF87171),
+              ),
+            ],
           ),
         ],
       ),
@@ -118,52 +125,67 @@ class _LoggedInCard extends StatelessWidget {
   }
 }
 
-class _MacroRow extends StatelessWidget {
+class _MacroChip extends StatelessWidget {
   final String label;
-  final int recommended;
-  final String unit;
+  final String value;
+  final Color color;
 
-  const _MacroRow({
+  const _MacroChip({
     required this.label,
-    required this.recommended,
-    required this.unit,
+    required this.value,
+    required this.color,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: AppTextStyles.bodySmall.copyWith(
-            fontSize: 11,
-            fontWeight: FontWeight.w600,
-            color: Colors.grey.shade500,
-            letterSpacing: 0.6,
-          ),
+    return Expanded(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+        decoration: BoxDecoration(
+          color: Color(0xFFF5F5F5),
+          borderRadius: 14.br,
+          border: Border.all(color: AppColors.borderColor, width: 0.8),
         ),
-        4.hs,
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              '$recommended$unit',
-              style: AppTextStyles.h2.copyWith(fontWeight: FontWeight.w600),
-            ),
-            4.ws,
-            Padding(
-              padding: 3.pb,
-              child: Text(
-                'töv.',
-                style: AppTextStyles.bodySmall.copyWith(
-                  color: Colors.grey.shade400,
+            Row(
+              children: [
+                Container(
+                  width: 6,
+                  height: 6,
+                  decoration: BoxDecoration(
+                    color: color,
+                    shape: BoxShape.circle,
+                  ),
                 ),
+                4.ws,
+                Flexible(
+                  child: Text(
+                    label,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.bodySmall.copyWith(
+                      fontSize: 10,
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xFF888888),
+                      letterSpacing: 0.2,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            4.hs,
+            Text(
+              value,
+              style: AppTextStyles.h2.copyWith(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ],
         ),
-      ],
+      ),
     );
   }
 }
@@ -175,10 +197,10 @@ class _DailyGoalSkeleton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 200,
+      height: 160,
       decoration: BoxDecoration(
         color: Colors.grey.shade100,
-        borderRadius: 20.br,
+        borderRadius: BorderRadius.circular(24),
       ),
     );
   }

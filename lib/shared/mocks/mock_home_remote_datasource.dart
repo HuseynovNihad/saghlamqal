@@ -47,6 +47,9 @@ class MockHomeRemoteDataSource implements HomeRemoteDataSource {
         protein: 5,
         carbs: 10,
         fat: 2,
+        vitamins: {'B12': 0.4, 'D': 1.2, 'Kalsium': 150.0},
+        advice: 'Probiotiklərlə zəngindir, həzm sisteminə faydalıdır.',
+        isFood: true,
       ),
       RecentProductModel(
         name: 'Protein Bar',
@@ -56,6 +59,9 @@ class MockHomeRemoteDataSource implements HomeRemoteDataSource {
         protein: 20,
         carbs: 15,
         fat: 7,
+        vitamins: {'B6': 0.3, 'Maqnezium': 40.0, 'Dəmir': 2.5},
+        advice: 'İdmandan sonra əzələ bərpası üçün əlverişlidir.',
+        isFood: true,
       ),
       RecentProductModel(
         name: 'Narıncı Şirə',
@@ -65,6 +71,9 @@ class MockHomeRemoteDataSource implements HomeRemoteDataSource {
         protein: 1,
         carbs: 20,
         fat: 0,
+        vitamins: {'C': 50.0, 'Folat': 30.0, 'Kalium': 200.0},
+        advice: 'C vitamini ilə zəngindir, lakin şəkər miqdarına diqqət edin.',
+        isFood: true,
       ),
     ];
   }

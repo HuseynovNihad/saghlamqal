@@ -52,7 +52,7 @@ class _HomeView extends StatelessWidget {
                     24.hs,
                     const PhotoScanCtaButton(),
                     16.hs,
-                    if (isLoggedIn) ...[
+                    if (!isLoggedIn) ...[
                       const GuestPreviewSection(),
                     ] else ...[
                       DailyGoalCard(isLoggedIn: true, state: homeState),

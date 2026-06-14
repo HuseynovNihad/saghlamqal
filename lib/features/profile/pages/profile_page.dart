@@ -22,7 +22,7 @@ class ProfilePage extends StatelessWidget {
       body: SafeArea(
         child: BlocBuilder<AuthBloc, AuthState>(
           builder: (context, authState) {
-            if (authState is AuthAuthenticated) {
+            if (authState is! AuthAuthenticated) {
               return const UnauthenticatedView(
                 headerIcon: AppAssets.profile,
                 title: 'Profilinə\ndaxil ol',

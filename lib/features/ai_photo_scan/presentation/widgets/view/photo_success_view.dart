@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+
 import '../../../../../core/constants/app_colors.dart';
 import '../../../../../core/constants/app_text_styles.dart';
-import '../../../../../core/utils/sized_box_extension.dart';
-import '../../../../../core/utils/radius_extension.dart';
 import '../../../../../core/utils/padding_extension.dart';
+import '../../../../../core/utils/radius_extension.dart';
+import '../../../../../core/utils/sized_box_extension.dart';
 import '../../../domain/entities/photo_product_entity.dart';
 import 'photo_nutrient_item.dart';
 import 'photo_vitamin_section.dart';
@@ -15,6 +16,9 @@ class PhotoSuccessView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final hasServing =
+        product.servingSize != null && product.servingUnit != null;
+
     return Column(
       children: [
         Text(
@@ -24,6 +28,17 @@ class PhotoSuccessView extends StatelessWidget {
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
         ),
+        if (hasServing) ...[
+          6.hs,
+          Text(
+            '${product.servingSize} ${product.servingUnit} üzrə',
+            style: AppTextStyles.bodySmall.copyWith(
+              color: Colors.grey.shade500,
+              fontSize: 12,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
         20.hs,
         Container(
           width: double.infinity,

@@ -86,6 +86,37 @@ class RecentProductCard extends StatelessWidget {
                     RecentProductMacro(label: 'YAĞ', value: '${product.fat}g'),
                   ],
                 ),
+                if (product.vitamins != null &&
+                    product.vitamins!.isNotEmpty) ...[
+                  8.hs,
+                  Wrap(
+                    spacing: 6,
+                    runSpacing: 4,
+                    children: product.vitamins!.entries.map((e) {
+                      final value = e.value;
+                      return Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 7,
+                          vertical: 2,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade100,
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: Text(
+                          value != null
+                              ? '${e.key}: ${value % 1 == 0 ? value.toInt() : value}'
+                              : e.key,
+                          style: AppTextStyles.bodySmall.copyWith(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.grey.shade600,
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ],
               ],
             ),
           ),

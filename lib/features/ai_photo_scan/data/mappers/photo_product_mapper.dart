@@ -12,6 +12,8 @@ class PhotoProductMapper {
       vitamins: model.vitamins,
       advice: model.advice,
       isFood: model.isFood,
+      servingSize: model.servingSize,
+      servingUnit: model.servingUnit,
     );
   }
 
@@ -25,6 +27,8 @@ class PhotoProductMapper {
       vitamins: entity.vitamins,
       advice: entity.advice,
       isFood: entity.isFood,
+      servingSize: entity.servingSize,
+      servingUnit: entity.servingUnit,
     );
   }
 }

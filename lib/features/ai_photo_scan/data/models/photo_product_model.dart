@@ -7,6 +7,8 @@ class PhotoProductModel {
   final Map<String, double?>? vitamins;
   final String advice;
   final bool isFood;
+  final int? servingSize;
+  final String? servingUnit;
 
   const PhotoProductModel({
     required this.name,
@@ -17,6 +19,8 @@ class PhotoProductModel {
     this.vitamins,
     required this.advice,
     this.isFood = true,
+    this.servingSize,
+    this.servingUnit,
   });
 
   factory PhotoProductModel.fromJson(Map<String, dynamic> json) {
@@ -32,6 +36,8 @@ class PhotoProductModel {
       ),
       advice: (json['advice'] as String?) ?? '',
       isFood: (json['is_food'] as bool?) ?? true,
+      servingSize: (json['serving_size'] as num?)?.toInt(),
+      servingUnit: json['serving_unit'] as String?,
     );
   }
 
@@ -44,5 +50,7 @@ class PhotoProductModel {
     'vitamins': vitamins,
     'advice': advice,
     'is_food': isFood,
+    'serving_size': servingSize,
+    'serving_unit': servingUnit,
   };
 }
