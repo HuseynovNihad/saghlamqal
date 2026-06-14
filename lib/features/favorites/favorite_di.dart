@@ -1,5 +1,3 @@
-// lib/features/favorites/favorites_injection.dart
-
 import 'package:get_it/get_it.dart';
 
 import '../../core/config/app_config.dart';
@@ -8,13 +6,13 @@ import 'data/datasources/remote/favorite_remote_datasource.dart';
 import 'data/repositories/favorite_repository_impl.dart';
 import 'domain/repositories/favorite_repository.dart';
 import 'domain/usecases/add_favorite_usecase.dart';
-import 'domain/usecases/assign_collection_usecase.dart';
+import 'domain/usecases/add_item_to_collection_usecase.dart';
 import 'domain/usecases/create_collection_usecase.dart';
 import 'domain/usecases/delete_collection_usecase.dart';
 import 'domain/usecases/get_collections_usecase.dart';
 import 'domain/usecases/get_favorites_usecase.dart';
 import 'domain/usecases/remove_favorite_usecase.dart';
-import 'domain/usecases/update_collection_usecase.dart';
+import 'domain/usecases/remove_item_from_collection_usecase.dart';
 import 'presentation/bloc/favorites_bloc.dart';
 
 Future<void> initFavorites(GetIt sl) async {
@@ -45,31 +43,24 @@ Future<void> initFavorites(GetIt sl) async {
   // ─────────────────────────────────────────────────────────────
 
   sl.registerLazySingleton(() => GetFavoritesUsecase(sl<FavoriteRepository>()));
-
   sl.registerLazySingleton(() => AddFavoriteUsecase(sl<FavoriteRepository>()));
-
   sl.registerLazySingleton(
     () => RemoveFavoriteUsecase(sl<FavoriteRepository>()),
   );
-
   sl.registerLazySingleton(
     () => GetCollectionsUsecase(sl<FavoriteRepository>()),
   );
-
   sl.registerLazySingleton(
     () => CreateCollectionUsecase(sl<FavoriteRepository>()),
   );
-
-  sl.registerLazySingleton(
-    () => UpdateCollectionUsecase(sl<FavoriteRepository>()),
-  );
-
   sl.registerLazySingleton(
     () => DeleteCollectionUsecase(sl<FavoriteRepository>()),
   );
-
   sl.registerLazySingleton(
-    () => AssignCollectionUsecase(sl<FavoriteRepository>()),
+    () => AddItemToCollectionUsecase(sl<FavoriteRepository>()),
+  );
+  sl.registerLazySingleton(
+    () => RemoveItemFromCollectionUsecase(sl<FavoriteRepository>()),
   );
 
   // ─────────────────────────────────────────────────────────────
@@ -83,9 +74,9 @@ Future<void> initFavorites(GetIt sl) async {
       removeFavorite: sl<RemoveFavoriteUsecase>(),
       getCollections: sl<GetCollectionsUsecase>(),
       createCollection: sl<CreateCollectionUsecase>(),
-      updateCollection: sl<UpdateCollectionUsecase>(),
       deleteCollection: sl<DeleteCollectionUsecase>(),
-      assignCollection: sl<AssignCollectionUsecase>(),
+      addItemToCollection: sl<AddItemToCollectionUsecase>(),
+      removeItemFromCollection: sl<RemoveItemFromCollectionUsecase>(),
     ),
   );
 }

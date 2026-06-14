@@ -5,14 +5,16 @@ abstract interface class FavoriteRepository {
   Future<List<FavoriteItemEntity>> getFavorites();
 
   Future<FavoriteItemEntity> addFavorite({
-    required String foodId,
     required String name,
-    String? brand,
-    required double calories,
-    required double protein,
-    required double carbs,
-    required double fat,
-    String? collectionId,
+    double? calories,
+    double? protein,
+    double? carbs,
+    double? fat,
+    Map<String, dynamic>? vitamins,
+    String? advice,
+    required bool isFood,
+    double? servingSize,
+    String? servingUnit,
   });
 
   Future<void> removeFavorite(String id);
@@ -21,19 +23,28 @@ abstract interface class FavoriteRepository {
 
   Future<FavoriteCollectionEntity> createCollection({
     required String name,
-    required String iconAsset,
-  });
-
-  Future<FavoriteCollectionEntity> updateCollection({
-    required String id,
-    required String name,
-    required String iconAsset,
+    String? description,
+    String? icon,
   });
 
   Future<void> deleteCollection(String id);
 
-  Future<FavoriteItemEntity> assignCollection({
-    required String favoriteId,
-    required String? collectionId,
+  Future<void> addItemToCollection({
+    required String collectionId,
+    required String name,
+    double? calories,
+    double? protein,
+    double? carbs,
+    double? fat,
+    Map<String, dynamic>? vitamins,
+    String? advice,
+    required bool isFood,
+    double? servingSize,
+    String? servingUnit,
+  });
+
+  Future<void> removeItemFromCollection({
+    required String collectionId,
+    required String itemId,
   });
 }

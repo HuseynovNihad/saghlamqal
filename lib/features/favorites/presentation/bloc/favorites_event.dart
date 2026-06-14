@@ -8,24 +8,28 @@ sealed class FavoritesEvent {
 final class GetFavoritesEvent extends FavoritesEvent {}
 
 final class AddFavoriteEvent extends FavoritesEvent {
-  final String foodId;
   final String name;
-  final String? brand;
-  final double calories;
-  final double protein;
-  final double carbs;
-  final double fat;
-  final String? collectionId;
+  final double? calories;
+  final double? protein;
+  final double? carbs;
+  final double? fat;
+  final Map<String, dynamic>? vitamins;
+  final String? advice;
+  final bool isFood;
+  final double? servingSize;
+  final String? servingUnit;
 
-  AddFavoriteEvent({
-    required this.foodId,
+  const AddFavoriteEvent({
     required this.name,
-    this.brand,
-    required this.calories,
-    required this.protein,
-    required this.carbs,
-    required this.fat,
-    this.collectionId,
+    this.calories,
+    this.protein,
+    this.carbs,
+    this.fat,
+    this.vitamins,
+    this.advice,
+    required this.isFood,
+    this.servingSize,
+    this.servingUnit,
   });
 }
 
@@ -39,20 +43,13 @@ final class GetCollectionsEvent extends FavoritesEvent {}
 
 final class CreateCollectionEvent extends FavoritesEvent {
   final String name;
-  final String iconAsset;
+  final String? description;
+  final String? icon;
 
-  const CreateCollectionEvent({required this.name, required this.iconAsset});
-}
-
-final class UpdateCollectionEvent extends FavoritesEvent {
-  final String id;
-  final String name;
-  final String iconAsset;
-
-  const UpdateCollectionEvent({
-    required this.id,
+  const CreateCollectionEvent({
     required this.name,
-    required this.iconAsset,
+    this.description,
+    this.icon,
   });
 }
 
@@ -62,12 +59,40 @@ final class DeleteCollectionEvent extends FavoritesEvent {
   const DeleteCollectionEvent(this.id);
 }
 
-final class AssignCollectionEvent extends FavoritesEvent {
-  final String favoriteId;
-  final String? collectionId;
+final class AddItemToCollectionEvent extends FavoritesEvent {
+  final String collectionId;
+  final String name;
+  final double? calories;
+  final double? protein;
+  final double? carbs;
+  final double? fat;
+  final Map<String, dynamic>? vitamins;
+  final String? advice;
+  final bool isFood;
+  final double? servingSize;
+  final String? servingUnit;
 
-  const AssignCollectionEvent({
-    required this.favoriteId,
+  const AddItemToCollectionEvent({
     required this.collectionId,
+    required this.name,
+    this.calories,
+    this.protein,
+    this.carbs,
+    this.fat,
+    this.vitamins,
+    this.advice,
+    required this.isFood,
+    this.servingSize,
+    this.servingUnit,
+  });
+}
+
+final class RemoveItemFromCollectionEvent extends FavoritesEvent {
+  final String collectionId;
+  final String itemId;
+
+  const RemoveItemFromCollectionEvent({
+    required this.collectionId,
+    required this.itemId,
   });
 }

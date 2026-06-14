@@ -21,7 +21,7 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   @override
   Future<DailyGoalModel> getDailyGoal() async {
     final response = await _networkManager.get<Map<String, dynamic>>(
-      Endpoints.getDailyGoal,
+      Endpoints.getNutrition,
     );
     return DailyGoalModel.fromJson(response.data!);
   }
@@ -37,7 +37,7 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   @override
   Future<HydrationModel> addWater(int amount) async {
     final response = await _networkManager.post<Map<String, dynamic>>(
-      Endpoints.addWater,
+      Endpoints.addWaterLog,
       data: {'amount': amount},
     );
     return HydrationModel.fromJson(response.data!);
@@ -46,7 +46,7 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   @override
   Future<List<RecentProductModel>> getRecentProducts() async {
     final response = await _networkManager.get<List<dynamic>>(
-      Endpoints.getRecentProducts,
+      Endpoints.getScanHistory,
     );
     return (response.data!)
         .map((e) => RecentProductModel.fromJson(e as Map<String, dynamic>))

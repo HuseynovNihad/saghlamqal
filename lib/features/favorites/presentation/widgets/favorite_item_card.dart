@@ -58,7 +58,7 @@ class FavoriteItemCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          item.name,
+          item.name ?? "Məhsul",
           style: AppTextStyles.bodyMedium.copyWith(
             fontWeight: FontWeight.w600,
             color: AppColors.headline,
@@ -66,10 +66,6 @@ class FavoriteItemCard extends StatelessWidget {
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
-        if (item.brand != null) ...[
-          2.verticalSpace,
-          Text(item.brand!, style: AppTextStyles.bodySmall),
-        ],
         6.verticalSpace,
         _buildMacros(),
       ],
@@ -80,13 +76,16 @@ class FavoriteItemCard extends StatelessWidget {
     return Row(
       children: [
         _MacroPill(
-          label: '${item.calories.toInt()} kkal',
+          label: '${item.calories?.toInt()} kkal',
           color: AppColors.primary,
         ),
         4.horizontalSpace,
-        _MacroPill(label: '${item.protein.toInt()}q Z', color: AppColors.info),
+        _MacroPill(label: '${item.protein?.toInt()}q Z', color: AppColors.info),
         4.horizontalSpace,
-        _MacroPill(label: '${item.carbs.toInt()}q K', color: AppColors.warning),
+        _MacroPill(
+          label: '${item.carbs?.toInt()}q K',
+          color: AppColors.warning,
+        ),
       ],
     );
   }

@@ -8,14 +8,16 @@ abstract interface class FavoriteRemoteDatasource {
   Future<List<FavoriteItemModel>> getFavorites();
 
   Future<FavoriteItemModel> addFavorite({
-    required String foodId,
     required String name,
-    String? brand,
-    required double calories,
-    required double protein,
-    required double carbs,
-    required double fat,
-    String? collectionId,
+    double? calories,
+    double? protein,
+    double? carbs,
+    double? fat,
+    Map<String, dynamic>? vitamins,
+    String? advice,
+    required bool isFood,
+    double? servingSize,
+    String? servingUnit,
   });
 
   Future<void> removeFavorite(String id);
@@ -24,20 +26,29 @@ abstract interface class FavoriteRemoteDatasource {
 
   Future<FavoriteCollectionModel> createCollection({
     required String name,
-    required String iconAsset,
-  });
-
-  Future<FavoriteCollectionModel> updateCollection({
-    required String id,
-    required String name,
-    required String iconAsset,
+    String? description,
+    String? icon,
   });
 
   Future<void> deleteCollection(String id);
 
-  Future<FavoriteItemModel> assignCollection({
-    required String favoriteId,
-    required String? collectionId,
+  Future<void> addItemToCollection({
+    required String collectionId,
+    required String name,
+    double? calories,
+    double? protein,
+    double? carbs,
+    double? fat,
+    Map<String, dynamic>? vitamins,
+    String? advice,
+    required bool isFood,
+    double? servingSize,
+    String? servingUnit,
+  });
+
+  Future<void> removeItemFromCollection({
+    required String collectionId,
+    required String itemId,
   });
 }
 
@@ -49,7 +60,7 @@ class FavoriteRemoteDatasourceImpl implements FavoriteRemoteDatasource {
   @override
   Future<List<FavoriteItemModel>> getFavorites() async {
     final response = await _networkManager.get<List<dynamic>>(
-      Endpoints.getFavorites,
+      Endpoints.getScanFavorites,
     );
 
     return (response.data as List)
@@ -59,26 +70,30 @@ class FavoriteRemoteDatasourceImpl implements FavoriteRemoteDatasource {
 
   @override
   Future<FavoriteItemModel> addFavorite({
-    required String foodId,
     required String name,
-    String? brand,
-    required double calories,
-    required double protein,
-    required double carbs,
-    required double fat,
-    String? collectionId,
+    double? calories,
+    double? protein,
+    double? carbs,
+    double? fat,
+    Map<String, dynamic>? vitamins,
+    String? advice,
+    required bool isFood,
+    double? servingSize,
+    String? servingUnit,
   }) async {
     final response = await _networkManager.post<Map<String, dynamic>>(
-      Endpoints.addFavorite,
+      Endpoints.addScanFavorite,
       data: {
-        'food_id': foodId,
         'name': name,
-        if (brand != null) 'brand': brand,
         'calories': calories,
         'protein': protein,
         'carbs': carbs,
         'fat': fat,
-        if (collectionId != null) 'collection_id': collectionId,
+        'vitamins': vitamins,
+        'advice': advice,
+        'is_food': isFood,
+        'serving_size': servingSize,
+        'serving_unit': servingUnit,
       },
     );
 
@@ -87,7 +102,7 @@ class FavoriteRemoteDatasourceImpl implements FavoriteRemoteDatasource {
 
   @override
   Future<void> removeFavorite(String id) async {
-    await _networkManager.delete<void>(Endpoints.removeFavorite(id));
+    await _networkManager.delete<void>(Endpoints.deleteScanFavorite(id));
   }
 
   @override
@@ -104,25 +119,16 @@ class FavoriteRemoteDatasourceImpl implements FavoriteRemoteDatasource {
   @override
   Future<FavoriteCollectionModel> createCollection({
     required String name,
-    required String iconAsset,
+    String? description,
+    String? icon,
   }) async {
     final response = await _networkManager.post<Map<String, dynamic>>(
       Endpoints.createCollection,
-      data: {'name': name, 'iconAsset': iconAsset},
-    );
-
-    return FavoriteCollectionModel.fromJson(response.data!);
-  }
-
-  @override
-  Future<FavoriteCollectionModel> updateCollection({
-    required String id,
-    required String name,
-    required String iconAsset,
-  }) async {
-    final response = await _networkManager.put<Map<String, dynamic>>(
-      Endpoints.updateCollection(id),
-      data: {'name': name, 'emoji': iconAsset},
+      data: {
+        'name': name,
+        if (description != null) 'description': description,
+        if (icon != null) 'icon': icon,
+      },
     );
 
     return FavoriteCollectionModel.fromJson(response.data!);
@@ -134,15 +140,43 @@ class FavoriteRemoteDatasourceImpl implements FavoriteRemoteDatasource {
   }
 
   @override
-  Future<FavoriteItemModel> assignCollection({
-    required String favoriteId,
-    required String? collectionId,
+  Future<void> addItemToCollection({
+    required String collectionId,
+    required String name,
+    double? calories,
+    double? protein,
+    double? carbs,
+    double? fat,
+    Map<String, dynamic>? vitamins,
+    String? advice,
+    required bool isFood,
+    double? servingSize,
+    String? servingUnit,
   }) async {
-    final response = await _networkManager.patch<Map<String, dynamic>>(
-      Endpoints.assignCollection(favoriteId),
-      data: {'collection_id': collectionId},
+    await _networkManager.post<Map<String, dynamic>>(
+      Endpoints.addCollectionItem(collectionId),
+      data: {
+        'name': name,
+        'calories': calories,
+        'protein': protein,
+        'carbs': carbs,
+        'fat': fat,
+        'vitamins': vitamins,
+        'advice': advice,
+        'is_food': isFood,
+        'serving_size': servingSize,
+        'serving_unit': servingUnit,
+      },
     );
+  }
 
-    return FavoriteItemModel.fromJson(response.data!);
+  @override
+  Future<void> removeItemFromCollection({
+    required String collectionId,
+    required String itemId,
+  }) async {
+    await _networkManager.delete<void>(
+      Endpoints.removeCollectionItem(collectionId, itemId),
+    );
   }
 }

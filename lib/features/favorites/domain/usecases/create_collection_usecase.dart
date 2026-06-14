@@ -1,3 +1,4 @@
+// create_collection_usecase.dart
 import '../entities/favorite_collection_entity.dart';
 import '../repositories/favorite_repository.dart';
 
@@ -8,6 +9,11 @@ class CreateCollectionUsecase {
 
   Future<FavoriteCollectionEntity> call({
     required String name,
-    required String iconAsset,
-  }) => _repository.createCollection(name: name, iconAsset: iconAsset);
+    String? description,
+    String? icon,
+  }) => _repository.createCollection(
+    name: name,
+    description: description,
+    icon: icon,
+  );
 }

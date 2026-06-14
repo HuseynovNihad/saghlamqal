@@ -17,24 +17,28 @@ class FavoriteRepositoryImpl implements FavoriteRepository {
 
   @override
   Future<FavoriteItemEntity> addFavorite({
-    required String foodId,
     required String name,
-    String? brand,
-    required double calories,
-    required double protein,
-    required double carbs,
-    required double fat,
-    String? collectionId,
+    double? calories,
+    double? protein,
+    double? carbs,
+    double? fat,
+    Map<String, dynamic>? vitamins,
+    String? advice,
+    required bool isFood,
+    double? servingSize,
+    String? servingUnit,
   }) async {
     final model = await _remoteDatasource.addFavorite(
-      foodId: foodId,
       name: name,
-      brand: brand,
       calories: calories,
       protein: protein,
       carbs: carbs,
       fat: fat,
-      collectionId: collectionId,
+      vitamins: vitamins,
+      advice: advice,
+      isFood: isFood,
+      servingSize: servingSize,
+      servingUnit: servingUnit,
     );
     return FavoriteMapper.toEntity(model);
   }
@@ -55,25 +59,13 @@ class FavoriteRepositoryImpl implements FavoriteRepository {
   @override
   Future<FavoriteCollectionEntity> createCollection({
     required String name,
-    required String iconAsset,
+    String? description,
+    String? icon,
   }) async {
     final model = await _remoteDatasource.createCollection(
       name: name,
-      iconAsset: iconAsset,
-    );
-    return FavoriteMapper.toCollectionEntity(model);
-  }
-
-  @override
-  Future<FavoriteCollectionEntity> updateCollection({
-    required String id,
-    required String name,
-    required String iconAsset,
-  }) async {
-    final model = await _remoteDatasource.updateCollection(
-      id: id,
-      name: name,
-      iconAsset: iconAsset,
+      description: description,
+      icon: icon,
     );
     return FavoriteMapper.toCollectionEntity(model);
   }
@@ -84,14 +76,42 @@ class FavoriteRepositoryImpl implements FavoriteRepository {
   }
 
   @override
-  Future<FavoriteItemEntity> assignCollection({
-    required String favoriteId,
-    required String? collectionId,
+  Future<void> addItemToCollection({
+    required String collectionId,
+    required String name,
+    double? calories,
+    double? protein,
+    double? carbs,
+    double? fat,
+    Map<String, dynamic>? vitamins,
+    String? advice,
+    required bool isFood,
+    double? servingSize,
+    String? servingUnit,
   }) async {
-    final model = await _remoteDatasource.assignCollection(
-      favoriteId: favoriteId,
+    await _remoteDatasource.addItemToCollection(
       collectionId: collectionId,
+      name: name,
+      calories: calories,
+      protein: protein,
+      carbs: carbs,
+      fat: fat,
+      vitamins: vitamins,
+      advice: advice,
+      isFood: isFood,
+      servingSize: servingSize,
+      servingUnit: servingUnit,
     );
-    return FavoriteMapper.toEntity(model);
+  }
+
+  @override
+  Future<void> removeItemFromCollection({
+    required String collectionId,
+    required String itemId,
+  }) async {
+    await _remoteDatasource.removeItemFromCollection(
+      collectionId: collectionId,
+      itemId: itemId,
+    );
   }
 }

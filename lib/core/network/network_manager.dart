@@ -16,7 +16,7 @@ class NetworkManager {
 
     _dio = Dio(
       BaseOptions(
-        baseUrl: 'https://api.saglamqal.az/v1/',
+        baseUrl: 'http://13.140.157.103/',
         connectTimeout: const Duration(seconds: 15),
         receiveTimeout: const Duration(seconds: 15),
         headers: {

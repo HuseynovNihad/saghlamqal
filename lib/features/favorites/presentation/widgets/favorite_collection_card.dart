@@ -45,7 +45,7 @@ class FavoriteCollectionCard extends StatelessWidget {
               borderRadius: 10.br,
             ),
             child: Center(
-              child: collection.iconAsset.svg(width: 20, height: 20),
+              child: collection.icon?.svg(width: 20, height: 20),
             ),
           ),
 

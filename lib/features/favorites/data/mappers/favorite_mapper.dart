@@ -7,30 +7,34 @@ class FavoriteMapper {
   static FavoriteItemEntity toEntity(FavoriteItemModel model) {
     return FavoriteItemEntity(
       id: model.id,
-      foodId: model.foodId,
       name: model.name,
-      brand: model.brand,
       calories: model.calories,
       protein: model.protein,
       carbs: model.carbs,
       fat: model.fat,
-      collectionId: model.collectionId,
-      addedAt: DateTime.parse(model.addedAt),
+      vitamins: model.vitamins,
+      advice: model.advice,
+      isFood: model.isFood,
+      servingSize: model.servingSize,
+      servingUnit: model.servingUnit,
+      createdAt: DateTime.parse(model.createdAt),
     );
   }
 
   static FavoriteItemModel toModel(FavoriteItemEntity entity) {
     return FavoriteItemModel(
       id: entity.id,
-      foodId: entity.foodId,
       name: entity.name,
-      brand: entity.brand,
       calories: entity.calories,
       protein: entity.protein,
       carbs: entity.carbs,
       fat: entity.fat,
-      collectionId: entity.collectionId,
-      addedAt: entity.addedAt.toIso8601String(),
+      vitamins: entity.vitamins,
+      advice: entity.advice,
+      isFood: entity.isFood,
+      servingSize: entity.servingSize,
+      servingUnit: entity.servingUnit,
+      createdAt: entity.createdAt.toIso8601String(),
     );
   }
 
@@ -45,7 +49,8 @@ class FavoriteMapper {
     return FavoriteCollectionEntity(
       id: model.id,
       name: model.name,
-      iconAsset: model.iconAsset,
+      icon: model.icon,
+      description: model.description,
       itemCount: itemCount,
       createdAt: DateTime.parse(model.createdAt),
     );
@@ -57,7 +62,8 @@ class FavoriteMapper {
     return FavoriteCollectionModel(
       id: entity.id,
       name: entity.name,
-      iconAsset: entity.iconAsset,
+      icon: entity.icon,
+      description: entity.description,
       createdAt: entity.createdAt.toIso8601String(),
     );
   }

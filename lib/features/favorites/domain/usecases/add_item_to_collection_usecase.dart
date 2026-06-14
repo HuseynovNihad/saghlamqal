@@ -1,12 +1,12 @@
-import '../entities/favorite_item_entity.dart';
 import '../repositories/favorite_repository.dart';
 
-class AddFavoriteUsecase {
+class AddItemToCollectionUsecase {
   final FavoriteRepository _repository;
 
-  const AddFavoriteUsecase(this._repository);
+  const AddItemToCollectionUsecase(this._repository);
 
-  Future<FavoriteItemEntity> call({
+  Future<void> call({
+    required String collectionId,
     required String name,
     double? calories,
     double? protein,
@@ -17,7 +17,8 @@ class AddFavoriteUsecase {
     required bool isFood,
     double? servingSize,
     String? servingUnit,
-  }) => _repository.addFavorite(
+  }) => _repository.addItemToCollection(
+    collectionId: collectionId,
     name: name,
     calories: calories,
     protein: protein,

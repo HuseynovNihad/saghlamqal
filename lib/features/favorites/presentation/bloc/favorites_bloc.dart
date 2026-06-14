@@ -8,9 +8,9 @@ import '../../domain/usecases/add_favorite_usecase.dart';
 import '../../domain/usecases/remove_favorite_usecase.dart';
 import '../../domain/usecases/get_collections_usecase.dart';
 import '../../domain/usecases/create_collection_usecase.dart';
-import '../../domain/usecases/update_collection_usecase.dart';
 import '../../domain/usecases/delete_collection_usecase.dart';
-import '../../domain/usecases/assign_collection_usecase.dart';
+import '../../domain/usecases/add_item_to_collection_usecase.dart';
+import '../../domain/usecases/remove_item_from_collection_usecase.dart';
 
 part 'favorites_event.dart';
 part 'favorites_state.dart';
@@ -21,9 +21,9 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
   final RemoveFavoriteUsecase _removeFavorite;
   final GetCollectionsUsecase _getCollections;
   final CreateCollectionUsecase _createCollection;
-  final UpdateCollectionUsecase _updateCollection;
   final DeleteCollectionUsecase _deleteCollection;
-  final AssignCollectionUsecase _assignCollection;
+  final AddItemToCollectionUsecase _addItemToCollection;
+  final RemoveItemFromCollectionUsecase _removeItemFromCollection;
 
   FavoritesBloc({
     required GetFavoritesUsecase getFavorites,
@@ -31,26 +31,26 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
     required RemoveFavoriteUsecase removeFavorite,
     required GetCollectionsUsecase getCollections,
     required CreateCollectionUsecase createCollection,
-    required UpdateCollectionUsecase updateCollection,
     required DeleteCollectionUsecase deleteCollection,
-    required AssignCollectionUsecase assignCollection,
+    required AddItemToCollectionUsecase addItemToCollection,
+    required RemoveItemFromCollectionUsecase removeItemFromCollection,
   }) : _getFavorites = getFavorites,
        _addFavorite = addFavorite,
        _removeFavorite = removeFavorite,
        _getCollections = getCollections,
        _createCollection = createCollection,
-       _updateCollection = updateCollection,
        _deleteCollection = deleteCollection,
-       _assignCollection = assignCollection,
+       _addItemToCollection = addItemToCollection,
+       _removeItemFromCollection = removeItemFromCollection,
        super(FavoritesInitial()) {
     on<GetFavoritesEvent>(_onGetFavorites);
     on<AddFavoriteEvent>(_onAddFavorite);
     on<RemoveFavoriteEvent>(_onRemoveFavorite);
     on<GetCollectionsEvent>(_onGetCollections);
     on<CreateCollectionEvent>(_onCreateCollection);
-    on<UpdateCollectionEvent>(_onUpdateCollection);
     on<DeleteCollectionEvent>(_onDeleteCollection);
-    on<AssignCollectionEvent>(_onAssignCollection);
+    on<AddItemToCollectionEvent>(_onAddItemToCollection);
+    on<RemoveItemFromCollectionEvent>(_onRemoveItemFromCollection);
   }
 
   // ─── Helpers ────────────────────────────────────────────────────
@@ -97,14 +97,16 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
     );
     try {
       final newItem = await _addFavorite(
-        foodId: event.foodId,
         name: event.name,
-        brand: event.brand,
         calories: event.calories,
         protein: event.protein,
         carbs: event.carbs,
         fat: event.fat,
-        collectionId: event.collectionId,
+        vitamins: event.vitamins,
+        advice: event.advice,
+        isFood: event.isFood,
+        servingSize: event.servingSize,
+        servingUnit: event.servingUnit,
       );
       final updated = [..._currentFavorites, newItem];
       emit(
@@ -169,39 +171,10 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
     try {
       final newCollection = await _createCollection(
         name: event.name,
-        iconAsset: event.iconAsset,
+        description: event.description,
+        icon: event.icon,
       );
       final updated = [..._currentCollections, newCollection];
-      emit(
-        FavoriteActionSuccess(
-          favorites: _currentFavorites,
-          collections: updated,
-        ),
-      );
-    } catch (e) {
-      emit(FavoritesError(e.toString()));
-    }
-  }
-
-  Future<void> _onUpdateCollection(
-    UpdateCollectionEvent event,
-    Emitter<FavoritesState> emit,
-  ) async {
-    emit(
-      FavoriteActionLoading(
-        favorites: _currentFavorites,
-        collections: _currentCollections,
-      ),
-    );
-    try {
-      final updatedCollection = await _updateCollection(
-        id: event.id,
-        name: event.name,
-        iconAsset: event.iconAsset,
-      );
-      final updated = _currentCollections
-          .map((c) => c.id == event.id ? updatedCollection : c)
-          .toList();
       emit(
         FavoriteActionSuccess(
           favorites: _currentFavorites,
@@ -228,15 +201,9 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
       final updatedCollections = _currentCollections
           .where((c) => c.id != event.id)
           .toList();
-      final updatedFavorites = _currentFavorites
-          .map(
-            (f) =>
-                f.collectionId == event.id ? f.copyWith(collectionId: null) : f,
-          )
-          .toList();
       emit(
         FavoriteActionSuccess(
-          favorites: updatedFavorites,
+          favorites: _currentFavorites,
           collections: updatedCollections,
         ),
       );
@@ -245,8 +212,8 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
     }
   }
 
-  Future<void> _onAssignCollection(
-    AssignCollectionEvent event,
+  Future<void> _onAddItemToCollection(
+    AddItemToCollectionEvent event,
     Emitter<FavoritesState> emit,
   ) async {
     emit(
@@ -256,16 +223,48 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
       ),
     );
     try {
-      final updatedItem = await _assignCollection(
-        favoriteId: event.favoriteId,
+      await _addItemToCollection(
         collectionId: event.collectionId,
+        name: event.name,
+        calories: event.calories,
+        protein: event.protein,
+        carbs: event.carbs,
+        fat: event.fat,
+        vitamins: event.vitamins,
+        advice: event.advice,
+        isFood: event.isFood,
+        servingSize: event.servingSize,
+        servingUnit: event.servingUnit,
       );
-      final updated = _currentFavorites
-          .map((f) => f.id == event.favoriteId ? updatedItem : f)
-          .toList();
       emit(
         FavoriteActionSuccess(
-          favorites: updated,
+          favorites: _currentFavorites,
+          collections: _currentCollections,
+        ),
+      );
+    } catch (e) {
+      emit(FavoritesError(e.toString()));
+    }
+  }
+
+  Future<void> _onRemoveItemFromCollection(
+    RemoveItemFromCollectionEvent event,
+    Emitter<FavoritesState> emit,
+  ) async {
+    emit(
+      FavoriteActionLoading(
+        favorites: _currentFavorites,
+        collections: _currentCollections,
+      ),
+    );
+    try {
+      await _removeItemFromCollection(
+        collectionId: event.collectionId,
+        itemId: event.itemId,
+      );
+      emit(
+        FavoriteActionSuccess(
+          favorites: _currentFavorites,
           collections: _currentCollections,
         ),
       );

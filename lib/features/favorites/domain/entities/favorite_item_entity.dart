@@ -1,51 +1,59 @@
 class FavoriteItemEntity {
   final String id;
-  final String foodId;
-  final String name;
-  final String? brand;
-  final double calories;
-  final double protein;
-  final double carbs;
-  final double fat;
-  final String? collectionId;
-  final DateTime addedAt;
+  final String? name;
+  final double? calories;
+  final double? protein;
+  final double? carbs;
+  final double? fat;
+  final Map<String, dynamic>? vitamins;
+  final String? advice;
+  final bool isFood;
+  final double? servingSize;
+  final String? servingUnit;
+  final DateTime createdAt;
 
   const FavoriteItemEntity({
     required this.id,
-    required this.foodId,
-    required this.name,
-    this.brand,
-    required this.calories,
-    required this.protein,
-    required this.carbs,
-    required this.fat,
-    this.collectionId,
-    required this.addedAt,
+    this.name,
+    this.calories,
+    this.protein,
+    this.carbs,
+    this.fat,
+    this.vitamins,
+    this.advice,
+    required this.isFood,
+    this.servingSize,
+    this.servingUnit,
+    required this.createdAt,
   });
 
   FavoriteItemEntity copyWith({
     String? id,
-    String? foodId,
     String? name,
-    String? brand,
     double? calories,
     double? protein,
     double? carbs,
     double? fat,
-    String? collectionId,
-    DateTime? addedAt,
+    Map<String, dynamic>? vitamins,
+    String? advice,
+    bool? isFood,
+    double? servingSize,
+    String? servingUnit,
+    DateTime? createdAt,
   }) {
     return FavoriteItemEntity(
       id: id ?? this.id,
-      foodId: foodId ?? this.foodId,
       name: name ?? this.name,
-      brand: brand ?? this.brand,
       calories: calories ?? this.calories,
       protein: protein ?? this.protein,
       carbs: carbs ?? this.carbs,
       fat: fat ?? this.fat,
-      collectionId: collectionId ?? this.collectionId,
-      addedAt: addedAt ?? this.addedAt,
+      vitamins: vitamins ?? this.vitamins,
+      advice: advice ?? this.advice,
+      isFood: isFood ?? this.isFood,
+      servingSize: servingSize ?? this.servingSize,
+      servingUnit: servingUnit ?? this.servingUnit,
+      createdAt: createdAt ?? this.createdAt,
     );
   }
 
