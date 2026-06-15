@@ -40,3 +40,34 @@ class RegisterSubmitted extends AuthEvent {
     required this.confirmPassword,
   });
 }
+
+class VerifyOtpSubmitted extends AuthEvent {
+  final String email;
+  final String otp;
+
+  const VerifyOtpSubmitted({required this.email, required this.otp});
+}
+
+class ResendOtpSubmitted extends AuthEvent {
+  final String email;
+
+  const ResendOtpSubmitted({required this.email});
+}
+
+class ForgotPasswordSubmitted extends AuthEvent {
+  final String email;
+
+  const ForgotPasswordSubmitted({required this.email});
+}
+
+class ResetPasswordSubmitted extends AuthEvent {
+  final String email;
+  final String otp;
+  final String newPassword;
+
+  const ResetPasswordSubmitted({
+    required this.email,
+    required this.otp,
+    required this.newPassword,
+  });
+}

@@ -9,7 +9,10 @@ import '../../features/ai_photo_scan/presentation/pages/photo_scan_page.dart';
 import '../../features/auth/presentation/bloc/auth_bloc.dart';
 import '../../features/auth/presentation/bloc/auth_event.dart';
 import '../../features/auth/presentation/bloc/auth_state.dart';
+import '../../features/auth/presentation/pages/forgot_password_page.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
+import '../../features/auth/presentation/pages/new_password_page.dart';
+import '../../features/auth/presentation/pages/otp_verify_page.dart';
 import '../../features/auth/presentation/pages/register_page.dart';
 import '../../features/favorites/presentation/pages/favorite_page.dart';
 import '../../features/home/domain/entities/meal_of_the_day_entity.dart';
@@ -68,11 +71,21 @@ class AppRouter {
           AppRoutes.photoScan,
           AppRoutes.recentProducts,
           AppRoutes.recipe,
+          AppRoutes.forgotPassword,
+          AppRoutes.resetOtp,
+          AppRoutes.newPassword,
         ];
         return guestAllowed.contains(location) ? null : AppRoutes.home;
       }
 
-      const authPages = [AppRoutes.login, AppRoutes.register, AppRoutes.splash];
+      const authPages = [
+        AppRoutes.login,
+        AppRoutes.register,
+        AppRoutes.splash,
+        AppRoutes.forgotPassword,
+        AppRoutes.resetOtp,
+        AppRoutes.newPassword,
+      ];
       if (authPages.contains(location)) return AppRoutes.home;
 
       return null;
@@ -91,6 +104,50 @@ class AppRouter {
         path: AppRoutes.register,
         builder: (_, __) =>
             BlocProvider.value(value: _authBloc, child: const RegisterPage()),
+      ),
+
+      GoRoute(
+        path: AppRoutes.otpVerify,
+        builder: (_, state) {
+          final extra = state.extra as OtpVerifyExtra;
+          return BlocProvider.value(
+            value: _authBloc,
+            child: OtpVerifyPage(email: extra.email, mode: extra.mode),
+          );
+        },
+      ),
+
+      GoRoute(
+        path: AppRoutes.forgotPassword,
+        builder: (_, __) => BlocProvider.value(
+          value: _authBloc,
+          child: const ForgotPasswordPage(),
+        ),
+      ),
+
+      GoRoute(
+        path: AppRoutes.resetOtp,
+        builder: (_, state) {
+          final email = state.extra as String;
+          return BlocProvider.value(
+            value: _authBloc,
+            child: OtpVerifyPage(
+              email: email,
+              mode: OtpVerifyMode.resetPassword,
+            ),
+          );
+        },
+      ),
+
+      GoRoute(
+        path: AppRoutes.newPassword,
+        builder: (_, state) {
+          final extra = state.extra as NewPasswordExtra;
+          return BlocProvider.value(
+            value: _authBloc,
+            child: NewPasswordPage(email: extra.email, otp: extra.otp),
+          );
+        },
       ),
 
       GoRoute(

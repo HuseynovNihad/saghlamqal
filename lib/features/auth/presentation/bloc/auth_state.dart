@@ -1,3 +1,4 @@
+import '../../../../shared/entities/nutrition_entity.dart';
 import '../../domain/entities/user_entity.dart';
 
 abstract class AuthState {
@@ -29,5 +30,31 @@ class AuthError extends AuthState {
 }
 
 class AuthRegistered extends AuthState {
-  const AuthRegistered();
+  final String email;
+  const AuthRegistered({required this.email});
+}
+
+class AuthOtpVerified extends AuthState {
+  final UserEntity user;
+  final String token;
+  final NutritionEntity nutrition;
+
+  const AuthOtpVerified({
+    required this.user,
+    required this.token,
+    required this.nutrition,
+  });
+}
+
+class AuthOtpResent extends AuthState {
+  const AuthOtpResent();
+}
+
+class AuthForgotPasswordSent extends AuthState {
+  final String email;
+  const AuthForgotPasswordSent({required this.email});
+}
+
+class AuthPasswordResetSuccess extends AuthState {
+  const AuthPasswordResetSuccess();
 }

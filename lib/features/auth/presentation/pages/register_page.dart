@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kalori_tracker/core/constants/app_colors.dart';
 
 import '../../../../core/constants/app_assets.dart';
+import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/router/app_routes.dart';
 import '../../../../core/utils/app_validators.dart';
 import '../../../../core/utils/asset_extension.dart';
 import '../../../../core/utils/padding_extension.dart';
@@ -22,6 +23,7 @@ import '../widgets/birthday_field.dart';
 import '../widgets/gender_field.dart';
 import '../widgets/name_field.dart';
 import '../widgets/weight_height_field.dart';
+import 'otp_verify_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -119,6 +121,14 @@ class _RegisterPageState extends State<RegisterPage> {
                 context,
                 message: state.message,
                 type: SnackBarType.error,
+              );
+            } else if (state is AuthRegistered) {
+              context.push(
+                AppRoutes.otpVerify,
+                extra: OtpVerifyExtra(
+                  email: state.email,
+                  mode: OtpVerifyMode.register,
+                ),
               );
             }
           },
@@ -309,7 +319,7 @@ class _SectionHeader extends StatelessWidget {
     return Row(
       children: [
         const Expanded(child: Divider(thickness: 1)),
-        icon.svg(width: 16, height: 16,color: AppColors.primary),
+        icon.svg(width: 16, height: 16, color: AppColors.primary),
         6.ws,
         Text(
           title,

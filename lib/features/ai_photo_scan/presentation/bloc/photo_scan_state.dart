@@ -36,3 +36,16 @@ final class PhotoScanError extends PhotoScanState {
 final class PhotoScanNotFood extends PhotoScanState {
   const PhotoScanNotFood();
 }
+
+final class PhotoScanHistoryLoaded extends PhotoScanState {
+  final List<PhotoScanHistoryEntity> history;
+
+  const PhotoScanHistoryLoaded(this.history);
+
+  @override
+  List<Object?> get props => [history];
+}
+
+final class PhotoScanHistoryActionSuccess extends PhotoScanState {
+  const PhotoScanHistoryActionSuccess();
+}

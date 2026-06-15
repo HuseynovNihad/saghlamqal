@@ -19,3 +19,20 @@ final class PhotoAnalyzeRequested extends PhotoScanEvent {
 final class PhotoScanReset extends PhotoScanEvent {
   const PhotoScanReset();
 }
+
+final class GetScanHistoryRequested extends PhotoScanEvent {
+  const GetScanHistoryRequested();
+}
+
+final class DeleteScanHistoryRequested extends PhotoScanEvent {
+  final String id;
+
+  const DeleteScanHistoryRequested(this.id);
+
+  @override
+  List<Object> get props => [id];
+}
+
+final class ClearScanHistoryRequested extends PhotoScanEvent {
+  const ClearScanHistoryRequested();
+}

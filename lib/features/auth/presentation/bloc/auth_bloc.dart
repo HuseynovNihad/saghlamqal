@@ -3,33 +3,60 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/di/injection_container.dart';
 import '../../../../core/storage/token_storage.dart';
 import '../../data/models/request/register_request.dart';
-import '../../domain/repositories/auth_repository.dart';
+import '../../domain/usecases/login_usecase.dart';
+import '../../domain/usecases/login_with_token_usecase.dart';
+import '../../domain/usecases/register_usecase.dart';
+import '../../domain/usecases/verify_otp_usecase.dart';
+import '../../domain/usecases/resend_otp_usecase.dart';
+import '../../domain/usecases/forgot_password_usecase.dart';
+import '../../domain/usecases/reset_password_usecase.dart';
 import 'auth_event.dart';
 import 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  final IAuthRepository _authRepository;
+  final LoginUsecase _login;
+  final LoginWithTokenUsecase _loginWithToken;
+  final RegisterUsecase _register;
+  final VerifyOtpUsecase _verifyOtp;
+  final ResendOtpUsecase _resendOtp;
+  final ForgotPasswordUsecase _forgotPassword;
+  final ResetPasswordUsecase _resetPassword;
 
-  AuthBloc(this._authRepository) : super(const AuthInitial()) {
+  AuthBloc({
+    required LoginUsecase login,
+    required LoginWithTokenUsecase loginWithToken,
+    required RegisterUsecase register,
+    required VerifyOtpUsecase verifyOtp,
+    required ResendOtpUsecase resendOtp,
+    required ForgotPasswordUsecase forgotPassword,
+    required ResetPasswordUsecase resetPassword,
+  }) : _login = login,
+       _loginWithToken = loginWithToken,
+       _register = register,
+       _verifyOtp = verifyOtp,
+       _resendOtp = resendOtp,
+       _forgotPassword = forgotPassword,
+       _resetPassword = resetPassword,
+       super(const AuthInitial()) {
     on<AppStarted>(_onAppStarted);
     on<LoginSubmitted>(_onLogin);
     on<RegisterSubmitted>(_onRegister);
+    on<VerifyOtpSubmitted>(_onVerifyOtp);
+    on<ResendOtpSubmitted>(_onResendOtp);
+    on<ForgotPasswordSubmitted>(_onForgotPassword);
+    on<ResetPasswordSubmitted>(_onResetPassword);
   }
 
   Future<void> _onAppStarted(AppStarted event, Emitter<AuthState> emit) async {
     emit(const AuthLoading());
-
     await Future.delayed(const Duration(seconds: 3));
-
     final token = sl<TokenStorage>().getToken();
-
     if (token == null || token.isEmpty) {
       emit(const AuthUnauthenticated());
       return;
     }
-
     try {
-      final response = await _authRepository.loginWithToken(token);
+      final response = await _loginWithToken(token);
       emit(AuthAuthenticated(user: response.user, token: response.token));
     } catch (e) {
       emit(const AuthUnauthenticated());
@@ -38,9 +65,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> _onLogin(LoginSubmitted event, Emitter<AuthState> emit) async {
     emit(const AuthLoading());
-
     try {
-      final response = await _authRepository.login(event.email, event.password);
+      final response = await _login(
+        email: event.email,
+        password: event.password,
+      );
       sl<TokenStorage>().saveToken(response.token);
       emit(AuthAuthenticated(user: response.user, token: response.token));
     } catch (e) {
@@ -53,9 +82,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     emit(const AuthLoading());
-
     try {
-      final response = await _authRepository.register(
+      await _register(
         RegisterRequest(
           email: event.email,
           firstName: event.firstName,
@@ -70,8 +98,70 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           confirmPassword: event.confirmPassword,
         ),
       );
+      emit(AuthRegistered(email: event.email));
+    } catch (e) {
+      emit(AuthError(e.toString()));
+    }
+  }
+
+  Future<void> _onVerifyOtp(
+    VerifyOtpSubmitted event,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(const AuthLoading());
+    try {
+      final response = await _verifyOtp(email: event.email, otp: event.otp);
       sl<TokenStorage>().saveToken(response.token);
-      emit(AuthAuthenticated(user: response.user, token: response.token));
+      emit(
+        AuthOtpVerified(
+          user: response.user,
+          token: response.token,
+          nutrition: response.nutrition,
+        ),
+      );
+    } catch (e) {
+      emit(AuthError(e.toString()));
+    }
+  }
+
+  Future<void> _onResendOtp(
+    ResendOtpSubmitted event,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(const AuthLoading());
+    try {
+      await _resendOtp(event.email);
+      emit(const AuthOtpResent());
+    } catch (e) {
+      emit(AuthError(e.toString()));
+    }
+  }
+
+  Future<void> _onForgotPassword(
+    ForgotPasswordSubmitted event,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(const AuthLoading());
+    try {
+      await _forgotPassword(event.email);
+      emit(AuthForgotPasswordSent(email: event.email));
+    } catch (e) {
+      emit(AuthError(e.toString()));
+    }
+  }
+
+  Future<void> _onResetPassword(
+    ResetPasswordSubmitted event,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(const AuthLoading());
+    try {
+      await _resetPassword(
+        email: event.email,
+        otp: event.otp,
+        newPassword: event.newPassword,
+      );
+      emit(const AuthPasswordResetSuccess());
     } catch (e) {
       emit(AuthError(e.toString()));
     }
