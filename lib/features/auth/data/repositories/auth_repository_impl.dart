@@ -1,3 +1,4 @@
+import '../../../../core/storage/token_storage.dart';
 import '../../domain/entities/auth_response_entity.dart';
 import '../../domain/entities/register_response_entity.dart';
 import '../../domain/entities/verify_otp_response_entity.dart';
@@ -9,20 +10,31 @@ import '../models/request/verify_otp_request.dart';
 
 class AuthRepositoryImpl implements IAuthRepository {
   final IAuthRemoteDataSource _remoteDataSource;
+  final TokenStorage _tokenStorage;
 
-  AuthRepositoryImpl(this._remoteDataSource);
+  AuthRepositoryImpl(this._remoteDataSource, this._tokenStorage);
 
   @override
   Future<AuthResponseEntity> login(String email, String password) async {
     final request = LoginRequest(email: email, password: password);
     final response = await _remoteDataSource.login(request);
-    return AuthResponseEntity(user: response.user, token: response.token);
+    return AuthResponseEntity(
+      user: response.user,
+      token: response.token,
+      refreshToken: response.refreshToken,
+      nutrition: response.nutrition,
+    );
   }
 
   @override
   Future<AuthResponseEntity> loginWithToken(String token) async {
-    final response = await _remoteDataSource.getMe(token);
-    return AuthResponseEntity(user: response.user, token: token);
+    final user = await _remoteDataSource.getMe();
+    return AuthResponseEntity(
+      user: user,
+      token: token,
+      refreshToken: _tokenStorage.getRefreshToken() ?? '',
+      nutrition: null,
+    );
   }
 
   @override
@@ -67,5 +79,10 @@ class AuthRepositoryImpl implements IAuthRepository {
       otp: otp,
       newPassword: newPassword,
     );
+  }
+
+  @override
+  Future<void> logout(String refreshToken) async {
+    await _remoteDataSource.logout(refreshToken);
   }
 }

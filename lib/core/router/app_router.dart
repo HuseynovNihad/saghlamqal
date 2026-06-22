@@ -43,9 +43,18 @@ class GoRouterRefreshStream extends ChangeNotifier {
 class AppRouter {
   static final AuthBloc _authBloc = sl<AuthBloc>()..add(AppStarted());
 
+  static const _authPages = [
+    AppRoutes.login,
+    AppRoutes.register,
+    AppRoutes.forgotPassword,
+    AppRoutes.resetOtp,
+    AppRoutes.newPassword,
+    AppRoutes.otpVerify,
+  ];
+
   static final GoRouter router = GoRouter(
     initialLocation: AppRoutes.splash,
-    debugLogDiagnostics: true,
+    debugLogDiagnostics: false,
     refreshListenable: GoRouterRefreshStream(_authBloc.stream),
     errorBuilder: (context, state) => ErrorPage(
       type: ErrorType.notFound,
@@ -54,39 +63,17 @@ class AppRouter {
 
     redirect: (context, state) {
       final authState = _authBloc.state;
-      final isLoggedIn = authState is AuthAuthenticated;
-      final isLoading = authState is AuthInitial || authState is AuthLoading;
       final location = state.matchedLocation;
 
-      if (isLoading) {
+      if (authState is AuthInitial) {
         return location == AppRoutes.splash ? null : AppRoutes.splash;
       }
 
-      if (!isLoggedIn) {
-        const guestAllowed = [
-          AppRoutes.login,
-          AppRoutes.register,
-          AppRoutes.home,
-          AppRoutes.scan,
-          AppRoutes.photoScan,
-          AppRoutes.recentProducts,
-          AppRoutes.recipe,
-          AppRoutes.forgotPassword,
-          AppRoutes.resetOtp,
-          AppRoutes.newPassword,
-        ];
-        return guestAllowed.contains(location) ? null : AppRoutes.home;
-      }
+      if (location == AppRoutes.splash) return AppRoutes.home;
 
-      const authPages = [
-        AppRoutes.login,
-        AppRoutes.register,
-        AppRoutes.splash,
-        AppRoutes.forgotPassword,
-        AppRoutes.resetOtp,
-        AppRoutes.newPassword,
-      ];
-      if (authPages.contains(location)) return AppRoutes.home;
+      if (authState is AuthAuthenticated && _authPages.contains(location)) {
+        return AppRoutes.home;
+      }
 
       return null;
     },
@@ -109,7 +96,12 @@ class AppRouter {
       GoRoute(
         path: AppRoutes.otpVerify,
         builder: (_, state) {
-          final extra = state.extra as OtpVerifyExtra;
+          final extra = state.extra;
+          if (extra is! OtpVerifyExtra) {
+            return const Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            );
+          }
           return BlocProvider.value(
             value: _authBloc,
             child: OtpVerifyPage(email: extra.email, mode: extra.mode),
@@ -128,11 +120,16 @@ class AppRouter {
       GoRoute(
         path: AppRoutes.resetOtp,
         builder: (_, state) {
-          final email = state.extra as String;
+          final extra = state.extra;
+          if (extra is! String) {
+            return const Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            );
+          }
           return BlocProvider.value(
             value: _authBloc,
             child: OtpVerifyPage(
-              email: email,
+              email: extra,
               mode: OtpVerifyMode.resetPassword,
             ),
           );
@@ -142,7 +139,10 @@ class AppRouter {
       GoRoute(
         path: AppRoutes.newPassword,
         builder: (_, state) {
-          final extra = state.extra as NewPasswordExtra;
+          final extra = state.extra;
+          if (extra is! NewPasswordExtra) {
+            return const _RedirectingPlaceholder(target: AppRoutes.login);
+          }
           return BlocProvider.value(
             value: _authBloc,
             child: NewPasswordPage(email: extra.email, otp: extra.otp),
@@ -166,8 +166,13 @@ class AppRouter {
       GoRoute(
         path: AppRoutes.recentProducts,
         builder: (_, state) {
-          final products = state.extra as List<RecentProductEntity>;
-          return RecentProductsPage(products: products);
+          final extra = state.extra;
+          if (extra is! List<RecentProductEntity>) {
+            return const Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            );
+          }
+          return RecentProductsPage(products: extra);
         },
       ),
 
@@ -179,10 +184,39 @@ class AppRouter {
       GoRoute(
         path: AppRoutes.recipe,
         builder: (_, state) {
-          final meal = state.extra as MealOfTheDayEntity;
-          return RecipePage(meal: meal);
+          final extra = state.extra;
+          if (extra is! MealOfTheDayEntity) {
+            return const Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            );
+          }
+          return RecipePage(meal: extra);
         },
       ),
     ],
   );
+}
+
+class _RedirectingPlaceholder extends StatefulWidget {
+  final String target;
+  const _RedirectingPlaceholder({required this.target});
+
+  @override
+  State<_RedirectingPlaceholder> createState() =>
+      _RedirectingPlaceholderState();
+}
+
+class _RedirectingPlaceholderState extends State<_RedirectingPlaceholder> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) context.go(widget.target);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(body: Center(child: CircularProgressIndicator()));
+  }
 }

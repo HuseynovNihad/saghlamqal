@@ -23,7 +23,12 @@ class CustomSnackBar {
           children: [
             Icon(icon, color: Colors.white),
             10.ws,
-            Expanded(child: Text(message, style: AppTextStyles.bodyMedium)),
+            Expanded(
+              child: Text(
+                message,
+                style: AppTextStyles.bodyMedium.copyWith(color: Colors.white),
+              ),
+            ),
           ],
         ),
       ),

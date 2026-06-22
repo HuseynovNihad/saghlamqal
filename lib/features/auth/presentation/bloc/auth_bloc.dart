@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/di/injection_container.dart';
@@ -5,6 +7,7 @@ import '../../../../core/storage/token_storage.dart';
 import '../../data/models/request/register_request.dart';
 import '../../domain/usecases/login_usecase.dart';
 import '../../domain/usecases/login_with_token_usecase.dart';
+import '../../domain/usecases/logout_usecase.dart';
 import '../../domain/usecases/register_usecase.dart';
 import '../../domain/usecases/verify_otp_usecase.dart';
 import '../../domain/usecases/resend_otp_usecase.dart';
@@ -21,6 +24,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final ResendOtpUsecase _resendOtp;
   final ForgotPasswordUsecase _forgotPassword;
   final ResetPasswordUsecase _resetPassword;
+  final LogoutUsecase _logout;
 
   AuthBloc({
     required LoginUsecase login,
@@ -30,6 +34,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     required ResendOtpUsecase resendOtp,
     required ForgotPasswordUsecase forgotPassword,
     required ResetPasswordUsecase resetPassword,
+    required LogoutUsecase logout,
   }) : _login = login,
        _loginWithToken = loginWithToken,
        _register = register,
@@ -37,6 +42,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
        _resendOtp = resendOtp,
        _forgotPassword = forgotPassword,
        _resetPassword = resetPassword,
+       _logout = logout,
        super(const AuthInitial()) {
     on<AppStarted>(_onAppStarted);
     on<LoginSubmitted>(_onLogin);
@@ -45,6 +51,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<ResendOtpSubmitted>(_onResendOtp);
     on<ForgotPasswordSubmitted>(_onForgotPassword);
     on<ResetPasswordSubmitted>(_onResetPassword);
+    on<LogoutRequested>(_onLogout);
+    on<AuthStateReset>(_onAuthStateReset);
   }
 
   Future<void> _onAppStarted(AppStarted event, Emitter<AuthState> emit) async {
@@ -59,6 +67,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final response = await _loginWithToken(token);
       emit(AuthAuthenticated(user: response.user, token: response.token));
     } catch (e) {
+      log('Session restore failed: $e');
       emit(const AuthUnauthenticated());
     }
   }
@@ -70,7 +79,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         email: event.email,
         password: event.password,
       );
-      sl<TokenStorage>().saveToken(response.token);
+      await sl<TokenStorage>().saveToken(response.token);
+      await sl<TokenStorage>().saveRefreshToken(response.refreshToken);
       emit(AuthAuthenticated(user: response.user, token: response.token));
     } catch (e) {
       emit(AuthError(e.toString()));
@@ -111,14 +121,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(const AuthLoading());
     try {
       final response = await _verifyOtp(email: event.email, otp: event.otp);
-      sl<TokenStorage>().saveToken(response.token);
-      emit(
-        AuthOtpVerified(
-          user: response.user,
-          token: response.token,
-          nutrition: response.nutrition,
-        ),
-      );
+      await sl<TokenStorage>().saveToken(response.token);
+      await sl<TokenStorage>().saveRefreshToken(response.refreshToken);
+      emit(AuthAuthenticated(user: response.user, token: response.token));
     } catch (e) {
       emit(AuthError(e.toString()));
     }
@@ -165,5 +170,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     } catch (e) {
       emit(AuthError(e.toString()));
     }
+  }
+
+  Future<void> _onLogout(LogoutRequested event, Emitter<AuthState> emit) async {
+    try {
+      final refreshToken = sl<TokenStorage>().getRefreshToken();
+      if (refreshToken != null) {
+        await _logout(refreshToken);
+      }
+      await sl<TokenStorage>().clearAll();
+      emit(const AuthUnauthenticated());
+    } catch (e) {
+      await sl<TokenStorage>().clearAll();
+      emit(const AuthUnauthenticated());
+    }
+  }
+
+  void _onAuthStateReset(AuthStateReset event, Emitter<AuthState> emit) {
+    emit(const AuthUnauthenticated());
   }
 }

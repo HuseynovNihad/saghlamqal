@@ -5,37 +5,20 @@ import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/utils/padding_extension.dart';
 import '../../../../core/utils/radius_extension.dart';
 import '../../../../core/utils/sized_box_extension.dart';
-import '../../../../shared/widgets/guest_lock_card.dart';
 import '../../domain/entities/daily_goal_entity.dart';
 import '../bloc/home_bloc.dart';
 
 class DailyGoalCard extends StatelessWidget {
-  final bool isLoggedIn;
   final HomeState state;
 
-  const DailyGoalCard({
-    super.key,
-    required this.isLoggedIn,
-    required this.state,
-  });
+  const DailyGoalCard({super.key, required this.state});
 
   @override
   Widget build(BuildContext context) {
-    if (!isLoggedIn) {
-      return const GuestLockCard(
-        title: 'Gündəlik Kalori Ehtiyacı',
-        message: 'Daxil ol, sənin üçün gündəlik kalori ehtiyacını hesablayaq.',
-      );
-    }
-
-    if (state is HomeLoading) {
-      return const _DailyGoalSkeleton();
-    }
-
+    if (state is HomeLoading) return const _DailyGoalSkeleton();
     if (state is HomeLoaded) {
       return _LoggedInCard(dailyGoal: (state as HomeLoaded).dailyGoal);
     }
-
     return const SizedBox.shrink();
   }
 }
@@ -76,14 +59,14 @@ class _LoggedInCard extends StatelessWidget {
                 textBaseline: TextBaseline.alphabetic,
                 children: [
                   Text(
-                    '${dailyGoal.dailyKcal}',
+                    '${dailyGoal.maintainCalories}',
                     style: AppTextStyles.h1.copyWith(
                       fontSize: 28,
                       fontWeight: FontWeight.w600,
                       height: 1,
                     ),
                   ),
-                  const SizedBox(width: 4),
+                  4.ws,
                   Text(
                     'kcal',
                     style: AppTextStyles.bodyMedium.copyWith(
@@ -101,20 +84,19 @@ class _LoggedInCard extends StatelessWidget {
             children: [
               _MacroChip(
                 label: 'Zülal',
-                value:
-                    '${dailyGoal.protein.recommended}${dailyGoal.protein.unit}',
+                value: '${dailyGoal.dailyProtein}g',
                 color: const Color(0xFF4ADE80),
               ),
-              const SizedBox(width: 10),
+              10.ws,
               _MacroChip(
                 label: 'Karbohidrat',
-                value: '${dailyGoal.carbs.recommended}${dailyGoal.carbs.unit}',
+                value: '${dailyGoal.dailyCarbs}g',
                 color: const Color(0xFFFBBF24),
               ),
-              const SizedBox(width: 10),
+              10.ws,
               _MacroChip(
                 label: 'Yağ',
-                value: '${dailyGoal.fats.recommended}${dailyGoal.fats.unit}',
+                value: '${dailyGoal.dailyFat}g',
                 color: const Color(0xFFF87171),
               ),
             ],

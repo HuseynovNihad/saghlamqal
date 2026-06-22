@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/di/injection_container.dart';
+import '../../../../core/router/app_routes.dart';
 import '../../../../core/utils/sized_box_extension.dart';
 import '../../../auth/presentation/bloc/auth_bloc.dart';
 import '../../../auth/presentation/bloc/auth_state.dart';
@@ -21,56 +23,83 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => sl<HomeBloc>()..add(const HomeStarted()),
+      create: (_) => sl<HomeBloc>(),
       child: const _HomeView(),
     );
   }
 }
 
-class _HomeView extends StatelessWidget {
+class _HomeView extends StatefulWidget {
   const _HomeView();
+
+  @override
+  State<_HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<_HomeView> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<HomeBloc>().add(const HomeStarted());
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: BlocBuilder<AuthBloc, AuthState>(
-        builder: (context, authState) {
-          final isLoggedIn = authState is AuthAuthenticated;
-          final name = isLoggedIn ? authState.user.name : null;
-
-          return BlocBuilder<HomeBloc, HomeState>(
-            builder: (context, homeState) {
-              return SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 16,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _Header(name: name),
-                    24.hs,
-                    const PhotoScanCtaButton(),
-                    16.hs,
-                    if (!isLoggedIn) ...[
-                      const GuestPreviewSection(),
-                    ] else ...[
-                      DailyGoalCard(isLoggedIn: true, state: homeState),
-                      16.hs,
-                      const WaterReminderCard(),
-                      16.hs,
-                      HydrationCard(isLoggedIn: true, state: homeState),
-                      16.hs,
-                      RecentProductsSection(isLoggedIn: true, state: homeState),
-                    ],
-                    16.hs,
-                    MealOfTheDayCard(state: homeState),
-                  ],
-                ),
-              );
-            },
-          );
+      child: BlocListener<AuthBloc, AuthState>(
+        listenWhen: (previous, current) =>
+            previous is! AuthAuthenticated && current is AuthAuthenticated,
+        listener: (context, authState) {
+          context.read<HomeBloc>().add(const HomeStarted());
         },
+        child: BlocBuilder<AuthBloc, AuthState>(
+          builder: (context, authState) {
+            final isLoggedIn = authState is AuthAuthenticated;
+            final name = isLoggedIn ? authState.user.firstName : null;
+
+            return BlocBuilder<HomeBloc, HomeState>(
+              builder: (context, homeState) {
+                return SingleChildScrollView(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 16,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _Header(name: name),
+                      24.hs,
+                      PhotoScanCtaButton(
+                        onTap: () async {
+                          await context.push(AppRoutes.photoScan);
+                          if (context.mounted) {
+                            context.read<HomeBloc>().add(
+                              const HomeRefreshRecent(),
+                            );
+                          }
+                        },
+                      ),
+                      16.hs,
+                      if (!isLoggedIn) ...[
+                        const GuestPreviewSection(),
+                      ] else ...[
+                        DailyGoalCard(state: homeState),
+                        16.hs,
+                        const WaterReminderCard(),
+                        16.hs,
+                        HydrationCard(state: homeState),
+                        16.hs,
+                        RecentProductsSection(state: homeState),
+                      ],
+                      16.hs,
+                      MealOfTheDayCard(state: homeState),
+                    ],
+                  ),
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }
@@ -102,7 +131,7 @@ class _Header extends StatelessWidget {
             ),
             children: [
               TextSpan(text: '$_greeting,\n'),
-              TextSpan(text: name != null ? '$name.' : 'Qonaq'),
+              TextSpan(text: name != null ? '$name' : 'Qonaq'),
             ],
           ),
         ),

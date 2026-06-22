@@ -1,62 +1,75 @@
 import '../../../ai_photo_scan/data/models/photo_product_model.dart';
 
 class RecentProductModel {
-  final String name;
-  final String? imageUrl;
-  final int calories;
-  final int protein;
-  final int carbs;
-  final int fat;
-  final Map<String, double?>? vitamins;
-  final String advice;
+  final String id;
+  final String? icon;
+  final String? name;
+  final double? calories;
+  final double? protein;
+  final double? carbs;
+  final double? fat;
+  final Map<String, dynamic>? vitamins;
+  final String? advice;
   final bool isFood;
+  final double? servingSize;
+  final String? servingUnit;
+  final String createdAt;
 
   const RecentProductModel({
-    required this.name,
-    this.imageUrl,
-    required this.calories,
-    required this.protein,
-    required this.carbs,
-    required this.fat,
+    required this.id,
+    this.icon,
+    this.name,
+    this.calories,
+    this.protein,
+    this.carbs,
+    this.fat,
     this.vitamins,
-    required this.advice,
+    this.advice,
     this.isFood = true,
+    this.servingSize,
+    this.servingUnit,
+    required this.createdAt,
   });
 
   factory RecentProductModel.fromJson(Map<String, dynamic> json) {
-    final rawVitamins = json['vitamins'] as Map<String, dynamic>?;
     return RecentProductModel(
-      name: json['name'] as String,
-      imageUrl: json['image_url'] as String?,
-      calories: json['calories'] as int,
-      protein: json['protein'] as int,
-      carbs: json['carbs'] as int,
-      fat: json['fat'] as int,
-      vitamins: rawVitamins?.map(
-        (k, v) => MapEntry(k, (v as num?)?.toDouble()),
-      ),
-      advice: (json['advice'] as String?) ?? '',
+      id: json['id'] as String,
+      icon: json['icon'] as String?,
+      name: json['name'] as String?,
+      calories: (json['calories'] as num?)?.toDouble(),
+      protein: (json['protein'] as num?)?.toDouble(),
+      carbs: (json['carbs'] as num?)?.toDouble(),
+      fat: (json['fat'] as num?)?.toDouble(),
+      vitamins: json['vitamins'] as Map<String, dynamic>?,
+      advice: json['advice'] as String?,
       isFood: (json['is_food'] as bool?) ?? true,
+      servingSize: (json['serving_size'] as num?)?.toDouble(),
+      servingUnit: json['serving_unit'] as String?,
+      createdAt: json['createdAt'] as String,
     );
   }
 
   factory RecentProductModel.fromPhoto(PhotoProductModel photo) {
     return RecentProductModel(
+      id: '',
+      icon: photo.icon,
       name: photo.name,
-      calories: photo.calories?.round() ?? 0,
-      protein: photo.protein?.round() ?? 0,
-      carbs: photo.carbs?.round() ?? 0,
-      fat: photo.fat?.round() ?? 0,
+      calories: photo.calories,
+      protein: photo.protein,
+      carbs: photo.carbs,
+      fat: photo.fat,
       vitamins: photo.vitamins,
       advice: photo.advice,
       isFood: photo.isFood,
+      createdAt: DateTime.now().toIso8601String(),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
+      'icon': icon,
       'name': name,
-      'image_url': imageUrl,
       'calories': calories,
       'protein': protein,
       'carbs': carbs,
@@ -64,6 +77,9 @@ class RecentProductModel {
       'vitamins': vitamins,
       'advice': advice,
       'is_food': isFood,
+      'serving_size': servingSize,
+      'serving_unit': servingUnit,
+      'createdAt': createdAt,
     };
   }
 }

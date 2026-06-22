@@ -6,6 +6,10 @@ class AppStarted extends AuthEvent {}
 
 class LogoutRequested extends AuthEvent {}
 
+class AuthStateReset extends AuthEvent {
+  const AuthStateReset();
+}
+
 class LoginSubmitted extends AuthEvent {
   final String email;
   final String password;

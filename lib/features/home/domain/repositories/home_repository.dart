@@ -6,7 +6,7 @@ import '../entities/recent_product_entity.dart';
 abstract class HomeRepository {
   Future<DailyGoalEntity> getDailyGoal();
   Future<HydrationEntity> getHydration();
-  Future<HydrationEntity> addWater(int amount);
+  Future<HydrationEntity> addWater(double amount);
   Future<List<RecentProductEntity>> getRecentProducts();
   Future<MealOfTheDayEntity> getMealOfTheDay();
 }

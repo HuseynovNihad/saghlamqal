@@ -1,4 +1,5 @@
 class PhotoProductModel {
+  final String? icon;
   final String name;
   final double? calories;
   final double? protein;
@@ -11,6 +12,7 @@ class PhotoProductModel {
   final String? servingUnit;
 
   const PhotoProductModel({
+    this.icon,
     required this.name,
     this.calories,
     this.protein,
@@ -26,6 +28,7 @@ class PhotoProductModel {
   factory PhotoProductModel.fromJson(Map<String, dynamic> json) {
     final rawVitamins = json['vitamins'] as Map<String, dynamic>?;
     return PhotoProductModel(
+      icon: (json['icon'] as String?) ?? '🍽️',
       name: (json['name'] as String?) ?? 'Naməlum məhsul',
       calories: (json['calories'] as num?)?.toDouble(),
       protein: (json['protein'] as num?)?.toDouble(),
@@ -42,6 +45,7 @@ class PhotoProductModel {
   }
 
   Map<String, dynamic> toJson() => {
+    'icon': icon,
     'name': name,
     'calories': calories,
     'protein': protein,

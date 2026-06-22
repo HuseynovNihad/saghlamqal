@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../domain/entities/daily_goal_entity.dart';
@@ -36,6 +38,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<HomeAddWaterPressed>(_onAddWaterPressed);
     on<HomeRecentProductsRequested>(_onRecentProductsRequested);
     on<HomeMealOfTheDayRequested>(_onMealOfTheDayRequested);
+    on<HomeRefreshRecent>(_onRefreshRecent);
   }
 
   Future<void> _onHomeStarted(
@@ -43,25 +46,40 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     Emitter<HomeState> emit,
   ) async {
     emit(const HomeLoading());
-    try {
-      final results = await Future.wait([
-        _getDailyGoal(),
-        _getHydration(),
-        _getRecentProducts(),
-        _getMealOfTheDay(),
-      ]);
 
-      emit(
-        HomeLoaded(
-          dailyGoal: results[0] as DailyGoalEntity,
-          hydration: results[1] as HydrationEntity,
-          recentProducts: results[2] as List<RecentProductEntity>,
-          mealOfTheDay: results[3] as MealOfTheDayEntity,
-        ),
-      );
+    DailyGoalEntity? dailyGoal;
+    HydrationEntity? hydration;
+    List<RecentProductEntity> recentProducts = [];
+    MealOfTheDayEntity? mealOfTheDay;
+    try {
+      dailyGoal = await _getDailyGoal();
     } catch (e) {
-      emit(HomeError(message: e.toString()));
+      log('DailyGoal error: $e');
     }
+    try {
+      hydration = await _getHydration();
+    } catch (e) {
+      log('Hydration error: $e');
+    }
+    try {
+      recentProducts = await _getRecentProducts();
+    } catch (e) {
+      log('RecentProducts error: $e');
+    }
+    try {
+      mealOfTheDay = await _getMealOfTheDay();
+    } catch (e) {
+      log('MealOfTheDay error: $e');
+    }
+
+    emit(
+      HomeLoaded(
+        dailyGoal: dailyGoal ?? DailyGoalEntity.empty(),
+        hydration: hydration ?? HydrationEntity.empty(),
+        recentProducts: recentProducts,
+        mealOfTheDay: mealOfTheDay,
+      ),
+    );
   }
 
   Future<void> _onAddWaterPressed(
@@ -71,11 +89,32 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     final current = state;
     if (current is! HomeLoaded) return;
 
+    final addedLiters = event.amount;
+    final newConsumed = (current.hydration.consumed + addedLiters).clamp(
+      0.0,
+      current.hydration.dailyGoal,
+    );
+    final newRemaining = (current.hydration.dailyGoal - newConsumed).clamp(
+      0.0,
+      current.hydration.dailyGoal,
+    );
+    final newPercentage = ((newConsumed / current.hydration.dailyGoal) * 100)
+        .clamp(0.0, 100.0);
+
+    final optimistic = HydrationEntity(
+      dailyGoal: current.hydration.dailyGoal,
+      consumed: newConsumed,
+      remaining: newRemaining,
+      percentage: newPercentage,
+    );
+
+    emit(current.copyWith(hydration: optimistic));
+
     try {
-      final hydration = await _addWater(event.amount);
-      emit(current.copyWith(hydration: hydration));
-    } catch (e) {
-      emit(HomeError(message: e.toString()));
+      final updated = await _addWater(event.amount);
+      emit(current.copyWith(hydration: updated));
+    } catch (_) {
+      emit(current.copyWith(hydration: current.hydration));
     }
   }
 
@@ -106,6 +145,21 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(current.copyWith(mealOfTheDay: mealOfTheDay));
     } catch (e) {
       emit(HomeError(message: e.toString()));
+    }
+  }
+
+  Future<void> _onRefreshRecent(
+    HomeRefreshRecent event,
+    Emitter<HomeState> emit,
+  ) async {
+    final current = state;
+    if (current is! HomeLoaded) return;
+
+    try {
+      final recentProducts = await _getRecentProducts();
+      emit(current.copyWith(recentProducts: recentProducts));
+    } catch (e) {
+      log('RefreshRecent error: $e');
     }
   }
 }

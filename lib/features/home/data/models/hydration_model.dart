@@ -1,27 +1,31 @@
 class HydrationModel {
-  final double tracked;
-  final double recommended;
-  final int addAmount;
+  final double dailyGoal;
+  final double consumed;
+  final double remaining;
+  final double percentage;
 
   const HydrationModel({
-    required this.tracked,
-    required this.recommended,
-    required this.addAmount,
+    required this.dailyGoal,
+    required this.consumed,
+    required this.remaining,
+    required this.percentage,
   });
 
   factory HydrationModel.fromJson(Map<String, dynamic> json) {
     return HydrationModel(
-      tracked: (json['tracked'] as num).toDouble(),
-      recommended: (json['recommended'] as num).toDouble(),
-      addAmount: (json['add_amount'] as num).toInt(),
+      dailyGoal: (json['dailyGoal'] as num).toDouble(),
+      consumed: (json['consumed'] as num).toDouble(),
+      remaining: (json['remaining'] as num).toDouble(),
+      percentage: (json['percentage'] as num).toDouble(),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'tracked': tracked,
-      'recommended': recommended,
-      'add_amount': addAmount,
+      'dailyGoal': dailyGoal,
+      'consumed': consumed,
+      'remaining': remaining,
+      'percentage': percentage,
     };
   }
 }

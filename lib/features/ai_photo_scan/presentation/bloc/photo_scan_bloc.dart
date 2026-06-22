@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -41,12 +43,14 @@ class PhotoScanBloc extends Bloc<PhotoScanEvent, PhotoScanState> {
     emit(const PhotoScanLoading());
     try {
       final product = await _analyzeImageUseCase(event.imagePath);
+      log('PhotoScan result: $product', name: 'PhotoScanBloc');
       if (!product.isFood) {
         emit(const PhotoScanNotFood());
       } else {
         emit(PhotoScanSuccess(product));
       }
     } catch (e) {
+      log('PhotoScan error: $e', name: 'PhotoScanBloc');
       emit(PhotoScanError(e.toString()));
     }
   }

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -66,6 +68,7 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
       child: Scaffold(
         body: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
+            log('📍 NewPasswordPage listener | state=${state.runtimeType}');
             if (state is AuthError) {
               CustomSnackBar.show(
                 context,
@@ -73,13 +76,20 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                 type: SnackBarType.error,
               );
             } else if (state is AuthPasswordResetSuccess) {
+              log(
+                '📍 AuthPasswordResetSuccess alındı, login-ə keçid planlaşdırılır',
+              );
               CustomSnackBar.show(
                 context,
                 message: 'Şifrəniz uğurla yeniləndi',
                 type: SnackBarType.success,
               );
-              // Bütün reset axışını stack-dan təmizləyib login-ə yönləndir
-              context.go(AppRoutes.login);
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                if (context.mounted) {
+                  context.read<AuthBloc>().add(const AuthStateReset());
+                  context.go(AppRoutes.login);
+                }
+              });
             }
           },
           builder: (context, state) {

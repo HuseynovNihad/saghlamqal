@@ -1,11 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 
 import '../storage/token_storage.dart';
 import '../di/injection_container.dart';
 
 import 'interceptors/auth_interceptor.dart';
-import 'interceptors/log_interceptor.dart';
 import 'models/network_exceptions.dart';
 
 class NetworkManager {
@@ -28,7 +26,7 @@ class NetworkManager {
 
     _dio.interceptors.addAll([
       AuthInterceptor(tokenStorage),
-      if (kDebugMode) AppLogInterceptor(),
+      // if (kDebugMode) AppLogInterceptor(),
     ]);
   }
 
@@ -105,7 +103,7 @@ class NetworkManager {
       path,
       method: 'POST',
       data: formData,
-      options: Options(contentType: 'multipart/form-data'),
+      options: Options(method: 'POST', contentType: 'multipart/form-data'),
     );
   }
 }

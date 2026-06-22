@@ -58,7 +58,7 @@ class GuestPreviewSection extends StatelessWidget {
             width: double.infinity,
             height: 50,
             child: ElevatedButton(
-              onPressed: () => context.push(AppRoutes.login),
+              onPressed: () => context.go(AppRoutes.login),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white,
                 foregroundColor: const Color(0xFF1A3A8F),

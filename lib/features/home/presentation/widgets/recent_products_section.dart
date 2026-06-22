@@ -6,30 +6,17 @@ import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/router/app_routes.dart';
 import '../../../../core/utils/radius_extension.dart';
 import '../../../../core/utils/sized_box_extension.dart';
-import '../../../../shared/widgets/guest_lock_card.dart';
 import '../../domain/entities/recent_product_entity.dart';
 import '../bloc/home_bloc.dart';
 import '../widgets/recent_product_card.dart';
 
 class RecentProductsSection extends StatelessWidget {
-  final bool isLoggedIn;
   final HomeState state;
 
-  const RecentProductsSection({
-    super.key,
-    required this.state,
-    required this.isLoggedIn,
-  });
+  const RecentProductsSection({super.key, required this.state});
 
   @override
   Widget build(BuildContext context) {
-    if (!isLoggedIn) {
-      return const GuestLockCard(
-        title: 'Son oxudulanlar',
-        message: 'Daxil ol, oxuduğun məhsulları burada görəsən.',
-      );
-    }
-    
     final products = state is HomeLoaded
         ? (state as HomeLoaded).recentProducts
         : <RecentProductEntity>[];

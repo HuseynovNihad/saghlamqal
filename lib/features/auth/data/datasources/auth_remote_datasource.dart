@@ -5,12 +5,13 @@ import '../models/request/register_request.dart';
 import '../models/request/verify_otp_request.dart';
 import '../models/response/login_response_model.dart';
 import '../models/response/register_response_model.dart';
+import '../models/response/user_model.dart';
 import '../models/response/verify_otp_response_model.dart';
 
 abstract class IAuthRemoteDataSource {
   Future<LoginResponseModel> login(LoginRequest request);
   Future<RegisterResponseModel> register(RegisterRequest request);
-  Future<LoginResponseModel> getMe(String token);
+  Future<UserModel> getMe();
   Future<VerifyOtpResponseModel> verifyOtp(VerifyOtpRequest request);
   Future<void> resendOtp(String email);
   Future<void> forgotPassword(String email);
@@ -19,6 +20,7 @@ abstract class IAuthRemoteDataSource {
     required String otp,
     required String newPassword,
   });
+  Future<void> logout(String refreshToken);
 }
 
 class AuthRemoteDataSourceImpl implements IAuthRemoteDataSource {
@@ -45,9 +47,9 @@ class AuthRemoteDataSourceImpl implements IAuthRemoteDataSource {
   }
 
   @override
-  Future<LoginResponseModel> getMe(String token) async {
+  Future<UserModel> getMe() async {
     final response = await _networkManager.get(Endpoints.getMe);
-    return LoginResponseModel.fromJson(response.data);
+    return UserModel.fromJson(response.data as Map<String, dynamic>);
   }
 
   @override
@@ -81,6 +83,14 @@ class AuthRemoteDataSourceImpl implements IAuthRemoteDataSource {
     await _networkManager.post(
       Endpoints.resetPassword,
       data: {'email': email, 'otp': otp, 'newPassword': newPassword},
+    );
+  }
+
+  @override
+  Future<void> logout(String refreshToken) async {
+    await _networkManager.post(
+      Endpoints.logout,
+      data: {'refreshToken': refreshToken},
     );
   }
 }

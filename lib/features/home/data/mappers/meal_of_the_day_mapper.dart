@@ -7,19 +7,20 @@ class MealOfTheDayMapper {
 
   static MealOfTheDayEntity toEntity(MealOfTheDayModel model) {
     return MealOfTheDayEntity(
-      id: model.id,
-      tag: model.tag,
-      title: model.title,
-      imageUrl: model.imageUrl,
-      kcal: model.kcal,
-      timeMinutes: model.timeMinutes,
-      description: model.description,
-      protein: model.protein,
-      carbs: model.carbs,
-      fat: model.fat,
-      ingredients: model.ingredients.map(IngredientMapper.toEntity).toList(),
-      steps: model.steps,
-      servings: model.servings,
+      id: model.id ?? 0,
+      tag: model.tag ?? '',
+      title: model.title ?? '',
+      imageUrl: model.imageUrl ?? '',
+      kcal: model.kcal ?? 0,
+      timeMinutes: model.timeMinutes ?? 0,
+      description: model.description ?? '',
+      protein: model.protein ?? 0,
+      carbs: model.carbs ?? 0,
+      fat: model.fat ?? 0,
+      ingredients:
+          model.ingredients?.map(IngredientMapper.toEntity).toList() ?? [],
+      steps: model.steps ?? [],
+      servings: model.servings ?? 0,
     );
   }
 

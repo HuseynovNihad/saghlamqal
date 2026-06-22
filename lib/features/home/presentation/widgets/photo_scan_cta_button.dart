@@ -8,7 +8,9 @@ import '../../../../core/router/app_routes.dart';
 import '../../../../core/utils/asset_extension.dart';
 
 class PhotoScanCtaButton extends StatelessWidget {
-  const PhotoScanCtaButton({super.key});
+  final VoidCallback? onTap;
+
+  const PhotoScanCtaButton({super.key, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,7 @@ class PhotoScanCtaButton extends StatelessWidget {
     final cardHeight = screenHeight * 0.22;
 
     return GestureDetector(
-      onTap: () => context.push(AppRoutes.photoScan),
+      onTap: onTap ?? () => context.push(AppRoutes.photoScan),
       child: Container(
         width: double.infinity,
         height: cardHeight,

@@ -15,6 +15,7 @@ import '../../../../shared/widgets/custom_snackbar.dart';
 import '../../../../shared/widgets/custom_text_button.dart';
 import '../../../../shared/widgets/custom_text_field.dart';
 import '../bloc/auth_bloc.dart';
+import '../bloc/auth_event.dart';
 import '../bloc/auth_state.dart';
 
 class LoginPage extends StatefulWidget {
@@ -30,20 +31,20 @@ class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  // void _login() {
-  //   if (!_formKey.currentState!.validate()) return;
-
-  //   context.read<AuthBloc>().add(
-  //     LoginSubmitted(
-  //       email: _emailController.text.trim(),
-  //       password: _passwordController.text.trim(),
-  //     ),
-  //   );
-  // }
-
   void _login() {
-    context.go(AppRoutes.home);
+    if (!_formKey.currentState!.validate()) return;
+
+    context.read<AuthBloc>().add(
+      LoginSubmitted(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      ),
+    );
   }
+
+  // void _login() {
+  //   context.go(AppRoutes.home);
+  // }
 
   @override
   void dispose() {
@@ -64,6 +65,8 @@ class _LoginPageState extends State<LoginPage> {
                 message: state.message,
                 type: SnackBarType.error,
               );
+            } else if (state is AuthAuthenticated) {
+              context.go(AppRoutes.home);
             }
           },
           builder: (context, state) {
@@ -119,7 +122,7 @@ class _LoginPageState extends State<LoginPage> {
                               alignment: Alignment.centerRight,
                               child: TextButton(
                                 onPressed: () {
-                                  // TODO: forgot password page
+                                  context.go(AppRoutes.forgotPassword);
                                 },
                                 child: Text(
                                   "Şifrənizi unutmusunuz?",

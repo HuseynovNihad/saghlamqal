@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:kalori_tracker/features/auth/domain/usecases/logout_usecase.dart';
 
 import 'data/datasources/auth_remote_datasource.dart';
 import 'data/repositories/auth_repository_impl.dart';
@@ -23,7 +24,9 @@ Future<void> initAuth(GetIt sl) async {
   // ─────────────────────────────────────────────────────────────
   // REPOSITORY
   // ─────────────────────────────────────────────────────────────
-  sl.registerLazySingleton<IAuthRepository>(() => AuthRepositoryImpl(sl()));
+  sl.registerLazySingleton<IAuthRepository>(
+    () => AuthRepositoryImpl(sl(), sl()),
+  );
 
   // ─────────────────────────────────────────────────────────────
   // USE CASES
@@ -35,6 +38,7 @@ Future<void> initAuth(GetIt sl) async {
   sl.registerLazySingleton(() => ResendOtpUsecase(sl<IAuthRepository>()));
   sl.registerLazySingleton(() => ForgotPasswordUsecase(sl<IAuthRepository>()));
   sl.registerLazySingleton(() => ResetPasswordUsecase(sl<IAuthRepository>()));
+  sl.registerLazySingleton(() => LogoutUsecase(sl<IAuthRepository>()));
 
   // ─────────────────────────────────────────────────────────────
   // BLOC
@@ -48,6 +52,7 @@ Future<void> initAuth(GetIt sl) async {
       resendOtp: sl<ResendOtpUsecase>(),
       forgotPassword: sl<ForgotPasswordUsecase>(),
       resetPassword: sl<ResetPasswordUsecase>(),
+      logout: sl<LogoutUsecase>(),
     ),
   );
 }

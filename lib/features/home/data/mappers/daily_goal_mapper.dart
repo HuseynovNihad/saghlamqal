@@ -1,25 +1,38 @@
 import '../../domain/entities/daily_goal_entity.dart';
 import '../models/daily_goal_model.dart';
-import 'macro_mapper.dart';
 
 class DailyGoalMapper {
   const DailyGoalMapper._();
 
   static DailyGoalEntity toEntity(DailyGoalModel model) {
     return DailyGoalEntity(
-      dailyKcal: model.dailyKcal,
-      protein: macroToEntity(model.protein),
-      carbs: macroToEntity(model.carbs),
-      fats: macroToEntity(model.fats),
+      id: model.id,
+      bmr: model.bmr,
+      tdee: model.tdee,
+      maintainCalories: model.maintainCalories,
+      loseCalories: model.loseCalories,
+      gainCalories: model.gainCalories,
+      dailyProtein: model.dailyProtein,
+      dailyCarbs: model.dailyCarbs,
+      dailyFat: model.dailyFat,
+      createdAt: model.createdAt,
+      updatedAt: model.updatedAt,
     );
   }
 
   static DailyGoalModel toModel(DailyGoalEntity entity) {
     return DailyGoalModel(
-      dailyKcal: entity.dailyKcal,
-      protein: macroToModel(entity.protein),
-      carbs: macroToModel(entity.carbs),
-      fats: macroToModel(entity.fats),
+      id: entity.id,
+      bmr: entity.bmr,
+      tdee: entity.tdee,
+      maintainCalories: entity.maintainCalories,
+      loseCalories: entity.loseCalories,
+      gainCalories: entity.gainCalories,
+      dailyProtein: entity.dailyProtein,
+      dailyCarbs: entity.dailyCarbs,
+      dailyFat: entity.dailyFat,
+      createdAt: entity.createdAt,
+      updatedAt: entity.updatedAt,
     );
   }
 }

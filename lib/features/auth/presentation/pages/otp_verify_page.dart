@@ -11,7 +11,6 @@ import '../../../../core/utils/asset_extension.dart';
 import '../../../../core/utils/padding_extension.dart';
 import '../../../../core/utils/radius_extension.dart';
 import '../../../../core/utils/sized_box_extension.dart';
-import '../../../../shared/widgets/custom_elevated_button.dart';
 import '../../../../shared/widgets/custom_snackbar.dart';
 import '../../../../shared/widgets/custom_text_button.dart';
 import '../bloc/auth_bloc.dart';
@@ -19,8 +18,6 @@ import '../bloc/auth_event.dart';
 import '../bloc/auth_state.dart';
 import 'new_password_page.dart';
 
-/// [OtpVerifyMode.register] — qeydiyyatdan sonra email təsdiqləmə
-/// [OtpVerifyMode.resetPassword] — şifrə sıfırlama OTP yoxlaması
 enum OtpVerifyMode { register, resetPassword }
 
 class OtpVerifyExtra {
@@ -79,24 +76,21 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
     } else if (value.isEmpty && index > 0) {
       _focusNodes[index - 1].requestFocus();
     }
+
+    // 6 rəqəm tamamlandıqda avtomatik yoxla
+    if (_otp.length == 6) {
+      _verify();
+    }
   }
 
   void _verify() {
-    if (_otp.length < 6) {
-      CustomSnackBar.show(
-        context,
-        message: 'Zəhmət olmasa 6 rəqəmli kodu daxil edin',
-        type: SnackBarType.error,
-      );
-      return;
-    }
+    if (_otp.length < 6) return;
 
     if (_isRegisterMode) {
       context.read<AuthBloc>().add(
         VerifyOtpSubmitted(email: widget.email, otp: _otp),
       );
     } else {
-      // Şifrə sıfırlama üçün OTP-ni saxlayıb növbəti səhifəyə keçirik
       context.push(
         AppRoutes.newPassword,
         extra: NewPasswordExtra(email: widget.email, otp: _otp),
@@ -134,15 +128,18 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
                 message: state.message,
                 type: SnackBarType.error,
               );
-            } else if (state is AuthOtpVerified) {
-              // Yalnız register mode üçün
-              context.go(AppRoutes.home);
+              for (final c in _controllers) {
+                c.clear();
+              }
+              _focusNodes[0].requestFocus();
             } else if (state is AuthOtpResent) {
               CustomSnackBar.show(
                 context,
                 message: 'Yeni kod göndərildi',
                 type: SnackBarType.success,
               );
+            } else if (state is AuthAuthenticated) {
+              context.go(AppRoutes.home);
             }
           },
           builder: (context, state) {
@@ -192,46 +189,44 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
                             ),
                           ),
                           32.hs,
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: List.generate(6, (index) {
-                              return SizedBox(
-                                width: 48,
-                                height: 56,
-                                child: TextField(
-                                  controller: _controllers[index],
-                                  focusNode: _focusNodes[index],
-                                  textAlign: TextAlign.center,
-                                  keyboardType: TextInputType.number,
-                                  maxLength: 1,
-                                  style: AppTextStyles.h2,
-                                  decoration: InputDecoration(
-                                    counterText: '',
-                                    contentPadding: EdgeInsets.zero,
-                                    border: OutlineInputBorder(
-                                      borderRadius: 12.br,
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: 12.br,
-                                      borderSide: const BorderSide(
-                                        color: Colors.green,
-                                        width: 2,
+                          state is AuthLoading
+                              ? const CircularProgressIndicator()
+                              : Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: List.generate(6, (index) {
+                                    return SizedBox(
+                                      width: 48,
+                                      height: 56,
+                                      child: TextField(
+                                        controller: _controllers[index],
+                                        focusNode: _focusNodes[index],
+                                        textAlign: TextAlign.center,
+                                        keyboardType: TextInputType.number,
+                                        maxLength: 1,
+                                        style: AppTextStyles.h2,
+                                        enabled: state is! AuthLoading,
+                                        decoration: InputDecoration(
+                                          counterText: '',
+                                          contentPadding: EdgeInsets.zero,
+                                          border: OutlineInputBorder(
+                                            borderRadius: 12.br,
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: 12.br,
+                                            borderSide: const BorderSide(
+                                              color: Colors.green,
+                                              width: 2,
+                                            ),
+                                          ),
+                                        ),
+                                        onChanged: (value) =>
+                                            _onChanged(value, index),
                                       ),
-                                    ),
-                                  ),
-                                  onChanged: (value) =>
-                                      _onChanged(value, index),
+                                    );
+                                  }),
                                 ),
-                              );
-                            }),
-                          ),
                           32.hs,
-                          CustomElevatedButton(
-                            text: _isRegisterMode ? "Təsdiqlə" : "Davam et",
-                            isLoading: state is AuthLoading,
-                            onPressed: _verify,
-                          ),
-                          16.hs,
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -253,11 +248,6 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
                                       ),
                                     ),
                             ],
-                          ),
-                          12.hs,
-                          CustomTextButton(
-                            text: "Geri qayıt",
-                            onPressed: () => context.pop(),
                           ),
                         ],
                       ),

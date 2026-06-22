@@ -1,7 +1,8 @@
 class UserEntity {
   final String id;
   final String email;
-  final String? name;
+  final String? firstName;
+  final String? lastName;
   final DateTime? birthday;
   final int? age;
   final double? weight;
@@ -12,7 +13,8 @@ class UserEntity {
   const UserEntity({
     required this.id,
     required this.email,
-    this.name,
+    this.firstName,
+    this.lastName,
     this.birthday,
     this.age,
     this.weight,
@@ -20,4 +22,12 @@ class UserEntity {
     this.gender,
     this.activityLevel,
   });
+
+  String? get name {
+    final parts = [
+      if (firstName != null && firstName!.isNotEmpty) firstName,
+      if (lastName != null && lastName!.isNotEmpty) lastName,
+    ];
+    return parts.isEmpty ? null : parts.join(' ');
+  }
 }

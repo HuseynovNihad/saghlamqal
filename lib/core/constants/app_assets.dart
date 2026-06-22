@@ -43,4 +43,5 @@ class AppAssets {
   static const String history = '$_svgPath/history.svg';
   static const String homeFill = '$_svgPath/home_fill.svg';
   static const String profileFill = '$_svgPath/profile_fill.svg';
+  static const String policy = '$_svgPath/policy.svg';
 }

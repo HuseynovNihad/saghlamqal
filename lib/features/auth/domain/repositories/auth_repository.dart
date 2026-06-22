@@ -18,4 +18,5 @@ abstract class IAuthRepository {
     required String otp,
     required String newPassword,
   });
+  Future<void> logout(String refreshToken);
 }

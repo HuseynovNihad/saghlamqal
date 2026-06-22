@@ -1,32 +1,40 @@
 import 'package:equatable/equatable.dart';
 
 class RecentProductEntity extends Equatable {
-  final String name;
-  final String? imageUrl;
-  final int calories;
-  final int protein;
-  final int carbs;
-  final int fat;
-  final Map<String, double?>? vitamins;
-  final String advice;
+  final String id;
+  final String? icon;
+  final String? name;
+  final double? calories;
+  final double? protein;
+  final double? carbs;
+  final double? fat;
+  final Map<String, dynamic>? vitamins;
+  final String? advice;
   final bool isFood;
+  final double? servingSize;
+  final String? servingUnit;
+  final DateTime createdAt;
 
   const RecentProductEntity({
-    required this.name,
-    this.imageUrl,
-    required this.calories,
-    required this.protein,
-    required this.carbs,
-    required this.fat,
+    required this.id,
+    this.icon,
+    this.name,
+    this.calories,
+    this.protein,
+    this.carbs,
+    this.fat,
     this.vitamins,
-    required this.advice,
+    this.advice,
     this.isFood = true,
+    this.servingSize,
+    this.servingUnit,
+    required this.createdAt,
   });
 
   @override
   List<Object?> get props => [
+    id,
     name,
-    imageUrl,
     calories,
     protein,
     carbs,
@@ -34,5 +42,8 @@ class RecentProductEntity extends Equatable {
     vitamins,
     advice,
     isFood,
+    servingSize,
+    servingUnit,
+    createdAt,
   ];
 }

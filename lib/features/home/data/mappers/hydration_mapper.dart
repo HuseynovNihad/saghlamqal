@@ -6,17 +6,19 @@ class HydrationMapper {
 
   static HydrationEntity toEntity(HydrationModel model) {
     return HydrationEntity(
-      tracked: model.tracked,
-      recommended: model.recommended,
-      addAmount: model.addAmount,
+      dailyGoal: model.dailyGoal,
+      consumed: model.consumed,
+      remaining: model.remaining,
+      percentage: model.percentage,
     );
   }
 
   static HydrationModel toModel(HydrationEntity entity) {
     return HydrationModel(
-      tracked: entity.tracked,
-      recommended: entity.recommended,
-      addAmount: entity.addAmount,
+      dailyGoal: entity.dailyGoal,
+      consumed: entity.consumed,
+      remaining: entity.remaining,
+      percentage: entity.percentage,
     );
   }
 }

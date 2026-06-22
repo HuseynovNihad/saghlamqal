@@ -1,4 +1,5 @@
 class PhotoScanHistoryModel {
+  final String? icon;
   final String id;
   final String? name;
   final double? calories;
@@ -13,6 +14,7 @@ class PhotoScanHistoryModel {
   final String createdAt;
 
   const PhotoScanHistoryModel({
+    this.icon,
     required this.id,
     this.name,
     this.calories,
@@ -30,6 +32,7 @@ class PhotoScanHistoryModel {
   factory PhotoScanHistoryModel.fromJson(Map<String, dynamic> json) {
     return PhotoScanHistoryModel(
       id: json['id'] as String,
+      icon: json['icon'] as String?,
       name: json['name'] as String?,
       calories: (json['calories'] as num?)?.toDouble(),
       protein: (json['protein'] as num?)?.toDouble(),

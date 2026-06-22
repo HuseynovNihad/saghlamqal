@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 
 class AppLogInterceptor extends LogInterceptor {
   AppLogInterceptor()
@@ -8,8 +7,5 @@ class AppLogInterceptor extends LogInterceptor {
         responseBody: true,
         requestHeader: true,
         error: true,
-        logPrint: (obj) {
-          debugPrint('🌐 API_LOG: $obj');
-        },
       );
 }

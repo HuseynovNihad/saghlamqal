@@ -8,29 +8,16 @@ import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/utils/asset_extension.dart';
 import '../../../../core/utils/radius_extension.dart';
 import '../../../../core/utils/sized_box_extension.dart';
-import '../../../../shared/widgets/guest_lock_card.dart';
 import '../../domain/entities/hydration_entity.dart';
 import '../bloc/home_bloc.dart';
 
 class HydrationCard extends StatelessWidget {
-  final bool isLoggedIn;
   final HomeState state;
 
-  const HydrationCard({
-    super.key,
-    required this.isLoggedIn,
-    required this.state,
-  });
+  const HydrationCard({super.key, required this.state});
 
   @override
   Widget build(BuildContext context) {
-    if (!isLoggedIn) {
-      return const GuestLockCard(
-        title: 'Hidrasiya',
-        message: 'Daxil ol, gündəlik su istehlakını izləyək.',
-      );
-    }
-
     if (state is HomeLoading) {
       return const _HydrationSkeleton();
     }
@@ -72,18 +59,15 @@ class _HydrationContentState extends State<_HydrationContent>
       duration: const Duration(milliseconds: 700),
     );
 
-    _fillAnimation = AlwaysStoppedAnimation(
-      widget.hydration.tracked / widget.hydration.recommended,
-    );
+    _fillAnimation = AlwaysStoppedAnimation(widget.hydration.fillRatio);
   }
 
   @override
   void didUpdateWidget(_HydrationContent oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.hydration.tracked != widget.hydration.tracked) {
-      final oldFill =
-          oldWidget.hydration.tracked / oldWidget.hydration.recommended;
-      final newFill = widget.hydration.tracked / widget.hydration.recommended;
+    if (oldWidget.hydration.consumed != widget.hydration.consumed) {
+      final oldFill = oldWidget.hydration.fillRatio;
+      final newFill = widget.hydration.fillRatio;
 
       _fillAnimation = Tween<double>(begin: oldFill, end: newFill).animate(
         CurvedAnimation(parent: _fillController, curve: Curves.easeOut),
@@ -102,7 +86,7 @@ class _HydrationContentState extends State<_HydrationContent>
   }
 
   String _fmt(double v) =>
-      v == v.roundToDouble() ? '${v.toInt()}L' : '${v.toStringAsFixed(1)}L';
+      v == v.roundToDouble() ? '${v.toInt()}L' : '${v.toStringAsFixed(2)}L';
 
   @override
   Widget build(BuildContext context) {
@@ -157,7 +141,7 @@ class _HydrationContentState extends State<_HydrationContent>
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        _fmt(hydration.tracked),
+                        _fmt(hydration.consumed),
                         style: AppTextStyles.h2.copyWith(
                           fontWeight: FontWeight.w600,
                           color: Colors.white,
@@ -167,7 +151,7 @@ class _HydrationContentState extends State<_HydrationContent>
                       ),
                       4.hs,
                       Text(
-                        'Tövsiyə: ${_fmt(hydration.recommended)}',
+                        'Tövsiyə: ${_fmt(hydration.dailyGoal)}',
                         style: AppTextStyles.bodySmall.copyWith(
                           fontSize: 11,
                           color: Colors.white.withOpacity(0.7),
@@ -198,7 +182,7 @@ class _HydrationContentState extends State<_HydrationContent>
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [250, 500, 750].map((amount) {
+                  children: [0.25, 0.5, 0.75].map((amount) {
                     return GestureDetector(
                       onTap: () => context.read<HomeBloc>().add(
                         HomeAddWaterPressed(amount: amount),
@@ -213,7 +197,7 @@ class _HydrationContentState extends State<_HydrationContent>
                           borderRadius: 8.br,
                         ),
                         child: Text(
-                          '+${amount}ml',
+                          '+${amount}L',
                           style: AppTextStyles.bodySmall.copyWith(
                             fontSize: 12,
                             fontWeight: FontWeight.w600,

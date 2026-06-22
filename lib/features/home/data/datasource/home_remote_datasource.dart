@@ -8,7 +8,7 @@ import '../models/recent_product_model.dart';
 abstract class HomeRemoteDataSource {
   Future<DailyGoalModel> getDailyGoal();
   Future<HydrationModel> getHydration();
-  Future<HydrationModel> addWater(int amount);
+  Future<HydrationModel> addWater(double amount);
   Future<List<RecentProductModel>> getRecentProducts();
   Future<MealOfTheDayModel> getMealOfTheDay();
 }
@@ -35,7 +35,7 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   }
 
   @override
-  Future<HydrationModel> addWater(int amount) async {
+  Future<HydrationModel> addWater(double amount) async {
     final response = await _networkManager.post<Map<String, dynamic>>(
       Endpoints.addWaterLog,
       data: {'amount': amount},

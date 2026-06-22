@@ -123,13 +123,15 @@ class _RegisterPageState extends State<RegisterPage> {
                 type: SnackBarType.error,
               );
             } else if (state is AuthRegistered) {
-              context.push(
-                AppRoutes.otpVerify,
-                extra: OtpVerifyExtra(
-                  email: state.email,
-                  mode: OtpVerifyMode.register,
-                ),
-              );
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                context.push(
+                  AppRoutes.otpVerify,
+                  extra: OtpVerifyExtra(
+                    email: state.email,
+                    mode: OtpVerifyMode.register,
+                  ),
+                );
+              });
             }
           },
           builder: (context, state) {
