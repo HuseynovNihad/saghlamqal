@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:kalori_tracker/core/utils/asset_extension.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/utils/padding_extension.dart';
 import '../../../../core/utils/radius_extension.dart';
+import '../../data/models/collection_icon_styles.dart';
 import '../../domain/entities/favorite_collection_entity.dart';
 
 class FavoriteCollectionCard extends StatelessWidget {
@@ -22,7 +22,7 @@ class FavoriteCollectionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
 
-    final cardWidth = (screenWidth - 56.w) / 3;
+    final cardWidth = (screenWidth - 56.w) / 4;
 
     return Container(
       width: cardWidth,
@@ -34,7 +34,7 @@ class FavoriteCollectionCard extends StatelessWidget {
         border: Border.all(color: AppColors.borderColor, width: 0.8),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
@@ -45,7 +45,16 @@ class FavoriteCollectionCard extends StatelessWidget {
               borderRadius: 10.br,
             ),
             child: Center(
-              child: collection.icon?.svg(width: 20, height: 20),
+              child: collection.icon != null
+                  ? Text(
+                      CollectionIconStyles.emoji(collection.icon!),
+                      style: const TextStyle(fontSize: 20),
+                    )
+                  : const Icon(
+                      Icons.folder_rounded,
+                      size: 20,
+                      color: AppColors.primary,
+                    ),
             ),
           ),
 

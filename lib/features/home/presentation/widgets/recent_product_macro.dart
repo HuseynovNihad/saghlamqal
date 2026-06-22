@@ -6,11 +6,13 @@ import '../../../../../core/utils/sized_box_extension.dart';
 class RecentProductMacro extends StatelessWidget {
   final String label;
   final String value;
+  final Color? color;
 
   const RecentProductMacro({
     super.key,
     required this.label,
     required this.value,
+    this.color,
   });
 
   @override
@@ -31,7 +33,7 @@ class RecentProductMacro extends StatelessWidget {
         Text(
           value,
           style: AppTextStyles.bodySmall.copyWith(
-            color: Colors.black87,
+            color: color ?? Colors.black87,
             fontWeight: FontWeight.w600,
             fontSize: 12,
           ),

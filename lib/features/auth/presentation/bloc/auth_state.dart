@@ -58,3 +58,7 @@ class AuthForgotPasswordSent extends AuthState {
 class AuthPasswordResetSuccess extends AuthState {
   const AuthPasswordResetSuccess();
 }
+
+class AuthSessionLoading extends AuthState {
+  const AuthSessionLoading();
+}

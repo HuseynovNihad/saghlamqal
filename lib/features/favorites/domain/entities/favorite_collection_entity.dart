@@ -1,4 +1,3 @@
-// favorite_collection_entity.dart
 class FavoriteCollectionEntity {
   final String id;
   final String name;

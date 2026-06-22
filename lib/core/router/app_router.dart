@@ -65,7 +65,7 @@ class AppRouter {
       final authState = _authBloc.state;
       final location = state.matchedLocation;
 
-      if (authState is AuthInitial) {
+      if (authState is AuthInitial || authState is AuthSessionLoading) {
         return location == AppRoutes.splash ? null : AppRoutes.splash;
       }
 

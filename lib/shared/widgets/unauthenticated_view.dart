@@ -76,7 +76,7 @@ class UnauthenticatedView extends StatelessWidget {
               width: double.infinity,
               height: 52,
               child: ElevatedButton(
-                onPressed: () => context.push(AppRoutes.login),
+                onPressed: () => context.go(AppRoutes.login),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
                   foregroundColor: Colors.white,
@@ -97,7 +97,7 @@ class UnauthenticatedView extends StatelessWidget {
               width: double.infinity,
               height: 52,
               child: OutlinedButton(
-                onPressed: () => context.push(AppRoutes.register),
+                onPressed: () => context.go(AppRoutes.register),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: AppColors.primary,
                   side: const BorderSide(color: AppColors.borderColor),

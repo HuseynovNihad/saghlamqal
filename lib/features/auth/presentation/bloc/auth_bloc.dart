@@ -56,7 +56,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<void> _onAppStarted(AppStarted event, Emitter<AuthState> emit) async {
-    emit(const AuthLoading());
+    emit(const AuthSessionLoading());
     await Future.delayed(const Duration(seconds: 3));
     final token = sl<TokenStorage>().getToken();
     if (token == null || token.isEmpty) {
