@@ -13,4 +13,8 @@ class AppRoutes {
   static const String profile = '/profile';
   static const String recentProducts = '/recent-products';
   static const String recipe = '/recipe';
+  static const String termsOfService = '/terms-of-service';
+  static const String privacyPolicy = '/privacy-policy';
+  static const String aboutUs = '/about-us';
+  static const String restoreOtp = '/restore-otp';
 }

@@ -7,6 +7,7 @@ import '../../../../core/router/app_routes.dart';
 import '../../../../core/utils/padding_extension.dart';
 import '../../../../core/utils/radius_extension.dart';
 import '../../../../core/utils/sized_box_extension.dart';
+import '../../../../shared/widgets/shimmer_box.dart';
 import '../../domain/entities/meal_of_the_day_entity.dart';
 import '../bloc/home_bloc.dart';
 
@@ -206,10 +207,54 @@ class _MealSkeleton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 320,
       decoration: BoxDecoration(
-        color: Colors.grey.shade100,
-        borderRadius: 16.br,
+        color: Colors.white,
+        borderRadius: 20.br,
+        border: Border.all(color: AppColors.borderColor, width: 0.8),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+            child: ShimmerBox(width: double.infinity, height: 220, radius: 0),
+          ),
+          Padding(
+            padding: 16.p,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ShimmerBox(width: 80, height: 11, radius: 4),
+                8.hs,
+                ShimmerBox(width: double.infinity, height: 22, radius: 6),
+                4.hs,
+                ShimmerBox(width: 180, height: 22, radius: 6),
+                14.hs,
+                Row(
+                  children: [
+                    ShimmerBox(width: 80, height: 36, radius: 6),
+                    16.ws,
+                    Container(
+                      width: 1,
+                      height: 32,
+                      color: Colors.grey.shade200,
+                    ),
+                    16.ws,
+                    ShimmerBox(width: 80, height: 36, radius: 6),
+                  ],
+                ),
+                14.hs,
+                ShimmerBox(width: double.infinity, height: 12, radius: 4),
+                6.hs,
+                ShimmerBox(width: double.infinity, height: 12, radius: 4),
+                6.hs,
+                ShimmerBox(width: 200, height: 12, radius: 4),
+                14.hs,
+                ShimmerBox(width: 100, height: 14, radius: 4),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

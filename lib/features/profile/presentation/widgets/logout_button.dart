@@ -4,7 +4,7 @@ import 'package:kalori_tracker/core/constants/app_text_styles.dart';
 import 'package:kalori_tracker/core/utils/asset_extension.dart';
 import 'package:kalori_tracker/core/utils/padding_extension.dart';
 
-import '../../../core/utils/radius_extension.dart';
+import '../../../../core/utils/radius_extension.dart';
 
 class LogoutButton extends StatelessWidget {
   final VoidCallback? onPressed;

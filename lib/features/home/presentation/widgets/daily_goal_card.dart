@@ -5,6 +5,7 @@ import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/utils/padding_extension.dart';
 import '../../../../core/utils/radius_extension.dart';
 import '../../../../core/utils/sized_box_extension.dart';
+import '../../../../shared/widgets/shimmer_box.dart';
 import '../../domain/entities/daily_goal_entity.dart';
 import '../bloc/home_bloc.dart';
 
@@ -179,10 +180,51 @@ class _DailyGoalSkeleton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 160,
+      padding: 20.p,
       decoration: BoxDecoration(
-        color: Colors.grey.shade100,
-        borderRadius: BorderRadius.circular(24),
+        color: Colors.white,
+        borderRadius: 20.br,
+        border: Border.all(color: AppColors.borderColor, width: 0.8),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              ShimmerBox(width: 120, height: 14, radius: 6),
+              ShimmerBox(width: 80, height: 28, radius: 6),
+            ],
+          ),
+          18.hs,
+          Row(
+            children: [
+              Expanded(
+                child: ShimmerBox(
+                  width: double.infinity,
+                  height: 62,
+                  radius: 14,
+                ),
+              ),
+              10.ws,
+              Expanded(
+                child: ShimmerBox(
+                  width: double.infinity,
+                  height: 62,
+                  radius: 14,
+                ),
+              ),
+              10.ws,
+              Expanded(
+                child: ShimmerBox(
+                  width: double.infinity,
+                  height: 62,
+                  radius: 14,
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

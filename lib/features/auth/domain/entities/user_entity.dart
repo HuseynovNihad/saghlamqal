@@ -9,6 +9,7 @@ class UserEntity {
   final double? height;
   final String? gender;
   final String? activityLevel;
+  final bool isActive;
 
   const UserEntity({
     required this.id,
@@ -21,6 +22,7 @@ class UserEntity {
     this.height,
     this.gender,
     this.activityLevel,
+    this.isActive = true,
   });
 
   String? get name {

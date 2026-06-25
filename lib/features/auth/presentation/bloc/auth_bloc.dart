@@ -5,14 +5,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/di/injection_container.dart';
 import '../../../../core/storage/token_storage.dart';
 import '../../data/models/request/register_request.dart';
+import '../../domain/usecases/delete_account_usecase.dart';
 import '../../domain/usecases/login_usecase.dart';
 import '../../domain/usecases/login_with_token_usecase.dart';
 import '../../domain/usecases/logout_usecase.dart';
 import '../../domain/usecases/register_usecase.dart';
+import '../../domain/usecases/request_restore_account_usecase.dart';
 import '../../domain/usecases/verify_otp_usecase.dart';
 import '../../domain/usecases/resend_otp_usecase.dart';
 import '../../domain/usecases/forgot_password_usecase.dart';
 import '../../domain/usecases/reset_password_usecase.dart';
+import '../../domain/usecases/verify_restore_account_usecase.dart';
 import 'auth_event.dart';
 import 'auth_state.dart';
 
@@ -25,7 +28,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final ForgotPasswordUsecase _forgotPassword;
   final ResetPasswordUsecase _resetPassword;
   final LogoutUsecase _logout;
-
+  final DeleteAccountUseCase _deleteAccount;
+  final RequestRestoreAccountUsecase _requestRestoreAccount;
+  final VerifyRestoreAccountUsecase _verifyRestoreAccount;
   AuthBloc({
     required LoginUsecase login,
     required LoginWithTokenUsecase loginWithToken,
@@ -35,6 +40,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     required ForgotPasswordUsecase forgotPassword,
     required ResetPasswordUsecase resetPassword,
     required LogoutUsecase logout,
+    required DeleteAccountUseCase deleteAccount,
+    required RequestRestoreAccountUsecase requestRestoreAccount,
+    required VerifyRestoreAccountUsecase verifyRestoreAccount,
   }) : _login = login,
        _loginWithToken = loginWithToken,
        _register = register,
@@ -43,6 +51,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
        _forgotPassword = forgotPassword,
        _resetPassword = resetPassword,
        _logout = logout,
+       _deleteAccount = deleteAccount,
+       _requestRestoreAccount = requestRestoreAccount,
+       _verifyRestoreAccount = verifyRestoreAccount,
        super(const AuthInitial()) {
     on<AppStarted>(_onAppStarted);
     on<LoginSubmitted>(_onLogin);
@@ -53,6 +64,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<ResetPasswordSubmitted>(_onResetPassword);
     on<LogoutRequested>(_onLogout);
     on<AuthStateReset>(_onAuthStateReset);
+    on<DeleteAccountRequested>(_onDeleteAccount);
+    on<ReactivateAccountRequested>(_onReactivateAccount);
+    on<VerifyRestoreAccountSubmitted>(_onVerifyRestoreAccount);
   }
 
   Future<void> _onAppStarted(AppStarted event, Emitter<AuthState> emit) async {
@@ -79,6 +93,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         email: event.email,
         password: event.password,
       );
+
+      if (!response.user.isActive) {
+        emit(AuthAccountDeactivated(email: event.email));
+        return;
+      }
+
       await sl<TokenStorage>().saveToken(response.token);
       await sl<TokenStorage>().saveRefreshToken(response.refreshToken);
       emit(AuthAuthenticated(user: response.user, token: response.token));
@@ -188,5 +208,50 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   void _onAuthStateReset(AuthStateReset event, Emitter<AuthState> emit) {
     emit(const AuthUnauthenticated());
+  }
+
+  Future<void> _onDeleteAccount(
+    DeleteAccountRequested event,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(const AuthLoading());
+    try {
+      await _deleteAccount();
+      await sl<TokenStorage>().clearAll();
+      emit(const AuthAccountDeleted());
+    } catch (e) {
+      emit(AuthError(e.toString()));
+    }
+  }
+
+  Future<void> _onReactivateAccount(
+    ReactivateAccountRequested event,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(const AuthLoading());
+    try {
+      await _requestRestoreAccount(event.email);
+      emit(AuthRestoreOtpSent(email: event.email));
+    } catch (e) {
+      emit(AuthError(e.toString()));
+    }
+  }
+
+  Future<void> _onVerifyRestoreAccount(
+    VerifyRestoreAccountSubmitted event,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(const AuthLoading());
+    try {
+      final response = await _verifyRestoreAccount(
+        email: event.email,
+        otp: event.otp,
+      );
+      await sl<TokenStorage>().saveToken(response.token);
+      await sl<TokenStorage>().saveRefreshToken(response.refreshToken);
+      emit(AuthAuthenticated(user: response.user, token: response.token));
+    } catch (e) {
+      emit(AuthError(e.toString()));
+    }
   }
 }

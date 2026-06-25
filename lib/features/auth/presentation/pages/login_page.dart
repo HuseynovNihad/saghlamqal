@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/constants/app_assets.dart';
+import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/router/app_routes.dart';
 import '../../../../core/utils/app_validators.dart';
@@ -10,6 +11,7 @@ import '../../../../core/utils/asset_extension.dart';
 import '../../../../core/utils/padding_extension.dart';
 import '../../../../core/utils/radius_extension.dart';
 import '../../../../core/utils/sized_box_extension.dart';
+import '../../../../shared/widgets/custom_alert_dialog.dart';
 import '../../../../shared/widgets/custom_elevated_button.dart';
 import '../../../../shared/widgets/custom_snackbar.dart';
 import '../../../../shared/widgets/custom_text_button.dart';
@@ -42,9 +44,34 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  // void _login() {
-  //   context.go(AppRoutes.home);
-  // }
+  void _showReactivateDialog(BuildContext context, String email) {
+    CustomAlertDialog.show(
+      context,
+      icon: Container(
+        width: 64,
+        height: 64,
+        decoration: BoxDecoration(
+          color: AppColors.warning.withOpacity(0.12),
+          shape: BoxShape.circle,
+        ),
+        child: Center(
+          child: AppAssets.lockPerson.svg(
+            color: AppColors.warning,
+            width: 28,
+            height: 28,
+            fit: BoxFit.contain,
+          ),
+        ),
+      ),
+      title: "Hesab deaktivdir",
+      message:
+          "Hesabınız deaktiv edilmişdir. Yenidən aktivləşdirmək üçün emailinizə doğrulama kodu göndəriləcək.",
+      confirmText: "Aktivləşdir",
+      onConfirm: () => context.read<AuthBloc>().add(
+        ReactivateAccountRequested(email: email),
+      ),
+    );
+  }
 
   @override
   void dispose() {
@@ -67,6 +94,10 @@ class _LoginPageState extends State<LoginPage> {
               );
             } else if (state is AuthAuthenticated) {
               context.go(AppRoutes.home);
+            } else if (state is AuthAccountDeactivated) {
+              _showReactivateDialog(context, state.email);
+            } else if (state is AuthRestoreOtpSent) {
+              context.push(AppRoutes.restoreOtp, extra: state.email);
             }
           },
           builder: (context, state) {

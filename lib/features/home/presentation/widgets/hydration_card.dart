@@ -1,15 +1,16 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kalori_tracker/core/constants/app_assets.dart';
+import 'package:kalori_tracker/core/constants/app_colors.dart';
 
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/utils/asset_extension.dart';
 import '../../../../core/utils/radius_extension.dart';
 import '../../../../core/utils/sized_box_extension.dart';
+import '../../../../shared/widgets/shimmer_box.dart';
 import '../../domain/entities/hydration_entity.dart';
 import '../bloc/home_bloc.dart';
+import '../painters/wave_painter.dart';
 
 class HydrationCard extends StatelessWidget {
   final HomeState state;
@@ -106,7 +107,7 @@ class _HydrationContentState extends State<_HydrationContent>
             children: [
               Positioned.fill(
                 child: CustomPaint(
-                  painter: _WavePainter(
+                  painter: WavePainter(
                     progress: _waveController.value,
                     fillRatio: _fillAnimation.value,
                   ),
@@ -218,69 +219,6 @@ class _HydrationContentState extends State<_HydrationContent>
   }
 }
 
-class _WavePainter extends CustomPainter {
-  final double progress;
-  final double fillRatio;
-
-  const _WavePainter({required this.progress, required this.fillRatio});
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final waterTop = size.height * (1 - fillRatio.clamp(0.0, 1.0));
-
-    _drawWave(
-      canvas,
-      size,
-      color: const Color(0xFF2B5CE6).withOpacity(0.5),
-      waterTop: waterTop,
-      amplitude: 10,
-      phaseShift: progress * 2 * pi + pi,
-      wavelengthFactor: 0.7,
-    );
-
-    _drawWave(
-      canvas,
-      size,
-      color: const Color(0xFF2B5CE6),
-      waterTop: waterTop,
-      amplitude: 8,
-      phaseShift: progress * 2 * pi,
-      wavelengthFactor: 1.0,
-    );
-  }
-
-  void _drawWave(
-    Canvas canvas,
-    Size size, {
-    required Color color,
-    required double waterTop,
-    required double amplitude,
-    required double phaseShift,
-    required double wavelengthFactor,
-  }) {
-    final paint = Paint()..color = color;
-    final wavelength = size.width * wavelengthFactor;
-    final path = Path()..moveTo(0, waterTop);
-
-    for (double x = 0; x <= size.width; x++) {
-      final y =
-          waterTop + amplitude * sin((x / wavelength * 2 * pi) + phaseShift);
-      path.lineTo(x, y);
-    }
-
-    path
-      ..lineTo(size.width, size.height)
-      ..lineTo(0, size.height)
-      ..close();
-
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(_WavePainter old) =>
-      old.progress != progress || old.fillRatio != fillRatio;
-}
-
 class _HydrationSkeleton extends StatelessWidget {
   const _HydrationSkeleton();
 
@@ -288,10 +226,35 @@ class _HydrationSkeleton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 180,
+      padding: const EdgeInsets.fromLTRB(20, 18, 20, 14),
       decoration: BoxDecoration(
-        color: Colors.grey.shade100,
+        color: Colors.white,
         borderRadius: 20.br,
+        border: Border.all(color: AppColors.borderColor, width: 0.8),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ShimmerBox(width: 36, height: 36, radius: 10),
+              const Spacer(),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  ShimmerBox(width: 60, height: 20, radius: 6),
+                  4.hs,
+                  ShimmerBox(width: 90, height: 12, radius: 6),
+                ],
+              ),
+            ],
+          ),
+          16.hs,
+          ShimmerBox(width: 80, height: 18, radius: 6),
+          16.hs,
+          ShimmerBox(width: double.infinity, height: 44, radius: 12),
+        ],
       ),
     );
   }

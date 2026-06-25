@@ -62,3 +62,17 @@ class AuthPasswordResetSuccess extends AuthState {
 class AuthSessionLoading extends AuthState {
   const AuthSessionLoading();
 }
+
+class AuthAccountDeleted extends AuthState {
+  const AuthAccountDeleted();
+}
+
+class AuthAccountDeactivated extends AuthState {
+  final String email;
+  const AuthAccountDeactivated({required this.email});
+}
+
+class AuthRestoreOtpSent extends AuthState {
+  final String email;
+  const AuthRestoreOtpSent({required this.email});
+}

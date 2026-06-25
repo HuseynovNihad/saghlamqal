@@ -6,6 +6,10 @@ class AppStarted extends AuthEvent {}
 
 class LogoutRequested extends AuthEvent {}
 
+class DeleteAccountRequested extends AuthEvent {
+  const DeleteAccountRequested();
+}
+
 class AuthStateReset extends AuthEvent {
   const AuthStateReset();
 }
@@ -74,4 +78,16 @@ class ResetPasswordSubmitted extends AuthEvent {
     required this.otp,
     required this.newPassword,
   });
+}
+
+// Köhnəni silin, yenisini yazın
+class ReactivateAccountRequested extends AuthEvent {
+  final String email;
+  const ReactivateAccountRequested({required this.email});
+}
+
+class VerifyRestoreAccountSubmitted extends AuthEvent {
+  final String email;
+  final String otp;
+  const VerifyRestoreAccountSubmitted({required this.email, required this.otp});
 }

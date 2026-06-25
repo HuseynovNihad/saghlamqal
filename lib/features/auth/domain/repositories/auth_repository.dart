@@ -19,4 +19,10 @@ abstract class IAuthRepository {
     required String newPassword,
   });
   Future<void> logout(String refreshToken);
+  Future<void> deleteAccount();
+  Future<void> requestRestoreAccount(String email);
+  Future<AuthResponseEntity> verifyRestoreAccount({
+    required String email,
+    required String otp,
+  });
 }

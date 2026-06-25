@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/constants/app_text_styles.dart';
+import '../../../../core/constants/app_text_styles.dart';
 
 class SectionLabel extends StatelessWidget {
   final String label;

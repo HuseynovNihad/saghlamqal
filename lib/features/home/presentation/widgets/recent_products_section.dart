@@ -4,8 +4,10 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/router/app_routes.dart';
+import '../../../../core/utils/padding_extension.dart';
 import '../../../../core/utils/radius_extension.dart';
 import '../../../../core/utils/sized_box_extension.dart';
+import '../../../../shared/widgets/shimmer_box.dart';
 import '../../domain/entities/recent_product_entity.dart';
 import '../bloc/home_bloc.dart';
 import '../widgets/recent_product_card.dart';
@@ -162,12 +164,33 @@ class _RecentProductsSkeleton extends StatelessWidget {
     return Column(
       children: List.generate(
         3,
-        (_) => Container(
-          margin: const EdgeInsets.only(bottom: 10),
-          height: 80,
-          decoration: BoxDecoration(
-            color: Colors.grey.shade100,
-            borderRadius: 16.br,
+        (_) => Padding(
+          padding: 10.pb,
+          child: Container(
+            padding: 14.p,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: 16.br,
+              border: Border.all(color: AppColors.borderColor, width: 0.8),
+            ),
+            child: Row(
+              children: [
+                ShimmerBox(width: 52, height: 52, radius: 12),
+                12.ws,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ShimmerBox(width: double.infinity, height: 14, radius: 6),
+                      8.hs,
+                      ShimmerBox(width: 100, height: 12, radius: 6),
+                    ],
+                  ),
+                ),
+                12.ws,
+                ShimmerBox(width: 48, height: 28, radius: 8),
+              ],
+            ),
           ),
         ),
       ),

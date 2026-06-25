@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/constants/app_text_styles.dart';
-import '../../../core/utils/asset_extension.dart';
-import '../../../core/utils/radius_extension.dart';
-import '../../../core/utils/sized_box_extension.dart';
+import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/utils/asset_extension.dart';
+import '../../../../core/utils/radius_extension.dart';
+import '../../../../core/utils/sized_box_extension.dart';
 
 class MenuItem extends StatelessWidget {
   final String svgAsset;

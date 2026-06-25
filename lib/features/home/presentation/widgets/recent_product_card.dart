@@ -15,19 +15,20 @@ class RecentProductCard extends StatelessWidget {
   const RecentProductCard({super.key, required this.product});
 
   String _formatDate(DateTime date) {
-    final now = DateTime.now();
-    final today = DateTime(now.year, now.month, now.day);
-    final dateOnly = DateTime(date.year, date.month, date.day);
-    final timeStr =
-        '${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}';
+  final localDate = date.toLocal(); 
+  final now = DateTime.now();
+  final today = DateTime(now.year, now.month, now.day);
+  final dateOnly = DateTime(localDate.year, localDate.month, localDate.day);
+  final timeStr =
+      '${localDate.hour.toString().padLeft(2, '0')}:${localDate.minute.toString().padLeft(2, '0')}';
 
-    if (dateOnly == today) return 'Bugün, $timeStr';
+  if (dateOnly == today) return 'Bugün, $timeStr';
 
-    final yesterday = today.subtract(const Duration(days: 1));
-    if (dateOnly == yesterday) return 'Dünən, $timeStr';
+  final yesterday = today.subtract(const Duration(days: 1));
+  if (dateOnly == yesterday) return 'Dünən, $timeStr';
 
-    return '${date.day.toString().padLeft(2, '0')}.${date.month.toString().padLeft(2, '0')}.${date.year}, $timeStr';
-  }
+  return '${localDate.day.toString().padLeft(2, '0')}.${localDate.month.toString().padLeft(2, '0')}.${localDate.year}, $timeStr';
+}
 
   @override
   Widget build(BuildContext context) {
@@ -131,7 +132,8 @@ class RecentProductCard extends StatelessWidget {
               ),
             ],
           ),
-          if (product.vitamins != null && product.vitamins!.isNotEmpty) ...[
+          if (product.vitamins != null &&
+              product.vitamins!.entries.any((e) => e.value != null)) ...[
             12.hs,
             Divider(color: AppColors.borderColor, thickness: 0.5, height: 0.7),
             12.hs,

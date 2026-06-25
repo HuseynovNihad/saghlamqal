@@ -13,6 +13,9 @@ class AppAssets {
   static const String salad = '$_pngPath/salad.png';
   static const String unsplash = '$_pngPath/unsplash.png';
   static const String food = '$_pngPath/food.png';
+  static const String instagram = '$_pngPath/instagram.png';
+  static const String website = '$_pngPath/website.png';
+  static const String mail = '$_pngPath/mail.png';
 
   // SVG
   static const String barcodeScanner = '$_svgPath/barcode_scanner.svg';
@@ -44,4 +47,9 @@ class AppAssets {
   static const String homeFill = '$_svgPath/home_fill.svg';
   static const String profileFill = '$_svgPath/profile_fill.svg';
   static const String policy = '$_svgPath/policy.svg';
+  static const String deleteAccount = '$_svgPath/delete_account.svg';
+  static const String warning = '$_svgPath/warning.svg';
+  static const String lock = '$_svgPath/lock.svg';
+  static const String lockPerson = '$_svgPath/lock_person.svg';
+  static const String close = '$_svgPath/close.svg';
 }

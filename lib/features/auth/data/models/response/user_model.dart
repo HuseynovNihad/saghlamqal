@@ -12,6 +12,7 @@ class UserModel extends UserEntity {
     super.height,
     super.gender,
     super.activityLevel,
+    super.isActive,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -42,6 +43,7 @@ class UserModel extends UserEntity {
       height: (data['height'] as num?)?.toDouble(),
       gender: data['gender'] as String?,
       activityLevel: data['activityLevel'] as String?,
+      isActive: data['isActive'] as bool? ?? true,
     );
   }
 }

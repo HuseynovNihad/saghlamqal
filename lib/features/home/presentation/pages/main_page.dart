@@ -9,7 +9,7 @@ import '../../../../core/utils/asset_extension.dart';
 import '../../../../core/utils/radius_extension.dart';
 import '../../../../core/utils/sized_box_extension.dart';
 import '../../../favorites/presentation/pages/favorite_page.dart';
-import '../../../profile/pages/profile_page.dart';
+import '../../../profile/presentation/pages/profile_page.dart';
 import 'home_page.dart';
 
 class MainPage extends StatefulWidget {

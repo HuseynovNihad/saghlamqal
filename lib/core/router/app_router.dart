@@ -20,10 +20,14 @@ import '../../features/home/domain/entities/recent_product_entity.dart';
 import '../../features/home/presentation/pages/main_page.dart';
 import '../../features/home/presentation/pages/recent_products_page.dart';
 import '../../features/home/presentation/pages/recipe_page.dart';
+import '../../features/profile/presentation/pages/about_us_page.dart';
+import '../../features/profile/presentation/pages/terms_page.dart';
 import '../../features/scan/presentation/scan_page.dart';
 import '../../features/splash/presentation/splash_page.dart';
 import '../../shared/widgets/error_page.dart';
 import '../enums/error_type.dart';
+import '../enums/otp_verify_mode.dart';
+import '../enums/terms_type.dart';
 import 'app_routes.dart';
 
 class GoRouterRefreshStream extends ChangeNotifier {
@@ -50,6 +54,7 @@ class AppRouter {
     AppRoutes.resetOtp,
     AppRoutes.newPassword,
     AppRoutes.otpVerify,
+    AppRoutes.restoreOtp,
   ];
 
   static final GoRouter router = GoRouter(
@@ -149,7 +154,24 @@ class AppRouter {
           );
         },
       ),
-
+      GoRoute(
+        path: AppRoutes.restoreOtp,
+        builder: (_, state) {
+          final extra = state.extra;
+          if (extra is! String) {
+            return const Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            );
+          }
+          return BlocProvider.value(
+            value: _authBloc,
+            child: OtpVerifyPage(
+              email: extra,
+              mode: OtpVerifyMode.restoreAccount,
+            ),
+          );
+        },
+      ),
       GoRoute(
         path: AppRoutes.home,
         builder: (_, __) =>
@@ -193,6 +215,16 @@ class AppRouter {
           return RecipePage(meal: extra);
         },
       ),
+      GoRoute(
+        path: AppRoutes.termsOfService,
+        builder: (_, __) => const TermsPage(type: TermsType.termsOfService),
+      ),
+
+      GoRoute(
+        path: AppRoutes.privacyPolicy,
+        builder: (_, __) => const TermsPage(type: TermsType.privacyPolicy),
+      ),
+      GoRoute(path: AppRoutes.aboutUs, builder: (_, __) => const AboutUsPage()),
     ],
   );
 }

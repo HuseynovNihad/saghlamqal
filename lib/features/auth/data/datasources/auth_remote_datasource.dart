@@ -21,6 +21,12 @@ abstract class IAuthRemoteDataSource {
     required String newPassword,
   });
   Future<void> logout(String refreshToken);
+  Future<void> deleteAccount();
+  Future<void> requestRestoreAccount(String email);
+  Future<LoginResponseModel> verifyRestoreAccount({
+    required String email,
+    required String otp,
+  });
 }
 
 class AuthRemoteDataSourceImpl implements IAuthRemoteDataSource {
@@ -92,5 +98,30 @@ class AuthRemoteDataSourceImpl implements IAuthRemoteDataSource {
       Endpoints.logout,
       data: {'refreshToken': refreshToken},
     );
+  }
+
+  @override
+  Future<void> deleteAccount() async {
+    await _networkManager.delete(Endpoints.deleteAccount);
+  }
+
+  @override
+  Future<void> requestRestoreAccount(String email) async {
+    await _networkManager.post(
+      Endpoints.restoreAccountRequest,
+      data: {'email': email},
+    );
+  }
+
+  @override
+  Future<LoginResponseModel> verifyRestoreAccount({
+    required String email,
+    required String otp,
+  }) async {
+    final response = await _networkManager.post(
+      Endpoints.restoreAccountVerify,
+      data: {'email': email, 'otp': otp},
+    );
+    return LoginResponseModel.fromJson(response.data);
   }
 }

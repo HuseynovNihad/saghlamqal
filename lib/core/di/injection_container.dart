@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:kalori_tracker/features/profile/profile_di.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../features/ai_photo_scan/photo_scan_di.dart';
@@ -29,4 +30,5 @@ Future<void> init() async {
   await initFavorites(sl);
   await initPhotoScan(sl);
   await initWaterReminder(sl);
+  await initProfile(sl);
 }

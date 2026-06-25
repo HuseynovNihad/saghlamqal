@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/constants/app_colors.dart';
-import '../../../core/utils/radius_extension.dart';
+import '../../../../core/constants/app_colors.dart';
+import '../../../../core/utils/radius_extension.dart';
 
 class MenuCard extends StatelessWidget {
   final List<Widget> items;

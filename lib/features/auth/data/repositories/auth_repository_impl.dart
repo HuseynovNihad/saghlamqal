@@ -85,4 +85,31 @@ class AuthRepositoryImpl implements IAuthRepository {
   Future<void> logout(String refreshToken) async {
     await _remoteDataSource.logout(refreshToken);
   }
+
+  @override
+  Future<void> deleteAccount() async {
+    await _remoteDataSource.deleteAccount();
+  }
+
+  @override
+  Future<void> requestRestoreAccount(String email) async {
+    await _remoteDataSource.requestRestoreAccount(email);
+  }
+
+  @override
+  Future<AuthResponseEntity> verifyRestoreAccount({
+    required String email,
+    required String otp,
+  }) async {
+    final response = await _remoteDataSource.verifyRestoreAccount(
+      email: email,
+      otp: otp,
+    );
+    return AuthResponseEntity(
+      user: response.user,
+      token: response.token,
+      refreshToken: response.refreshToken,
+      nutrition: response.nutrition,
+    );
+  }
 }

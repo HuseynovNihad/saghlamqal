@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/constants/app_assets.dart';
 import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/enums/otp_verify_mode.dart';
 import '../../../../core/router/app_routes.dart';
 import '../../../../core/utils/asset_extension.dart';
 import '../../../../core/utils/padding_extension.dart';
@@ -17,8 +18,6 @@ import '../bloc/auth_bloc.dart';
 import '../bloc/auth_event.dart';
 import '../bloc/auth_state.dart';
 import 'new_password_page.dart';
-
-enum OtpVerifyMode { register, resetPassword }
 
 class OtpVerifyExtra {
   final String email;
@@ -50,7 +49,6 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
 
   String get _otp => _controllers.map((c) => c.text).join();
 
-  bool get _isRegisterMode => widget.mode == OtpVerifyMode.register;
 
   @override
   void initState() {
@@ -77,7 +75,6 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
       _focusNodes[index - 1].requestFocus();
     }
 
-    // 6 rəqəm tamamlandıqda avtomatik yoxla
     if (_otp.length == 6) {
       _verify();
     }
@@ -86,9 +83,13 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
   void _verify() {
     if (_otp.length < 6) return;
 
-    if (_isRegisterMode) {
+    if (widget.mode == OtpVerifyMode.register) {
       context.read<AuthBloc>().add(
         VerifyOtpSubmitted(email: widget.email, otp: _otp),
+      );
+    } else if (widget.mode == OtpVerifyMode.restoreAccount) {
+      context.read<AuthBloc>().add(
+        VerifyRestoreAccountSubmitted(email: widget.email, otp: _otp),
       );
     } else {
       context.push(
@@ -100,7 +101,15 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
 
   void _resend() {
     if (!_canResend) return;
-    context.read<AuthBloc>().add(ResendOtpSubmitted(email: widget.email));
+
+    if (widget.mode == OtpVerifyMode.restoreAccount) {
+      context.read<AuthBloc>().add(
+        ReactivateAccountRequested(email: widget.email),
+      );
+    } else {
+      context.read<AuthBloc>().add(ResendOtpSubmitted(email: widget.email));
+    }
+
     _startTimer();
   }
 
@@ -166,15 +175,19 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            _isRegisterMode
+                            widget.mode == OtpVerifyMode.register
                                 ? "Email Təsdiqləmə"
+                                : widget.mode == OtpVerifyMode.restoreAccount
+                                ? "Hesab Bərpası" // ✅
                                 : "Şifrə Sıfırlama",
                             style: AppTextStyles.h2,
                           ),
                           16.hs,
                           Text(
-                            _isRegisterMode
+                            widget.mode == OtpVerifyMode.register
                                 ? "Emailinizə göndərilən 6 rəqəmli kodu daxil edin"
+                                : widget.mode == OtpVerifyMode.restoreAccount
+                                ? "Hesabınızı bərpa etmək üçün emailinizə göndərilən kodu daxil edin" // ✅
                                 : "Şifrə sıfırlamaq üçün emailinizə göndərilən kodu daxil edin",
                             textAlign: TextAlign.center,
                             style: AppTextStyles.bodyMedium.copyWith(

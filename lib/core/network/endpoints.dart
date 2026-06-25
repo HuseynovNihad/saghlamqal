@@ -10,6 +10,8 @@ class Endpoints {
   static const String logout = 'auth/logout';
   static const String forgotPassword = 'auth/forgot-password';
   static const String resetPassword = 'auth/reset-password';
+  static const String restoreAccountRequest = 'auth/restore/request';
+  static const String restoreAccountVerify = 'auth/restore/verify';
 
   // ─── Users ───────────────────────────────────────────────
   static const String getMe = 'users/me';
@@ -17,7 +19,6 @@ class Endpoints {
   static const String updatePhysical = 'users/physical';
   static const String changePassword = 'users/change-password';
   static const String deleteAccount = 'users/me';
-  static const String restoreAccount = 'users/me/restore';
 
   // ─── Nutrition ───────────────────────────────────────────
   static const String getNutrition = 'nutrition';
@@ -52,4 +53,7 @@ class Endpoints {
   // ─── Terms ───────────────────────────────────────────────
   static const String termsOfService = 'terms/terms-of-service';
   static const String privacyPolicy = 'terms/privacy-policy';
+
+  // ─── About Us ───────────────────────────────────────────────
+  static const String aboutUs = '/about';
 }

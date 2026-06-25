@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:kalori_tracker/core/utils/asset_extension.dart';
 
-import '../../../core/constants/app_assets.dart';
-import '../../../core/constants/app_text_styles.dart';
-import '../../../core/utils/sized_box_extension.dart';
-import '../../../shared/widgets/unauthenticated_view.dart';
-import '../../auth/presentation/bloc/auth_bloc.dart';
-import '../../auth/presentation/bloc/auth_event.dart';
-import '../../auth/presentation/bloc/auth_state.dart';
-import '../../water_reminder/presentation/widgets/water_reminder_tile.dart';
+import '../../../../core/constants/app_assets.dart';
+import '../../../../core/constants/app_colors.dart';
+import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/router/app_routes.dart';
+import '../../../../core/utils/sized_box_extension.dart';
+import '../../../../shared/widgets/custom_alert_dialog.dart';
+import '../../../../shared/widgets/unauthenticated_view.dart';
+import '../../../auth/presentation/bloc/auth_bloc.dart';
+import '../../../auth/presentation/bloc/auth_event.dart';
+import '../../../auth/presentation/bloc/auth_state.dart';
+import '../../../water_reminder/presentation/widgets/water_reminder_tile.dart';
 import '../widgets/menu_card.dart';
 import '../widgets/menu_item.dart';
 import '../widgets/section_label.dart';
@@ -74,10 +79,14 @@ class ProfilePage extends StatelessWidget {
                             MenuItem(
                               svgAsset: AppAssets.privacyTip,
                               label: 'Məxfilik Siyasəti',
+                              onTap: () =>
+                                  context.push(AppRoutes.privacyPolicy),
                             ),
                             MenuItem(
                               svgAsset: AppAssets.policy,
                               label: 'İstifadəçi Şərtləri',
+                              onTap: () =>
+                                  context.push(AppRoutes.termsOfService),
                               isLast: true,
                             ),
                           ],
@@ -91,6 +100,7 @@ class ProfilePage extends StatelessWidget {
                               svgAsset: AppAssets.about,
                               label: 'Haqqımızda',
                               isLast: true,
+                              onTap: () => context.push(AppRoutes.aboutUs),
                             ),
                           ],
                         ),
@@ -103,12 +113,76 @@ class ProfilePage extends StatelessWidget {
                               iconColor: const Color(0xFFE53935),
                               bgColor: const Color(0xFFFFF5F5),
                               isLast: true,
-                              onTap: () => context.read<AuthBloc>().add(
-                                LogoutRequested(),
+                              onTap: () => CustomAlertDialog.show(
+                                context,
+                                icon: Container(
+                                  width: 64,
+                                  height: 64,
+                                  decoration: BoxDecoration(
+                                    color: AppColors.error.withOpacity(0.12),
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Center(
+                                    child: AppAssets.logout.svg(
+                                      color: AppColors.error,
+                                      width: 28,
+                                      height: 28,
+                                      fit: BoxFit.contain,
+                                    ),
+                                  ),
+                                ),
+                                title: "Çıxış et",
+                                message:
+                                    "Hesabınızdan çıxmaq istədiyinizə əminsiniz?",
+                                confirmText: "Çıxış",
+                                confirmColor: AppColors.error,
+                                onConfirm: () => context.read<AuthBloc>().add(
+                                  LogoutRequested(),
+                                ),
                               ),
                             ),
                           ],
                         ),
+                        8.hs,
+                        MenuCard(
+                          items: [
+                            MenuItem(
+                              svgAsset: AppAssets.deleteAccount,
+                              label: 'Hesabı sil',
+                              iconColor: const Color(0xFFE53935),
+                              bgColor: const Color(0xFFFFF5F5),
+                              isLast: true,
+                              onTap: () => CustomAlertDialog.show(
+                                context,
+                                icon: Container(
+                                  width: 64,
+                                  height: 64,
+                                  decoration: BoxDecoration(
+                                    color: AppColors.error.withOpacity(0.12),
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Center(
+                                    child: AppAssets.deleteAccount.svg(
+                                      color: AppColors.error,
+                                      width: 28,
+                                      height: 28,
+                                      fit: BoxFit.contain,
+                                    ),
+                                  ),
+                                ),
+                                title: "Hesabı sil",
+                                message:
+                                    "Hesabınız deaktiv ediləcək. İstədiyiniz zaman yenidən aktivləşdirə bilərsiniz.",
+                                confirmText: "Sil",
+                                confirmColor: AppColors.error,
+                                onConfirm: () => context.read<AuthBloc>().add(
+                                  const DeleteAccountRequested(),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        8.hs,
                       ],
                     ),
                   ),
