@@ -1,6 +1,6 @@
 name: kalori_tracker
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 
 version: 1.0.0+1
 
@@ -28,6 +28,7 @@ dependencies:
   url_launcher: ^6.3.2
   flutter_native_splash: ^2.4.7
   shimmer: ^3.0.0
+  smooth_page_indicator: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -35,7 +36,6 @@ dev_dependencies:
   flutter_lints: ^5.0.0
 
 flutter:
-
   uses-material-design: true
 
   assets:
@@ -45,7 +45,7 @@ flutter:
     - assets/images/icons/png/
     - assets/images/icons/svg/
     - assets/images/logo/
-
+    - assets/images/onboarding/
 
   fonts:
     # ================= INTER =================

@@ -4,10 +4,19 @@ class AppAssets {
   static const String _svgPath = '$_iconPath/svg';
   static const String _pngPath = '$_iconPath/png';
   static const String _logoPath = '$_basePath/logo';
+  static const String _onboardPath = '$_basePath/onboarding';
 
   // LOGO
   static const String logo = '$_logoPath/logo.png';
   static const String appLogo = '$_logoPath/app_logo.png';
+
+  // Onboard
+  static const String onboard1 = '$_onboardPath/onboard_1_realistic.png';
+  static const String onboard1AppScreen = '$_onboardPath/onboard_1_app_screen.png';
+  static const String onboard2 = '$_onboardPath/onboard_2_realistic.png';
+  static const String onboard3 = '$_onboardPath/onboard_3_realistic.png';
+  static const String onboard4 = '$_onboardPath/onboard_4_realistic.png';
+  static const String onboard5 = '$_onboardPath/onboard_5_realistic.png';
 
   // PNG
   static const String salad = '$_pngPath/salad.png';
@@ -52,4 +61,6 @@ class AppAssets {
   static const String lock = '$_svgPath/lock.svg';
   static const String lockPerson = '$_svgPath/lock_person.svg';
   static const String close = '$_svgPath/close.svg';
+  static const String flashOn = '$_svgPath/flash_on.svg';
+  static const String flashOff = '$_svgPath/flash_off.svg';
 }

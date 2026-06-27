@@ -9,6 +9,7 @@ import '../../features/home/home_di.dart';
 import '../../features/scan/scan_di.dart';
 import '../../features/water_reminder/water_reminder_di.dart';
 import '../network/network_manager.dart';
+import '../storage/onboarding_storage.dart';
 import '../storage/token_storage.dart';
 
 final sl = GetIt.instance;
@@ -22,6 +23,10 @@ Future<void> init() async {
   sl.registerLazySingleton(() => prefs);
 
   sl.registerLazySingleton<TokenStorage>(() => TokenStorage(sl()));
+
+  sl.registerLazySingleton<OnboardingStorage>(
+    () => OnboardingStorage(sl<SharedPreferences>()),
+  );
 
   // ================= FEATURES =================
   await initAuth(sl);

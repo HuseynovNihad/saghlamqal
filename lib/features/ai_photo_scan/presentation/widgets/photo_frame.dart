@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../core/constants/app_colors.dart';
-import '../../../../../core/constants/app_text_styles.dart';
-import '../../../../../core/utils/radius_extension.dart';
 import '../../../../../core/utils/sized_box_extension.dart';
 
 class PhotoFrame extends StatelessWidget {
@@ -12,56 +10,34 @@ class PhotoFrame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = isCapturing ? AppColors.primary : Colors.white;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final frameSize = screenWidth * 0.78;
+    final color = isCapturing ? AppColors.primary : const Color(0xFF7FE09A);
 
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         SizedBox(
-          width: 260,
-          height: 260,
+          width: frameSize,
+          height: frameSize,
           child: Stack(
             children: [
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: color.withOpacity(0.3), width: 1),
-                  borderRadius: 16.br,
+              Positioned.fill(
+                child: CustomPaint(
+                  painter: _GridPainter(cornerSize: 36, borderStrokeWidth: 2.5),
                 ),
               ),
               ..._buildCorners(color),
-              Center(
-                child: isCapturing
-                    ? CircularProgressIndicator(
-                        color: AppColors.primary,
-                        strokeWidth: 2,
-                      )
-                    : Icon(
-                        Icons.camera_alt_outlined,
-                        color: Colors.white.withOpacity(0.3),
-                        size: 48,
-                      ),
-              ),
             ],
           ),
         ),
-        24.hs,
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          decoration: BoxDecoration(
-            color: Colors.black.withOpacity(0.5),
-            borderRadius: 24.br,
-          ),
-          child: Text(
-            isCapturing ? 'Təhlil edilir...' : 'Məhsulu çərçivəyə tutun',
-            style: AppTextStyles.bodySmall.copyWith(color: Colors.white),
-          ),
-        ),
+        20.hs,
       ],
     );
   }
 
   List<Widget> _buildCorners(Color color) {
-    const size = 24.0;
+    const size = 36.0;
     const thickness = 3.0;
     return [
       Positioned(
@@ -110,6 +86,58 @@ class PhotoFrame extends StatelessWidget {
       ),
     ];
   }
+}
+
+class _GridPainter extends CustomPainter {
+  final double cornerSize;
+  final double borderStrokeWidth;
+
+  _GridPainter({this.cornerSize = 36.0, this.borderStrokeWidth = 1.5});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final gridPaint = Paint()
+      ..color = Colors.white.withOpacity(0.15)
+      ..strokeWidth = 0.8;
+
+    for (int i = 1; i < 8; i++) {
+      final y = size.height * i / 8;
+      canvas.drawLine(Offset(0, y), Offset(size.width, y), gridPaint);
+    }
+    for (int i = 1; i < 8; i++) {
+      final x = size.width * i / 8;
+      canvas.drawLine(Offset(x, 0), Offset(x, size.height), gridPaint);
+    }
+
+    final borderPaint = Paint()
+      ..color = Colors.white.withOpacity(0.25)
+      ..strokeWidth = borderStrokeWidth
+      ..style = PaintingStyle.stroke;
+
+    canvas.drawLine(
+      Offset(cornerSize, 0),
+      Offset(size.width - cornerSize, 0),
+      borderPaint,
+    );
+    canvas.drawLine(
+      Offset(cornerSize, size.height),
+      Offset(size.width - cornerSize, size.height),
+      borderPaint,
+    );
+    canvas.drawLine(
+      Offset(0, cornerSize),
+      Offset(0, size.height - cornerSize),
+      borderPaint,
+    );
+    canvas.drawLine(
+      Offset(size.width, cornerSize),
+      Offset(size.width, size.height - cornerSize),
+      borderPaint,
+    );
+  }
+
+  @override
+  bool shouldRepaint(_GridPainter old) => false;
 }
 
 class _Corner extends StatelessWidget {
@@ -165,24 +193,38 @@ class _CornerPainter extends CustomPainter {
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke;
 
+    const radius = 12.0;
     final path = Path();
 
     if (top && left) {
       path.moveTo(0, size.height);
-      path.lineTo(0, 0);
+      path.lineTo(0, radius);
+      path.arcToPoint(Offset(radius, 0), radius: const Radius.circular(radius));
       path.lineTo(size.width, 0);
     } else if (top && !left) {
       path.moveTo(0, 0);
-      path.lineTo(size.width, 0);
+      path.lineTo(size.width - radius, 0);
+      path.arcToPoint(
+        Offset(size.width, radius),
+        radius: const Radius.circular(radius),
+      );
       path.lineTo(size.width, size.height);
     } else if (!top && left) {
-      path.moveTo(0, 0);
-      path.lineTo(0, size.height);
-      path.lineTo(size.width, size.height);
+      path.moveTo(size.width, size.height);
+      path.lineTo(radius, size.height);
+      path.arcToPoint(
+        Offset(0, size.height - radius),
+        radius: const Radius.circular(radius),
+      );
+      path.lineTo(0, 0);
     } else {
-      path.moveTo(0, size.height);
-      path.lineTo(size.width, size.height);
-      path.lineTo(size.width, 0);
+      path.moveTo(size.width, 0);
+      path.lineTo(size.width, size.height - radius);
+      path.arcToPoint(
+        Offset(size.width - radius, size.height),
+        radius: const Radius.circular(radius),
+      );
+      path.lineTo(0, size.height);
     }
 
     canvas.drawPath(path, paint);

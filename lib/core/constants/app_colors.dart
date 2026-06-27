@@ -23,4 +23,11 @@ class AppColors {
   // UI Elements
   static const Color textfieldColor = Color(0xFFE8F1F2);
   static const Color borderColor = Color(0xFFD8E4ED);
+
+  // Onboarding
+  static const Color onboardPanelDark = Color(0xFF1A3D1F);
+  static const Color onboardDarkGreen = Color(0xFF1B5E20);
+  static const Color onboardLightGreen = Color(0xFF81C784);
+  static const Color onboardAccentGreen = Color(0xFF4CAF50);
+  static const Color onboardSkipGreen = Color(0xFF66BB6A);
 }

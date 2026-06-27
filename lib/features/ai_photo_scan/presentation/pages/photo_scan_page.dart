@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/di/injection_container.dart';
+import '../../../../core/utils/sized_box_extension.dart';
 import '../bloc/photo_scan_bloc.dart';
 import '../widgets/photo_app_bar.dart';
 import '../widgets/photo_capture_button.dart';
 import '../widgets/photo_frame.dart';
 import '../widgets/photo_result_sheet.dart';
+import '../widgets/photo_tips_panel.dart';
 
 class PhotoScanPage extends StatefulWidget {
   const PhotoScanPage({super.key});
@@ -105,21 +107,25 @@ class _PhotoScanPageState extends State<PhotoScanPage> {
                       const Center(
                         child: CircularProgressIndicator(color: Colors.white),
                       ),
-                    Positioned(
-                      left: 0,
-                      right: 0,
-                      child: PhotoAppBar(controller: _cameraController),
-                    ),
-                    Center(
-                      child: PhotoFrame(isCapturing: state is PhotoScanLoading),
-                    ),
-                    Positioned(
-                      bottom: MediaQuery.of(context).padding.bottom + 16,
-                      left: 0,
-                      right: 0,
-                      child: PhotoCaptureButton(
-                        isLoading: state is PhotoScanLoading,
-                        onTap: () => _onCapture(context),
+                    SafeArea(
+                      child: Column(
+                        children: [
+                          PhotoAppBar(controller: _cameraController),
+                          Expanded(
+                            child: Center(
+                              child: PhotoFrame(
+                                isCapturing: state is PhotoScanLoading,
+                              ),
+                            ),
+                          ),
+                          const PhotoTipsPanel(),
+                          20.hs,
+                          PhotoCaptureButton(
+                            isLoading: state is PhotoScanLoading,
+                            onTap: () => _onCapture(context),
+                          ),
+                          15.hs,
+                        ],
                       ),
                     ),
                   ],

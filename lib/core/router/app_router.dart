@@ -20,6 +20,7 @@ import '../../features/home/domain/entities/recent_product_entity.dart';
 import '../../features/home/presentation/pages/main_page.dart';
 import '../../features/home/presentation/pages/recent_products_page.dart';
 import '../../features/home/presentation/pages/recipe_page.dart';
+import '../../features/onboard/screen/onboarding_screen.dart';
 import '../../features/profile/presentation/pages/about_us_page.dart';
 import '../../features/profile/presentation/pages/terms_page.dart';
 import '../../features/scan/presentation/scan_page.dart';
@@ -28,6 +29,7 @@ import '../../shared/widgets/error_page.dart';
 import '../enums/error_type.dart';
 import '../enums/otp_verify_mode.dart';
 import '../enums/terms_type.dart';
+import '../storage/onboarding_storage.dart';
 import 'app_routes.dart';
 
 class GoRouterRefreshStream extends ChangeNotifier {
@@ -46,6 +48,7 @@ class GoRouterRefreshStream extends ChangeNotifier {
 
 class AppRouter {
   static final AuthBloc _authBloc = sl<AuthBloc>()..add(AppStarted());
+  static final OnboardingStorage _onboardingStorage = sl<OnboardingStorage>();
 
   static const _authPages = [
     AppRoutes.login,
@@ -74,7 +77,11 @@ class AppRouter {
         return location == AppRoutes.splash ? null : AppRoutes.splash;
       }
 
-      if (location == AppRoutes.splash) return AppRoutes.home;
+      if (location == AppRoutes.splash) {
+        return _onboardingStorage.isCompleted()
+            ? AppRoutes.home
+            : AppRoutes.onboarding;
+      }
 
       if (authState is AuthAuthenticated && _authPages.contains(location)) {
         return AppRoutes.home;
@@ -85,6 +92,16 @@ class AppRouter {
 
     routes: [
       GoRoute(path: AppRoutes.splash, builder: (_, __) => const SplashPage()),
+
+      GoRoute(
+        path: AppRoutes.onboarding,
+        builder: (_, __) => OnboardingScreen(
+          onFinish: () async {
+            await _onboardingStorage.markCompleted();
+            router.go(AppRoutes.home);
+          },
+        ),
+      ),
 
       GoRoute(
         path: AppRoutes.login,
@@ -154,6 +171,7 @@ class AppRouter {
           );
         },
       ),
+
       GoRoute(
         path: AppRoutes.restoreOtp,
         builder: (_, state) {
@@ -172,6 +190,7 @@ class AppRouter {
           );
         },
       ),
+
       GoRoute(
         path: AppRoutes.home,
         builder: (_, __) =>
@@ -215,6 +234,7 @@ class AppRouter {
           return RecipePage(meal: extra);
         },
       ),
+
       GoRoute(
         path: AppRoutes.termsOfService,
         builder: (_, __) => const TermsPage(type: TermsType.termsOfService),
@@ -224,6 +244,7 @@ class AppRouter {
         path: AppRoutes.privacyPolicy,
         builder: (_, __) => const TermsPage(type: TermsType.privacyPolicy),
       ),
+
       GoRoute(path: AppRoutes.aboutUs, builder: (_, __) => const AboutUsPage()),
     ],
   );
