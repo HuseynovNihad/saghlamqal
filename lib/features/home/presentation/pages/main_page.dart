@@ -66,87 +66,91 @@ class _BottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bottomInset = MediaQuery.of(context).padding.bottom;
+
     return Material(
       type: MaterialType.transparency,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
-        child: SafeArea(
-          top: false,
-          child: Container(
-            height: 78,
-            padding: 4.py,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(999),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.08),
-                  blurRadius: 20,
-                  offset: const Offset(0, 8),
-                ),
-              ],
-            ),
-            child: Row(
-              children: List.generate(_items.length, (i) {
-                final item = _items[i];
-                final isSelected = currentIndex == i;
-                return Expanded(
-                  child: GestureDetector(
-                    onTap: () => onTap(i),
-                    behavior: HitTestBehavior.opaque,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        AnimatedContainer(
-                          duration: const Duration(milliseconds: 250),
-                          curve: Curves.easeOut,
-                          width: 44,
-                          height: 44,
-                          decoration: BoxDecoration(
-                            color: isSelected
-                                ? AppColors.primary
-                                : Colors.transparent,
-                            shape: BoxShape.circle,
-                            boxShadow: isSelected
-                                ? [
-                                    BoxShadow(
-                                      color: AppColors.primary.withValues(
-                                        alpha: 0.35,
-                                      ),
-                                      blurRadius: 12,
-                                      offset: const Offset(0, 4),
+        padding: EdgeInsets.fromLTRB(
+          16,
+          0,
+          16,
+          bottomInset > 0 ? bottomInset  : 12,
+        ),
+        child: Container(
+          height: 78,
+          padding: 4.py,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(999),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.08),
+                blurRadius: 20,
+                offset: const Offset(0, 8),
+              ),
+            ],
+          ),
+          child: Row(
+            children: List.generate(_items.length, (i) {
+              final item = _items[i];
+              final isSelected = currentIndex == i;
+              return Expanded(
+                child: GestureDetector(
+                  onTap: () => onTap(i),
+                  behavior: HitTestBehavior.opaque,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      AnimatedContainer(
+                        duration: const Duration(milliseconds: 250),
+                        curve: Curves.easeOut,
+                        width: 44,
+                        height: 44,
+                        decoration: BoxDecoration(
+                          color: isSelected
+                              ? AppColors.primary
+                              : Colors.transparent,
+                          shape: BoxShape.circle,
+                          boxShadow: isSelected
+                              ? [
+                                  BoxShadow(
+                                    color: AppColors.primary.withValues(
+                                      alpha: 0.35,
                                     ),
-                                  ]
-                                : null,
-                          ),
-                          alignment: Alignment.center,
-                          child: (isSelected ? item.iconFill : item.icon).svg(
-                            width: 20,
-                            height: 20,
-                            color: isSelected
-                                ? Colors.white
-                                : Colors.grey.shade400,
-                          ),
+                                    blurRadius: 12,
+                                    offset: const Offset(0, 4),
+                                  ),
+                                ]
+                              : null,
                         ),
-                        4.hs,
-                        Text(
-                          item.label,
-                          style: AppTextStyles.bodySmall.copyWith(
-                            color: isSelected
-                                ? AppColors.primary
-                                : Colors.grey.shade400,
-                            fontWeight: isSelected
-                                ? FontWeight.w600
-                                : FontWeight.normal,
-                            fontSize: 10,
-                          ),
+                        alignment: Alignment.center,
+                        child: (isSelected ? item.iconFill : item.icon).svg(
+                          width: 20,
+                          height: 20,
+                          color: isSelected
+                              ? Colors.white
+                              : Colors.grey.shade400,
                         ),
-                      ],
-                    ),
+                      ),
+                      4.hs,
+                      Text(
+                        item.label,
+                        style: AppTextStyles.bodySmall.copyWith(
+                          color: isSelected
+                              ? AppColors.primary
+                              : Colors.grey.shade400,
+                          fontWeight: isSelected
+                              ? FontWeight.w600
+                              : FontWeight.normal,
+                          fontSize: 10,
+                        ),
+                      ),
+                    ],
                   ),
-                );
-              }),
-            ),
+                ),
+              );
+            }),
           ),
         ),
       ),
