@@ -12,10 +12,17 @@ import 'view/photo_loading_view.dart';
 import 'view/photo_not_food_view.dart';
 import 'view/photo_success_view.dart';
 
-class PhotoResultSheet extends StatelessWidget {
+class PhotoResultSheet extends StatefulWidget {
   final VoidCallback onScanAgain;
 
   const PhotoResultSheet({super.key, required this.onScanAgain});
+
+  @override
+  State<PhotoResultSheet> createState() => _PhotoResultSheetState();
+}
+
+class _PhotoResultSheetState extends State<PhotoResultSheet> {
+  bool _stepsAnimationDone = false;
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +47,19 @@ class PhotoResultSheet extends StatelessWidget {
           18.hs,
           BlocBuilder<PhotoScanBloc, PhotoScanState>(
             builder: (context, state) {
+              final isStillLoading =
+                  state is PhotoScanLoading || !_stepsAnimationDone;
+
+              if (isStillLoading) {
+                return PhotoLoadingView(
+                  onMinDurationElapsed: () {
+                    if (!mounted) return;
+                    setState(() => _stepsAnimationDone = true);
+                  },
+                );
+              }
+
               return switch (state) {
-                PhotoScanLoading() => const PhotoLoadingView(),
                 PhotoScanSuccess(:final product) => PhotoSuccessView(
                   product: product,
                 ),
@@ -55,7 +73,10 @@ class PhotoResultSheet extends StatelessWidget {
           ),
           24.hs,
           GestureDetector(
-            onTap: onScanAgain,
+            onTap: () {
+              setState(() => _stepsAnimationDone = false);
+              widget.onScanAgain();
+            },
             child: Container(
               width: double.infinity,
               padding: 16.py,

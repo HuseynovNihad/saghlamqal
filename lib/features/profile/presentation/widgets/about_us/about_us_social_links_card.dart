@@ -11,32 +11,56 @@ class AboutUsSocialLinksCard extends StatelessWidget {
 
   const AboutUsSocialLinksCard({super.key, required this.socialLinks});
 
-  Future<void> _launch(String url) async {
-    final uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) await launchUrl(uri);
+  Future<void> _launch(BuildContext context, String url) async {
+    final trimmed = url.trim();
+    final uri = Uri.tryParse(trimmed);
+
+    if (uri == null) {
+      _showError(context, 'Keçərsiz link: $trimmed');
+      return;
+    }
+
+    try {
+      final launched = await launchUrl(
+        uri,
+        mode: LaunchMode.externalApplication,
+      );
+      if (!launched && context.mounted) {
+        _showError(context, 'Link açıla bilmədi: $trimmed');
+      }
+    } catch (e) {
+      if (context.mounted) {
+        _showError(context, 'Xəta baş verdi: $e');
+      }
+    }
+  }
+
+  void _showError(BuildContext context, String message) {
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
   }
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        // about_us_social_links_card.dart
         AboutUsSocialButton(
           imagePath: AppAssets.mail,
           label: 'E-poçt',
-          onTap: () => _launch('mailto:${socialLinks.email}'),
+          onTap: () => _launch(context, 'mailto:${socialLinks.email}'),
         ),
         12.ws,
         AboutUsSocialButton(
           imagePath: AppAssets.website,
           label: 'Vebsayt',
-          onTap: () => _launch(socialLinks.website),
+          onTap: () => _launch(context, socialLinks.website),
         ),
         12.ws,
         AboutUsSocialButton(
           imagePath: AppAssets.instagram,
           label: 'Instagram',
-          onTap: () => _launch(socialLinks.instagram),
+          onTap: () => _launch(context, socialLinks.instagram),
         ),
       ],
     );

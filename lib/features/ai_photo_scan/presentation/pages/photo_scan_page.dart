@@ -29,17 +29,28 @@ class _PhotoScanPageState extends State<PhotoScanPage> {
   }
 
   Future<void> _initCamera() async {
-    final cameras = await availableCameras();
-    if (cameras.isEmpty) return;
+    await _cameraController?.dispose();
 
-    _cameraController = CameraController(
+    final cameras = await availableCameras();
+    if (cameras.isEmpty || !mounted) return;
+
+    final controller = CameraController(
       cameras.first,
-      ResolutionPreset.high,
+      ResolutionPreset.medium,
       enableAudio: false,
+      imageFormatGroup: ImageFormatGroup.jpeg,
     );
 
-    await _cameraController!.initialize();
-    if (mounted) setState(() => _isReady = true);
+    await controller.initialize();
+    if (!mounted) {
+      await controller.dispose();
+      return;
+    }
+
+    setState(() {
+      _cameraController = controller;
+      _isReady = true;
+    });
   }
 
   @override
@@ -81,59 +92,81 @@ class _PhotoScanPageState extends State<PhotoScanPage> {
 
   @override
   Widget build(BuildContext context) {
+    final frameSize = MediaQuery.of(context).size.width * 0.78;
+
     return BlocProvider(
       create: (_) => sl<PhotoScanBloc>(),
-      child: Builder(
-        builder: (context) {
-          return Scaffold(
-            backgroundColor: Colors.black,
-            body: BlocBuilder<PhotoScanBloc, PhotoScanState>(
-              builder: (context, state) {
-                return Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    if (_isReady && _cameraController != null)
-                      SizedBox.expand(
-                        child: FittedBox(
-                          fit: BoxFit.cover,
-                          child: SizedBox(
-                            width: _cameraController!.value.previewSize!.height,
-                            height: _cameraController!.value.previewSize!.width,
-                            child: CameraPreview(_cameraController!),
-                          ),
-                        ),
-                      )
-                    else
-                      const Center(
-                        child: CircularProgressIndicator(color: Colors.white),
-                      ),
-                    SafeArea(
-                      child: Column(
-                        children: [
-                          PhotoAppBar(controller: _cameraController),
-                          Expanded(
-                            child: Center(
-                              child: PhotoFrame(
-                                isCapturing: state is PhotoScanLoading,
-                              ),
-                            ),
-                          ),
-                          const PhotoTipsPanel(),
-                          20.hs,
-                          PhotoCaptureButton(
-                            isLoading: state is PhotoScanLoading,
-                            onTap: () => _onCapture(context),
-                          ),
-                          15.hs,
-                        ],
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        body: Stack(
+          fit: StackFit.expand,
+          children: [
+            _CameraPreviewLayer(
+              controller: _cameraController,
+              isReady: _isReady,
+            ),
+            SafeArea(
+              child: Column(
+                children: [
+                  PhotoAppBar(controller: _cameraController),
+                  Expanded(
+                    child: Center(
+                      child: BlocBuilder<PhotoScanBloc, PhotoScanState>(
+                        buildWhen: (prev, curr) =>
+                            prev.runtimeType != curr.runtimeType,
+                        builder: (context, state) {
+                          return PhotoFrame(
+                            isCapturing: state is PhotoScanLoading,
+                          );
+                        },
                       ),
                     ),
-                  ],
-                );
-              },
+                  ),
+                  PhotoTipsPanel(width: frameSize),
+                  20.hs,
+                  BlocBuilder<PhotoScanBloc, PhotoScanState>(
+                    buildWhen: (prev, curr) =>
+                        prev.runtimeType != curr.runtimeType,
+                    builder: (context, state) {
+                      return PhotoCaptureButton(
+                        isLoading: state is PhotoScanLoading,
+                        onTap: () => _onCapture(context),
+                      );
+                    },
+                  ),
+                  15.hs,
+                ],
+              ),
             ),
-          );
-        },
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _CameraPreviewLayer extends StatelessWidget {
+  final CameraController? controller;
+  final bool isReady;
+
+  const _CameraPreviewLayer({required this.controller, required this.isReady});
+
+  @override
+  Widget build(BuildContext context) {
+    if (!isReady || controller == null) {
+      return const Center(
+        child: CircularProgressIndicator(color: Colors.white),
+      );
+    }
+
+    return SizedBox.expand(
+      child: FittedBox(
+        fit: BoxFit.cover,
+        child: SizedBox(
+          width: controller!.value.previewSize!.height,
+          height: controller!.value.previewSize!.width,
+          child: CameraPreview(controller!),
+        ),
       ),
     );
   }

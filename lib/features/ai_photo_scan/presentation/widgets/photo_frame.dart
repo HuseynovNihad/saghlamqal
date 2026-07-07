@@ -12,7 +12,7 @@ class PhotoFrame extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final frameSize = screenWidth * 0.78;
-    final color = isCapturing ? AppColors.primary : const Color(0xFF7FE09A);
+    final color = isCapturing ? AppColors.primary : const Color(0xFF00FF6A);
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -38,7 +38,7 @@ class PhotoFrame extends StatelessWidget {
 
   List<Widget> _buildCorners(Color color) {
     const size = 36.0;
-    const thickness = 3.0;
+    const thickness = 4.0;
     return [
       Positioned(
         top: 0,
@@ -100,12 +100,12 @@ class _GridPainter extends CustomPainter {
       ..color = Colors.white.withOpacity(0.15)
       ..strokeWidth = 0.8;
 
-    for (int i = 1; i < 8; i++) {
-      final y = size.height * i / 8;
+    for (int i = 1; i < 12; i++) {
+      final y = size.height * i / 12;
       canvas.drawLine(Offset(0, y), Offset(size.width, y), gridPaint);
     }
-    for (int i = 1; i < 8; i++) {
-      final x = size.width * i / 8;
+    for (int i = 1; i < 12; i++) {
+      final x = size.width * i / 12;
       canvas.drawLine(Offset(x, 0), Offset(x, size.height), gridPaint);
     }
 
@@ -185,14 +185,7 @@ class _CornerPainter extends CustomPainter {
     required this.left,
   });
 
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = color
-      ..strokeWidth = thickness
-      ..strokeCap = StrokeCap.round
-      ..style = PaintingStyle.stroke;
-
+  Path _buildPath(Size size) {
     const radius = 12.0;
     final path = Path();
 
@@ -227,9 +220,42 @@ class _CornerPainter extends CustomPainter {
       path.lineTo(0, size.height);
     }
 
-    canvas.drawPath(path, paint);
+    return path;
   }
 
   @override
-  bool shouldRepaint(_CornerPainter old) => old.color != color;
+  void paint(Canvas canvas, Size size) {
+    final path = _buildPath(size);
+
+    final glows = [
+      (width: 10.0, opacity: 0.12, blur: 6.0),
+      (width: 6.0, opacity: 0.25, blur: 4.0),
+      (width: 4.0, opacity: 0.45, blur: 2.5),
+    ];
+
+    for (final g in glows) {
+      canvas.drawPath(
+        path,
+        Paint()
+          ..color = color.withOpacity(g.opacity)
+          ..strokeWidth = g.width
+          ..strokeCap = StrokeCap.round
+          ..style = PaintingStyle.stroke
+          ..maskFilter = MaskFilter.blur(BlurStyle.normal, g.blur),
+      );
+    }
+
+    canvas.drawPath(
+      path,
+      Paint()
+        ..color = Colors.white
+        ..strokeWidth = thickness
+        ..strokeCap = StrokeCap.round
+        ..style = PaintingStyle.stroke,
+    );
+  }
+
+  @override
+  bool shouldRepaint(_CornerPainter old) =>
+      old.color != color || old.thickness != thickness;
 }

@@ -5,10 +5,11 @@ class PhotoProductEntity {
   final double? carbs;
   final double? fat;
   final Map<String, double?>? vitamins;
-  final String advice;
+  final List<String> advice;
   final bool isFood;
   final int? servingSize;
   final String? servingUnit;
+  final String? icon;
 
   const PhotoProductEntity({
     required this.name,
@@ -21,5 +22,6 @@ class PhotoProductEntity {
     this.isFood = true,
     this.servingSize,
     this.servingUnit,
+    this.icon,
   });
 }

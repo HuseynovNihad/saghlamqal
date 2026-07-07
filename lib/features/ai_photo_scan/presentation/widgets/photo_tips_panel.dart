@@ -1,29 +1,54 @@
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import '../../../../core/utils/padding_extension.dart';
+
+import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/utils/radius_extension.dart';
+import '../../../../core/utils/sized_box_extension.dart';
 
 class PhotoTipsPanel extends StatelessWidget {
-  const PhotoTipsPanel({super.key});
+  final double width;
+  const PhotoTipsPanel({super.key, required this.width});
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-          decoration: BoxDecoration(color: Colors.black.withOpacity(0.45)),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _TipItem(icon: Icons.wb_sunny_outlined, label: 'Yaxşı işıq'),
-              _Divider(),
-              _TipItem(icon: Icons.crop_outlined, label: 'Çərçivəyə sığdırın'),
-              _Divider(),
-              _TipItem(
-                icon: Icons.stay_current_portrait_outlined,
-                label: 'Sabit saxlayın',
-              ),
-            ],
+    return SizedBox(
+      width: width,
+      child: ClipRRect(
+        borderRadius: 16.br,
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 16),
+            decoration: BoxDecoration(
+              color: Colors.black.withOpacity(0.45),
+              borderRadius: 16.br,
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: _TipItem(
+                    icon: Icons.wb_sunny_outlined,
+                    label: 'Yaxşı işıq',
+                  ),
+                ),
+                _Divider(),
+                Expanded(
+                  child: _TipItem(
+                    icon: Icons.crop_outlined,
+                    label: 'Çərçivəyə sığdırın',
+                  ),
+                ),
+                _Divider(),
+                Expanded(
+                  child: _TipItem(
+                    icon: Icons.stay_current_portrait_outlined,
+                    label: 'Sabit saxlayın',
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -40,14 +65,20 @@ class _TipItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
         Icon(icon, color: Colors.white70, size: 22),
-        const SizedBox(height: 6),
+        6.hs,
         Text(
           label,
-          style: const TextStyle(color: Colors.white70, fontSize: 11),
+          style: AppTextStyles.bodySmall.copyWith(
+            color: Colors.white70,
+            fontSize: 11,
+          ),
           textAlign: TextAlign.center,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
         ),
       ],
     );
@@ -57,6 +88,9 @@ class _TipItem extends StatelessWidget {
 class _Divider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(width: 1, height: 32, color: Colors.white24);
+    return Padding(
+      padding: 4.px,
+      child: Container(width: 1, height: 48, color: Colors.white24),
+    );
   }
 }

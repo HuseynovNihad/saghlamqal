@@ -1,5 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:kalori_tracker/core/constants/app_assets.dart';
+import 'package:kalori_tracker/core/utils/asset_extension.dart';
 
 import '../../../../../core/constants/app_text_styles.dart';
 import '../../../../../core/utils/padding_extension.dart';
@@ -44,12 +46,7 @@ class _PhotoAppBarState extends State<PhotoAppBar> {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            _AppBarButton(
-              icon: _isTorchOn
-                  ? Icons.flashlight_off_rounded
-                  : Icons.flashlight_on_rounded,
-              onTap: _toggleTorch,
-            ),
+            _FlashButton(isTorchOn: _isTorchOn, onTap: _toggleTorch),
           ],
         ),
       ),
@@ -74,6 +71,30 @@ class _AppBarButton extends StatelessWidget {
           borderRadius: 16.br,
         ),
         child: Icon(icon, color: Colors.white, size: 22),
+      ),
+    );
+  }
+}
+
+class _FlashButton extends StatelessWidget {
+  final bool isTorchOn;
+  final VoidCallback onTap;
+
+  const _FlashButton({required this.isTorchOn, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: 12.p,
+        decoration: BoxDecoration(
+          color: Colors.black.withOpacity(0.5),
+          borderRadius: 16.br,
+        ),
+        child: isTorchOn
+            ? AppAssets.flashOff.svg(width: 20, height: 20, color: Colors.white)
+            : AppAssets.flashOn.svg(width: 20, height: 20, color: Colors.white),
       ),
     );
   }

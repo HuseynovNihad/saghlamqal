@@ -9,7 +9,7 @@ class RecentProductModel {
   final double? carbs;
   final double? fat;
   final Map<String, dynamic>? vitamins;
-  final String? advice;
+  final List<String>? advice;
   final bool isFood;
   final double? servingSize;
   final String? servingUnit;
@@ -41,7 +41,9 @@ class RecentProductModel {
       carbs: (json['carbs'] as num?)?.toDouble(),
       fat: (json['fat'] as num?)?.toDouble(),
       vitamins: json['vitamins'] as Map<String, dynamic>?,
-      advice: json['advice'] as String?,
+      advice: (json['advice'] as List<dynamic>?)
+          ?.map((e) => e.toString())
+          .toList(),
       isFood: (json['is_food'] as bool?) ?? true,
       servingSize: (json['serving_size'] as num?)?.toDouble(),
       servingUnit: json['serving_unit'] as String?,

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:kalori_tracker/core/utils/padding_extension.dart';
 
 import '../../../../core/constants/app_assets.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/utils/asset_extension.dart';
-import '../../../../core/utils/radius_extension.dart';
+import '../../../../core/utils/padding_extension.dart';
 import '../../../../core/utils/sized_box_extension.dart';
 import '../../../favorites/presentation/pages/favorite_page.dart';
 import '../../../profile/presentation/pages/profile_page.dart';
@@ -34,6 +33,7 @@ class _MainPageState extends State<MainPage> {
       value: SystemUiOverlayStyle.dark,
       child: Scaffold(
         backgroundColor: AppColors.background,
+        extendBody: true,
         body: IndexedStack(index: _currentIndex, children: _pages),
         bottomNavigationBar: _BottomNavBar(
           currentIndex: _currentIndex,
@@ -66,13 +66,26 @@ class _BottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(color: Colors.white),
-      child: SafeArea(
-        child: Padding(
-          padding: 8.px,
-          child: SizedBox(
-            height: 64,
+    return Material(
+      type: MaterialType.transparency,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+        child: SafeArea(
+          top: false,
+          child: Container(
+            height: 78,
+            padding: 4.py,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(999),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.08),
+                  blurRadius: 20,
+                  offset: const Offset(0, 8),
+                ),
+              ],
+            ),
             child: Row(
               children: List.generate(_items.length, (i) {
                 final item = _items[i];
@@ -81,46 +94,54 @@ class _BottomNavBar extends StatelessWidget {
                   child: GestureDetector(
                     onTap: () => onTap(i),
                     behavior: HitTestBehavior.opaque,
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 200),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          AnimatedContainer(
-                            duration: const Duration(milliseconds: 200),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 6,
-                            ),
-                            decoration: BoxDecoration(
-                              color: isSelected
-                                  ? AppColors.primary.withValues(alpha: 0.12)
-                                  : Colors.transparent,
-                              borderRadius: 20.br,
-                            ),
-                            child: (isSelected ? item.iconFill : item.icon).svg(
-                              width: 20,
-                              height: 20,
-                              color: isSelected
-                                  ? AppColors.primary
-                                  : Colors.grey.shade400,
-                            ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        AnimatedContainer(
+                          duration: const Duration(milliseconds: 250),
+                          curve: Curves.easeOut,
+                          width: 44,
+                          height: 44,
+                          decoration: BoxDecoration(
+                            color: isSelected
+                                ? AppColors.primary
+                                : Colors.transparent,
+                            shape: BoxShape.circle,
+                            boxShadow: isSelected
+                                ? [
+                                    BoxShadow(
+                                      color: AppColors.primary.withValues(
+                                        alpha: 0.35,
+                                      ),
+                                      blurRadius: 12,
+                                      offset: const Offset(0, 4),
+                                    ),
+                                  ]
+                                : null,
                           ),
-                          2.hs,
-                          Text(
-                            item.label,
-                            style: AppTextStyles.bodySmall.copyWith(
-                              color: isSelected
-                                  ? AppColors.primary
-                                  : Colors.grey.shade400,
-                              fontWeight: isSelected
-                                  ? FontWeight.w600
-                                  : FontWeight.normal,
-                              fontSize: 10,
-                            ),
+                          alignment: Alignment.center,
+                          child: (isSelected ? item.iconFill : item.icon).svg(
+                            width: 20,
+                            height: 20,
+                            color: isSelected
+                                ? Colors.white
+                                : Colors.grey.shade400,
                           ),
-                        ],
-                      ),
+                        ),
+                        4.hs,
+                        Text(
+                          item.label,
+                          style: AppTextStyles.bodySmall.copyWith(
+                            color: isSelected
+                                ? AppColors.primary
+                                : Colors.grey.shade400,
+                            fontWeight: isSelected
+                                ? FontWeight.w600
+                                : FontWeight.normal,
+                            fontSize: 10,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 );

@@ -9,7 +9,7 @@ class RecentProductEntity extends Equatable {
   final double? carbs;
   final double? fat;
   final Map<String, dynamic>? vitamins;
-  final String? advice;
+  final List<String>? advice;
   final bool isFood;
   final double? servingSize;
   final String? servingUnit;
@@ -34,6 +34,7 @@ class RecentProductEntity extends Equatable {
   @override
   List<Object?> get props => [
     id,
+    icon,
     name,
     calories,
     protein,

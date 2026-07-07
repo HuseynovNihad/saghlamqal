@@ -14,6 +14,7 @@ class PhotoProductMapper {
       isFood: model.isFood,
       servingSize: model.servingSize,
       servingUnit: model.servingUnit,
+      icon: model.icon,
     );
   }
 
@@ -29,6 +30,7 @@ class PhotoProductMapper {
       isFood: entity.isFood,
       servingSize: entity.servingSize,
       servingUnit: entity.servingUnit,
+      icon: entity.icon,
     );
   }
 }

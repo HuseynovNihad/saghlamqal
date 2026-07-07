@@ -6,7 +6,7 @@ class PhotoProductModel {
   final double? carbs;
   final double? fat;
   final Map<String, double?>? vitamins;
-  final String advice;
+  final List<String> advice;
   final bool isFood;
   final int? servingSize;
   final String? servingUnit;
@@ -37,7 +37,11 @@ class PhotoProductModel {
       vitamins: rawVitamins?.map(
         (k, v) => MapEntry(k, (v as num?)?.toDouble()),
       ),
-      advice: (json['advice'] as String?) ?? '',
+      advice:
+          (json['advice'] as List<dynamic>?)
+              ?.map((e) => e.toString())
+              .toList() ??
+          [],
       isFood: (json['is_food'] as bool?) ?? true,
       servingSize: (json['serving_size'] as num?)?.toInt(),
       servingUnit: json['serving_unit'] as String?,
