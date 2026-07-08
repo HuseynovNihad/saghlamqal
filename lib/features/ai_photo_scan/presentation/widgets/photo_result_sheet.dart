@@ -6,6 +6,10 @@ import '../../../../../core/constants/app_text_styles.dart';
 import '../../../../../core/utils/padding_extension.dart';
 import '../../../../../core/utils/radius_extension.dart';
 import '../../../../../core/utils/sized_box_extension.dart';
+import '../../../auth/presentation/bloc/auth_bloc.dart';
+import '../../../auth/presentation/bloc/auth_state.dart';
+import '../../../favorites/presentation/bloc/favorites_bloc.dart';
+import '../../domain/entities/photo_product_entity.dart';
 import '../bloc/photo_scan_bloc.dart';
 import 'view/photo_error_view.dart';
 import 'view/photo_loading_view.dart';
@@ -23,89 +27,155 @@ class PhotoResultSheet extends StatefulWidget {
 
 class _PhotoResultSheetState extends State<PhotoResultSheet> {
   bool _stepsAnimationDone = false;
+  bool _isFavorite = false;
+  dynamic _favoriteId;
+
+  void _onFavoriteToggle(PhotoProductEntity product) {
+    final favoritesBloc = context.read<FavoritesBloc>();
+
+    if (_isFavorite) {
+      if (_favoriteId != null) {
+        favoritesBloc.add(RemoveFavoriteEvent(_favoriteId));
+      }
+      setState(() {
+        _isFavorite = false;
+        _favoriteId = null;
+      });
+    } else {
+      favoritesBloc.add(
+        AddFavoriteEvent(
+          name: product.name,
+          calories: product.calories,
+          protein: product.protein,
+          carbs: product.carbs,
+          fat: product.fat,
+          vitamins: product.vitamins,
+          advice: product.advice,
+          isFood: product.isFood,
+          servingSize: product.servingSize,
+          servingUnit: product.servingUnit,
+        ),
+      );
+      setState(() => _isFavorite = true);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-        top: 24,
-        left: 24,
-        right: 24,
-        bottom: MediaQuery.of(context).padding.bottom,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: 40,
-            height: 4,
-            decoration: BoxDecoration(
-              color: Colors.grey.shade300,
-              borderRadius: 2.br,
-            ),
-          ),
-          18.hs,
-          BlocBuilder<PhotoScanBloc, PhotoScanState>(
-            builder: (context, state) {
-              final isStillLoading =
-                  state is PhotoScanLoading || !_stepsAnimationDone;
+    final maxHeight = MediaQuery.of(context).size.height * 0.9;
+    final isLoggedIn = context.watch<AuthBloc>().state is AuthAuthenticated;
 
-              if (isStillLoading) {
-                return PhotoLoadingView(
-                  onMinDurationElapsed: () {
-                    if (!mounted) return;
-                    setState(() => _stepsAnimationDone = true);
-                  },
-                );
-              }
-
-              return switch (state) {
-                PhotoScanSuccess(:final product) => PhotoSuccessView(
-                  product: product,
-                ),
-                PhotoScanNotFood() => const PhotoNotFoodView(),
-                PhotoScanError(:final message) => PhotoErrorView(
-                  message: message,
-                ),
-                _ => const SizedBox.shrink(),
-              };
-            },
-          ),
-          24.hs,
-          GestureDetector(
-            onTap: () {
-              setState(() => _stepsAnimationDone = false);
-              widget.onScanAgain();
-            },
-            child: Container(
-              width: double.infinity,
-              padding: 16.py,
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxHeight: maxHeight),
+      child: Padding(
+        padding: EdgeInsets.only(
+          top: 24,
+          left: 24,
+          right: 24,
+          bottom: MediaQuery.of(context).padding.bottom,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 40,
+              height: 4,
               decoration: BoxDecoration(
-                color: AppColors.primary,
-                borderRadius: 16.br,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(
-                    Icons.camera_alt_rounded,
-                    color: Colors.white,
-                    size: 18,
-                  ),
-                  8.ws,
-                  Text(
-                    'Yenidən çək',
-                    style: AppTextStyles.bodyMedium.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
+                color: Colors.grey.shade300,
+                borderRadius: 2.br,
               ),
             ),
-          ),
-          16.hs,
-        ],
+            18.hs,
+            Flexible(
+              child: SingleChildScrollView(
+                child: BlocConsumer<FavoritesBloc, FavoritesState>(
+                  listener: (context, favState) {
+                    if (favState is FavoriteActionSuccess &&
+                        _isFavorite &&
+                        _favoriteId == null) {
+                      final added = favState.favorites.isNotEmpty
+                          ? favState.favorites.last
+                          : null;
+                      if (added != null) {
+                        setState(() => _favoriteId = added.id);
+                      }
+                    }
+                  },
+                  builder: (context, favState) {
+                    return BlocBuilder<PhotoScanBloc, PhotoScanState>(
+                      builder: (context, state) {
+                        final isStillLoading =
+                            state is PhotoScanLoading || !_stepsAnimationDone;
+
+                        if (isStillLoading) {
+                          return PhotoLoadingView(
+                            onMinDurationElapsed: () {
+                              if (!mounted) return;
+                              setState(() => _stepsAnimationDone = true);
+                            },
+                          );
+                        }
+
+                        return switch (state) {
+                          PhotoScanSuccess(:final product) => PhotoSuccessView(
+                            product: product,
+                            isFavorite: _isFavorite,
+                            onFavoriteToggle: isLoggedIn
+                                ? () => _onFavoriteToggle(product)
+                                : null,
+                          ),
+                          PhotoScanNotFood() => const PhotoNotFoodView(),
+                          PhotoScanError(:final message) => PhotoErrorView(
+                            message: message,
+                          ),
+                          _ => const SizedBox.shrink(),
+                        };
+                      },
+                    );
+                  },
+                ),
+              ),
+            ),
+            24.hs,
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  _stepsAnimationDone = false;
+                  _isFavorite = false;
+                  _favoriteId = null;
+                });
+                widget.onScanAgain();
+              },
+              child: Container(
+                width: double.infinity,
+                padding: 16.py,
+                decoration: BoxDecoration(
+                  color: AppColors.primary,
+                  borderRadius: 16.br,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.camera_alt_rounded,
+                      color: Colors.white,
+                      size: 18,
+                    ),
+                    8.ws,
+                    Text(
+                      'Yenidən çək',
+                      style: AppTextStyles.bodyMedium.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            16.hs,
+          ],
+        ),
       ),
     );
   }

@@ -14,9 +14,9 @@ final class AddFavoriteEvent extends FavoritesEvent {
   final double? carbs;
   final double? fat;
   final Map<String, dynamic>? vitamins;
-  final String? advice;
+  final List<String>? advice;
   final bool isFood;
-  final double? servingSize;
+  final int? servingSize;
   final String? servingUnit;
 
   const AddFavoriteEvent({

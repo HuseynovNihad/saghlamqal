@@ -7,9 +7,9 @@ class FavoriteItemModel {
   final double? carbs;
   final double? fat;
   final Map<String, dynamic>? vitamins;
-  final String? advice;
+  final List<String>? advice;
   final bool isFood;
-  final double? servingSize;
+  final int? servingSize;
   final String? servingUnit;
   final String createdAt;
 
@@ -37,9 +37,9 @@ class FavoriteItemModel {
       carbs: (json['carbs'] as num?)?.toDouble(),
       fat: (json['fat'] as num?)?.toDouble(),
       vitamins: json['vitamins'] as Map<String, dynamic>?,
-      advice: json['advice'] as String?,
+      advice: json['advice'] as List<String>?,
       isFood: json['is_food'] as bool? ?? false,
-      servingSize: (json['serving_size'] as num?)?.toDouble(),
+      servingSize: (json['serving_size'] as num?)?.toInt(),
       servingUnit: json['serving_unit'] as String?,
       createdAt: json['createdAt'] as String,
     );

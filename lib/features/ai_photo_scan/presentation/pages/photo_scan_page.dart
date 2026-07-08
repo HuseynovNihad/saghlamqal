@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/di/injection_container.dart';
 import '../../../../core/utils/sized_box_extension.dart';
+import '../../../auth/presentation/bloc/auth_bloc.dart';
+import '../../../favorites/presentation/bloc/favorites_bloc.dart';
 import '../bloc/photo_scan_bloc.dart';
 import '../widgets/photo_app_bar.dart';
 import '../widgets/photo_capture_button.dart';
@@ -18,18 +20,43 @@ class PhotoScanPage extends StatefulWidget {
   State<PhotoScanPage> createState() => _PhotoScanPageState();
 }
 
-class _PhotoScanPageState extends State<PhotoScanPage> {
+class _PhotoScanPageState extends State<PhotoScanPage>
+    with WidgetsBindingObserver {
   CameraController? _cameraController;
   bool _isReady = false;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _initCamera();
   }
 
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    final controller = _cameraController;
+
+    if (controller == null || !controller.value.isInitialized) return;
+
+    if (state == AppLifecycleState.inactive ||
+        state == AppLifecycleState.paused) {
+      _disposeCamera();
+    } else if (state == AppLifecycleState.resumed) {
+      _initCamera();
+    }
+  }
+
+  Future<void> _disposeCamera() async {
+    final controller = _cameraController;
+    _cameraController = null;
+    if (mounted) {
+      setState(() => _isReady = false);
+    }
+    await controller?.dispose();
+  }
+
   Future<void> _initCamera() async {
-    await _cameraController?.dispose();
+    await _disposeCamera();
 
     final cameras = await availableCameras();
     if (cameras.isEmpty || !mounted) return;
@@ -41,7 +68,13 @@ class _PhotoScanPageState extends State<PhotoScanPage> {
       imageFormatGroup: ImageFormatGroup.jpeg,
     );
 
-    await controller.initialize();
+    try {
+      await controller.initialize();
+    } catch (_) {
+      await controller.dispose();
+      return;
+    }
+
     if (!mounted) {
       await controller.dispose();
       return;
@@ -55,6 +88,7 @@ class _PhotoScanPageState extends State<PhotoScanPage> {
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _cameraController?.dispose();
     super.dispose();
   }
@@ -70,6 +104,9 @@ class _PhotoScanPageState extends State<PhotoScanPage> {
   }
 
   void _showResultSheet(BuildContext context) {
+    final photoScanBloc = context.read<PhotoScanBloc>();
+    final authBloc = context.read<AuthBloc>();
+
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.white,
@@ -78,12 +115,16 @@ class _PhotoScanPageState extends State<PhotoScanPage> {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
-      builder: (_) => BlocProvider.value(
-        value: context.read<PhotoScanBloc>(),
+      builder: (_) => MultiBlocProvider(
+        providers: [
+          BlocProvider.value(value: photoScanBloc),
+          BlocProvider.value(value: authBloc),
+          BlocProvider(create: (_) => sl<FavoritesBloc>()),
+        ],
         child: PhotoResultSheet(
           onScanAgain: () {
             Navigator.pop(context);
-            context.read<PhotoScanBloc>().add(const PhotoScanReset());
+            photoScanBloc.add(const PhotoScanReset());
           },
         ),
       ),

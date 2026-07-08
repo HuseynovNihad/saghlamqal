@@ -14,9 +14,9 @@ abstract interface class FavoriteRemoteDatasource {
     double? carbs,
     double? fat,
     Map<String, dynamic>? vitamins,
-    String? advice,
+    List<String>? advice,
     required bool isFood,
-    double? servingSize,
+    int? servingSize,
     String? servingUnit,
   });
 
@@ -76,9 +76,9 @@ class FavoriteRemoteDatasourceImpl implements FavoriteRemoteDatasource {
     double? carbs,
     double? fat,
     Map<String, dynamic>? vitamins,
-    String? advice,
+    List<String>? advice,
     required bool isFood,
-    double? servingSize,
+    int? servingSize,
     String? servingUnit,
   }) async {
     final response = await _networkManager.post<Map<String, dynamic>>(

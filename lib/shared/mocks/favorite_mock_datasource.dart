@@ -88,9 +88,9 @@ class FavoriteMockDatasource implements FavoriteRemoteDatasource {
     double? carbs,
     double? fat,
     Map<String, dynamic>? vitamins,
-    String? advice,
+    List<String>? advice,
     required bool isFood,
-    double? servingSize,
+    int? servingSize,
     String? servingUnit,
   }) async {
     await Future.delayed(const Duration(milliseconds: 300));

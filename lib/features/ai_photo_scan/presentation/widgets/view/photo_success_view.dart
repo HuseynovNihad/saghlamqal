@@ -69,25 +69,27 @@ class PhotoSuccessView extends StatelessWidget {
                 ],
               ),
             ),
-            8.ws,
-            GestureDetector(
-              onTap: onFavoriteToggle,
-              child: Container(
-                width: 36,
-                height: 36,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(color: AppColors.borderColor),
-                ),
-                child: Icon(
-                  isFavorite
-                      ? Icons.favorite_rounded
-                      : Icons.favorite_border_rounded,
-                  size: 18,
-                  color: isFavorite ? Colors.red : Colors.grey.shade600,
+            if (onFavoriteToggle != null) ...[
+              8.ws,
+              GestureDetector(
+                onTap: onFavoriteToggle,
+                child: Container(
+                  width: 44,
+                  height: 44,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(color: AppColors.borderColor),
+                  ),
+                  child: Icon(
+                    isFavorite
+                        ? Icons.favorite_rounded
+                        : Icons.favorite_border_rounded,
+                    size: 22,
+                    color: isFavorite ? Colors.red : Colors.grey.shade600,
+                  ),
                 ),
               ),
-            ),
+            ],
           ],
         ),
         24.hs,

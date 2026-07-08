@@ -219,7 +219,8 @@ class AppRouter {
 
       GoRoute(
         path: AppRoutes.photoScan,
-        builder: (_, __) => const PhotoScanPage(),
+        builder: (_, __) =>
+            BlocProvider.value(value: _authBloc, child: const PhotoScanPage()),
       ),
 
       GoRoute(

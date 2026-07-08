@@ -6,9 +6,9 @@ class FavoriteItemEntity {
   final double? carbs;
   final double? fat;
   final Map<String, dynamic>? vitamins;
-  final String? advice;
+  final List<String>? advice;
   final bool isFood;
-  final double? servingSize;
+  final int? servingSize;
   final String? servingUnit;
   final DateTime createdAt;
 
@@ -35,9 +35,9 @@ class FavoriteItemEntity {
     double? carbs,
     double? fat,
     Map<String, dynamic>? vitamins,
-    String? advice,
+    List<String>? advice,
     bool? isFood,
-    double? servingSize,
+    int? servingSize,
     String? servingUnit,
     DateTime? createdAt,
   }) {
