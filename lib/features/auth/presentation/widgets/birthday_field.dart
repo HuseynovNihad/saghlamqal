@@ -41,6 +41,7 @@ class BirthdayField extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
             decoration: BoxDecoration(
+              color: Colors.white,
               border: Border.all(
                 color: errorText != null
                     ? AppColors.error

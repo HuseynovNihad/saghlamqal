@@ -116,14 +116,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       await _register(
         RegisterRequest(
           email: event.email,
+          phoneNumber: event.phoneNumber,
           firstName: event.firstName,
           lastName: event.lastName,
           birthday: event.birthday,
           age: event.age,
           weight: event.weight,
+          targetWeight: event.targetWeight,
           height: event.height,
           gender: event.gender,
           activityLevel: event.activityLevel,
+          goal:event.goal,
           password: event.password,
           confirmPassword: event.confirmPassword,
         ),
