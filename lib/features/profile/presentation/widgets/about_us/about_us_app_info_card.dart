@@ -32,7 +32,7 @@ class AboutUsAppInfoCard extends StatelessWidget {
       ),
       child: Column(
         children: [
-          AppAssets.appLogo.png(width: 90, height: 90,fit: BoxFit.cover),
+          AppAssets.appLogo.png(width: 90, height: 90, fit: BoxFit.cover),
           Text(
             appName,
             style: AppTextStyles.h3.copyWith(

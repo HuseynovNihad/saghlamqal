@@ -49,7 +49,6 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
 
   String get _otp => _controllers.map((c) => c.text).join();
 
-
   @override
   void initState() {
     super.initState();

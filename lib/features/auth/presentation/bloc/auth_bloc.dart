@@ -126,7 +126,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           height: event.height,
           gender: event.gender,
           activityLevel: event.activityLevel,
-          goal:event.goal,
+          goal: event.goal,
           password: event.password,
           confirmPassword: event.confirmPassword,
         ),

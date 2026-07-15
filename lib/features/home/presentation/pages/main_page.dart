@@ -75,7 +75,7 @@ class _BottomNavBar extends StatelessWidget {
           16,
           0,
           16,
-          bottomInset > 0 ? bottomInset  : 12,
+          bottomInset > 0 ? bottomInset : 12,
         ),
         child: Container(
           height: 78,

@@ -34,17 +34,17 @@ class RegisterRequest {
   Map<String, dynamic> toJson() {
     return {
       "email": email,
-      "phoneNumber":phoneNumber,
+      "phoneNumber": phoneNumber,
       "firstName": firstName,
       "lastName": lastName,
       "birthday": birthday.toIso8601String(),
       "age": age,
       "weight": weight,
-      "targetWeight":targetWeight,
+      "targetWeight": targetWeight,
       "height": height,
       "gender": gender,
       "activityLevel": activityLevel,
-      "goal":goal,
+      "goal": goal,
       "password": password,
       "confirmPassword": confirmPassword,
     };

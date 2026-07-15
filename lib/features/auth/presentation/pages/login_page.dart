@@ -9,7 +9,6 @@ import '../../../../core/router/app_routes.dart';
 import '../../../../core/utils/app_validators.dart';
 import '../../../../core/utils/asset_extension.dart';
 import '../../../../core/utils/padding_extension.dart';
-import '../../../../core/utils/radius_extension.dart';
 import '../../../../core/utils/sized_box_extension.dart';
 import '../../../../shared/widgets/custom_alert_dialog.dart';
 import '../../../../shared/widgets/custom_elevated_button.dart';
@@ -82,9 +81,10 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: BlocConsumer<AuthBloc, AuthState>(
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
             if (state is AuthError) {
               CustomSnackBar.show(
@@ -113,17 +113,13 @@ class _LoginPageState extends State<LoginPage> {
                         Text("SağlamQal", style: AppTextStyles.h1),
                       ],
                     ),
-                    20.hs,
+                    8.hs,
                     Container(
                       padding: 20.p,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: 16.br,
-                      ),
                       child: Form(
                         key: _formKey,
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text("Daxil ol", style: AppTextStyles.h2),
                             20.hs,
@@ -210,13 +206,13 @@ class _LoginPageState extends State<LoginPage> {
             );
           },
         ),
-        bottomNavigationBar: Padding(
-          padding: const EdgeInsets.only(bottom: 20),
-          child: Text(
-            "Sağlam həyat sənin əlindədir 💚",
-            textAlign: TextAlign.center,
-            style: AppTextStyles.bodySmall.copyWith(color: Colors.grey),
-          ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(bottom: 20),
+        child: Text(
+          "Sağlam həyat sənin əlindədir 💚",
+          textAlign: TextAlign.center,
+          style: AppTextStyles.bodySmall.copyWith(color: Colors.grey),
         ),
       ),
     );

@@ -20,9 +20,7 @@ class SectionHeader extends StatelessWidget {
         6.ws,
         Text(
           title,
-          style: AppTextStyles.bodyMedium.copyWith(
-            fontWeight: FontWeight.w600,
-          ),
+          style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.w600),
         ),
         6.ws,
         const Expanded(child: Divider(thickness: 1)),

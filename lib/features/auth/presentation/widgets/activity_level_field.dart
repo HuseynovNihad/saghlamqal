@@ -56,8 +56,6 @@ class ActivityLevelField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Aktivlik səviyyəsi", style: AppTextStyles.bodyMedium),
-        8.hs,
         ...(_activityLevels.map((level) {
           final isSelected = value == level['value'];
           return GestureDetector(
@@ -68,11 +66,11 @@ class ActivityLevelField extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
               decoration: BoxDecoration(
                 color: isSelected
-                    ? AppColors.headline.withOpacity(0.1)
+                    ? AppColors.secondary.withOpacity(0.1)
                     : Colors.transparent,
                 border: Border.all(
                   color: isSelected
-                      ? AppColors.headline
+                      ? AppColors.secondary
                       : AppColors.borderColor,
                   width: isSelected ? 2 : 1,
                 ),
@@ -89,21 +87,20 @@ class ActivityLevelField extends StatelessWidget {
                         Text(
                           level['label']!,
                           style: AppTextStyles.bodyMedium.copyWith(
-                            color: isSelected
-                                ? AppColors.headline
-                                : Colors.black,
+                            color: AppColors.headline,
                             fontWeight: isSelected
-                                ? FontWeight.w600
-                                : FontWeight.normal,
+                                ? FontWeight.w700
+                                : FontWeight.w600,
                           ),
                         ),
                         2.hs,
                         Text(
                           level['subtext']!,
                           style: AppTextStyles.bodySmall.copyWith(
-                            color: isSelected
-                                ? AppColors.headline.withOpacity(0.7)
-                                : Colors.grey,
+                            color: AppColors.bodyText,
+                            fontWeight: isSelected
+                                ? FontWeight.w500
+                                : FontWeight.w400,
                           ),
                         ),
                       ],
@@ -118,12 +115,12 @@ class ActivityLevelField extends StatelessWidget {
                       shape: BoxShape.circle,
                       border: Border.all(
                         color: isSelected
-                            ? AppColors.headline
+                            ? AppColors.secondary
                             : Colors.grey.shade300,
                         width: 2,
                       ),
                       color: isSelected
-                          ? AppColors.headline
+                          ? AppColors.secondary
                           : Colors.transparent,
                     ),
                     child: isSelected

@@ -12,7 +12,8 @@ class AppAssets {
 
   // Onboard
   static const String onboard1 = '$_onboardPath/onboard_1_realistic.png';
-  static const String onboard1AppScreen = '$_onboardPath/onboard_1_app_screen.png';
+  static const String onboard1AppScreen =
+      '$_onboardPath/onboard_1_app_screen.png';
   static const String onboard2 = '$_onboardPath/onboard_2_realistic.png';
   static const String onboard3 = '$_onboardPath/onboard_3_realistic.png';
   static const String onboard4 = '$_onboardPath/onboard_4_realistic.png';

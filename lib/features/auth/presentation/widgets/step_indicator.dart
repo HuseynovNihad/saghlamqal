@@ -27,7 +27,7 @@ class StepIndicator extends StatelessWidget {
               return Container(
                 width: 28,
                 height: 2,
-                color: isCompleted ? AppColors.primary : Colors.grey.shade300,
+                color: isCompleted ? AppColors.secondary : Colors.grey.shade300,
               );
             }
             final step = index ~/ 2;
@@ -69,9 +69,9 @@ class _StepCircle extends StatelessWidget {
       height: 36,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: active ? AppColors.primary : Colors.white,
+        color: active ? AppColors.secondary : Colors.white,
         border: Border.all(
-          color: active ? AppColors.primary : Colors.grey.shade300,
+          color: active ? AppColors.secondary : Colors.grey.shade300,
           width: 1.5,
         ),
       ),

@@ -42,11 +42,11 @@ class GenderField extends StatelessWidget {
                   padding: 14.py,
                   decoration: BoxDecoration(
                     color: isSelected
-                        ? Theme.of(context).primaryColor.withOpacity(0.1)
+                        ? AppColors.secondary.withOpacity(0.1)
                         : Colors.transparent,
                     border: Border.all(
                       color: isSelected
-                          ? Theme.of(context).primaryColor
+                          ? AppColors.secondary
                           : AppColors.borderColor,
                       width: isSelected ? 2 : 1,
                     ),
@@ -61,8 +61,8 @@ class GenderField extends StatelessWidget {
                         g['label']!,
                         style: AppTextStyles.bodyMedium.copyWith(
                           color: isSelected
-                              ? Theme.of(context).primaryColor
-                              : Colors.grey,
+                              ? AppColors.headline
+                              : AppColors.bodyText,
                           fontWeight: isSelected
                               ? FontWeight.w600
                               : FontWeight.normal,
