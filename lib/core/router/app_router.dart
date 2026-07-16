@@ -22,6 +22,7 @@ import '../../features/home/presentation/pages/recent_products_page.dart';
 import '../../features/home/presentation/pages/recipe_page.dart';
 import '../../features/onboard/screen/onboarding_screen.dart';
 import '../../features/profile/presentation/pages/about_us_page.dart';
+import '../../features/profile/presentation/pages/profile_edit_page.dart';
 import '../../features/profile/presentation/pages/terms_page.dart';
 import '../../features/scan/presentation/scan_page.dart';
 import '../../features/splash/presentation/splash_page.dart';
@@ -247,6 +248,11 @@ class AppRouter {
       ),
 
       GoRoute(path: AppRoutes.aboutUs, builder: (_, __) => const AboutUsPage()),
+
+      GoRoute(
+        path: AppRoutes.profileEdit,
+        builder: (_, __) => const ProfileEditPage(),
+      ),
     ],
   );
 }

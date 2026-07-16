@@ -127,7 +127,7 @@ class WaterReminderService {
         await _notifications.zonedSchedule(
           id: id++,
           title: _getTitle(scheduledHours[i]),
-          body: messages[count % messages.length],
+          body: messages[i % messages.length],
           scheduledDate: time,
           notificationDetails: const NotificationDetails(
             android: AndroidNotificationDetails(

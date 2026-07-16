@@ -20,6 +20,8 @@ class CustomTextField extends StatefulWidget {
   final List<TextInputFormatter>? inputFormatters;
   final int maxLines;
   final bool enabled;
+  final bool readOnly;
+  final VoidCallback? onTap;
   final ValueChanged<String>? onChanged;
 
   const CustomTextField({
@@ -36,6 +38,8 @@ class CustomTextField extends StatefulWidget {
     this.inputFormatters,
     this.maxLines = 1,
     this.enabled = true,
+    this.readOnly = false,
+    this.onTap,
     this.onChanged,
   });
 
@@ -72,7 +76,14 @@ class _CustomTextFieldState extends State<CustomTextField> {
           obscureText: _obscureText,
           keyboardType: widget.keyboardType,
           validator: widget.validator,
-          style: AppTextStyles.bodyMedium,
+          readOnly: widget.readOnly,
+          onTap: widget.onTap,
+          showCursor: !widget.readOnly,
+          style: widget.enabled
+              ? AppTextStyles.bodyMedium
+              : AppTextStyles.bodyMedium.copyWith(
+                  color: AppColors.bodyText.withOpacity(0.6),
+                ),
           inputFormatters: widget.inputFormatters,
           maxLines: widget.maxLines,
           enabled: widget.enabled,
@@ -99,13 +110,16 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   )
                 : widget.suffixIcon,
             filled: true,
-            fillColor: AppColors.surface,
+            fillColor: widget.enabled
+                ? AppColors.surface
+                : AppColors.disabledSurface,
             contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             enabledBorder: AppColors.borderColor.border(),
             focusedBorder: AppColors.primary.border(width: 1.5),
             errorBorder: AppColors.error.border(),
             focusedErrorBorder: AppColors.error.border(width: 1.5),
             border: AppColors.borderColor.border(),
+            disabledBorder: AppColors.borderColor.withOpacity(0.7).border(),
           ),
         ),
       ],

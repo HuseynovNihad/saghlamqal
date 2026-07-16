@@ -24,6 +24,12 @@ final class ProfileAboutUsLoaded extends ProfileState {
   const ProfileAboutUsLoaded({required this.aboutUs});
 }
 
+final class ProfileLoaded extends ProfileState {
+  final UserEntity user;
+
+  const ProfileLoaded({required this.user});
+}
+
 final class ProfileError extends ProfileState {
   final String message;
 

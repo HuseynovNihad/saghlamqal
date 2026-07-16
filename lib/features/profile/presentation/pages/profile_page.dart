@@ -75,6 +75,7 @@ class ProfilePage extends StatelessWidget {
                             MenuItem(
                               svgAsset: AppAssets.edit,
                               label: 'Profili redaktə et',
+                              onTap: () => context.push(AppRoutes.profileEdit),
                             ),
                             MenuItem(
                               svgAsset: AppAssets.privacyTip,

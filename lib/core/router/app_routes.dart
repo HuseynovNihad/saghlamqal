@@ -17,4 +17,5 @@ abstract final class AppRoutes {
   static const String termsOfService = '/terms-of-service';
   static const String privacyPolicy = '/privacy-policy';
   static const String aboutUs = '/about-us';
+  static const String profileEdit = '/profile-edit';
 }

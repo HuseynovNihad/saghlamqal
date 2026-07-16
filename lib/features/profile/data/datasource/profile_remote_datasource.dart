@@ -1,5 +1,6 @@
 import '../../../../core/network/endpoints.dart';
 import '../../../../core/network/network_manager.dart';
+import '../../../auth/data/models/response/user_model.dart';
 import '../models/about_us_model.dart';
 import '../models/terms_model.dart';
 
@@ -7,6 +8,7 @@ abstract class ProfileRemoteDataSource {
   Future<TermsModel> getTermsOfService();
   Future<TermsModel> getPrivacyPolicy();
   Future<AboutUsModel> getAboutUs();
+  Future<UserModel> getProfile();
 }
 
 class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
@@ -36,5 +38,13 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
       Endpoints.aboutUs,
     );
     return AboutUsModel.fromJson(response.data!);
+  }
+
+  @override
+  Future<UserModel> getProfile() async {
+    final response = await _networkManager.get<Map<String, dynamic>>(
+      Endpoints.getMe,
+    );
+    return UserModel.fromJson(response.data!);
   }
 }

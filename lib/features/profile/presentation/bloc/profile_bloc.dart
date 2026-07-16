@@ -3,10 +3,12 @@ import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../auth/domain/entities/user_entity.dart';
 import '../../domain/entities/about_us_entity.dart';
 import '../../domain/entities/terms_entity.dart';
 import '../../domain/usecases/get_about_us_usecase.dart';
 import '../../domain/usecases/get_privacy_policy_usecase.dart';
+import '../../domain/usecases/get_profile_usecase.dart';
 import '../../domain/usecases/get_terms_of_service_usecase.dart';
 
 part 'profile_event.dart';
@@ -16,18 +18,22 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final GetTermsOfServiceUseCase _getTermsOfService;
   final GetPrivacyPolicyUseCase _getPrivacyPolicy;
   final GetAboutUsUseCase _getAboutUs;
+  final GetProfileUseCase _getProfile;
 
   ProfileBloc({
     required GetTermsOfServiceUseCase getTermsOfService,
     required GetPrivacyPolicyUseCase getPrivacyPolicy,
     required GetAboutUsUseCase getAboutUs,
+    required GetProfileUseCase getProfile,
   }) : _getTermsOfService = getTermsOfService,
        _getPrivacyPolicy = getPrivacyPolicy,
        _getAboutUs = getAboutUs,
+       _getProfile = getProfile,
        super(const ProfileInitial()) {
     on<ProfileTermsOfServiceRequested>(_onTermsOfServiceRequested);
     on<ProfilePrivacyPolicyRequested>(_onPrivacyPolicyRequested);
     on<ProfileAboutUsRequested>(_onAboutUsRequested);
+    on<ProfileRequested>(_onProfileRequested);
   }
 
   Future<void> _onTermsOfServiceRequested(
@@ -68,6 +74,20 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       emit(ProfileAboutUsLoaded(aboutUs: aboutUs));
     } catch (e) {
       log('AboutUs error: $e');
+      emit(ProfileError(message: e.toString()));
+    }
+  }
+
+  Future<void> _onProfileRequested(
+    ProfileRequested event,
+    Emitter<ProfileState> emit,
+  ) async {
+    emit(const ProfileLoading());
+    try {
+      final user = await _getProfile();
+      emit(ProfileLoaded(user: user));
+    } catch (e) {
+      log('Profile error: $e');
       emit(ProfileError(message: e.toString()));
     }
   }

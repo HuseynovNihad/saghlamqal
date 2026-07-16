@@ -5,6 +5,7 @@ import 'data/repositories/profile_repository_impl.dart';
 import 'domain/repositories/profile_repository.dart';
 import 'domain/usecases/get_about_us_usecase.dart';
 import 'domain/usecases/get_privacy_policy_usecase.dart';
+import 'domain/usecases/get_profile_usecase.dart';
 import 'domain/usecases/get_terms_of_service_usecase.dart';
 import 'presentation/bloc/profile_bloc.dart';
 
@@ -36,6 +37,7 @@ Future<void> initProfile(GetIt sl) async {
     () => GetPrivacyPolicyUseCase(sl<ProfileRepository>()),
   );
   sl.registerLazySingleton(() => GetAboutUsUseCase(sl<ProfileRepository>()));
+  sl.registerLazySingleton(() => GetProfileUseCase(sl<ProfileRepository>()));
 
   // ─────────────────────────────────────────────────────────────
   // BLOC
@@ -46,6 +48,7 @@ Future<void> initProfile(GetIt sl) async {
       getTermsOfService: sl<GetTermsOfServiceUseCase>(),
       getPrivacyPolicy: sl<GetPrivacyPolicyUseCase>(),
       getAboutUs: sl<GetAboutUsUseCase>(),
+      getProfile: sl<GetProfileUseCase>(),
     ),
   );
 }

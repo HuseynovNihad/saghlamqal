@@ -15,3 +15,7 @@ final class ProfilePrivacyPolicyRequested extends ProfileEvent {
 final class ProfileAboutUsRequested extends ProfileEvent {
   const ProfileAboutUsRequested();
 }
+
+final class ProfileRequested extends ProfileEvent {
+  const ProfileRequested();
+}

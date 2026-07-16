@@ -1,3 +1,4 @@
+import '../../../auth/domain/entities/user_entity.dart';
 import '../../domain/entities/about_us_entity.dart';
 import '../../domain/entities/terms_entity.dart';
 import '../../domain/repositories/profile_repository.dart';
@@ -26,5 +27,10 @@ class ProfileRepositoryImpl implements ProfileRepository {
   Future<AboutUsEntity> getAboutUs() async {
     final model = await _remoteDataSource.getAboutUs();
     return model.toEntity();
+  }
+
+  @override
+  Future<UserEntity> getProfile() async {
+    return _remoteDataSource.getProfile();
   }
 }

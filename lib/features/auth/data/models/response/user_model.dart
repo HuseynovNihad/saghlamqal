@@ -4,14 +4,17 @@ class UserModel extends UserEntity {
   const UserModel({
     required super.id,
     required super.email,
+    super.phoneNumber,
     super.firstName,
     super.lastName,
     super.birthday,
     super.age,
     super.weight,
+    super.targetWeight,
     super.height,
     super.gender,
     super.activityLevel,
+    super.goal,
     super.isActive,
   });
 
@@ -33,6 +36,7 @@ class UserModel extends UserEntity {
     return UserModel(
       id: data['id'].toString(),
       email: data['email'] as String,
+      phoneNumber: data['phoneNumber'] as String?,
       firstName: apiFirstName,
       lastName: apiLastName,
       birthday: data['birthday'] != null
@@ -40,9 +44,11 @@ class UserModel extends UserEntity {
           : null,
       age: data['age'] as int?,
       weight: (data['weight'] as num?)?.toDouble(),
+      targetWeight: (data['targetWeight'] as num?)?.toDouble(),
       height: (data['height'] as num?)?.toDouble(),
       gender: data['gender'] as String?,
       activityLevel: data['activityLevel'] as String?,
+      goal: data['goal'] as String?,
       isActive: data['isActive'] as bool? ?? true,
     );
   }
