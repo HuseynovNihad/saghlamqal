@@ -29,6 +29,7 @@ dependencies:
   flutter_native_splash: ^2.4.7
   shimmer: ^3.0.0
   smooth_page_indicator: ^1.1.0
+  flutter_timezone: ^5.1.0
 
 dev_dependencies:
   flutter_test:

@@ -1,4 +1,5 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
@@ -22,6 +23,14 @@ class WaterReminderService {
 
   Future<void> initialize() async {
     tz.initializeTimeZones();
+
+    try {
+      final TimezoneInfo timezoneInfo =
+          await FlutterTimezone.getLocalTimezone();
+      tz.setLocalLocation(tz.getLocation(timezoneInfo.identifier));
+    } catch (e) {
+      tz.setLocalLocation(tz.getLocation('Asia/Baku'));
+    }
 
     const settings = InitializationSettings(
       android: AndroidInitializationSettings('@mipmap/ic_launcher'),
@@ -53,7 +62,10 @@ class WaterReminderService {
         >();
 
     if (android != null) {
-      return await android.requestNotificationsPermission() ?? false;
+      final notificationGranted =
+          await android.requestNotificationsPermission() ?? false;
+      await android.requestExactAlarmsPermission();
+      return notificationGranted;
     }
     if (ios != null) {
       return await ios.requestPermissions(
@@ -78,7 +90,7 @@ class WaterReminderService {
 
   String _getTitle(int hour) {
     if (hour == 7) return '🌅 Günə su ilə başla!';
-    if (hour == 9) return '☀️ Səhər suunu içdin?';
+    if (hour == 9) return '☀️ Səhər suyunu içdin?';
     if (hour == 11) return '💧 Nahardan əvvəl su vaxtı!';
     if (hour == 13) return '🥗 Nahardan sonra su iç!';
     if (hour == 15) return '⚡ Enerji üçün su iç!';
@@ -88,7 +100,7 @@ class WaterReminderService {
     return '💧 Su içmə vaxtıdır!';
   }
 
-  List<String> messages = [
+  final List<String> messages = [
     'Bir stəkan su iç, özünü yaxşı hiss et! 🌊',
     'Susuzluq yorğunluq gətirir. Su vaxtıdır! 💪',
     'Sağlıqlı qalmaq üçün bir stəkan su! ✨',
@@ -99,6 +111,8 @@ class WaterReminderService {
     'Axşam yeməyindən əvvəl su içməyi unutma! 🍽️',
   ];
 
+  static const List<int> _scheduledHours = [7, 9, 11, 13, 15, 17, 19, 21];
+
   Future<void> _schedule() async {
     await _cancelAll();
 
@@ -106,76 +120,56 @@ class WaterReminderService {
     int id = _baseNotificationId;
     int count = 0;
 
-    const scheduledHours = [7, 9, 11, 13, 15, 17, 19, 21];
-
     for (int day = 0; day < 7 && count < _maxNotifications; day++) {
       final date = now.add(Duration(days: day));
       for (
         int i = 0;
-        i < scheduledHours.length && count < _maxNotifications;
+        i < _scheduledHours.length && count < _maxNotifications;
         i++
       ) {
+        final hour = _scheduledHours[i];
         final time = tz.TZDateTime(
           tz.local,
           date.year,
           date.month,
           date.day,
-          scheduledHours[i],
+          hour,
         );
         if (time.isBefore(now)) continue;
 
-        await _notifications.zonedSchedule(
-          id: id++,
-          title: _getTitle(scheduledHours[i]),
-          body: messages[i % messages.length],
-          scheduledDate: time,
-          notificationDetails: const NotificationDetails(
-            android: AndroidNotificationDetails(
-              _channelId,
-              _channelName,
-              channelDescription: _channelDesc,
-              importance: Importance.high,
-              priority: Priority.high,
+        try {
+          await _notifications.zonedSchedule(
+            id: id,
+            title: _getTitle(hour),
+            body: messages[i % messages.length],
+            scheduledDate: time,
+            notificationDetails: const NotificationDetails(
+              android: AndroidNotificationDetails(
+                _channelId,
+                _channelName,
+                channelDescription: _channelDesc,
+                importance: Importance.high,
+                priority: Priority.high,
+              ),
+              iOS: DarwinNotificationDetails(
+                presentAlert: true,
+                presentBadge: true,
+                presentSound: true,
+              ),
             ),
-            iOS: DarwinNotificationDetails(
-              presentAlert: true,
-              presentBadge: true,
-              presentSound: true,
-            ),
-          ),
-          androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-        );
-        count++;
+            androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+          );
+          id++;
+          count++;
+        } catch (e) {
+          // Bir bildirişin planlaşdırılması uğursuz olsa belə,
+          // qalanları planlaşdırmağa davam edirik (əvvəlki kodda
+          // xəta bütün dövrü dayandırırdı).
+          id++;
+        }
       }
     }
   }
-
-  // TEST: Bu hissəni commentdən çıxar, _schedule() çağırışını comment et
-  // Future<void> _scheduleTest() async {
-  //   await _cancelAll();
-  //   final now = tz.TZDateTime.now(tz.local);
-  //   await _notifications.zonedSchedule(
-  //     id: _baseNotificationId,
-  //     title: _getTitle(now.hour),
-  //     body: messages[0],
-  //     scheduledDate: now.add(const Duration(minutes: 1)),
-  //     notificationDetails: const NotificationDetails(
-  //       android: AndroidNotificationDetails(
-  //         _channelId,
-  //         _channelName,
-  //         channelDescription: _channelDesc,
-  //         importance: Importance.high,
-  //         priority: Priority.high,
-  //       ),
-  //       iOS: DarwinNotificationDetails(
-  //         presentAlert: true,
-  //         presentBadge: true,
-  //         presentSound: true,
-  //       ),
-  //     ),
-  //     androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-  //   );
-  // }
 
   Future<void> _cancelAll() async {
     for (

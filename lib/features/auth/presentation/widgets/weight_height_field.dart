@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../core/utils/app_validators.dart';
 import '../../../../core/utils/sized_box_extension.dart';
-import '../../../../shared/widgets/custom_text_field.dart';
+import '../../../../shared/widgets/controller_stepper_field.dart';
 
 class WeightHeightField extends StatelessWidget {
   final TextEditingController weightController;
@@ -18,22 +18,31 @@ class WeightHeightField extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: CustomTextField(
-            label: "Çəki (kq)",
-            hintText: "00.0",
+          child: ControllerStepperField(
             controller: weightController,
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            label: "Çəki",
+            unit: "kq",
+            min: 20,
+            max: 300,
+            step: 0.1,
+            majorEvery: 10,
+            decimals: 1,
             validator: (value) =>
                 AppValidators.combine(value, [AppValidators.isNotEmpty]),
           ),
         ),
         12.ws,
         Expanded(
-          child: CustomTextField(
-            label: "Boy (sm)",
-            hintText: "000",
+          child: ControllerStepperField(
             controller: heightController,
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            label: "Boy",
+            unit: "sm",
+            min: 50,
+            max: 250,
+            step: 1,
+            majorEvery: 10,
+            decimals: 0,
+            allowManualInput: false,
             validator: (value) =>
                 AppValidators.combine(value, [AppValidators.isNotEmpty]),
           ),

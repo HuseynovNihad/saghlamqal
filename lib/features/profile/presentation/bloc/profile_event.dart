@@ -19,3 +19,19 @@ final class ProfileAboutUsRequested extends ProfileEvent {
 final class ProfileRequested extends ProfileEvent {
   const ProfileRequested();
 }
+
+final class ProfileUpdateRequested extends ProfileEvent {
+  final UpdateProfileParams params;
+
+  const ProfileUpdateRequested({required this.params});
+}
+
+final class PatientProfileRequested extends ProfileEvent {
+  const PatientProfileRequested();
+}
+
+final class PatientProfileUpdateRequested extends ProfileEvent {
+  final UpdatePatientProfileParams params;
+
+  const PatientProfileUpdateRequested({required this.params});
+}

@@ -42,9 +42,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: BlocConsumer<AuthBloc, AuthState>(
+    return Scaffold(
+      body: SafeArea(
+        child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
             if (state is AuthError) {
               CustomSnackBar.show(
@@ -79,10 +79,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       24.hs,
                       Container(
                         padding: 20.p,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: 16.br,
-                        ),
+
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [

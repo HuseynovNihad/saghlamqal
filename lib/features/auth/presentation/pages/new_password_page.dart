@@ -18,7 +18,6 @@ import '../bloc/auth_bloc.dart';
 import '../bloc/auth_event.dart';
 import '../bloc/auth_state.dart';
 
-/// OtpVerifyPage-dən bu səhifəyə ötürülən məlumat
 class NewPasswordExtra {
   final String email;
   final String otp;
@@ -64,9 +63,9 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: BlocConsumer<AuthBloc, AuthState>(
+    return Scaffold(
+      body: SafeArea(
+        child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
             log('📍 NewPasswordPage listener | state=${state.runtimeType}');
             if (state is AuthError) {

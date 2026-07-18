@@ -149,7 +149,7 @@ class _LoginPageState extends State<LoginPage> {
                               alignment: Alignment.centerRight,
                               child: TextButton(
                                 onPressed: () {
-                                  context.go(AppRoutes.forgotPassword);
+                                  context.push(AppRoutes.forgotPassword);
                                 },
                                 child: Text(
                                   "Şifrənizi unutmusunuz?",

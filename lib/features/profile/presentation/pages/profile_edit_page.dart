@@ -6,6 +6,9 @@ import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/utils/padding_extension.dart';
 import '../../../auth/domain/entities/user_entity.dart';
+import '../../../profile/domain/entities/patient_profile_entity.dart';
+import '../../../profile/domain/usecases/update_patient_profile_usecase.dart';
+import '../../../profile/domain/usecases/update_profile_usecase.dart';
 import '../../../profile/presentation/bloc/profile_bloc.dart';
 import '../widgets/profile_edit/body_metrics_card.dart';
 import '../widgets/profile_edit/personal_info_card.dart';
@@ -21,7 +24,9 @@ class ProfileEditPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => sl<ProfileBloc>()..add(const ProfileRequested()),
+      create: (_) => sl<ProfileBloc>()
+        ..add(const ProfileRequested())
+        ..add(const PatientProfileRequested()),
       child: const _ProfileEditView(),
     );
   }
@@ -59,7 +64,24 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
   String? _activityLevel;
   String? _goal;
 
-  bool _hasHydrated = false;
+  // Dəyişikliyi aşkar etmək üçün ilkin (server-dən gələn) dəyərlər
+  String _initialFirstName = '';
+  String _initialLastName = '';
+  String _initialPhoneDigits = '';
+
+  DateTime? _initialBirthday;
+  int? _initialHeight;
+  double? _initialWeight;
+  double? _initialTargetWeight;
+  String? _initialGender;
+  String? _initialActivityLevel;
+  String? _initialGoal;
+
+  bool _hasUserHydrated = false;
+  bool _hasPatientProfileHydrated = false;
+  bool get _hasHydrated => _hasUserHydrated && _hasPatientProfileHydrated;
+
+  bool _isSaving = false;
 
   /// PhoneNumberField yalnız yerli 9 rəqəmi (994 kod xaric) qəbul edir,
   /// ona görə controller-ə ölkə kodunu təmizləyib boşluqsuz yazırıq.
@@ -77,14 +99,32 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
     _lastNameController.text = user.lastName ?? '';
     _emailController.text = user.email;
     _phoneController.text = _stripCountryCode(user.phoneNumber);
-    _birthday = user.birthday;
-    _height = user.height?.toInt();
-    _weight = user.weight;
-    _targetWeight = user.targetWeight;
-    _gender = user.gender;
-    _activityLevel = user.activityLevel;
-    _goal = user.goal;
-    _hasHydrated = true;
+
+    _initialFirstName = _firstNameController.text;
+    _initialLastName = _lastNameController.text;
+    _initialPhoneDigits = _phoneController.text;
+
+    _hasUserHydrated = true;
+  }
+
+  void _hydrateFromPatientProfile(PatientProfileEntity profile) {
+    _birthday = profile.birthday;
+    _height = profile.height;
+    _weight = profile.currentWeight;
+    _targetWeight = profile.targetWeight;
+    _gender = profile.gender;
+    _activityLevel = profile.activityLevel;
+    _goal = profile.goal;
+
+    _initialBirthday = profile.birthday;
+    _initialHeight = profile.height;
+    _initialWeight = profile.currentWeight;
+    _initialTargetWeight = profile.targetWeight;
+    _initialGender = profile.gender;
+    _initialActivityLevel = profile.activityLevel;
+    _initialGoal = profile.goal;
+
+    _hasPatientProfileHydrated = true;
   }
 
   @override
@@ -96,14 +136,63 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
     super.dispose();
   }
 
+  bool get _isPersonalInfoChanged {
+    return _firstNameController.text.trim() != _initialFirstName ||
+        _lastNameController.text.trim() != _initialLastName ||
+        _phoneController.text.trim() != _initialPhoneDigits;
+  }
+
+  bool get _isPhysicalInfoChanged {
+    return _birthday != _initialBirthday ||
+        _height != _initialHeight ||
+        _weight != _initialWeight ||
+        _targetWeight != _initialTargetWeight ||
+        _gender != _initialGender ||
+        _activityLevel != _initialActivityLevel ||
+        _goal != _initialGoal;
+  }
+
   void _save() {
-    _phoneController.text.replaceAll(RegExp(r'\D'), '');
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Profile saved'),
-        backgroundColor: AppColors.success,
-      ),
-    );
+    final bloc = context.read<ProfileBloc>();
+    final personalChanged = _isPersonalInfoChanged;
+    final physicalChanged = _isPhysicalInfoChanged;
+
+    if (!personalChanged && !physicalChanged) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Heç bir dəyişiklik yoxdur')),
+      );
+      return;
+    }
+
+    setState(() => _isSaving = true);
+
+    if (personalChanged) {
+      bloc.add(
+        ProfileUpdateRequested(
+          params: UpdateProfileParams(
+            firstName: _firstNameController.text.trim(),
+            lastName: _lastNameController.text.trim(),
+            phoneNumber: '$_phoneCountryCode${_phoneController.text.trim()}',
+          ),
+        ),
+      );
+    }
+
+    if (physicalChanged) {
+      bloc.add(
+        PatientProfileUpdateRequested(
+          params: UpdatePatientProfileParams(
+            birthday: _birthday!,
+            gender: _gender!,
+            height: _height!,
+            currentWeight: _weight!,
+            targetWeight: _targetWeight!,
+            activityLevel: _activityLevel!,
+            goal: _goal!,
+          ),
+        ),
+      );
+    }
   }
 
   String _initialFor(UserEntity user) {
@@ -133,10 +222,51 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
       body: SafeArea(
         child: BlocConsumer<ProfileBloc, ProfileState>(
           listener: (context, state) {
-            if (state is ProfileLoaded && !_hasHydrated) {
+            if (state is ProfileLoaded && !_hasUserHydrated) {
               setState(() => _hydrateFromUser(state.user));
             }
-            if (state is ProfileError) {
+            if (state is PatientProfileLoaded && !_hasPatientProfileHydrated) {
+              setState(() => _hydrateFromPatientProfile(state.patientProfile));
+            }
+
+            if (state is ProfileError || state is PatientProfileError) {
+              final message = state is ProfileError
+                  ? state.message
+                  : (state as PatientProfileError).message;
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(message),
+                  backgroundColor: AppColors.error,
+                ),
+              );
+            }
+
+            if (state is ProfileUpdateSuccess) {
+              setState(() {
+                _hydrateFromUser(state.user);
+                _isSaving = false;
+              });
+              _maybeShowSavedSnackBar(context);
+            }
+            if (state is PatientProfileUpdateSuccess) {
+              setState(() {
+                _hydrateFromPatientProfile(state.patientProfile);
+                _isSaving = false;
+              });
+              _maybeShowSavedSnackBar(context);
+            }
+
+            if (state is ProfileUpdateError) {
+              setState(() => _isSaving = false);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.message),
+                  backgroundColor: AppColors.error,
+                ),
+              );
+            }
+            if (state is PatientProfileUpdateError) {
+              setState(() => _isSaving = false);
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(state.message),
@@ -147,12 +277,15 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
           },
           builder: (context, state) {
             if (!_hasHydrated) {
-              if (state is ProfileError) {
+              if (state is ProfileError || state is PatientProfileError) {
+                final message = state is ProfileError
+                    ? state.message
+                    : (state as PatientProfileError).message;
                 return Center(
                   child: Padding(
                     padding: 24.p,
                     child: Text(
-                      state.message,
+                      message,
                       textAlign: TextAlign.center,
                       style: const TextStyle(color: AppColors.bodyText),
                     ),
@@ -164,7 +297,9 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
               );
             }
 
-            final user = state is ProfileLoaded ? state.user : null;
+            final user = state is ProfileLoaded
+                ? state.user
+                : (state is ProfileUpdateSuccess ? state.user : null);
 
             return ListView(
               padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
@@ -191,33 +326,17 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
                   height: _height,
                   weight: _weight,
                   targetWeight: _targetWeight,
-                  onHeightDecrement: () => setState(() {
-                    final current = _height ?? _minHeight;
-                    _height = current > _minHeight ? current - 1 : _minHeight;
+                  onHeightChanged: (value) => setState(() {
+                    _height = value.clamp(_minHeight, _maxHeight);
                   }),
-                  onHeightIncrement: () => setState(() {
-                    final current = _height ?? (_minHeight - 1);
-                    _height = current < _maxHeight ? current + 1 : _maxHeight;
+                  onWeightChanged: (value) => setState(() {
+                    _weight = value.clamp(_minWeight, _maxWeight);
                   }),
-                  onWeightDecrement: () => setState(() {
-                    final current = _weight ?? _minWeight;
-                    _weight = current > _minWeight ? current - 1 : _minWeight;
-                  }),
-                  onWeightIncrement: () => setState(() {
-                    final current = _weight ?? (_minWeight - 1);
-                    _weight = current < _maxWeight ? current + 1 : _maxWeight;
-                  }),
-                  onTargetWeightDecrement: () => setState(() {
-                    final current = _targetWeight ?? _minTargetWeight;
-                    _targetWeight = current > _minTargetWeight
-                        ? current - 1
-                        : _minTargetWeight;
-                  }),
-                  onTargetWeightIncrement: () => setState(() {
-                    final current = _targetWeight ?? (_minTargetWeight - 1);
-                    _targetWeight = current < _maxTargetWeight
-                        ? current + 1
-                        : _maxTargetWeight;
+                  onTargetWeightChanged: (value) => setState(() {
+                    _targetWeight = value.clamp(
+                      _minTargetWeight,
+                      _maxTargetWeight,
+                    );
                   }),
                 ),
                 20.hs,
@@ -238,9 +357,25 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
       bottomNavigationBar: _hasHydrated
           ? SafeArea(
               minimum: const EdgeInsets.fromLTRB(20, 8, 20, 12),
-              child: SaveChangesButton(onPressed: _save),
+              child: SaveChangesButton(
+                isLoading: _isSaving,
+                onPressed: _isSaving ? null : _save,
+              ),
             )
           : null,
     );
+  }
+
+  void _maybeShowSavedSnackBar(BuildContext context) {
+    final personalChanged = _isPersonalInfoChanged;
+    final physicalChanged = _isPhysicalInfoChanged;
+    if (!personalChanged && !physicalChanged) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Profile saved'),
+          backgroundColor: AppColors.success,
+        ),
+      );
+    }
   }
 }

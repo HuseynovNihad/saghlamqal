@@ -16,9 +16,16 @@ class Endpoints {
   // ─── Users ───────────────────────────────────────────────
   static const String getMe = 'users/me';
   static const String updateProfile = 'users/profile';
-  static const String updatePhysical = 'users/physical';
   static const String changePassword = 'users/change-password';
   static const String deleteAccount = 'users/me';
+
+  // ─── Patient Profile ───────────────────────────────────────
+  static const String getPatientProfile = 'patient-profile/me';
+  static const String updatePatientProfile = 'patient-profile/me';
+  static const String addWeightLog = 'patient-profile/weight-logs';
+  static const String getWeightLogs = 'patient-profile/weight-logs';
+  static const String addActivityLog = 'patient-profile/activity-logs';
+  static const String getActivityLogs = 'patient-profile/activity-logs';
 
   // ─── Nutrition ───────────────────────────────────────────
   static const String getNutrition = 'nutrition';

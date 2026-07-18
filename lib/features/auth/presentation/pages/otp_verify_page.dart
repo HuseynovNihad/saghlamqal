@@ -126,9 +126,9 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: BlocConsumer<AuthBloc, AuthState>(
+    return Scaffold(
+      body: SafeArea(
+        child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
             if (state is AuthError) {
               CustomSnackBar.show(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../../core/constants/app_colors.dart';
+import '../../../../../shared/widgets/ruler_picker_sheet.dart';
 
 class StepperField extends StatelessWidget {
   const StepperField({
@@ -7,22 +8,46 @@ class StepperField extends StatelessWidget {
     required this.label,
     required this.value,
     required this.unit,
-    required this.onDecrement,
-    required this.onIncrement,
-    this.showCheck = false,
+    required this.min,
+    required this.max,
+    required this.onChanged,
+    this.step = 1,
+    this.majorEvery = 10,
+    this.decimals = 0,
+    this.allowManualInput = true,
   });
 
   final String label;
-  final String value;
+  final double? value;
   final String unit;
-  final VoidCallback onDecrement;
-  final VoidCallback onIncrement;
-  final bool showCheck;
+  final double min;
+  final double max;
+  final double step;
+  final int majorEvery;
+  final int decimals;
+  final bool allowManualInput;
+  final ValueChanged<double> onChanged;
+
+  Future<void> _openPicker(BuildContext context) async {
+    final result = await showRulerPickerSheet(
+      context: context,
+      title: label,
+      min: min,
+      max: max,
+      step: step,
+      majorEvery: majorEvery,
+      unit: unit,
+      decimals: decimals,
+      initialValue: value ?? min,
+      allowManualInput: allowManualInput,
+    );
+    if (result != null) onChanged(result);
+  }
 
   @override
   Widget build(BuildContext context) {
-    final hasValue = value.isNotEmpty;
-    final displayValue = hasValue ? value : '-';
+    final hasValue = value != null;
+    final displayValue = hasValue ? value!.toStringAsFixed(decimals) : '-';
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,79 +63,54 @@ class StepperField extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
         ),
         const SizedBox(height: 6),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-          decoration: BoxDecoration(
-            color: AppColors.textfieldColor,
-            borderRadius: BorderRadius.circular(14),
-            border: Border.all(color: AppColors.borderColor),
-          ),
-          child: Row(
-            children: [
-              Expanded(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.baseline,
-                  textBaseline: TextBaseline.alphabetic,
-                  children: [
-                    Text(
-                      displayValue,
-                      style: const TextStyle(
-                        color: AppColors.headline,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-                    if (hasValue) ...[
-                      const SizedBox(width: 3),
+        InkWell(
+          onTap: () => _openPicker(context),
+          borderRadius: BorderRadius.circular(14),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            decoration: BoxDecoration(
+              color: AppColors.textfieldColor,
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(color: AppColors.borderColor),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: [
                       Text(
-                        unit,
+                        displayValue,
                         style: const TextStyle(
-                          color: AppColors.bodyText,
-                          fontSize: 11,
+                          color: AppColors.headline,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
                         ),
                       ),
+                      if (hasValue) ...[
+                        const SizedBox(width: 3),
+                        Text(
+                          unit,
+                          style: const TextStyle(
+                            color: AppColors.bodyText,
+                            fontSize: 11,
+                          ),
+                        ),
+                      ],
                     ],
-                  ],
+                  ),
                 ),
-              ),
-            ],
+                const Icon(
+                  Icons.unfold_more_rounded,
+                  size: 16,
+                  color: AppColors.bodyText,
+                ),
+              ],
+            ),
           ),
-        ),
-        const SizedBox(height: 6),
-        Row(
-          children: [
-            _MiniIconButton(icon: Icons.remove_rounded, onTap: onDecrement),
-            const SizedBox(width: 6),
-            _MiniIconButton(icon: Icons.add_rounded, onTap: onIncrement),
-          ],
         ),
       ],
-    );
-  }
-}
-
-class _MiniIconButton extends StatelessWidget {
-  const _MiniIconButton({required this.icon, required this.onTap});
-
-  final IconData icon;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(10),
-        child: Container(
-          height: 32,
-          decoration: BoxDecoration(
-            color: AppColors.surface,
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: AppColors.borderColor),
-          ),
-          child: Icon(icon, size: 16, color: AppColors.headline),
-        ),
-      ),
     );
   }
 }

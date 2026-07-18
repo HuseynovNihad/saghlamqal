@@ -5,9 +5,9 @@ import '../../../../../core/constants/app_text_styles.dart';
 import '../../../../../core/utils/app_validators.dart';
 import '../../../../../core/utils/padding_extension.dart';
 import '../../../../../core/utils/sized_box_extension.dart';
-import '../../../../../shared/widgets/custom_elevated_button.dart';
 import '../../../../../shared/widgets/custom_text_button.dart';
 import '../../../../../shared/widgets/custom_text_field.dart';
+import '../register_nav_buttons.dart';
 import '../section_header.dart';
 
 class RegisterSecurityStep extends StatelessWidget {
@@ -63,42 +63,18 @@ class RegisterSecurityStep extends StatelessWidget {
             },
           ),
           24.hs,
-          Row(
-            children: [
-              Expanded(
-                child: OutlinedButton(
-                  onPressed: onBack,
-                  style: OutlinedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    side: BorderSide(color: Colors.grey.shade300),
-                  ),
-                  child: Text(
-                    "Geri",
-                    style: AppTextStyles.bodyMedium.copyWith(
-                      color: Colors.black87,
-                    ),
-                  ),
-                ),
-              ),
-              12.ws,
-              Expanded(
-                flex: 2,
-                child: CustomElevatedButton(
-                  text: "Qeydiyyatdan keç",
-                  isLoading: isLoading,
-                  onPressed: onRegister,
-                ),
-              ),
-            ],
+          RegisterNavButtons(
+            showBack: true,
+            nextLabel: "Qeydiyyatdan keç",
+            isLoading: isLoading,
+            onNext: onRegister,
+            onBack: onBack,
           ),
           16.hs,
           Row(
             children: [
               const Expanded(child: Divider(thickness: 1)),
-              Padding(padding: 8.px, child: Text("və ya")),
+              Padding(padding: 8.px, child: const Text("və ya")),
               const Expanded(child: Divider(thickness: 1)),
             ],
           ),

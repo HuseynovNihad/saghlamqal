@@ -5,8 +5,8 @@ import '../../../../../core/constants/app_text_styles.dart';
 import '../../../../../core/utils/app_validators.dart';
 import '../../../../../core/utils/padding_extension.dart';
 import '../../../../../core/utils/sized_box_extension.dart';
+import '../../../../../shared/widgets/controller_stepper_field.dart';
 import '../../../../../shared/widgets/custom_text_button.dart';
-import '../../../../../shared/widgets/custom_text_field.dart';
 import '../gender_field.dart';
 import '../register_nav_buttons.dart';
 import '../section_header.dart';
@@ -52,11 +52,15 @@ class RegisterPhysicalInfoStep extends StatelessWidget {
             heightController: heightController,
           ),
           16.hs,
-          CustomTextField(
-            label: "Hədəf çəki (kq)",
-            hintText: "Məsələn: 65",
+          ControllerStepperField(
             controller: targetWeightController,
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            label: "Hədəf çəki",
+            unit: "kq",
+            min: 20,
+            max: 300,
+            step: 0.1,
+            majorEvery: 10,
+            decimals: 1,
             validator: (value) =>
                 AppValidators.combine(value, [AppValidators.isNotEmpty]),
           ),

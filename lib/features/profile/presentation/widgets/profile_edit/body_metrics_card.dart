@@ -12,24 +12,18 @@ class BodyMetricsCard extends StatelessWidget {
     required this.height,
     required this.weight,
     required this.targetWeight,
-    required this.onHeightDecrement,
-    required this.onHeightIncrement,
-    required this.onWeightDecrement,
-    required this.onWeightIncrement,
-    required this.onTargetWeightDecrement,
-    required this.onTargetWeightIncrement,
+    required this.onHeightChanged,
+    required this.onWeightChanged,
+    required this.onTargetWeightChanged,
     this.progressMessage = "Əla gedir! Doğru yoldasan.",
   });
 
   final int? height;
   final double? weight;
   final double? targetWeight;
-  final VoidCallback onHeightDecrement;
-  final VoidCallback onHeightIncrement;
-  final VoidCallback onWeightDecrement;
-  final VoidCallback onWeightIncrement;
-  final VoidCallback onTargetWeightDecrement;
-  final VoidCallback onTargetWeightIncrement;
+  final ValueChanged<int> onHeightChanged;
+  final ValueChanged<double> onWeightChanged;
+  final ValueChanged<double> onTargetWeightChanged;
   final String progressMessage;
 
   @override
@@ -43,31 +37,43 @@ class BodyMetricsCard extends StatelessWidget {
             Expanded(
               child: StepperField(
                 label: 'Boy',
-                value: height?.toString() ?? '',
+                value: height?.toDouble(),
                 unit: 'sm',
-                onDecrement: onHeightDecrement,
-                onIncrement: onHeightIncrement,
+                min: 100,
+                max: 220,
+                step: 1,
+                majorEvery: 10,
+                decimals: 0,
+                allowManualInput: false,
+                onChanged: (v) => onHeightChanged(v.round()),
               ),
             ),
             10.ws,
             Expanded(
               child: StepperField(
                 label: 'Cari çəki',
-                value: weight?.toStringAsFixed(0) ?? '',
+                value: weight,
                 unit: 'kq',
-                onDecrement: onWeightDecrement,
-                onIncrement: onWeightIncrement,
+                min: 30,
+                max: 200,
+                step: 0.1,
+                majorEvery: 10,
+                decimals: 1,
+                onChanged: onWeightChanged,
               ),
             ),
             10.ws,
             Expanded(
               child: StepperField(
                 label: 'Hədəf çəki',
-                value: targetWeight?.toStringAsFixed(0) ?? '',
+                value: targetWeight,
                 unit: 'kq',
-                showCheck: true,
-                onDecrement: onTargetWeightDecrement,
-                onIncrement: onTargetWeightIncrement,
+                min: 30,
+                max: 200,
+                step: 0.1,
+                majorEvery: 10,
+                decimals: 1,
+                onChanged: onTargetWeightChanged,
               ),
             ),
           ],
