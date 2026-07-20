@@ -24,3 +24,7 @@ final class HomeMealOfTheDayRequested extends HomeEvent {
 final class HomeRefreshRecent extends HomeEvent {
   const HomeRefreshRecent();
 }
+
+final class HomeDailyGoalRequested extends HomeEvent {
+  const HomeDailyGoalRequested();
+}

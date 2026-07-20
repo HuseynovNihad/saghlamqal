@@ -67,6 +67,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<DeleteAccountRequested>(_onDeleteAccount);
     on<ReactivateAccountRequested>(_onReactivateAccount);
     on<VerifyRestoreAccountSubmitted>(_onVerifyRestoreAccount);
+    on<AuthUserUpdated>(_onAuthUserUpdated);
   }
 
   Future<void> _onAppStarted(AppStarted event, Emitter<AuthState> emit) async {
@@ -255,6 +256,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthAuthenticated(user: response.user, token: response.token));
     } catch (e) {
       emit(AuthError(e.toString()));
+    }
+  }
+
+  void _onAuthUserUpdated(AuthUserUpdated event, Emitter<AuthState> emit) {
+    final currentState = state;
+    if (currentState is AuthAuthenticated) {
+      emit(AuthAuthenticated(user: event.user, token: currentState.token));
     }
   }
 }

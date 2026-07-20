@@ -5,7 +5,11 @@ import 'package:kalori_tracker/core/utils/sized_box_extension.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/utils/padding_extension.dart';
+import '../../../../shared/widgets/custom_snackbar.dart';
 import '../../../auth/domain/entities/user_entity.dart';
+import '../../../auth/presentation/bloc/auth_bloc.dart';
+import '../../../auth/presentation/bloc/auth_event.dart';
+import '../../../home/presentation/bloc/home_bloc.dart';
 import '../../../profile/domain/entities/patient_profile_entity.dart';
 import '../../../profile/domain/usecases/update_patient_profile_usecase.dart';
 import '../../../profile/domain/usecases/update_profile_usecase.dart';
@@ -64,7 +68,6 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
   String? _activityLevel;
   String? _goal;
 
-  // Dəyişikliyi aşkar etmək üçün ilkin (server-dən gələn) dəyərlər
   String _initialFirstName = '';
   String _initialLastName = '';
   String _initialPhoneDigits = '';
@@ -83,8 +86,8 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
 
   bool _isSaving = false;
 
-  /// PhoneNumberField yalnız yerli 9 rəqəmi (994 kod xaric) qəbul edir,
-  /// ona görə controller-ə ölkə kodunu təmizləyib boşluqsuz yazırıq.
+  String _avatarInitial = 'U';
+
   String _stripCountryCode(String? rawPhone) {
     if (rawPhone == null || rawPhone.isEmpty) return '';
     var digits = rawPhone.replaceAll(RegExp(r'\D'), '');
@@ -103,6 +106,8 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
     _initialFirstName = _firstNameController.text;
     _initialLastName = _lastNameController.text;
     _initialPhoneDigits = _phoneController.text;
+
+    _avatarInitial = _initialFor(user);
 
     _hasUserHydrated = true;
   }
@@ -158,8 +163,10 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
     final physicalChanged = _isPhysicalInfoChanged;
 
     if (!personalChanged && !physicalChanged) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Heç bir dəyişiklik yoxdur')),
+      CustomSnackBar.show(
+        context,
+        message: 'Heç bir dəyişiklik yoxdur',
+        type: SnackBarType.info,
       );
       return;
     }
@@ -182,13 +189,13 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
       bloc.add(
         PatientProfileUpdateRequested(
           params: UpdatePatientProfileParams(
-            birthday: _birthday!,
-            gender: _gender!,
-            height: _height!,
-            currentWeight: _weight!,
-            targetWeight: _targetWeight!,
-            activityLevel: _activityLevel!,
-            goal: _goal!,
+            birthday: _birthday,
+            gender: _gender,
+            height: _height,
+            currentWeight: _weight,
+            targetWeight: _targetWeight,
+            activityLevel: _activityLevel,
+            goal: _goal,
           ),
         ),
       );
@@ -233,11 +240,10 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
               final message = state is ProfileError
                   ? state.message
                   : (state as PatientProfileError).message;
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(message),
-                  backgroundColor: AppColors.error,
-                ),
+              CustomSnackBar.show(
+                context,
+                message: message,
+                type: SnackBarType.error,
               );
             }
 
@@ -246,6 +252,7 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
                 _hydrateFromUser(state.user);
                 _isSaving = false;
               });
+              context.read<AuthBloc>().add(AuthUserUpdated(state.user));
               _maybeShowSavedSnackBar(context);
             }
             if (state is PatientProfileUpdateSuccess) {
@@ -253,25 +260,24 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
                 _hydrateFromPatientProfile(state.patientProfile);
                 _isSaving = false;
               });
+              context.read<HomeBloc>().add(const HomeDailyGoalRequested());
               _maybeShowSavedSnackBar(context);
             }
 
             if (state is ProfileUpdateError) {
               setState(() => _isSaving = false);
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(state.message),
-                  backgroundColor: AppColors.error,
-                ),
+              CustomSnackBar.show(
+                context,
+                message: state.message,
+                type: SnackBarType.error,
               );
             }
             if (state is PatientProfileUpdateError) {
               setState(() => _isSaving = false);
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(state.message),
-                  backgroundColor: AppColors.error,
-                ),
+              CustomSnackBar.show(
+                context,
+                message: state.message,
+                type: SnackBarType.error,
               );
             }
           },
@@ -297,15 +303,11 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
               );
             }
 
-            final user = state is ProfileLoaded
-                ? state.user
-                : (state is ProfileUpdateSuccess ? state.user : null);
-
             return ListView(
               padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
               children: [
                 ProfileAvatar(
-                  initial: user != null ? _initialFor(user) : 'U',
+                  initial: _avatarInitial,
                   imageUrl: null,
                   onEditTap: () {
                     // TODO: image picker
@@ -370,11 +372,11 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
     final personalChanged = _isPersonalInfoChanged;
     final physicalChanged = _isPhysicalInfoChanged;
     if (!personalChanged && !physicalChanged) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Profile saved'),
-          backgroundColor: AppColors.success,
-        ),
+      CustomSnackBar.show(
+        context,
+        message: 'Profil yadda saxlanıldı',
+        type: SnackBarType.success,
+        position: SnackBarPosition.top,
       );
     }
   }

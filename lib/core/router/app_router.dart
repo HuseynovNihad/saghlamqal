@@ -17,6 +17,7 @@ import '../../features/auth/presentation/pages/register_page.dart';
 import '../../features/favorites/presentation/pages/favorite_page.dart';
 import '../../features/home/domain/entities/meal_of_the_day_entity.dart';
 import '../../features/home/domain/entities/recent_product_entity.dart';
+import '../../features/home/presentation/bloc/home_bloc.dart';
 import '../../features/home/presentation/pages/main_page.dart';
 import '../../features/home/presentation/pages/recent_products_page.dart';
 import '../../features/home/presentation/pages/recipe_page.dart';
@@ -48,7 +49,10 @@ class GoRouterRefreshStream extends ChangeNotifier {
 }
 
 class AppRouter {
-  static final AuthBloc _authBloc = sl<AuthBloc>()..add(AppStarted());
+  static final AuthBloc authBloc = sl<AuthBloc>()..add(AppStarted());
+
+  static final HomeBloc homeBloc = sl<HomeBloc>();
+
   static final OnboardingStorage _onboardingStorage = sl<OnboardingStorage>();
 
   static const _authPages = [
@@ -64,14 +68,14 @@ class AppRouter {
   static final GoRouter router = GoRouter(
     initialLocation: AppRoutes.splash,
     debugLogDiagnostics: false,
-    refreshListenable: GoRouterRefreshStream(_authBloc.stream),
+    refreshListenable: GoRouterRefreshStream(authBloc.stream),
     errorBuilder: (context, state) => ErrorPage(
       type: ErrorType.notFound,
       onBack: () => context.go(AppRoutes.home),
     ),
 
     redirect: (context, state) {
-      final authState = _authBloc.state;
+      final authState = authBloc.state;
       final location = state.matchedLocation;
 
       if (authState is AuthInitial || authState is AuthSessionLoading) {
@@ -104,16 +108,11 @@ class AppRouter {
         ),
       ),
 
-      GoRoute(
-        path: AppRoutes.login,
-        builder: (_, __) =>
-            BlocProvider.value(value: _authBloc, child: const LoginPage()),
-      ),
+      GoRoute(path: AppRoutes.login, builder: (_, __) => const LoginPage()),
 
       GoRoute(
         path: AppRoutes.register,
-        builder: (_, __) =>
-            BlocProvider.value(value: _authBloc, child: const RegisterPage()),
+        builder: (_, __) => const RegisterPage(),
       ),
 
       GoRoute(
@@ -125,19 +124,13 @@ class AppRouter {
               body: Center(child: CircularProgressIndicator()),
             );
           }
-          return BlocProvider.value(
-            value: _authBloc,
-            child: OtpVerifyPage(email: extra.email, mode: extra.mode),
-          );
+          return OtpVerifyPage(email: extra.email, mode: extra.mode);
         },
       ),
 
       GoRoute(
         path: AppRoutes.forgotPassword,
-        builder: (_, __) => BlocProvider.value(
-          value: _authBloc,
-          child: const ForgotPasswordPage(),
-        ),
+        builder: (_, __) => const ForgotPasswordPage(),
       ),
 
       GoRoute(
@@ -149,13 +142,7 @@ class AppRouter {
               body: Center(child: CircularProgressIndicator()),
             );
           }
-          return BlocProvider.value(
-            value: _authBloc,
-            child: OtpVerifyPage(
-              email: extra,
-              mode: OtpVerifyMode.resetPassword,
-            ),
-          );
+          return OtpVerifyPage(email: extra, mode: OtpVerifyMode.resetPassword);
         },
       ),
 
@@ -166,10 +153,7 @@ class AppRouter {
           if (extra is! NewPasswordExtra) {
             return const _RedirectingPlaceholder(target: AppRoutes.login);
           }
-          return BlocProvider.value(
-            value: _authBloc,
-            child: NewPasswordPage(email: extra.email, otp: extra.otp),
-          );
+          return NewPasswordPage(email: extra.email, otp: extra.otp);
         },
       ),
 
@@ -182,21 +166,14 @@ class AppRouter {
               body: Center(child: CircularProgressIndicator()),
             );
           }
-          return BlocProvider.value(
-            value: _authBloc,
-            child: OtpVerifyPage(
-              email: extra,
-              mode: OtpVerifyMode.restoreAccount,
-            ),
+          return OtpVerifyPage(
+            email: extra,
+            mode: OtpVerifyMode.restoreAccount,
           );
         },
       ),
 
-      GoRoute(
-        path: AppRoutes.home,
-        builder: (_, __) =>
-            BlocProvider.value(value: _authBloc, child: const MainPage()),
-      ),
+      GoRoute(path: AppRoutes.home, builder: (_, __) => const MainPage()),
 
       GoRoute(path: AppRoutes.scan, builder: (_, __) => const ScanPage()),
 
@@ -220,8 +197,7 @@ class AppRouter {
 
       GoRoute(
         path: AppRoutes.photoScan,
-        builder: (_, __) =>
-            BlocProvider.value(value: _authBloc, child: const PhotoScanPage()),
+        builder: (_, __) => const PhotoScanPage(),
       ),
 
       GoRoute(
@@ -251,7 +227,8 @@ class AppRouter {
 
       GoRoute(
         path: AppRoutes.profileEdit,
-        builder: (_, __) => const ProfileEditPage(),
+        builder: (_, __) =>
+            BlocProvider.value(value: homeBloc, child: const ProfileEditPage()),
       ),
     ],
   );

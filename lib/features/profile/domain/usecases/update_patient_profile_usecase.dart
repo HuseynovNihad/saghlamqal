@@ -2,22 +2,22 @@ import '../entities/patient_profile_entity.dart';
 import '../repositories/profile_repository.dart';
 
 class UpdatePatientProfileParams {
-  final DateTime birthday;
-  final String gender;
-  final int height;
-  final double currentWeight;
-  final double targetWeight;
-  final String activityLevel;
-  final String goal;
+  final DateTime? birthday;
+  final String? gender;
+  final int? height;
+  final double? currentWeight;
+  final double? targetWeight;
+  final String? activityLevel;
+  final String? goal;
 
   const UpdatePatientProfileParams({
-    required this.birthday,
-    required this.gender,
-    required this.height,
-    required this.currentWeight,
-    required this.targetWeight,
-    required this.activityLevel,
-    required this.goal,
+    this.birthday,
+    this.gender,
+    this.height,
+    this.currentWeight,
+    this.targetWeight,
+    this.activityLevel,
+    this.goal,
   });
 }
 

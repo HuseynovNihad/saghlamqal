@@ -73,7 +73,8 @@ class ProfileRepositoryImpl implements ProfileRepository {
     return model.toEntity();
   }
 
-  String _formatDate(DateTime date) {
+  String? _formatDate(DateTime? date) {
+    if (date == null) return null;
     final y = date.year.toString().padLeft(4, '0');
     final m = date.month.toString().padLeft(2, '0');
     final d = date.day.toString().padLeft(2, '0');

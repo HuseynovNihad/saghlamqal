@@ -39,6 +39,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<HomeRecentProductsRequested>(_onRecentProductsRequested);
     on<HomeMealOfTheDayRequested>(_onMealOfTheDayRequested);
     on<HomeRefreshRecent>(_onRefreshRecent);
+    on<HomeDailyGoalRequested>(_onDailyGoalRequested);
   }
 
   Future<void> _onHomeStarted(
@@ -161,5 +162,31 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     } catch (e) {
       log('RefreshRecent error: $e');
     }
+  }
+
+  Future<void> _onDailyGoalRequested(
+    HomeDailyGoalRequested event,
+    Emitter<HomeState> emit,
+  ) async {
+    final current = state;
+    if (current is! HomeLoaded) return;
+
+    final results = await Future.wait([
+      _getDailyGoal().catchError((e) {
+        log('DailyGoalRequested error: $e');
+        return current.dailyGoal;
+      }),
+      _getHydration().catchError((e) {
+        log('HydrationRequested error: $e');
+        return current.hydration;
+      }),
+    ]);
+
+    emit(
+      current.copyWith(
+        dailyGoal: results[0] as DailyGoalEntity,
+        hydration: results[1] as HydrationEntity,
+      ),
+    );
   }
 }

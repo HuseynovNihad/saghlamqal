@@ -1,3 +1,5 @@
+import '../../domain/entities/user_entity.dart';
+
 abstract class AuthEvent {
   const AuthEvent();
 }
@@ -96,4 +98,9 @@ class VerifyRestoreAccountSubmitted extends AuthEvent {
   final String email;
   final String otp;
   const VerifyRestoreAccountSubmitted({required this.email, required this.otp});
+}
+
+class AuthUserUpdated extends AuthEvent {
+  final UserEntity user;
+  const AuthUserUpdated(this.user);
 }

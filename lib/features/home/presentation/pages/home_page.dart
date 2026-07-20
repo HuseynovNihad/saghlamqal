@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/constants/app_text_styles.dart';
-import '../../../../core/di/injection_container.dart';
+import '../../../../core/router/app_router.dart';
 import '../../../../core/router/app_routes.dart';
 import '../../../../core/utils/sized_box_extension.dart';
 import '../../../auth/presentation/bloc/auth_bloc.dart';
@@ -22,8 +22,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => sl<HomeBloc>(),
+    return BlocProvider<HomeBloc>.value(
+      value: AppRouter.homeBloc,
       child: const _HomeView(),
     );
   }
