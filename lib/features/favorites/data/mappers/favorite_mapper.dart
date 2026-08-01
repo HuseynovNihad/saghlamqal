@@ -7,6 +7,7 @@ class FavoriteMapper {
   static FavoriteItemEntity toEntity(FavoriteItemModel model) {
     return FavoriteItemEntity(
       id: model.id,
+      icon: model.icon,
       name: model.name,
       calories: model.calories,
       protein: model.protein,
@@ -24,6 +25,7 @@ class FavoriteMapper {
   static FavoriteItemModel toModel(FavoriteItemEntity entity) {
     return FavoriteItemModel(
       id: entity.id,
+      icon: entity.icon,
       name: entity.name,
       calories: entity.calories,
       protein: entity.protein,

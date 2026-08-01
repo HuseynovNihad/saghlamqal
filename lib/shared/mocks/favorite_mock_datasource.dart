@@ -1,4 +1,5 @@
 import '../../features/favorites/data/datasources/remote/favorite_remote_datasource.dart';
+import '../../features/favorites/data/models/add_favorite_request_model.dart';
 import '../../features/favorites/data/models/favorite_collection_model.dart';
 import '../../features/favorites/data/models/favorite_item_model.dart';
 
@@ -81,32 +82,21 @@ class FavoriteMockDatasource implements FavoriteRemoteDatasource {
   }
 
   @override
-  Future<FavoriteItemModel> addFavorite({
-    required String name,
-    double? calories,
-    double? protein,
-    double? carbs,
-    double? fat,
-    Map<String, dynamic>? vitamins,
-    List<String>? advice,
-    required bool isFood,
-    int? servingSize,
-    String? servingUnit,
-  }) async {
+  Future<FavoriteItemModel> addFavorite(AddFavoriteRequestModel request) async {
     await Future.delayed(const Duration(milliseconds: 300));
 
     final item = FavoriteItemModel(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
-      name: name,
-      calories: calories,
-      protein: protein,
-      carbs: carbs,
-      fat: fat,
-      vitamins: vitamins,
-      advice: advice,
-      isFood: isFood,
-      servingSize: servingSize,
-      servingUnit: servingUnit,
+      name: request.name,
+      calories: request.calories,
+      protein: request.protein,
+      carbs: request.carbs,
+      fat: request.fat,
+      vitamins: request.vitamins,
+      advice: request.advice,
+      isFood: request.isFood,
+      servingSize: request.servingSize,
+      servingUnit: request.servingUnit,
       createdAt: DateTime.now().toIso8601String(),
     );
 

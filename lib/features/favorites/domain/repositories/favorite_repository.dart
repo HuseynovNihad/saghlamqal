@@ -6,6 +6,7 @@ abstract interface class FavoriteRepository {
 
   Future<FavoriteItemEntity> addFavorite({
     required String name,
+    String? icon,
     double? calories,
     double? protein,
     double? carbs,

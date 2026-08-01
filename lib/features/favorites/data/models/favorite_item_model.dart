@@ -1,6 +1,6 @@
-// favorite_item_model.dart
 class FavoriteItemModel {
   final String id;
+  final String? icon;
   final String? name;
   final double? calories;
   final double? protein;
@@ -15,6 +15,7 @@ class FavoriteItemModel {
 
   const FavoriteItemModel({
     required this.id,
+    this.icon,
     this.name,
     this.calories,
     this.protein,
@@ -37,10 +38,13 @@ class FavoriteItemModel {
       carbs: (json['carbs'] as num?)?.toDouble(),
       fat: (json['fat'] as num?)?.toDouble(),
       vitamins: json['vitamins'] as Map<String, dynamic>?,
-      advice: json['advice'] as List<String>?,
+      advice: (json['advice'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
       isFood: json['is_food'] as bool? ?? false,
       servingSize: (json['serving_size'] as num?)?.toInt(),
       servingUnit: json['serving_unit'] as String?,
+      icon: json['icon'] as String?,
       createdAt: json['createdAt'] as String,
     );
   }
@@ -57,6 +61,7 @@ class FavoriteItemModel {
     'is_food': isFood,
     'serving_size': servingSize,
     'serving_unit': servingUnit,
+    'icon': icon,
     'createdAt': createdAt,
   };
 }

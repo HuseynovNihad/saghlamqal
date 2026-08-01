@@ -98,6 +98,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
     try {
       final newItem = await _addFavorite(
         name: event.name,
+        icon: event.icon,
         calories: event.calories,
         protein: event.protein,
         carbs: event.carbs,

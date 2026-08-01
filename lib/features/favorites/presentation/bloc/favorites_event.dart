@@ -9,6 +9,7 @@ final class GetFavoritesEvent extends FavoritesEvent {}
 
 final class AddFavoriteEvent extends FavoritesEvent {
   final String name;
+  final String? icon;
   final double? calories;
   final double? protein;
   final double? carbs;
@@ -21,6 +22,7 @@ final class AddFavoriteEvent extends FavoritesEvent {
 
   const AddFavoriteEvent({
     required this.name,
+    this.icon,
     this.calories,
     this.protein,
     this.carbs,

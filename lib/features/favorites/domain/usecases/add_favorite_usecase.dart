@@ -8,6 +8,7 @@ class AddFavoriteUsecase {
 
   Future<FavoriteItemEntity> call({
     required String name,
+    String? icon,
     double? calories,
     double? protein,
     double? carbs,
@@ -19,6 +20,7 @@ class AddFavoriteUsecase {
     String? servingUnit,
   }) => _repository.addFavorite(
     name: name,
+    icon: icon,
     calories: calories,
     protein: protein,
     carbs: carbs,

@@ -1,5 +1,6 @@
 class FavoriteItemEntity {
   final String id;
+  final String? icon;
   final String? name;
   final double? calories;
   final double? protein;
@@ -14,6 +15,7 @@ class FavoriteItemEntity {
 
   const FavoriteItemEntity({
     required this.id,
+    this.icon,
     this.name,
     this.calories,
     this.protein,
@@ -29,6 +31,7 @@ class FavoriteItemEntity {
 
   FavoriteItemEntity copyWith({
     String? id,
+    String? icon,
     String? name,
     double? calories,
     double? protein,
@@ -43,6 +46,7 @@ class FavoriteItemEntity {
   }) {
     return FavoriteItemEntity(
       id: id ?? this.id,
+      icon: icon ?? this.icon,
       name: name ?? this.name,
       calories: calories ?? this.calories,
       protein: protein ?? this.protein,

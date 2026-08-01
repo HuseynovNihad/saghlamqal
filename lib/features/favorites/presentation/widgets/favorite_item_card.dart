@@ -49,7 +49,12 @@ class FavoriteItemCard extends StatelessWidget {
         color: AppColors.background,
         borderRadius: 12.br,
       ),
-      child: const Center(child: Text('🍎', style: TextStyle(fontSize: 22))),
+      child: Center(
+        child: Text(
+          (item.icon != null && item.icon!.isNotEmpty) ? item.icon! : '🍎',
+          style: const TextStyle(fontSize: 22),
+        ),
+      ),
     );
   }
 

@@ -1,24 +1,16 @@
+import 'dart:developer';
+
 import '../../../../../../core/network/endpoints.dart';
 import '../../../../../../core/network/network_manager.dart';
 
+import '../../models/add_favorite_request_model.dart';
 import '../../models/favorite_collection_model.dart';
 import '../../models/favorite_item_model.dart';
 
 abstract interface class FavoriteRemoteDatasource {
   Future<List<FavoriteItemModel>> getFavorites();
 
-  Future<FavoriteItemModel> addFavorite({
-    required String name,
-    double? calories,
-    double? protein,
-    double? carbs,
-    double? fat,
-    Map<String, dynamic>? vitamins,
-    List<String>? advice,
-    required bool isFood,
-    int? servingSize,
-    String? servingUnit,
-  });
+  Future<FavoriteItemModel> addFavorite(AddFavoriteRequestModel request);
 
   Future<void> removeFavorite(String id);
 
@@ -59,45 +51,43 @@ class FavoriteRemoteDatasourceImpl implements FavoriteRemoteDatasource {
 
   @override
   Future<List<FavoriteItemModel>> getFavorites() async {
-    final response = await _networkManager.get<List<dynamic>>(
-      Endpoints.getScanFavorites,
-    );
+    log('[FavoriteRemoteDatasource] getFavorites request');
 
-    return (response.data as List)
-        .map((e) => FavoriteItemModel.fromJson(e as Map<String, dynamic>))
-        .toList();
+    try {
+      final response = await _networkManager.get<List<dynamic>>(
+        Endpoints.getScanFavorites,
+      );
+
+      log('[FavoriteRemoteDatasource] getFavorites response: ${response.data}');
+
+      return (response.data as List)
+          .map((e) => FavoriteItemModel.fromJson(e as Map<String, dynamic>))
+          .toList();
+    } catch (e, stackTrace) {
+      log('[FavoriteRemoteDatasource] getFavorites error: $e');
+      log('[FavoriteRemoteDatasource] getFavorites stackTrace: $stackTrace');
+      rethrow;
+    }
   }
 
   @override
-  Future<FavoriteItemModel> addFavorite({
-    required String name,
-    double? calories,
-    double? protein,
-    double? carbs,
-    double? fat,
-    Map<String, dynamic>? vitamins,
-    List<String>? advice,
-    required bool isFood,
-    int? servingSize,
-    String? servingUnit,
-  }) async {
-    final response = await _networkManager.post<Map<String, dynamic>>(
-      Endpoints.addScanFavorite,
-      data: {
-        'name': name,
-        'calories': calories,
-        'protein': protein,
-        'carbs': carbs,
-        'fat': fat,
-        'vitamins': vitamins,
-        'advice': advice,
-        'is_food': isFood,
-        'serving_size': servingSize,
-        'serving_unit': servingUnit,
-      },
-    );
+  Future<FavoriteItemModel> addFavorite(AddFavoriteRequestModel request) async {
+    log('[FavoriteRemoteDatasource] addFavorite request: ${request.toJson()}');
 
-    return FavoriteItemModel.fromJson(response.data!);
+    try {
+      final response = await _networkManager.post<Map<String, dynamic>>(
+        Endpoints.addScanFavorite,
+        data: request.toJson(),
+      );
+
+      log('[FavoriteRemoteDatasource] addFavorite response: ${response.data}');
+
+      return FavoriteItemModel.fromJson(response.data!);
+    } catch (e, stackTrace) {
+      log('[FavoriteRemoteDatasource] addFavorite error: $e');
+      log('[FavoriteRemoteDatasource] addFavorite stackTrace: $stackTrace');
+      rethrow;
+    }
   }
 
   @override

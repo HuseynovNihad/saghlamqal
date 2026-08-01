@@ -3,6 +3,7 @@ import '../../domain/entities/favorite_item_entity.dart';
 import '../../domain/repositories/favorite_repository.dart';
 import '../datasources/remote/favorite_remote_datasource.dart';
 import '../mappers/favorite_mapper.dart';
+import '../models/add_favorite_request_model.dart';
 
 class FavoriteRepositoryImpl implements FavoriteRepository {
   final FavoriteRemoteDatasource _remoteDatasource;
@@ -18,6 +19,7 @@ class FavoriteRepositoryImpl implements FavoriteRepository {
   @override
   Future<FavoriteItemEntity> addFavorite({
     required String name,
+    String? icon,
     double? calories,
     double? protein,
     double? carbs,
@@ -29,16 +31,19 @@ class FavoriteRepositoryImpl implements FavoriteRepository {
     String? servingUnit,
   }) async {
     final model = await _remoteDatasource.addFavorite(
-      name: name,
-      calories: calories,
-      protein: protein,
-      carbs: carbs,
-      fat: fat,
-      vitamins: vitamins,
-      advice: advice,
-      isFood: isFood,
-      servingSize: servingSize,
-      servingUnit: servingUnit,
+      AddFavoriteRequestModel(
+        name: name,
+        icon: icon,
+        calories: calories,
+        protein: protein,
+        carbs: carbs,
+        fat: fat,
+        vitamins: vitamins,
+        advice: advice,
+        isFood: isFood,
+        servingSize: servingSize,
+        servingUnit: servingUnit,
+      ),
     );
     return FavoriteMapper.toEntity(model);
   }
