@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/constants/app_assets.dart';
 import '../../../../core/constants/app_colors.dart';
-import '../../../../core/di/injection_container.dart';
+import '../../../../core/router/app_router.dart';
 import '../../../../core/utils/asset_extension.dart';
 import '../../../../core/utils/padding_extension.dart';
 import '../../../../shared/widgets/custom_text_field.dart';
@@ -17,26 +17,20 @@ import '../widgets/favorites_error_view.dart';
 import '../widgets/favorites_header.dart';
 import '../widgets/favorites_items_section.dart';
 
-class FavoritesPage extends StatelessWidget {
+class FavoritesPage extends StatefulWidget {
   const FavoritesPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => sl<FavoritesBloc>()..add(GetFavoritesEvent()),
-      child: const _FavoritesView(),
-    );
-  }
+  State<FavoritesPage> createState() => _FavoritesPageState();
 }
 
-class _FavoritesView extends StatefulWidget {
-  const _FavoritesView();
-
+class _FavoritesPageState extends State<FavoritesPage> {
   @override
-  State<_FavoritesView> createState() => _FavoritesViewState();
-}
+  void initState() {
+    super.initState();
+    AppRouter.favoritesBloc.add(GetFavoritesEvent());
+  }
 
-class _FavoritesViewState extends State<_FavoritesView> {
   bool _isSearchOpen = false;
 
   @override

@@ -18,6 +18,7 @@ class AddFavoriteUsecase {
     required bool isFood,
     int? servingSize,
     String? servingUnit,
+    String? historyId,
   }) => _repository.addFavorite(
     name: name,
     icon: icon,
@@ -30,5 +31,6 @@ class AddFavoriteUsecase {
     isFood: isFood,
     servingSize: servingSize,
     servingUnit: servingUnit,
+    historyId: historyId,
   );
 }

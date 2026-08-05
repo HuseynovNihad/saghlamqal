@@ -16,6 +16,7 @@ abstract interface class FavoriteRepository {
     required bool isFood,
     int? servingSize,
     String? servingUnit,
+    String? historyId,
   });
 
   Future<void> removeFavorite(String id);

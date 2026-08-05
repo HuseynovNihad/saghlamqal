@@ -10,6 +10,7 @@ class AddFavoriteRequestModel {
   final bool isFood;
   final int? servingSize;
   final String? servingUnit;
+  final String? historyId;
 
   const AddFavoriteRequestModel({
     required this.name,
@@ -23,6 +24,7 @@ class AddFavoriteRequestModel {
     required this.isFood,
     this.servingSize,
     this.servingUnit,
+    this.historyId,
   });
 
   Map<String, dynamic> toJson() => {
@@ -37,5 +39,6 @@ class AddFavoriteRequestModel {
     'is_food': isFood,
     'serving_size': servingSize,
     'serving_unit': servingUnit,
+    if (historyId != null) 'historyId': historyId,
   };
 }

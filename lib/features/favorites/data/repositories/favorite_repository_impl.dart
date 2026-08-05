@@ -29,6 +29,7 @@ class FavoriteRepositoryImpl implements FavoriteRepository {
     required bool isFood,
     int? servingSize,
     String? servingUnit,
+    String? historyId,
   }) async {
     final model = await _remoteDatasource.addFavorite(
       AddFavoriteRequestModel(
@@ -43,6 +44,7 @@ class FavoriteRepositoryImpl implements FavoriteRepository {
         isFood: isFood,
         servingSize: servingSize,
         servingUnit: servingUnit,
+        historyId: historyId,
       ),
     );
     return FavoriteMapper.toEntity(model);

@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/di/injection_container.dart';
+import '../../../../core/router/app_router.dart';
 import '../../../../core/utils/sized_box_extension.dart';
 import '../../../auth/presentation/bloc/auth_bloc.dart';
-import '../../../favorites/presentation/bloc/favorites_bloc.dart';
 import '../bloc/photo_scan_bloc.dart';
 import '../widgets/photo_app_bar.dart';
 import '../widgets/photo_capture_button.dart';
@@ -119,7 +119,7 @@ class _PhotoScanPageState extends State<PhotoScanPage>
         providers: [
           BlocProvider.value(value: photoScanBloc),
           BlocProvider.value(value: authBloc),
-          BlocProvider(create: (_) => sl<FavoritesBloc>()),
+          BlocProvider.value(value: AppRouter.favoritesBloc),
         ],
         child: PhotoResultSheet(
           onScanAgain: () {

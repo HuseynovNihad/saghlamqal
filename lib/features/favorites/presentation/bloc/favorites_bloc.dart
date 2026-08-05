@@ -108,6 +108,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
         isFood: event.isFood,
         servingSize: event.servingSize,
         servingUnit: event.servingUnit,
+        historyId: event.historyId,
       );
       final updated = [..._currentFavorites, newItem];
       emit(

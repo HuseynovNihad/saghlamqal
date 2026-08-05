@@ -19,6 +19,8 @@ class RecentProductMapper {
       servingSize: model.servingSize,
       servingUnit: model.servingUnit,
       createdAt: DateTime.parse(model.createdAt),
+      isFavorite: model.isFavorite,
+      favoriteId: model.favoriteId,
     );
   }
 
@@ -37,6 +39,8 @@ class RecentProductMapper {
       servingSize: entity.servingSize,
       servingUnit: entity.servingUnit,
       createdAt: entity.createdAt.toIso8601String(),
+      isFavorite: entity.isFavorite,
+      favoriteId: entity.favoriteId,
     );
   }
 }

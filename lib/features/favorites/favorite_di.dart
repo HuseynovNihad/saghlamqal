@@ -67,7 +67,7 @@ Future<void> initFavorites(GetIt sl) async {
   // BLOC
   // ─────────────────────────────────────────────────────────────
 
-  sl.registerFactory(
+  sl.registerLazySingleton(
     () => FavoritesBloc(
       getFavorites: sl<GetFavoritesUsecase>(),
       addFavorite: sl<AddFavoriteUsecase>(),

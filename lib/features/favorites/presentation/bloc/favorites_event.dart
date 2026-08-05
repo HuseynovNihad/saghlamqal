@@ -19,6 +19,7 @@ final class AddFavoriteEvent extends FavoritesEvent {
   final bool isFood;
   final int? servingSize;
   final String? servingUnit;
+  final String? historyId;
 
   const AddFavoriteEvent({
     required this.name,
@@ -32,6 +33,7 @@ final class AddFavoriteEvent extends FavoritesEvent {
     required this.isFood,
     this.servingSize,
     this.servingUnit,
+    this.historyId,
   });
 }
 

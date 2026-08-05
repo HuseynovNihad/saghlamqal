@@ -6,6 +6,7 @@ import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/utils/asset_extension.dart';
 import '../../../../core/utils/radius_extension.dart';
+import '../../../../shared/widgets/custom_snackbar.dart';
 import '../../domain/entities/favorite_item_entity.dart';
 
 class FavoriteItemCard extends StatelessWidget {
@@ -102,21 +103,11 @@ class FavoriteItemCard extends StatelessWidget {
           onTap: () {
             onRemove();
 
-            ScaffoldMessenger.of(context).hideCurrentSnackBar();
-
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('${item.name} favoritlərdən silindi'),
-                behavior: SnackBarBehavior.floating,
-                backgroundColor: AppColors.headline,
-                duration: const Duration(seconds: 2),
-
-                action: SnackBarAction(
-                  label: 'Geri qaytar',
-                  textColor: Colors.white,
-                  onPressed: onAdd,
-                ),
-              ),
+            CustomSnackBar.show(
+              context,
+              message: '${item.name} favoritlərdən silindi',
+              type: SnackBarType.info,
+              position: SnackBarPosition.top,
             );
           },
           child: AppAssets.favoriteFill.svg(height: 20, width: 20),

@@ -17,7 +17,7 @@ class FavoritesItemsSection extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
       sliver: SliverList.separated(
         itemCount: favorites.length,
-        separatorBuilder: (_, __) => 10.ws,
+        separatorBuilder: (_, __) => 10.hs,
         itemBuilder: (context, index) {
           return FavoriteItemCard(
             item: favorites[index],

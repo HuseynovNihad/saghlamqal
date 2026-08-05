@@ -14,6 +14,8 @@ class RecentProductModel {
   final double? servingSize;
   final String? servingUnit;
   final String createdAt;
+  final bool isFavorite;
+  final String? favoriteId;
 
   const RecentProductModel({
     required this.id,
@@ -29,6 +31,8 @@ class RecentProductModel {
     this.servingSize,
     this.servingUnit,
     required this.createdAt,
+    this.isFavorite = false,
+    this.favoriteId,
   });
 
   factory RecentProductModel.fromJson(Map<String, dynamic> json) {
@@ -48,6 +52,8 @@ class RecentProductModel {
       servingSize: (json['serving_size'] as num?)?.toDouble(),
       servingUnit: json['serving_unit'] as String?,
       createdAt: json['createdAt'] as String,
+      isFavorite: (json['isFavorite'] as bool?) ?? false,
+      favoriteId: json['favoriteId'] as String?,
     );
   }
 
@@ -82,6 +88,8 @@ class RecentProductModel {
       'serving_size': servingSize,
       'serving_unit': servingUnit,
       'createdAt': createdAt,
+      'isFavorite': isFavorite,
+      'favoriteId': favoriteId,
     };
   }
 }

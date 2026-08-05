@@ -12,6 +12,8 @@ class FavoriteItemModel {
   final int? servingSize;
   final String? servingUnit;
   final String createdAt;
+  final bool isFavorite;
+  final String? favoriteId;
 
   const FavoriteItemModel({
     required this.id,
@@ -27,6 +29,8 @@ class FavoriteItemModel {
     this.servingSize,
     this.servingUnit,
     required this.createdAt,
+    this.isFavorite = true,
+    this.favoriteId,
   });
 
   factory FavoriteItemModel.fromJson(Map<String, dynamic> json) {
@@ -46,6 +50,8 @@ class FavoriteItemModel {
       servingUnit: json['serving_unit'] as String?,
       icon: json['icon'] as String?,
       createdAt: json['createdAt'] as String,
+      isFavorite: (json['isFavorite'] as bool?) ?? true,
+      favoriteId: (json['favoriteId'] as String?) ?? json['id'] as String?,
     );
   }
 
@@ -63,5 +69,7 @@ class FavoriteItemModel {
     'serving_unit': servingUnit,
     'icon': icon,
     'createdAt': createdAt,
+    'isFavorite': isFavorite,
+    'favoriteId': favoriteId,
   };
 }

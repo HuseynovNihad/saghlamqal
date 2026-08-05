@@ -14,6 +14,8 @@ class RecentProductEntity extends Equatable {
   final double? servingSize;
   final String? servingUnit;
   final DateTime createdAt;
+  final bool isFavorite;
+  final String? favoriteId;
 
   const RecentProductEntity({
     required this.id,
@@ -29,7 +31,32 @@ class RecentProductEntity extends Equatable {
     this.servingSize,
     this.servingUnit,
     required this.createdAt,
+    this.isFavorite = false,
+    this.favoriteId,
   });
+
+  RecentProductEntity copyWith({
+    bool? isFavorite,
+    String? favoriteId,
+  }) {
+    return RecentProductEntity(
+      id: id,
+      icon: icon,
+      name: name,
+      calories: calories,
+      protein: protein,
+      carbs: carbs,
+      fat: fat,
+      vitamins: vitamins,
+      advice: advice,
+      isFood: isFood,
+      servingSize: servingSize,
+      servingUnit: servingUnit,
+      createdAt: createdAt,
+      isFavorite: isFavorite ?? this.isFavorite,
+      favoriteId: favoriteId ?? this.favoriteId,
+    );
+  }
 
   @override
   List<Object?> get props => [
@@ -46,5 +73,7 @@ class RecentProductEntity extends Equatable {
     servingSize,
     servingUnit,
     createdAt,
+    isFavorite,
+    favoriteId,
   ];
 }

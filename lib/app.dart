@@ -4,14 +4,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'core/constants/app_colors.dart';
 import 'core/router/app_router.dart';
 import 'features/auth/presentation/bloc/auth_bloc.dart';
+import 'features/favorites/presentation/bloc/favorites_bloc.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<AuthBloc>.value(
-      value: AppRouter.authBloc,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthBloc>.value(value: AppRouter.authBloc),
+        BlocProvider<FavoritesBloc>.value(value: AppRouter.favoritesBloc),
+      ],
       child: ScreenUtilInit(
         designSize: const Size(360, 690),
         minTextAdapt: true,

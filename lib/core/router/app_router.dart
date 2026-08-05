@@ -14,6 +14,7 @@ import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/new_password_page.dart';
 import '../../features/auth/presentation/pages/otp_verify_page.dart';
 import '../../features/auth/presentation/pages/register_page.dart';
+import '../../features/favorites/presentation/bloc/favorites_bloc.dart';
 import '../../features/favorites/presentation/pages/favorite_page.dart';
 import '../../features/home/domain/entities/meal_of_the_day_entity.dart';
 import '../../features/home/domain/entities/recent_product_entity.dart';
@@ -52,6 +53,8 @@ class AppRouter {
   static final AuthBloc authBloc = sl<AuthBloc>()..add(AppStarted());
 
   static final HomeBloc homeBloc = sl<HomeBloc>();
+
+  static final FavoritesBloc favoritesBloc = sl<FavoritesBloc>();
 
   static final OnboardingStorage _onboardingStorage = sl<OnboardingStorage>();
 
