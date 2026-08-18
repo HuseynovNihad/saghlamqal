@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/di/injection_container.dart';
@@ -70,6 +71,53 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthUserUpdated>(_onAuthUserUpdated);
   }
 
+  /// Xəta obyektini istifadəçiyə göstərilə bilən mesaja çevirir.
+  /// Dart-ın texniki xətalarını (TypeError, cast xətaları və s.) gizlədir,
+  /// backend-dən gələn məzmunlu mesajları isə saxlayır.
+  /// Səhifəyə göstərilən HƏR mesaj eyni zamanda log-a da yazılır.
+  String _mapError(Object e) {
+    final result = _resolveErrorMessage(e);
+    log('[AuthBloc] Səhifəyə göstərilən xəta: "$result" | Original error: $e');
+    return result;
+  }
+
+  String _resolveErrorMessage(Object e) {
+    // Backend-dən gələn HTTP xətaları (Dio istifadə olunursa)
+    if (e is DioException) {
+      final data = e.response?.data;
+      log(
+        '[AuthBloc] DioException | statusCode: ${e.response?.statusCode} | data: $data',
+      );
+      if (data is Map && data['message'] != null) {
+        final msg = data['message'];
+        if (msg is String) return msg;
+        if (msg is List && msg.isNotEmpty) return msg.first.toString();
+      }
+      if (e.type == DioExceptionType.connectionTimeout ||
+          e.type == DioExceptionType.receiveTimeout ||
+          e.type == DioExceptionType.connectionError) {
+        return 'İnternet bağlantısında problem var';
+      }
+      return 'Server xətası baş verdi, yenidən cəhd edin';
+    }
+
+    // Dart-ın daxili tip/parse xətaları — istifadəçiyə göstərilməməlidir
+    if (e is TypeError ||
+        e is FormatException ||
+        e.toString().contains('is not a subtype') ||
+        e.toString().contains('type ')) {
+      return 'Xəta baş verdi, yenidən cəhd edin';
+    }
+
+    // Digər bilinməyən xətalar üçün də təhlükəsiz fallback
+    final message = e.toString();
+    if (message.length > 150 || message.contains('Exception:')) {
+      return 'Xəta baş verdi, yenidən cəhd edin';
+    }
+
+    return message;
+  }
+
   Future<void> _onAppStarted(AppStarted event, Emitter<AuthState> emit) async {
     emit(const AuthSessionLoading());
     await Future.delayed(const Duration(seconds: 3));
@@ -104,7 +152,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       await sl<TokenStorage>().saveRefreshToken(response.refreshToken);
       emit(AuthAuthenticated(user: response.user, token: response.token));
     } catch (e) {
-      emit(AuthError(e.toString()));
+      emit(AuthError(_mapError(e)));
     }
   }
 
@@ -121,7 +169,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           firstName: event.firstName,
           lastName: event.lastName,
           birthday: event.birthday,
-          age: event.age,
           weight: event.weight,
           targetWeight: event.targetWeight,
           height: event.height,
@@ -134,7 +181,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
       emit(AuthRegistered(email: event.email));
     } catch (e) {
-      emit(AuthError(e.toString()));
+      emit(AuthError(_mapError(e)));
     }
   }
 
@@ -149,7 +196,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       await sl<TokenStorage>().saveRefreshToken(response.refreshToken);
       emit(AuthAuthenticated(user: response.user, token: response.token));
     } catch (e) {
-      emit(AuthError(e.toString()));
+      emit(AuthError(_mapError(e)));
     }
   }
 
@@ -162,7 +209,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       await _resendOtp(event.email);
       emit(const AuthOtpResent());
     } catch (e) {
-      emit(AuthError(e.toString()));
+      emit(AuthError(_mapError(e)));
     }
   }
 
@@ -175,7 +222,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       await _forgotPassword(event.email);
       emit(AuthForgotPasswordSent(email: event.email));
     } catch (e) {
-      emit(AuthError(e.toString()));
+      emit(AuthError(_mapError(e)));
     }
   }
 
@@ -192,7 +239,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
       emit(const AuthPasswordResetSuccess());
     } catch (e) {
-      emit(AuthError(e.toString()));
+      emit(AuthError(_mapError(e)));
     }
   }
 
@@ -224,7 +271,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       await sl<TokenStorage>().clearAll();
       emit(const AuthAccountDeleted());
     } catch (e) {
-      emit(AuthError(e.toString()));
+      emit(AuthError(_mapError(e)));
     }
   }
 
@@ -237,7 +284,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       await _requestRestoreAccount(event.email);
       emit(AuthRestoreOtpSent(email: event.email));
     } catch (e) {
-      emit(AuthError(e.toString()));
+      emit(AuthError(_mapError(e)));
     }
   }
 
@@ -255,7 +302,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       await sl<TokenStorage>().saveRefreshToken(response.refreshToken);
       emit(AuthAuthenticated(user: response.user, token: response.token));
     } catch (e) {
-      emit(AuthError(e.toString()));
+      emit(AuthError(_mapError(e)));
     }
   }
 

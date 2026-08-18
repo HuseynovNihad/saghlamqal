@@ -29,7 +29,6 @@ class RegisterSubmitted extends AuthEvent {
   final String firstName;
   final String lastName;
   final DateTime birthday;
-  final int age;
   final double weight;
   final double targetWeight;
   final double height;
@@ -45,7 +44,6 @@ class RegisterSubmitted extends AuthEvent {
     required this.firstName,
     required this.lastName,
     required this.birthday,
-    required this.age,
     required this.weight,
     required this.targetWeight,
     required this.height,

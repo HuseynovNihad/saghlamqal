@@ -24,13 +24,13 @@ class PhotoCaptureButton extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _SideButton(
-              icon: Icons.photo_library_outlined,
-              label: 'Qalereya',
-              onTap: () {},
-            ),
+            // _SideButton(
+            //   icon: Icons.photo_library_outlined,
+            //   label: 'Qalereya',
+            //   onTap: () {},
+            // ),
             GestureDetector(
               onTap: isLoading ? null : onTap,
               child: Container(
@@ -49,18 +49,14 @@ class PhotoCaptureButton extends StatelessWidget {
                           color: Colors.black54,
                         ),
                       )
-                    : const Icon(
-                        Icons.camera_alt,
-                        size: 32,
-                        color: Colors.black87,
-                      ),
+                    : SizedBox.shrink()
               ),
             ),
-            _SideButton(
-              icon: Icons.help_outline_rounded,
-              label: 'Necə skan etməli?',
-              onTap: () {},
-            ),
+            // _SideButton(
+            //   icon: Icons.help_outline_rounded,
+            //   label: 'Necə skan etməli?',
+            //   onTap: () {},
+            // ),
           ],
         ),
       ),

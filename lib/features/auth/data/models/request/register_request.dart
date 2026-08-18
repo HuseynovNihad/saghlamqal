@@ -4,7 +4,6 @@ class RegisterRequest {
   final String firstName;
   final String lastName;
   final DateTime birthday;
-  final int age;
   final double weight;
   final double targetWeight;
   final double height;
@@ -20,7 +19,6 @@ class RegisterRequest {
     required this.firstName,
     required this.lastName,
     required this.birthday,
-    required this.age,
     required this.weight,
     required this.targetWeight,
     required this.height,
@@ -38,7 +36,6 @@ class RegisterRequest {
       "firstName": firstName,
       "lastName": lastName,
       "birthday": birthday.toIso8601String(),
-      "age": age,
       "weight": weight,
       "targetWeight": targetWeight,
       "height": height,

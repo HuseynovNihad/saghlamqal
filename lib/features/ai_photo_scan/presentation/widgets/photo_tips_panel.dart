@@ -20,7 +20,7 @@ class PhotoTipsPanel extends StatelessWidget {
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
             decoration: BoxDecoration(
               color: Colors.black.withOpacity(0.45),
               borderRadius: 16.br,

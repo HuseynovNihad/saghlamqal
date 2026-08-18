@@ -6,8 +6,16 @@ class NetworkExceptions implements Exception {
       case DioExceptionType.connectionTimeout:
         return "Bağlantı vaxtı bitdi. İnterneti yoxlayın.";
       case DioExceptionType.badResponse:
-        final message = error.response?.data['message'];
-        return message ?? "Server xətası baş verdi.";
+        final data = error.response?.data;
+        final message = data is Map ? data['message'] : null;
+
+        if (message is String && message.isNotEmpty) {
+          return message;
+        }
+        if (message is List && message.isNotEmpty) {
+          return message.first.toString();
+        }
+        return "Server xətası baş verdi.";
       case DioExceptionType.connectionError:
         return "İnternet bağlantısı yoxdur.";
       default:

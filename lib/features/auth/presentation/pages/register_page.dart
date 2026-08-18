@@ -128,7 +128,6 @@ class _RegisterPageState extends State<RegisterPage> {
             "+994${_phoneNumberController.text.trim().replaceAll(' ', '')}",
         firstName: _firstNameController.text.trim(),
         lastName: _lastNameController.text.trim(),
-        age: _calculatedAge!,
         birthday: _selectedBirthday!,
         weight: double.parse(_weightController.text.trim()),
         targetWeight: double.parse(_targetWeightController.text.trim()),

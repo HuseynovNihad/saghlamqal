@@ -11,7 +11,7 @@ class PhotoFrame extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final frameSize = screenWidth * 0.78;
+    final frameSize = screenWidth * 0.82;
     final color = isCapturing ? AppColors.primary : const Color(0xFF00FF6A);
 
     return Column(

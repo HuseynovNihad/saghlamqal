@@ -26,31 +26,30 @@ class ActivityLevelField extends StatelessWidget {
       'icon': '🛋️',
     },
     {
-      'value': 'lightly_active',
+      'value': 'light',
       'label': 'Az aktiv',
       'subtext': 'Həftədə 1-3 gün yüngül idman',
       'icon': '🚶',
     },
     {
-      'value': 'moderately_active',
+      'value': 'moderate',
       'label': 'Orta aktiv',
       'subtext': 'Həftədə 3-5 gün orta səviyyəli idman',
       'icon': '🏃',
     },
     {
-      'value': 'very_active',
+      'value': 'active',
       'label': 'Çox aktiv',
       'subtext': 'Həftədə 6-7 gün intensiv idman',
       'icon': '🏋️',
     },
     {
-      'value': 'extra_active',
+      'value': 'very_active',
       'label': 'Həddindən çox aktiv',
       'subtext': 'Gündə 2 dəfə idman və ya ağır fiziki iş',
       'icon': '🔥',
     },
   ];
-
   @override
   Widget build(BuildContext context) {
     return Column(
