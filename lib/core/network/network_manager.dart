@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 
+import '../config/app_config.dart';
 import '../storage/token_storage.dart';
 import '../di/injection_container.dart';
 
@@ -14,7 +15,7 @@ class NetworkManager {
 
     _dio = Dio(
       BaseOptions(
-        baseUrl: 'http://13.140.157.103/',
+        baseUrl: AppConfig.baseUrl,
         connectTimeout: const Duration(seconds: 15),
         receiveTimeout: const Duration(seconds: 15),
         headers: {

@@ -1,4 +1,4 @@
-package com.example.kalori_tracker
+package az.saglamqal.app
 
 import io.flutter.embedding.android.FlutterActivity
 
