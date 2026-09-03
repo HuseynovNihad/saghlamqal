@@ -2,7 +2,7 @@ name: kalori_tracker
 description: "A new Flutter project."
 publish_to: "none"
 
-version: 1.0.0+3
+version: 1.0.0+5
 
 environment:
   sdk: ^3.8.1
@@ -30,6 +30,7 @@ dependencies:
   shimmer: ^3.0.0
   smooth_page_indicator: ^1.1.0
   flutter_timezone: ^5.1.0
+  google_sign_in: ^7.2.0
 
 dev_dependencies:
   flutter_test:

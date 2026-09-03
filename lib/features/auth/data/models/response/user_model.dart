@@ -16,6 +16,7 @@ class UserModel extends UserEntity {
     super.activityLevel,
     super.goal,
     super.isActive,
+    super.profileCompleted,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -27,7 +28,9 @@ class UserModel extends UserEntity {
     if ((apiFirstName == null || apiFirstName.isEmpty) &&
         data['name'] != null) {
       final nameParts = (data['name'] as String).trim().split(' ');
+
       apiFirstName = nameParts.first;
+
       if (nameParts.length > 1) {
         apiLastName = nameParts.sublist(1).join(' ');
       }
@@ -50,6 +53,7 @@ class UserModel extends UserEntity {
       activityLevel: data['activityLevel'] as String?,
       goal: data['goal'] as String?,
       isActive: data['isActive'] as bool? ?? true,
+      profileCompleted: data['profileCompleted'] as bool? ?? false,
     );
   }
 }

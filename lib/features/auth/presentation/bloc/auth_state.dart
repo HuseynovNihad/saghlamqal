@@ -76,3 +76,14 @@ class AuthRestoreOtpSent extends AuthState {
   final String email;
   const AuthRestoreOtpSent({required this.email});
 }
+
+class AuthEmailNotVerified extends AuthState {
+  final String email;
+  const AuthEmailNotVerified({required this.email});
+}
+
+class AuthPasswordNotSet extends AuthState {
+  final String email;
+
+  const AuthPasswordNotSet({required this.email});
+}

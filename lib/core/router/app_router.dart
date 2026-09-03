@@ -9,6 +9,7 @@ import '../../features/ai_photo_scan/presentation/pages/photo_scan_page.dart';
 import '../../features/auth/presentation/bloc/auth_bloc.dart';
 import '../../features/auth/presentation/bloc/auth_event.dart';
 import '../../features/auth/presentation/bloc/auth_state.dart';
+import '../../features/auth/presentation/pages/complete_profile_page.dart';
 import '../../features/auth/presentation/pages/forgot_password_page.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/new_password_page.dart';
@@ -71,7 +72,22 @@ class AppRouter {
   static final GoRouter router = GoRouter(
     initialLocation: AppRoutes.splash,
     debugLogDiagnostics: false,
-    refreshListenable: GoRouterRefreshStream(authBloc.stream),
+    // ÖNƏMLİ: refreshListenable YALNIZ auth statusuna (giriş/çıxış) təsir edən
+    // state-lərdə işə düşməlidir. Əvvəllər `authBloc.stream`-in bütün
+    // emissiyalarına (AuthLoading, AuthOtpResent, AuthError və s.) qulaq
+    // asırdı — bu da hər belə emissiyada GoRouter-i marşrutu yenidən
+    // qiymətləndirməyə vadar edirdi. Nəticədə `push()` ilə ötürülən `extra`
+    // (məs. OtpVerifyExtra) itirilirdi və OTP səhifəsi "Yenidən göndər"
+    // basılanda boş/loading placeholder-ə düşürdü.
+    refreshListenable: GoRouterRefreshStream(
+      authBloc.stream.where(
+        (state) =>
+            state is AuthInitial ||
+            state is AuthSessionLoading ||
+            state is AuthAuthenticated ||
+            state is AuthUnauthenticated,
+      ),
+    ),
     errorBuilder: (context, state) => ErrorPage(
       type: ErrorType.notFound,
       onBack: () => context.go(AppRoutes.home),
@@ -91,13 +107,28 @@ class AppRouter {
             : AppRoutes.onboarding;
       }
 
-      if (authState is AuthAuthenticated && _authPages.contains(location)) {
-        return AppRoutes.home;
+      if (authState is AuthAuthenticated) {
+        final isProfileCompleted = authState.user.profileCompleted;
+
+        if (!isProfileCompleted) {
+          if (location != AppRoutes.completeProfile) {
+            return AppRoutes.completeProfile;
+          }
+
+          return null;
+        }
+
+        if (location == AppRoutes.completeProfile) {
+          return AppRoutes.home;
+        }
+
+        if (_authPages.contains(location)) {
+          return AppRoutes.home;
+        }
       }
 
       return null;
     },
-
     routes: [
       GoRoute(path: AppRoutes.splash, builder: (_, __) => const SplashPage()),
 
@@ -116,6 +147,11 @@ class AppRouter {
       GoRoute(
         path: AppRoutes.register,
         builder: (_, __) => const RegisterPage(),
+      ),
+
+      GoRoute(
+        path: AppRoutes.completeProfile,
+        builder: (_, __) => const CompleteProfilePage(),
       ),
 
       GoRoute(

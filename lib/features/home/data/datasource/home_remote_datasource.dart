@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import '../../../../core/network/endpoints.dart';
 import '../../../../core/network/network_manager.dart';
 import '../models/daily_goal_model.dart';
@@ -58,6 +60,16 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
     final response = await _networkManager.get<Map<String, dynamic>>(
       Endpoints.getMealOfTheDay,
     );
-    return MealOfTheDayModel.fromJson(response.data!);
+    log('getMealOfTheDay RAW response: ${response.data}'); // ADD
+    log(
+      'getMealOfTheDay RAW ingredients: ${response.data?['ingredients']}',
+    ); // ADD
+
+    final model = MealOfTheDayModel.fromJson(response.data!);
+    log(
+      'getMealOfTheDay PARSED ingredients count: ${model.ingredients?.length}',
+    ); // ADD
+
+    return model;
   }
 }

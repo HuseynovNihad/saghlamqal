@@ -64,4 +64,5 @@ class AppAssets {
   static const String close = '$_svgPath/close.svg';
   static const String flashOn = '$_svgPath/flash_on.svg';
   static const String flashOff = '$_svgPath/flash_off.svg';
+  static const String google = '$_svgPath/google.svg';
 }

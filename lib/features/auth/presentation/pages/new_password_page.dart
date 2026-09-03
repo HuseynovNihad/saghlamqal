@@ -45,11 +45,13 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
 
   void _submit() {
     if (!_formKey.currentState!.validate()) return;
+
     context.read<AuthBloc>().add(
       ResetPasswordSubmitted(
         email: widget.email,
         otp: widget.otp,
         newPassword: _newPasswordController.text,
+        confirmPassword: _confirmPasswordController.text,
       ),
     );
   }

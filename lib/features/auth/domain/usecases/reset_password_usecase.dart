@@ -9,9 +9,13 @@ class ResetPasswordUsecase {
     required String email,
     required String otp,
     required String newPassword,
-  }) => _repository.resetPassword(
-    email: email,
-    otp: otp,
-    newPassword: newPassword,
-  );
+    required String confirmPassword,
+  }) {
+    return _repository.resetPassword(
+      email: email,
+      otp: otp,
+      newPassword: newPassword,
+      confirmPassword: confirmPassword,
+    );
+  }
 }

@@ -1,5 +1,7 @@
 import '../../../../core/network/endpoints.dart';
 import '../../../../core/network/network_manager.dart';
+import '../models/request/complete_profile_request.dart';
+import '../models/request/google_login_request.dart';
 import '../models/request/login_request.dart';
 import '../models/request/register_request.dart';
 import '../models/request/verify_otp_request.dart';
@@ -10,7 +12,9 @@ import '../models/response/verify_otp_response_model.dart';
 
 abstract class IAuthRemoteDataSource {
   Future<LoginResponseModel> login(LoginRequest request);
+  Future<LoginResponseModel> googleLogin(GoogleLoginRequest request);
   Future<RegisterResponseModel> register(RegisterRequest request);
+  Future<UserModel> completeProfile(CompleteProfileRequest request);
   Future<UserModel> getMe();
   Future<VerifyOtpResponseModel> verifyOtp(VerifyOtpRequest request);
   Future<void> resendOtp(String email);
@@ -19,6 +23,7 @@ abstract class IAuthRemoteDataSource {
     required String email,
     required String otp,
     required String newPassword,
+    required String confirmPassword,
   });
   Future<void> logout(String refreshToken);
   Future<void> deleteAccount();
@@ -44,12 +49,32 @@ class AuthRemoteDataSourceImpl implements IAuthRemoteDataSource {
   }
 
   @override
+  Future<LoginResponseModel> googleLogin(GoogleLoginRequest request) async {
+    final response = await _networkManager.post(
+      Endpoints.googleLogin,
+      data: request.toJson(),
+    );
+
+    return LoginResponseModel.fromJson(response.data);
+  }
+
+  @override
   Future<RegisterResponseModel> register(RegisterRequest request) async {
     final response = await _networkManager.post(
       Endpoints.register,
       data: request.toJson(),
     );
     return RegisterResponseModel.fromJson(response.data);
+  }
+
+  @override
+  Future<UserModel> completeProfile(CompleteProfileRequest request) async {
+    final response = await _networkManager.post(
+      Endpoints.completeProfile,
+      data: request.toJson(),
+    );
+
+    return UserModel.fromJson(response.data as Map<String, dynamic>);
   }
 
   @override
@@ -85,10 +110,16 @@ class AuthRemoteDataSourceImpl implements IAuthRemoteDataSource {
     required String email,
     required String otp,
     required String newPassword,
+    required String confirmPassword,
   }) async {
     await _networkManager.post(
       Endpoints.resetPassword,
-      data: {'email': email, 'otp': otp, 'newPassword': newPassword},
+      data: {
+        'email': email,
+        'otp': otp,
+        'newPassword': newPassword,
+        'confirmPassword': confirmPassword,
+      },
     );
   }
 

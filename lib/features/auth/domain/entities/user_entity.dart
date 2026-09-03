@@ -13,6 +13,7 @@ class UserEntity {
   final String? activityLevel;
   final String? goal;
   final bool isActive;
+  final bool profileCompleted;
 
   const UserEntity({
     required this.id,
@@ -29,6 +30,7 @@ class UserEntity {
     this.activityLevel,
     this.goal,
     this.isActive = true,
+    this.profileCompleted = false,
   });
 
   String? get name {
@@ -36,6 +38,7 @@ class UserEntity {
       if (firstName != null && firstName!.isNotEmpty) firstName,
       if (lastName != null && lastName!.isNotEmpty) lastName,
     ];
+
     return parts.isEmpty ? null : parts.join(' ');
   }
 }

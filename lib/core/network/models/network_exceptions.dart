@@ -1,25 +1,71 @@
 import 'package:dio/dio.dart';
 
-class NetworkExceptions implements Exception {
-  static String handleException(DioException error) {
+/// Backend-dən gələn strukturlaşdırılmış xəta.
+/// message: istifadəçiyə göstəriləcək mətn
+/// errorCode: backend-in göndərdiyi kod (məs. EMAIL_NOT_VERIFIED)
+/// extra: errorCode ilə bağlı əlavə sahələr (məs. email)
+class AppException implements Exception {
+  final String message;
+  final String? errorCode;
+  final Map<String, dynamic>? extra;
+
+  AppException(this.message, {this.errorCode, this.extra});
+
+  @override
+  String toString() => message;
+}
+
+class NetworkExceptions {
+  static AppException handleException(DioException error) {
     switch (error.type) {
       case DioExceptionType.connectionTimeout:
-        return "Bağlantı vaxtı bitdi. İnterneti yoxlayın.";
+      case DioExceptionType.sendTimeout:
+      case DioExceptionType.receiveTimeout:
+        return AppException("Bağlantı vaxtı bitdi. İnterneti yoxlayın.");
+
       case DioExceptionType.badResponse:
         final data = error.response?.data;
-        final message = data is Map ? data['message'] : null;
 
-        if (message is String && message.isNotEmpty) {
-          return message;
+        if (data is Map) {
+          final msg = data['message'];
+
+          // Nested hal: { message: { errorCode, message, email } }
+          if (msg is Map) {
+            final innerMessage = msg['message'];
+            return AppException(
+              (innerMessage is String && innerMessage.isNotEmpty)
+                  ? innerMessage
+                  : "Server xətası baş verdi.",
+              errorCode: msg['errorCode']?.toString(),
+              extra: Map<String, dynamic>.from(msg),
+            );
+          }
+
+          // Flat hal: { errorCode, message, email }
+          if (data['errorCode'] != null) {
+            return AppException(
+              (msg is String && msg.isNotEmpty)
+                  ? msg
+                  : "Server xətası baş verdi.",
+              errorCode: data['errorCode']?.toString(),
+              extra: Map<String, dynamic>.from(data),
+            );
+          }
+
+          if (msg is String && msg.isNotEmpty) {
+            return AppException(msg);
+          }
+          if (msg is List && msg.isNotEmpty) {
+            return AppException(msg.first.toString());
+          }
         }
-        if (message is List && message.isNotEmpty) {
-          return message.first.toString();
-        }
-        return "Server xətası baş verdi.";
+        return AppException("Server xətası baş verdi.");
+
       case DioExceptionType.connectionError:
-        return "İnternet bağlantısı yoxdur.";
+        return AppException("İnternet bağlantısı yoxdur.");
+
       default:
-        return "Gözlənilməz bir xəta baş verdi.";
+        return AppException("Gözlənilməz bir xəta baş verdi.");
     }
   }
 }
