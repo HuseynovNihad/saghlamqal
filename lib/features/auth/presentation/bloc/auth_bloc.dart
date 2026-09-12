@@ -150,9 +150,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       final response = await _loginWithToken(token);
 
+      if (!response.user.profileCompleted) {
+        await sl<TokenStorage>().clearAll();
+
+        emit(const AuthUnauthenticated());
+        return;
+      }
+
       emit(AuthAuthenticated(user: response.user, token: response.token));
     } catch (e) {
-      log('Session restore failed: $e');
+      log('[AuthBloc] Session restore failed: $e');
+
+      await sl<TokenStorage>().clearAll();
 
       emit(const AuthUnauthenticated());
     }

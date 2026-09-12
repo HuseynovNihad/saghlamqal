@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 
 import '../config/app_config.dart';
@@ -16,8 +18,12 @@ class NetworkManager {
     _dio = Dio(
       BaseOptions(
         baseUrl: AppConfig.baseUrl,
-        connectTimeout: const Duration(seconds: 15),
-        receiveTimeout: const Duration(seconds: 15),
+
+        // Debug üçün bir az artırırıq.
+        connectTimeout: const Duration(seconds: 30),
+        receiveTimeout: const Duration(seconds: 30),
+        sendTimeout: const Duration(seconds: 30),
+
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -46,6 +52,16 @@ class NetworkManager {
         options: options ?? Options(method: method),
       );
     } on DioException catch (e) {
+      log('================ DIO ERROR ================');
+      log('[NetworkManager] Type: ${e.type}');
+      log('[NetworkManager] Method: ${e.requestOptions.method}');
+      log('[NetworkManager] URL: ${e.requestOptions.uri}');
+      log('[NetworkManager] Status Code: ${e.response?.statusCode}');
+      log('[NetworkManager] Message: ${e.message}');
+      log('[NetworkManager] Response: ${e.response?.data}');
+      log('[NetworkManager] Error: ${e.error}');
+      log('===========================================');
+
       throw NetworkExceptions.handleException(e);
     }
   }

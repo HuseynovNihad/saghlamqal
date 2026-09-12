@@ -23,7 +23,7 @@ class OnboardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final panelHeight = size.height * 0.38;
+    final panelHeight = size.height * 0.41;
 
     return Stack(
       children: [

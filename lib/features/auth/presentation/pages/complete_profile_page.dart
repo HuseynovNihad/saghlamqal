@@ -3,9 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
-import '../../../../core/utils/padding_extension.dart';
-import '../../../../core/utils/radius_extension.dart';
-import '../../../../core/utils/sized_box_extension.dart';
 import '../../../../shared/widgets/custom_snackbar.dart';
 
 import '../bloc/auth_bloc.dart';
@@ -71,7 +68,19 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
     _heightController.text = '170';
   }
 
+  @override
+  void dispose() {
+    _phoneNumberController.dispose();
+    _weightController.dispose();
+    _targetWeightController.dispose();
+    _heightController.dispose();
+
+    super.dispose();
+  }
+
   void _submit() {
+    FocusManager.instance.primaryFocus?.unfocus();
+
     final formValid = _formKey.currentState?.validate() ?? false;
 
     setState(() {
@@ -98,11 +107,17 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
 
     final phoneNumber = _phoneNumberController.text.trim().replaceAll(' ', '');
 
-    final currentWeight = double.tryParse(_weightController.text.trim());
+    final currentWeight = double.tryParse(
+      _weightController.text.trim().replaceAll(',', '.'),
+    );
 
-    final targetWeight = double.tryParse(_targetWeightController.text.trim());
+    final targetWeight = double.tryParse(
+      _targetWeightController.text.trim().replaceAll(',', '.'),
+    );
 
-    final height = double.tryParse(_heightController.text.trim());
+    final height = double.tryParse(
+      _heightController.text.trim().replaceAll(',', '.'),
+    );
 
     if (currentWeight == null || height == null) {
       CustomSnackBar.show(
@@ -129,16 +144,6 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
   }
 
   @override
-  void dispose() {
-    _phoneNumberController.dispose();
-    _weightController.dispose();
-    _targetWeightController.dispose();
-    _heightController.dispose();
-
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -156,144 +161,144 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
           builder: (context, state) {
             final isLoading = state is AuthLoading;
 
-            return SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              child: Padding(
-                padding: 20.px + 24.py,
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildHeader(),
+            return GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onTap: () {
+                FocusManager.instance.primaryFocus?.unfocus();
+              },
+              child: Column(
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      keyboardDismissBehavior:
+                          ScrollViewKeyboardDismissBehavior.onDrag,
+                      padding: const EdgeInsets.fromLTRB(18, 12, 18, 28),
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _buildHeader(),
 
-                      32.hs,
+                            const SizedBox(height: 18),
 
-                      PhoneNumberField(
-                        controller: _phoneNumberController,
-                        required: true,
-                      ),
+                            _buildSectionCard(
+                              icon: Icons.person_outline_rounded,
+                              title: 'Şəxsi məlumatlar',
+                              description:
+                                  'Sizi daha yaxşı tanımaq üçün əsas məlumatları tamamlayın.',
+                              children: [
+                                PhoneNumberField(
+                                  controller: _phoneNumberController,
+                                  required: true,
+                                ),
 
-                      20.hs,
+                                const SizedBox(height: 18),
 
-                      BirthdayField(
-                        selectedBirthday: _selectedBirthday,
-                        calculatedAge: _calculatedAge,
-                        errorText: _birthdayError,
-                        onChanged: (date) {
-                          setState(() {
-                            _selectedBirthday = date;
-                            _birthdayError = null;
-                          });
-                        },
-                      ),
+                                BirthdayField(
+                                  selectedBirthday: _selectedBirthday,
+                                  calculatedAge: _calculatedAge,
+                                  errorText: _birthdayError,
+                                  onChanged: (date) {
+                                    setState(() {
+                                      _selectedBirthday = date;
+                                      _birthdayError = null;
+                                    });
+                                  },
+                                ),
 
-                      20.hs,
+                                const SizedBox(height: 18),
 
-                      GenderField(
-                        value: _selectedGender,
-                        errorText: _genderError,
-                        onChanged: (value) {
-                          setState(() {
-                            _selectedGender = value;
-                            _genderError = null;
-                          });
-                        },
-                      ),
+                                GenderField(
+                                  value: _selectedGender,
+                                  errorText: _genderError,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _selectedGender = value;
+                                      _genderError = null;
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
 
-                      24.hs,
+                            const SizedBox(height: 16),
 
-                      Text(
-                        'Fiziki məlumatlar',
-                        style: AppTextStyles.bodyMedium.copyWith(
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.headline,
+                            _buildSectionCard(
+                              icon: Icons.monitor_weight_outlined,
+                              title: 'Bədən göstəriciləri',
+                              description:
+                                  'Boy və çəki məlumatlarınız gündəlik ehtiyacların hesablanmasına kömək edir.',
+                              children: [
+                                WeightHeightField(
+                                  weightController: _weightController,
+                                  heightController: _heightController,
+                                ),
+
+                                const SizedBox(height: 18),
+
+                                _buildTargetWeightField(),
+                              ],
+                            ),
+
+                            const SizedBox(height: 16),
+
+                            _buildSectionCard(
+                              icon: Icons.directions_run_rounded,
+                              title: 'Aktivlik səviyyəsi',
+                              description:
+                                  'Adi gününüzə ən yaxın fiziki aktivlik səviyyəsini seçin.',
+                              children: [
+                                ActivityLevelField(
+                                  value: _selectedActivityLevel,
+                                  errorText: _activityLevelError,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _selectedActivityLevel = value;
+                                      _activityLevelError = null;
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
+
+                            const SizedBox(height: 16),
+
+                            _buildSectionCard(
+                              icon: Icons.flag_outlined,
+                              title: 'Məqsədiniz',
+                              description:
+                                  'SağlamQal planınızı seçdiyiniz məqsədə uyğun fərdiləşdirəcək.',
+                              children: [
+                                GoalField(
+                                  value: _selectedGoal,
+                                  errorText: _goalError,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _selectedGoal = value;
+                                      _goalError = null;
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
+
+                            const SizedBox(height: 22),
+
+                            _buildPrivacyNote(),
+
+                            const SizedBox(height: 24),
+
+                            _buildSubmitButton(isLoading),
+
+                            const SizedBox(height: 8),
+                          ],
                         ),
                       ),
-
-                      12.hs,
-
-                      WeightHeightField(
-                        weightController: _weightController,
-                        heightController: _heightController,
-                      ),
-
-                      16.hs,
-
-                      _buildTargetWeightField(),
-
-                      28.hs,
-
-                      Text(
-                        'Aktivlik səviyyəniz',
-                        style: AppTextStyles.bodyMedium.copyWith(
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.headline,
-                        ),
-                      ),
-
-                      8.hs,
-
-                      Text(
-                        'Gündəlik fiziki aktivliyinizə ən uyğun variantı seçin.',
-                        style: AppTextStyles.bodySmall.copyWith(
-                          color: AppColors.bodyText,
-                        ),
-                      ),
-
-                      16.hs,
-
-                      ActivityLevelField(
-                        value: _selectedActivityLevel,
-                        errorText: _activityLevelError,
-                        onChanged: (value) {
-                          setState(() {
-                            _selectedActivityLevel = value;
-                            _activityLevelError = null;
-                          });
-                        },
-                      ),
-
-                      28.hs,
-
-                      Text(
-                        'Məqsədiniz',
-                        style: AppTextStyles.bodyMedium.copyWith(
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.headline,
-                        ),
-                      ),
-
-                      8.hs,
-
-                      Text(
-                        'SağlamQal sizin üçün planı bu məlumata əsasən hazırlayacaq.',
-                        style: AppTextStyles.bodySmall.copyWith(
-                          color: AppColors.bodyText,
-                        ),
-                      ),
-
-                      16.hs,
-
-                      GoalField(
-                        value: _selectedGoal,
-                        errorText: _goalError,
-                        onChanged: (value) {
-                          setState(() {
-                            _selectedGoal = value;
-                            _goalError = null;
-                          });
-                        },
-                      ),
-
-                      32.hs,
-
-                      _buildSubmitButton(isLoading),
-
-                      24.hs,
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
             );
           },
@@ -303,44 +308,206 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
   }
 
   Widget _buildHeader() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          width: 48,
-          height: 48,
-          decoration: BoxDecoration(
-            color: AppColors.secondary.withOpacity(0.12),
-            borderRadius: 14.br,
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.fromLTRB(16, 15, 16, 16),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: AppColors.borderColor.withOpacity(0.6)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.022),
+            blurRadius: 12,
+            offset: const Offset(0, 3),
           ),
-          child: Icon(
-            Icons.person_outline_rounded,
-            color: AppColors.secondary,
-            size: 26,
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: AppColors.secondary.withOpacity(0.09),
+                  borderRadius: BorderRadius.circular(13),
+                ),
+                child: const Icon(
+                  Icons.person_add_alt_1_rounded,
+                  color: AppColors.secondary,
+                  size: 20,
+                ),
+              ),
+
+              const Spacer(),
+
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 5,
+                ),
+                decoration: BoxDecoration(
+                  color: AppColors.secondary.withOpacity(0.07),
+                  borderRadius: BorderRadius.circular(100),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      width: 5,
+                      height: 5,
+                      decoration: const BoxDecoration(
+                        color: AppColors.secondary,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+
+                    const SizedBox(width: 6),
+
+                    Text(
+                      'Son addım',
+                      style: AppTextStyles.bodySmall.copyWith(
+                        color: AppColors.secondary,
+                        fontSize: 10,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-        ),
 
-        20.hs,
+          const SizedBox(height: 13),
 
-        Text(
-          'Profilinizi tamamlayın',
-          style: AppTextStyles.bodyMedium.copyWith(
-            fontSize: 26,
-            fontWeight: FontWeight.w700,
-            color: AppColors.headline,
+          Text(
+            'Profilinizi tamamlayaq',
+            style: AppTextStyles.bodyMedium.copyWith(
+              fontSize: 23,
+              height: 1.15,
+              letterSpacing: -0.4,
+              fontWeight: FontWeight.w700,
+              color: AppColors.headline,
+            ),
           ),
-        ),
 
-        8.hs,
+          const SizedBox(height: 6),
 
-        Text(
-          'Sizə uyğun kalori və qidalanma planı hazırlamaq üçün bir neçə məlumat lazımdır.',
-          style: AppTextStyles.bodyMedium.copyWith(
-            color: AppColors.bodyText,
-            height: 1.5,
+          Text(
+            'Sizə uyğun kalori və qidalanma planı hazırlamaq üçün bir neçə məlumat lazımdır.',
+            style: AppTextStyles.bodySmall.copyWith(
+              color: AppColors.bodyText,
+              height: 1.45,
+              fontSize: 12,
+            ),
           ),
-        ),
-      ],
+
+          const SizedBox(height: 13),
+
+          Row(
+            children: [
+              Expanded(child: _buildProgressLine(active: true)),
+              const SizedBox(width: 5),
+              Expanded(child: _buildProgressLine(active: true)),
+              const SizedBox(width: 5),
+              Expanded(child: _buildProgressLine(active: true)),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildProgressLine({required bool active}) {
+    return Container(
+      height: 3,
+      decoration: BoxDecoration(
+        color: active ? AppColors.secondary : AppColors.borderColor,
+        borderRadius: BorderRadius.circular(20),
+      ),
+    );
+  }
+
+  Widget _buildSectionCard({
+    required IconData icon,
+    required String title,
+    required String description,
+    required List<Widget> children,
+  }) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(22),
+        border: Border.all(color: AppColors.borderColor.withOpacity(0.65)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.022),
+            blurRadius: 14,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: AppColors.secondary.withOpacity(0.09),
+                  borderRadius: BorderRadius.circular(13),
+                ),
+                child: Icon(icon, color: AppColors.secondary, size: 20),
+              ),
+
+              const SizedBox(width: 12),
+
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: AppTextStyles.bodyMedium.copyWith(
+                        color: AppColors.headline,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 15,
+                      ),
+                    ),
+
+                    const SizedBox(height: 4),
+
+                    Text(
+                      description,
+                      style: AppTextStyles.bodySmall.copyWith(
+                        color: AppColors.bodyText,
+                        height: 1.45,
+                        fontSize: 11.5,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 20),
+
+          Container(height: 1, color: AppColors.borderColor.withOpacity(0.55)),
+
+          const SizedBox(height: 20),
+
+          ...children,
+        ],
+      ),
     );
   }
 
@@ -348,42 +515,84 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Hədəf çəki',
-          style: AppTextStyles.bodyMedium.copyWith(
-            color: AppColors.headline,
-            fontWeight: FontWeight.w500,
-          ),
+        Row(
+          children: [
+            Text(
+              'Hədəf çəki',
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: AppColors.headline,
+                fontWeight: FontWeight.w600,
+                fontSize: 13,
+              ),
+            ),
+
+            const SizedBox(width: 6),
+
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+              decoration: BoxDecoration(
+                color: AppColors.secondary.withOpacity(0.08),
+                borderRadius: BorderRadius.circular(100),
+              ),
+              child: Text(
+                'İstəyə bağlı',
+                style: AppTextStyles.bodySmall.copyWith(
+                  color: AppColors.secondary,
+                  fontSize: 9,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ],
         ),
 
-        8.hs,
+        const SizedBox(height: 8),
 
         TextFormField(
           controller: _targetWeightController,
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          textInputAction: TextInputAction.done,
           decoration: InputDecoration(
-            hintText: 'Məsələn: 75',
+            hintText: 'Məsələn: 65',
             suffixText: 'kq',
             filled: true,
-            fillColor: Colors.white,
+            fillColor: AppColors.textfieldColor,
+            isDense: true,
             contentPadding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 16,
+              horizontal: 14,
+              vertical: 15,
+            ),
+            suffixStyle: const TextStyle(
+              color: AppColors.bodyText,
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+            ),
+            hintStyle: TextStyle(
+              color: AppColors.bodyText.withOpacity(0.55),
+              fontSize: 13,
             ),
             border: OutlineInputBorder(
-              borderRadius: 16.br,
+              borderRadius: BorderRadius.circular(14),
               borderSide: const BorderSide(color: AppColors.borderColor),
             ),
             enabledBorder: OutlineInputBorder(
-              borderRadius: 16.br,
+              borderRadius: BorderRadius.circular(14),
               borderSide: const BorderSide(color: AppColors.borderColor),
             ),
             focusedBorder: OutlineInputBorder(
-              borderRadius: 16.br,
+              borderRadius: BorderRadius.circular(14),
               borderSide: const BorderSide(
                 color: AppColors.secondary,
-                width: 1.5,
+                width: 1.4,
               ),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(14),
+              borderSide: const BorderSide(color: AppColors.error),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(14),
+              borderSide: const BorderSide(color: AppColors.error, width: 1.4),
             ),
           ),
           validator: (value) {
@@ -391,7 +600,7 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
               return null;
             }
 
-            final weight = double.tryParse(value.trim());
+            final weight = double.tryParse(value.trim().replaceAll(',', '.'));
 
             if (weight == null) {
               return 'Düzgün çəki daxil edin';
@@ -408,32 +617,93 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
     );
   }
 
+  Widget _buildPrivacyNote() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 13),
+      decoration: BoxDecoration(
+        color: AppColors.secondary.withOpacity(0.05),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppColors.secondary.withOpacity(0.11)),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 34,
+            height: 34,
+            decoration: BoxDecoration(
+              color: AppColors.secondary.withOpacity(0.09),
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(
+              Icons.lock_outline_rounded,
+              size: 17,
+              color: AppColors.secondary,
+            ),
+          ),
+
+          const SizedBox(width: 11),
+
+          Expanded(
+            child: Text(
+              'Məlumatlarınız yalnız sizə uyğun fərdi plan yaratmaq üçün istifadə olunur.',
+              style: AppTextStyles.bodySmall.copyWith(
+                color: AppColors.bodyText,
+                height: 1.45,
+                fontSize: 11,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildSubmitButton(bool isLoading) {
     return SizedBox(
       width: double.infinity,
-      height: 54,
+      height: 56,
       child: ElevatedButton(
         onPressed: isLoading ? null : _submit,
         style: ElevatedButton.styleFrom(
+          elevation: 0,
           backgroundColor: AppColors.secondary,
           foregroundColor: Colors.white,
-          disabledBackgroundColor: AppColors.secondary.withOpacity(0.5),
-          elevation: 0,
-          shape: RoundedRectangleBorder(borderRadius: 16.br),
+          disabledBackgroundColor: AppColors.secondary.withOpacity(0.45),
+          shadowColor: Colors.transparent,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18),
+          ),
         ),
-        child: isLoading
-            ? const SizedBox(
-                width: 22,
-                height: 22,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2.5,
-                  color: Colors.white,
+        child: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 180),
+          child: isLoading
+              ? const SizedBox(
+                  key: ValueKey('loading'),
+                  width: 22,
+                  height: 22,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2.3,
+                    color: Colors.white,
+                  ),
+                )
+              : const Row(
+                  key: ValueKey('button'),
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Profili tamamla',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    Icon(Icons.arrow_forward_rounded, size: 19),
+                  ],
                 ),
-              )
-            : const Text(
-                'Davam et',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-              ),
+        ),
       ),
     );
   }

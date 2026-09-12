@@ -13,16 +13,7 @@ class WaterReminderService {
 
   static const int _baseNotificationId = 1000;
 
-  static const List<int> _scheduledHours = [
-    7,
-    9,
-    11,
-    13,
-    15,
-    17,
-    19,
-    21,
-  ];
+  static const List<int> _scheduledHours = [7, 9, 11, 13, 15, 17, 19, 21];
 
   final FlutterLocalNotificationsPlugin _notifications;
   final SharedPreferences _prefs;
@@ -40,19 +31,13 @@ class WaterReminderService {
       final TimezoneInfo timezoneInfo =
           await FlutterTimezone.getLocalTimezone();
 
-      tz.setLocalLocation(
-        tz.getLocation(timezoneInfo.identifier),
-      );
+      tz.setLocalLocation(tz.getLocation(timezoneInfo.identifier));
     } catch (_) {
-      tz.setLocalLocation(
-        tz.getLocation('Asia/Baku'),
-      );
+      tz.setLocalLocation(tz.getLocation('Asia/Baku'));
     }
 
     const settings = InitializationSettings(
-      android: AndroidInitializationSettings(
-        '@mipmap/ic_launcher',
-      ),
+      android: AndroidInitializationSettings('@mipmap/ic_launcher'),
       iOS: DarwinInitializationSettings(
         requestAlertPermission: false,
         requestBadgePermission: false,
@@ -60,27 +45,40 @@ class WaterReminderService {
       ),
     );
 
-    await _notifications.initialize(
-      settings: settings,
-    );
+    await _notifications.initialize(settings: settings);
 
-    if (await isEnabled()) {
-      await _schedule();
+    final enabled = await isEnabled();
+
+    if (enabled) {
+      final granted = await requestPermission();
+
+      if (granted) {
+        await _schedule();
+      }
     }
   }
 
   Future<bool> isEnabled() async {
-    return _prefs.getBool(_keyEnabled) ?? false;
+    final savedValue = _prefs.getBool(_keyEnabled);
+
+    if (savedValue == null) {
+      await _prefs.setBool(_keyEnabled, true);
+      return true;
+    }
+
+    return savedValue;
   }
 
   Future<bool> requestPermission() async {
-    final android =
-        _notifications.resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>();
+    final android = _notifications
+        .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin
+        >();
 
-    final ios =
-        _notifications.resolvePlatformSpecificImplementation<
-            IOSFlutterLocalNotificationsPlugin>();
+    final ios = _notifications
+        .resolvePlatformSpecificImplementation<
+          IOSFlutterLocalNotificationsPlugin
+        >();
 
     if (android != null) {
       return await android.requestNotificationsPermission() ?? false;
@@ -99,10 +97,7 @@ class WaterReminderService {
   }
 
   Future<void> setEnabled(bool value) async {
-    await _prefs.setBool(
-      _keyEnabled,
-      value,
-    );
+    await _prefs.setBool(_keyEnabled, value);
 
     if (value) {
       await _schedule();
@@ -179,9 +174,7 @@ class WaterReminderService {
     required String title,
     required String body,
   }) async {
-    final now = tz.TZDateTime.now(
-      tz.local,
-    );
+    final now = tz.TZDateTime.now(tz.local);
 
     var scheduledDate = tz.TZDateTime(
       tz.local,
@@ -192,9 +185,7 @@ class WaterReminderService {
     );
 
     if (!scheduledDate.isAfter(now)) {
-      scheduledDate = scheduledDate.add(
-        const Duration(days: 1),
-      );
+      scheduledDate = scheduledDate.add(const Duration(days: 1));
     }
 
     try {
@@ -217,10 +208,8 @@ class WaterReminderService {
             presentSound: true,
           ),
         ),
-        androidScheduleMode:
-            AndroidScheduleMode.inexactAllowWhileIdle,
-        matchDateTimeComponents:
-            DateTimeComponents.time,
+        androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+        matchDateTimeComponents: DateTimeComponents.time,
       );
     } catch (_) {
       // Bir notification planlanmasa belə,
@@ -229,14 +218,8 @@ class WaterReminderService {
   }
 
   Future<void> _cancelAll() async {
-    for (
-      int i = 0;
-      i < _scheduledHours.length;
-      i++
-    ) {
-      await _notifications.cancel(
-        id: _baseNotificationId + i,
-      );
+    for (int i = 0; i < _scheduledHours.length; i++) {
+      await _notifications.cancel(id: _baseNotificationId + i);
     }
   }
 }

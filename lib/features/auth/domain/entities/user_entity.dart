@@ -14,6 +14,7 @@ class UserEntity {
   final String? goal;
   final bool isActive;
   final bool profileCompleted;
+  final String? patientCode;
 
   const UserEntity({
     required this.id,
@@ -31,6 +32,7 @@ class UserEntity {
     this.goal,
     this.isActive = true,
     this.profileCompleted = false,
+    this.patientCode,
   });
 
   String? get name {

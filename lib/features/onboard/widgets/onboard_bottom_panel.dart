@@ -27,25 +27,40 @@ class OnboardBottomPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bottomSafeArea = MediaQuery.paddingOf(context).bottom;
+
     return Padding(
       padding: 24.px,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           28.hs,
+
           OnboardTitle(
             title: data.title,
             titleHighlight: data.titleHighlight,
             emoji: data.titleEmoji,
           ),
+
           8.hs,
+
           _Subtitle(text: data.subtitle),
+
           24.hs,
+
           _DotIndicator(activeIndex: currentIndex, count: totalPages),
+
           16.hs,
+
           _CtaButton(label: data.buttonLabel, onPressed: onNext),
+
           8.hs,
-          if (currentIndex < totalPages - 1) _SkipLink(onTap: onSkip),
+
+          if (currentIndex < totalPages - 1)
+            Padding(
+              padding: EdgeInsets.only(bottom: bottomSafeArea + 4),
+              child: _SkipLink(onTap: onSkip),
+            ),
         ],
       ),
     );
@@ -54,6 +69,7 @@ class OnboardBottomPanel extends StatelessWidget {
 
 class _Subtitle extends StatelessWidget {
   final String text;
+
   const _Subtitle({required this.text});
 
   @override
@@ -71,6 +87,7 @@ class _Subtitle extends StatelessWidget {
 class _DotIndicator extends StatelessWidget {
   final int activeIndex;
   final int count;
+
   const _DotIndicator({required this.activeIndex, required this.count});
 
   @override
@@ -95,6 +112,7 @@ class _DotIndicator extends StatelessWidget {
 class _CtaButton extends StatelessWidget {
   final String label;
   final VoidCallback onPressed;
+
   const _CtaButton({required this.label, required this.onPressed});
 
   @override
@@ -132,6 +150,7 @@ class _CtaButton extends StatelessWidget {
 
 class _SkipLink extends StatelessWidget {
   final VoidCallback onTap;
+
   const _SkipLink({required this.onTap});
 
   @override
@@ -139,6 +158,7 @@ class _SkipLink extends StatelessWidget {
     return Center(
       child: GestureDetector(
         onTap: onTap,
+        behavior: HitTestBehavior.opaque,
         child: Padding(
           padding: 4.py,
           child: Text(

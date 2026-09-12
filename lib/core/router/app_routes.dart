@@ -4,6 +4,7 @@ abstract final class AppRoutes {
   static const String login = '/login';
   static const String register = '/register';
   static const String completeProfile = '/complete-profile';
+  static const String patientCode = '/patient-code';
   static const String otpVerify = '/otp-verify';
   static const String forgotPassword = '/forgot-password';
   static const String resetOtp = '/reset-otp';

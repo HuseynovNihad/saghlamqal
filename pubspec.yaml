@@ -2,7 +2,7 @@ name: kalori_tracker
 description: "A new Flutter project."
 publish_to: "none"
 
-version: 1.0.0+5
+version: 1.0.0+6
 
 environment:
   sdk: ^3.8.1
@@ -26,11 +26,11 @@ dependencies:
   flutter_local_notifications: ^20.1.0
   flutter_dotenv: ^6.0.1
   url_launcher: ^6.3.2
-  flutter_native_splash: ^2.4.7
   shimmer: ^3.0.0
   smooth_page_indicator: ^1.1.0
   flutter_timezone: ^5.1.0
   google_sign_in: ^7.2.0
+  share_plus: ^13.3.0
 
 dev_dependencies:
   flutter_test:

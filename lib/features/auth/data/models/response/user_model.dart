@@ -17,6 +17,7 @@ class UserModel extends UserEntity {
     super.goal,
     super.isActive,
     super.profileCompleted,
+    super.patientCode,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -27,12 +28,16 @@ class UserModel extends UserEntity {
 
     if ((apiFirstName == null || apiFirstName.isEmpty) &&
         data['name'] != null) {
-      final nameParts = (data['name'] as String).trim().split(' ');
+      final name = (data['name'] as String).trim();
 
-      apiFirstName = nameParts.first;
+      if (name.isNotEmpty) {
+        final nameParts = name.split(RegExp(r'\s+'));
 
-      if (nameParts.length > 1) {
-        apiLastName = nameParts.sublist(1).join(' ');
+        apiFirstName = nameParts.first;
+
+        if (nameParts.length > 1) {
+          apiLastName = nameParts.sublist(1).join(' ');
+        }
       }
     }
 
@@ -43,7 +48,7 @@ class UserModel extends UserEntity {
       firstName: apiFirstName,
       lastName: apiLastName,
       birthday: data['birthday'] != null
-          ? DateTime.tryParse(data['birthday'] as String)
+          ? DateTime.tryParse(data['birthday'].toString())
           : null,
       age: data['age'] as int?,
       weight: (data['weight'] as num?)?.toDouble(),
@@ -54,6 +59,7 @@ class UserModel extends UserEntity {
       goal: data['goal'] as String?,
       isActive: data['isActive'] as bool? ?? true,
       profileCompleted: data['profileCompleted'] as bool? ?? false,
+      patientCode: data['patientCode'] as String?,
     );
   }
 }

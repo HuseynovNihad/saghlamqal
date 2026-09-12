@@ -78,6 +78,11 @@ class ProfilePage extends StatelessWidget {
                               onTap: () => context.push(AppRoutes.profileEdit),
                             ),
                             MenuItem(
+                              svgAsset: AppAssets.patientCodeMenu,
+                              label: 'Pasiyent kodum',
+                              onTap: () => context.push(AppRoutes.patientCode),
+                            ),
+                            MenuItem(
                               svgAsset: AppAssets.privacyTip,
                               label: 'Məxfilik Siyasəti',
                               onTap: () =>

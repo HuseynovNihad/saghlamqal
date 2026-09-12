@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import '../../../../core/network/endpoints.dart';
 import '../../../../core/network/network_manager.dart';
 import '../models/request/complete_profile_request.dart';
@@ -85,10 +87,21 @@ class AuthRemoteDataSourceImpl implements IAuthRemoteDataSource {
 
   @override
   Future<VerifyOtpResponseModel> verifyOtp(VerifyOtpRequest request) async {
+    log('========== VERIFY OTP REQUEST ==========');
+    log('Endpoint: ${Endpoints.verifyOtp}');
+    log('Request: ${request.toJson()}');
+
     final response = await _networkManager.post(
       Endpoints.verifyOtp,
       data: request.toJson(),
     );
+
+    log('========== VERIFY OTP RESPONSE ==========');
+    log('Status Code: ${response.statusCode}');
+    log('Response Data: ${response.data}');
+    log('Response Type: ${response.data.runtimeType}');
+    log('=========================================');
+
     return VerifyOtpResponseModel.fromJson(response.data);
   }
 

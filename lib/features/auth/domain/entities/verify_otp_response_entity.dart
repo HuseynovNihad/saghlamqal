@@ -5,12 +5,12 @@ class VerifyOtpResponseEntity {
   final String token;
   final String refreshToken;
   final UserEntity user;
-  final NutritionEntity nutrition;
+  final NutritionEntity? nutrition;
 
   const VerifyOtpResponseEntity({
     required this.token,
     required this.refreshToken,
     required this.user,
-    required this.nutrition,
+    this.nutrition,
   });
 }
