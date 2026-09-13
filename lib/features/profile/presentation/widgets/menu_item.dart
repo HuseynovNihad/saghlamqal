@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/utils/asset_extension.dart';
 import '../../../../core/utils/radius_extension.dart';
@@ -27,6 +28,8 @@ class MenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final hasBadge = badge != null && badge!.trim().isNotEmpty;
+
     return Column(
       children: [
         InkWell(
@@ -56,6 +59,33 @@ class MenuItem extends StatelessWidget {
                 ),
                 12.ws,
                 Expanded(child: Text(label, style: AppTextStyles.bodySmall)),
+                if (hasBadge) ...[
+                  Container(
+                    constraints: const BoxConstraints(
+                      minWidth: 22,
+                      minHeight: 22,
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 6,
+                      vertical: 3,
+                    ),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: AppColors.error,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Text(
+                      badge!,
+                      style: AppTextStyles.bodySmall.copyWith(
+                        color: Colors.white,
+                        fontSize: 11,
+                        fontWeight: FontWeight.w600,
+                        height: 1,
+                      ),
+                    ),
+                  ),
+                  8.ws,
+                ],
                 const Icon(
                   Icons.chevron_right_rounded,
                   color: Color(0xFFBDBDBD),

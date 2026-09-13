@@ -67,4 +67,6 @@ class AppAssets {
   static const String google = '$_svgPath/google.svg';
   static const String patientCode = '$_svgPath/patient_code.svg';
   static const String patientCodeMenu = '$_svgPath/patient_code_menu.svg';
+  static const String dietitianInvites = '$_svgPath/dietitian_invites.svg';
+  static const String dietitian = '$_svgPath/dietitian.svg';
 }

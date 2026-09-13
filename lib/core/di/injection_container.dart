@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../features/ai_photo_scan/photo_scan_di.dart';
 import '../../features/auth/auth_di.dart';
+import '../../features/dietitian_invites/dietitian_invites_di.dart';
 import '../../features/favorites/favorite_di.dart';
 import '../../features/home/home_di.dart';
 import '../../features/scan/scan_di.dart';
@@ -36,4 +37,5 @@ Future<void> init() async {
   await initPhotoScan(sl);
   await initWaterReminder(sl);
   await initProfile(sl);
+  await initDietitianInvites(sl);
 }

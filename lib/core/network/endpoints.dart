@@ -51,6 +51,18 @@ class Endpoints {
 
   static const String getActivityLogs = 'patient-profile/activity-logs';
 
+  // ─── Dietitian Invites ─────────────────────────────────────
+
+  static const String getDietitianInvites = 'dietitian-patients/my-invites';
+
+  static String acceptDietitianInvite(String id) =>
+      'dietitian-patients/$id/accept';
+
+  static String rejectDietitianInvite(String id) =>
+      'dietitian-patients/$id/reject';
+
+  // ─── Nutrition ───────────────────────────────────────────
+
   // ─── Nutrition ───────────────────────────────────────────
 
   static const String getNutrition = 'nutrition';

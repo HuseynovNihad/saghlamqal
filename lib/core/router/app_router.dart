@@ -15,6 +15,7 @@ import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/new_password_page.dart';
 import '../../features/auth/presentation/pages/otp_verify_page.dart';
 import '../../features/auth/presentation/pages/register_page.dart';
+import '../../features/dietitian_invites/presentation/dietitian_invites_page.dart';
 import '../../features/favorites/presentation/bloc/favorites_bloc.dart';
 import '../../features/favorites/presentation/pages/favorite_page.dart';
 import '../../features/home/domain/entities/meal_of_the_day_entity.dart';
@@ -414,9 +415,20 @@ class AppRouter {
           );
         },
       ),
+      // ========================================================
+      // PATIENT CODE
+      // ========================================================
       GoRoute(
         path: AppRoutes.patientCode,
         builder: (_, __) => const PatientCodePage(),
+      ),
+
+      // ========================================================
+      // DIETITIAN INVITES
+      // ========================================================
+      GoRoute(
+        path: AppRoutes.dietitianInvites,
+        builder: (_, __) => const DietitianInvitesPage(),
       ),
     ],
   );

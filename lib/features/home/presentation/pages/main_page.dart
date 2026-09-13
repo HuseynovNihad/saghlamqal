@@ -4,9 +4,12 @@ import 'package:flutter/services.dart';
 import '../../../../core/constants/app_assets.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/di/injection_container.dart';
 import '../../../../core/utils/asset_extension.dart';
 import '../../../../core/utils/padding_extension.dart';
 import '../../../../core/utils/sized_box_extension.dart';
+import '../../../dietitian_invites/presentation/bloc/dietitian_invites_bloc.dart';
+import '../../../dietitians/presentation/pages/dietitians_page.dart';
 import '../../../favorites/presentation/pages/favorite_page.dart';
 import '../../../profile/presentation/pages/profile_page.dart';
 import 'home_page.dart';
@@ -21,11 +24,28 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int _currentIndex = 0;
 
+  static const int _profileIndex = 3;
+
   late final List<Widget> _pages = const [
     HomePage(),
     FavoritesPage(),
+    DietitiansPage(),
     ProfilePage(),
   ];
+
+  void _onNavigationTap(int index) {
+    if (index == _profileIndex) {
+      sl<DietitianInvitesBloc>().add(const DietitianInvitesRequested());
+    }
+
+    if (_currentIndex == index) {
+      return;
+    }
+
+    setState(() {
+      _currentIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +57,7 @@ class _MainPageState extends State<MainPage> {
         body: IndexedStack(index: _currentIndex, children: _pages),
         bottomNavigationBar: _BottomNavBar(
           currentIndex: _currentIndex,
-          onTap: (i) => setState(() => _currentIndex = i),
+          onTap: _onNavigationTap,
         ),
       ),
     );
@@ -50,19 +70,28 @@ class _BottomNavBar extends StatelessWidget {
 
   const _BottomNavBar({required this.currentIndex, required this.onTap});
 
-  static const _items = [
-    (icon: AppAssets.home, iconFill: AppAssets.homeFill, label: 'Ana səhifə'),
-    (
-      icon: AppAssets.favorite,
-      iconFill: AppAssets.favoriteFill,
-      label: 'Favoritlər',
-    ),
-    (
-      icon: AppAssets.profile,
-      iconFill: AppAssets.profileFill,
-      label: 'Profilim',
-    ),
-  ];
+static const _items = [
+  (
+    icon: AppAssets.home,
+    iconFill: AppAssets.homeFill,
+    label: 'Ana səhifə',
+  ),
+  (
+    icon: AppAssets.favorite,
+    iconFill: AppAssets.favoriteFill,
+    label: 'Favoritlər',
+  ),
+  (
+    icon: AppAssets.dietitian,
+    iconFill: AppAssets.dietitian,
+    label: 'Dietoloqlar',
+  ),
+  (
+    icon: AppAssets.profile,
+    iconFill: AppAssets.profileFill,
+    label: 'Profilim',
+  ),
+];
 
   @override
   Widget build(BuildContext context) {
@@ -95,6 +124,7 @@ class _BottomNavBar extends StatelessWidget {
             children: List.generate(_items.length, (i) {
               final item = _items[i];
               final isSelected = currentIndex == i;
+
               return Expanded(
                 child: GestureDetector(
                   onTap: () => onTap(i),
