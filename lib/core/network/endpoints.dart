@@ -37,7 +37,7 @@ class Endpoints {
 
   static const String deleteAccount = 'users/me';
 
-  // ─── Patient Profile ───────────────────────────────────────
+  // ─── Patient Profile ─────────────────────────────────────
 
   static const String getPatientProfile = 'patient-profile/me';
 
@@ -51,7 +51,11 @@ class Endpoints {
 
   static const String getActivityLogs = 'patient-profile/activity-logs';
 
-  // ─── Dietitian Invites ─────────────────────────────────────
+  // ─── Dietitian ───────────────────────────────────────────
+
+  static const String getMyDietitian = 'dietitian-patients/my-dietitian';
+
+  // ─── Dietitian Invites ───────────────────────────────────
 
   static const String getDietitianInvites = 'dietitian-patients/my-invites';
 
@@ -61,7 +65,15 @@ class Endpoints {
   static String rejectDietitianInvite(String id) =>
       'dietitian-patients/$id/reject';
 
-  // ─── Nutrition ───────────────────────────────────────────
+  // ─── Patient Diet Plan ───────────────────────────────────
+
+  static const String getActiveDietPlan = 'patient/diet-plan';
+
+  static const String getDietPlanHistory = 'patient/diet-plan/history';
+
+  static const String getDietPlanCheckIns = 'patient/diet-plan/check-ins';
+
+  static const String updateDietPlanCheckIn = 'patient/diet-plan/check-ins';
 
   // ─── Nutrition ───────────────────────────────────────────
 
@@ -73,7 +85,7 @@ class Endpoints {
 
   static const String addWaterLog = 'hydration/log';
 
-  // ─── Photo Scan ───────────────────────────────────────────
+  // ─── Photo Scan ──────────────────────────────────────────
 
   static const String analyzeScan = 'photo-scan/analyze';
 
@@ -89,7 +101,7 @@ class Endpoints {
 
   static String deleteScanFavorite(String id) => 'photo-scan/favorites/$id';
 
-  // ─── Collections ───────────────────────────────────────────
+  // ─── Collections ─────────────────────────────────────────
 
   static const String getCollections = 'collections';
 
@@ -106,7 +118,7 @@ class Endpoints {
   static String removeCollectionItem(String id, String itemId) =>
       'collections/$id/items/$itemId';
 
-  // ─── Meal ───────────────────────────────────────────────
+  // ─── Meal ────────────────────────────────────────────────
 
   static const String getMealOfTheDay = 'meal/today';
 
@@ -118,7 +130,7 @@ class Endpoints {
 
   static const String privacyPolicy = 'terms/privacy-policy';
 
-  // ─── About Us ───────────────────────────────────────────────
+  // ─── About Us ────────────────────────────────────────────
 
   static const String aboutUs = '/about';
 }

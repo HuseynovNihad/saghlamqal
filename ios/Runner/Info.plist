@@ -4,8 +4,16 @@
 <plist version="1.0">
 <dict>
 
+	<!-- ============================== -->
+	<!-- Flutter -->
+	<!-- ============================== -->
+
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+
+	<!-- ============================== -->
+	<!-- App Information -->
+	<!-- ============================== -->
 
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
@@ -58,7 +66,14 @@
 	</array>
 
 	<!-- ============================== -->
-	<!-- iOS -->
+	<!-- Permissions -->
+	<!-- ============================== -->
+
+	<key>NSCameraUsageDescription</key>
+	<string>SağlamQal barkodları skan etmək və qidaları analiz etmək üçün kameradan istifadə edir.</string>
+
+	<!-- ============================== -->
+	<!-- iOS Configuration -->
 	<!-- ============================== -->
 
 	<key>LSRequiresIPhoneOS</key>
@@ -101,6 +116,10 @@
 
 	<key>UIStatusBarHidden</key>
 	<false/>
+
+	<!-- ============================== -->
+	<!-- Supported Orientations -->
+	<!-- ============================== -->
 
 	<key>UISupportedInterfaceOrientations</key>
 	<array>

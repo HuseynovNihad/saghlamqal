@@ -126,7 +126,9 @@ class _EmptyState extends StatelessWidget {
             width: double.infinity,
             height: 48,
             child: ElevatedButton.icon(
-              onPressed: () {},
+              onPressed: () {
+                context.push(AppRoutes.scan);
+              },
               icon: const Icon(
                 Icons.barcode_reader,
                 size: 18,
