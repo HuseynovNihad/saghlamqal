@@ -7,11 +7,21 @@ import '../usecases/update_patient_profile_usecase.dart';
 
 abstract class ProfileRepository {
   Future<TermsEntity> getTermsOfService();
+
   Future<TermsEntity> getPrivacyPolicy();
+
   Future<AboutUsEntity> getAboutUs();
+
   Future<UserEntity> getProfile();
+
   Future<UserEntity> updateProfile(UpdateProfileParams params);
+
+  Future<UserEntity> uploadAvatar(String filePath);
+
+  Future<UserEntity> deleteAvatar();
+
   Future<PatientProfileEntity> getPatientProfile();
+
   Future<PatientProfileEntity> updatePatientProfile(
     UpdatePatientProfileParams params,
   );

@@ -33,6 +33,10 @@ class Endpoints {
 
   static const String updateProfile = 'users/profile';
 
+  static const String uploadAvatar = 'users/me/avatar';
+
+  static const String deleteAvatar = 'users/me/avatar';
+
   static const String changePassword = 'users/change-password';
 
   static const String deleteAccount = 'users/me';

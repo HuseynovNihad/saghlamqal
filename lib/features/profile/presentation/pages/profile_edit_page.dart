@@ -1,9 +1,14 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:kalori_tracker/core/utils/sized_box_extension.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/di/injection_container.dart';
 import '../../../../core/utils/padding_extension.dart';
 import '../../../../shared/widgets/custom_snackbar.dart';
 import '../../../auth/domain/entities/user_entity.dart';
@@ -14,13 +19,13 @@ import '../../../profile/domain/entities/patient_profile_entity.dart';
 import '../../../profile/domain/usecases/update_patient_profile_usecase.dart';
 import '../../../profile/domain/usecases/update_profile_usecase.dart';
 import '../../../profile/presentation/bloc/profile_bloc.dart';
+import '../widgets/profile_edit/avatar_crop_page.dart';
+import '../widgets/profile_edit/avatar_source_bottom_sheet.dart';
 import '../widgets/profile_edit/body_metrics_card.dart';
 import '../widgets/profile_edit/personal_info_card.dart';
 import '../widgets/profile_edit/preferences_card.dart';
 import '../widgets/profile_edit/profile_avatar.dart';
 import '../widgets/profile_edit/save_changes_button.dart';
-
-import '../../../../core/di/injection_container.dart';
 
 class ProfileEditPage extends StatelessWidget {
   const ProfileEditPage({super.key});
@@ -49,18 +54,31 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
   final _emailController = TextEditingController();
   final _phoneController = TextEditingController();
 
-  // Realistik limitlər
+  final ImagePicker _imagePicker = ImagePicker();
+
+  // ─────────────────────────────────────────────────────────────
+  // LIMITS
+  // ─────────────────────────────────────────────────────────────
+
   static const int _minHeight = 50;
   static const int _maxHeight = 250;
+
   static const double _minWeight = 20;
   static const double _maxWeight = 300;
+
   static const double _minTargetWeight = 20;
   static const double _maxTargetWeight = 300;
 
   static const String _phoneCountryCode = '+994';
 
+  // ─────────────────────────────────────────────────────────────
+  // PATIENT PROFILE
+  // ─────────────────────────────────────────────────────────────
+
   DateTime? _birthday;
+
   int? _height;
+
   double? _weight;
   double? _targetWeight;
 
@@ -68,32 +86,61 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
   String? _activityLevel;
   String? _goal;
 
-  String _initialFirstName = '';
-  String _initialLastName = '';
-  String _initialPhoneDigits = '';
-
   DateTime? _initialBirthday;
+
   int? _initialHeight;
+
   double? _initialWeight;
   double? _initialTargetWeight;
+
   String? _initialGender;
   String? _initialActivityLevel;
   String? _initialGoal;
 
+  // ─────────────────────────────────────────────────────────────
+  // USER
+  // ─────────────────────────────────────────────────────────────
+
+  String _initialFirstName = '';
+  String _initialLastName = '';
+  String _initialPhoneDigits = '';
+
   bool _hasUserHydrated = false;
   bool _hasPatientProfileHydrated = false;
+
   bool get _hasHydrated => _hasUserHydrated && _hasPatientProfileHydrated;
 
   bool _isSaving = false;
 
+  // ─────────────────────────────────────────────────────────────
+  // AVATAR
+  // ─────────────────────────────────────────────────────────────
+
   String _avatarInitial = 'U';
 
+  String? _avatarUrl;
+  String? _localAvatarPath;
+
+  bool _isAvatarUploading = false;
+  bool _isAvatarDeleting = false;
+
+  bool get _isAvatarBusy => _isAvatarUploading || _isAvatarDeleting;
+
+  // ─────────────────────────────────────────────────────────────
+  // USER HYDRATION
+  // ─────────────────────────────────────────────────────────────
+
   String _stripCountryCode(String? rawPhone) {
-    if (rawPhone == null || rawPhone.isEmpty) return '';
+    if (rawPhone == null || rawPhone.isEmpty) {
+      return '';
+    }
+
     var digits = rawPhone.replaceAll(RegExp(r'\D'), '');
+
     if (digits.startsWith('994')) {
       digits = digits.substring(3);
     }
+
     return digits;
   }
 
@@ -108,6 +155,7 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
     _initialPhoneDigits = _phoneController.text;
 
     _avatarInitial = _initialFor(user);
+    _avatarUrl = user.avatar;
 
     _hasUserHydrated = true;
   }
@@ -117,6 +165,7 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
     _height = profile.height;
     _weight = profile.currentWeight;
     _targetWeight = profile.targetWeight;
+
     _gender = profile.gender;
     _activityLevel = profile.activityLevel;
     _goal = profile.goal;
@@ -125,6 +174,7 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
     _initialHeight = profile.height;
     _initialWeight = profile.currentWeight;
     _initialTargetWeight = profile.targetWeight;
+
     _initialGender = profile.gender;
     _initialActivityLevel = profile.activityLevel;
     _initialGoal = profile.goal;
@@ -132,14 +182,144 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
     _hasPatientProfileHydrated = true;
   }
 
+  // ─────────────────────────────────────────────────────────────
+  // AVATAR
+  // ─────────────────────────────────────────────────────────────
+
+  Future<void> _pickAvatar(ImageSource source) async {
+    if (_isAvatarBusy) {
+      return;
+    }
+
+    try {
+      // 1. Kamera və ya qalereyadan şəkli seçirik.
+      final image = await _imagePicker.pickImage(
+        source: source,
+        imageQuality: 95,
+        maxWidth: 2400,
+        maxHeight: 2400,
+        preferredCameraDevice: CameraDevice.front,
+      );
+
+      if (image == null || !mounted) {
+        return;
+      }
+
+      // 2. Şəkli crop səhifəsinə göndəririk.
+      final croppedBytes = await Navigator.of(context).push<Uint8List>(
+        MaterialPageRoute<Uint8List>(
+          fullscreenDialog: true,
+          builder: (_) {
+            return AvatarCropPage(imagePath: image.path);
+          },
+        ),
+      );
+
+      // İstifadəçi crop ekranından geri çıxıbsa
+      // heç bir upload etmirik.
+      if (croppedBytes == null || !mounted) {
+        return;
+      }
+
+      // 3. Crop edilmiş Uint8List-i temp fayla yazırıq.
+      final croppedFile = await _createCroppedAvatarFile(croppedBytes);
+
+      if (!mounted) {
+        return;
+      }
+
+      // 4. Lokal preview + loading.
+      setState(() {
+        _localAvatarPath = croppedFile.path;
+        _isAvatarUploading = true;
+      });
+
+      // 5. Backend-ə artıq crop edilmiş faylı göndəririk.
+      context.read<ProfileBloc>().add(
+        ProfileAvatarUploadRequested(filePath: croppedFile.path),
+      );
+    } catch (e) {
+      if (!mounted) {
+        return;
+      }
+
+      setState(() {
+        _isAvatarUploading = false;
+      });
+
+      CustomSnackBar.show(
+        context,
+        message: source == ImageSource.camera
+            ? 'Şəkil çəkilərkən xəta baş verdi'
+            : 'Şəkil seçilərkən xəta baş verdi',
+        type: SnackBarType.error,
+      );
+    }
+  }
+
+  Future<File> _createCroppedAvatarFile(Uint8List bytes) async {
+    final tempDirectory = Directory.systemTemp;
+
+    final timestamp = DateTime.now().microsecondsSinceEpoch;
+
+    final file = File('${tempDirectory.path}/avatar_$timestamp.png');
+
+    await file.writeAsBytes(bytes, flush: true);
+
+    return file;
+  }
+
+  void _showAvatarActions() {
+    if (_isAvatarBusy) {
+      return;
+    }
+
+    final hasAvatar =
+        (_avatarUrl != null && _avatarUrl!.trim().isNotEmpty) ||
+        (_localAvatarPath != null && _localAvatarPath!.trim().isNotEmpty);
+
+    AvatarSourceBottomSheet.show(
+      context: context,
+      hasAvatar: hasAvatar,
+      onCameraTap: () {
+        _pickAvatar(ImageSource.camera);
+      },
+      onGalleryTap: () {
+        _pickAvatar(ImageSource.gallery);
+      },
+      onDeleteTap: _deleteAvatar,
+    );
+  }
+
+  void _deleteAvatar() {
+    if (_isAvatarBusy) {
+      return;
+    }
+
+    setState(() {
+      _isAvatarDeleting = true;
+    });
+
+    context.read<ProfileBloc>().add(const ProfileAvatarDeleteRequested());
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  // DISPOSE
+  // ─────────────────────────────────────────────────────────────
+
   @override
   void dispose() {
     _firstNameController.dispose();
     _lastNameController.dispose();
     _emailController.dispose();
     _phoneController.dispose();
+
     super.dispose();
   }
+
+  // ─────────────────────────────────────────────────────────────
+  // CHANGE DETECTION
+  // ─────────────────────────────────────────────────────────────
 
   bool get _isPersonalInfoChanged {
     return _firstNameController.text.trim() != _initialFirstName ||
@@ -157,9 +337,15 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
         _goal != _initialGoal;
   }
 
+  // ─────────────────────────────────────────────────────────────
+  // SAVE PROFILE
+  // ─────────────────────────────────────────────────────────────
+
   void _save() {
     final bloc = context.read<ProfileBloc>();
+
     final personalChanged = _isPersonalInfoChanged;
+
     final physicalChanged = _isPhysicalInfoChanged;
 
     if (!personalChanged && !physicalChanged) {
@@ -168,10 +354,13 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
         message: 'Heç bir dəyişiklik yoxdur',
         type: SnackBarType.info,
       );
+
       return;
     }
 
-    setState(() => _isSaving = true);
+    setState(() {
+      _isSaving = true;
+    });
 
     if (personalChanged) {
       bloc.add(
@@ -206,11 +395,17 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
     if (user.firstName != null && user.firstName!.isNotEmpty) {
       return user.firstName![0];
     }
+
     if (user.email.isNotEmpty) {
       return user.email[0];
     }
+
     return 'U';
   }
+
+  // ─────────────────────────────────────────────────────────────
+  // BUILD
+  // ─────────────────────────────────────────────────────────────
 
   @override
   Widget build(BuildContext context) {
@@ -222,24 +417,36 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.of(context).maybePop(),
+          onPressed: () {
+            Navigator.of(context).maybePop();
+          },
         ),
         title: Text('Profil redaktəsi', style: AppTextStyles.h3),
       ),
       body: SafeArea(
         child: BlocConsumer<ProfileBloc, ProfileState>(
           listener: (context, state) {
+            // ─────────────────────────────────────────────
+            // LOAD
+            // ─────────────────────────────────────────────
+
             if (state is ProfileLoaded && !_hasUserHydrated) {
-              setState(() => _hydrateFromUser(state.user));
+              setState(() {
+                _hydrateFromUser(state.user);
+              });
             }
+
             if (state is PatientProfileLoaded && !_hasPatientProfileHydrated) {
-              setState(() => _hydrateFromPatientProfile(state.patientProfile));
+              setState(() {
+                _hydrateFromPatientProfile(state.patientProfile);
+              });
             }
 
             if (state is ProfileError || state is PatientProfileError) {
               final message = state is ProfileError
                   ? state.message
                   : (state as PatientProfileError).message;
+
               CustomSnackBar.show(
                 context,
                 message: message,
@@ -247,33 +454,125 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
               );
             }
 
+            // ─────────────────────────────────────────────
+            // PROFILE UPDATE
+            // ─────────────────────────────────────────────
+
             if (state is ProfileUpdateSuccess) {
               setState(() {
                 _hydrateFromUser(state.user);
                 _isSaving = false;
               });
+
               context.read<AuthBloc>().add(AuthUserUpdated(state.user));
+
               _maybeShowSavedSnackBar(context);
             }
+
             if (state is PatientProfileUpdateSuccess) {
               setState(() {
                 _hydrateFromPatientProfile(state.patientProfile);
+
                 _isSaving = false;
               });
+
               context.read<HomeBloc>().add(const HomeDailyGoalRequested());
+
               _maybeShowSavedSnackBar(context);
             }
 
             if (state is ProfileUpdateError) {
-              setState(() => _isSaving = false);
+              setState(() {
+                _isSaving = false;
+              });
+
               CustomSnackBar.show(
                 context,
                 message: state.message,
                 type: SnackBarType.error,
               );
             }
+
             if (state is PatientProfileUpdateError) {
-              setState(() => _isSaving = false);
+              setState(() {
+                _isSaving = false;
+              });
+
+              CustomSnackBar.show(
+                context,
+                message: state.message,
+                type: SnackBarType.error,
+              );
+            }
+
+            // ─────────────────────────────────────────────
+            // AVATAR UPLOAD
+            // ─────────────────────────────────────────────
+
+            if (state is ProfileAvatarUploadSuccess) {
+              setState(() {
+                _avatarUrl = state.user.avatar;
+
+                _localAvatarPath = null;
+
+                _isAvatarUploading = false;
+
+                _avatarInitial = _initialFor(state.user);
+              });
+
+              context.read<AuthBloc>().add(AuthUserUpdated(state.user));
+
+              CustomSnackBar.show(
+                context,
+                message: 'Profil şəkli yeniləndi',
+                type: SnackBarType.success,
+                position: SnackBarPosition.top,
+              );
+            }
+
+            if (state is ProfileAvatarUploadError) {
+              setState(() {
+                _localAvatarPath = null;
+                _isAvatarUploading = false;
+              });
+
+              CustomSnackBar.show(
+                context,
+                message: state.message,
+                type: SnackBarType.error,
+              );
+            }
+
+            // ─────────────────────────────────────────────
+            // AVATAR DELETE
+            // ─────────────────────────────────────────────
+
+            if (state is ProfileAvatarDeleteSuccess) {
+              setState(() {
+                _avatarUrl = state.user.avatar;
+
+                _localAvatarPath = null;
+
+                _isAvatarDeleting = false;
+
+                _avatarInitial = _initialFor(state.user);
+              });
+
+              context.read<AuthBloc>().add(AuthUserUpdated(state.user));
+
+              CustomSnackBar.show(
+                context,
+                message: 'Profil şəkli silindi',
+                type: SnackBarType.success,
+                position: SnackBarPosition.top,
+              );
+            }
+
+            if (state is ProfileAvatarDeleteError) {
+              setState(() {
+                _isAvatarDeleting = false;
+              });
+
               CustomSnackBar.show(
                 context,
                 message: state.message,
@@ -287,6 +586,7 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
                 final message = state is ProfileError
                     ? state.message
                     : (state as PatientProfileError).message;
+
                 return Center(
                   child: Padding(
                     padding: 24.p,
@@ -298,6 +598,7 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
                   ),
                 );
               }
+
               return const Center(
                 child: CircularProgressIndicator(color: AppColors.primary),
               );
@@ -306,50 +607,88 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
             return ListView(
               padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
               children: [
+                // ───────────────────────────────────────
+                // AVATAR
+                // ───────────────────────────────────────
                 ProfileAvatar(
                   initial: _avatarInitial,
-                  imageUrl: null,
-                  onEditTap: () {
-                    // TODO: image picker
-                  },
+                  imageUrl: _avatarUrl,
+                  localImagePath: _localAvatarPath,
+                  isLoading: _isAvatarBusy,
+                  onEditTap: _showAvatarActions,
                 ),
+
                 16.hs,
+
+                // ───────────────────────────────────────
+                // PERSONAL INFO
+                // ───────────────────────────────────────
                 PersonalInfoCard(
                   firstNameController: _firstNameController,
                   lastNameController: _lastNameController,
                   emailController: _emailController,
                   phoneController: _phoneController,
                   birthday: _birthday,
-                  onBirthdayChanged: (value) =>
-                      setState(() => _birthday = value),
+                  onBirthdayChanged: (value) {
+                    setState(() {
+                      _birthday = value;
+                    });
+                  },
                 ),
+
                 20.hs,
+
+                // ───────────────────────────────────────
+                // BODY METRICS
+                // ───────────────────────────────────────
                 BodyMetricsCard(
                   height: _height,
                   weight: _weight,
                   targetWeight: _targetWeight,
-                  onHeightChanged: (value) => setState(() {
-                    _height = value.clamp(_minHeight, _maxHeight);
-                  }),
-                  onWeightChanged: (value) => setState(() {
-                    _weight = value.clamp(_minWeight, _maxWeight);
-                  }),
-                  onTargetWeightChanged: (value) => setState(() {
-                    _targetWeight = value.clamp(
-                      _minTargetWeight,
-                      _maxTargetWeight,
-                    );
-                  }),
+                  onHeightChanged: (value) {
+                    setState(() {
+                      _height = value.clamp(_minHeight, _maxHeight);
+                    });
+                  },
+                  onWeightChanged: (value) {
+                    setState(() {
+                      _weight = value.clamp(_minWeight, _maxWeight);
+                    });
+                  },
+                  onTargetWeightChanged: (value) {
+                    setState(() {
+                      _targetWeight = value.clamp(
+                        _minTargetWeight,
+                        _maxTargetWeight,
+                      );
+                    });
+                  },
                 ),
+
                 20.hs,
+
+                // ───────────────────────────────────────
+                // PREFERENCES
+                // ───────────────────────────────────────
                 PreferencesCard(
                   gender: _gender,
-                  onGenderChanged: (value) => setState(() => _gender = value),
+                  onGenderChanged: (value) {
+                    setState(() {
+                      _gender = value;
+                    });
+                  },
                   activityLevel: _activityLevel,
-                  onActivityLevelChanged: (value) =>
-                      setState(() => _activityLevel = value),
+                  onActivityLevelChanged: (value) {
+                    setState(() {
+                      _activityLevel = value;
+                    });
+                  },
                   goal: _goal,
-                  onGoalChanged: (value) => setState(() => _goal = value),
+                  onGoalChanged: (value) {
+                    setState(() {
+                      _goal = value;
+                    });
+                  },
                 ),
               ],
             );
@@ -370,7 +709,9 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
 
   void _maybeShowSavedSnackBar(BuildContext context) {
     final personalChanged = _isPersonalInfoChanged;
+
     final physicalChanged = _isPhysicalInfoChanged;
+
     if (!personalChanged && !physicalChanged) {
       CustomSnackBar.show(
         context,

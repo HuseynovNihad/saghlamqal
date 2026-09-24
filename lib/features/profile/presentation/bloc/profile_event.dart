@@ -35,3 +35,13 @@ final class PatientProfileUpdateRequested extends ProfileEvent {
 
   const PatientProfileUpdateRequested({required this.params});
 }
+
+final class ProfileAvatarUploadRequested extends ProfileEvent {
+  final String filePath;
+
+  const ProfileAvatarUploadRequested({required this.filePath});
+}
+
+final class ProfileAvatarDeleteRequested extends ProfileEvent {
+  const ProfileAvatarDeleteRequested();
+}

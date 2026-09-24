@@ -95,11 +95,16 @@ class _ProfileView extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           UserInfoCard(
-                            name: '${user.firstName} ${user.lastName}',
+                            name:
+                                '${user.firstName ?? ''} ${user.lastName ?? ''}'
+                                    .trim(),
                             email: user.email,
                             initial: (user.firstName?.isNotEmpty ?? false)
                                 ? user.firstName![0].toUpperCase()
+                                : user.email.isNotEmpty
+                                ? user.email[0].toUpperCase()
                                 : 'U',
+                            imageUrl: user.avatar,
                           ),
 
                           const SectionLabel(label: 'Hesab və Parametrlər'),
@@ -122,28 +127,27 @@ class _ProfileView extends StatelessWidget {
                                 },
                               ),
 
-                              BlocBuilder<
-                                DietitianInvitesBloc,
-                                DietitianInvitesState
-                              >(
-                                builder: (context, state) {
-                                  final inviteCount = _getInviteCount(state);
+                              // BlocBuilder<
+                              //   DietitianInvitesBloc,
+                              //   DietitianInvitesState
+                              // >(
+                              //   builder: (context, state) {
+                              //     final inviteCount = _getInviteCount(state);
 
-                                  return MenuItem(
-                                    svgAsset: AppAssets.dietitianInvites,
-                                    label: 'Dietoloq dəvətləri',
-                                    badge: inviteCount > 0
-                                        ? inviteCount > 99
-                                              ? '99+'
-                                              : inviteCount.toString()
-                                        : null,
-                                    onTap: () {
-                                      context.push(AppRoutes.dietitianInvites);
-                                    },
-                                  );
-                                },
-                              ),
-
+                              //     return MenuItem(
+                              //       svgAsset: AppAssets.dietitianInvites,
+                              //       label: 'Dietoloq dəvətləri',
+                              //       badge: inviteCount > 0
+                              //           ? inviteCount > 99
+                              //                 ? '99+'
+                              //                 : inviteCount.toString()
+                              //           : null,
+                              //       onTap: () {
+                              //         context.push(AppRoutes.dietitianInvites);
+                              //       },
+                              //     );
+                              //   },
+                              // ),
                               MenuItem(
                                 svgAsset: AppAssets.privacyTip,
                                 label: 'Məxfilik Siyasəti',
@@ -290,21 +294,21 @@ class _ProfileView extends StatelessWidget {
     );
   }
 
-  int _getInviteCount(DietitianInvitesState state) {
-    if (state is DietitianInvitesLoaded) {
-      return state.invites.length;
-    }
+  // int _getInviteCount(DietitianInvitesState state) {
+  //   if (state is DietitianInvitesLoaded) {
+  //     return state.invites.length;
+  //   }
 
-    if (state is DietitianInviteActionLoading) {
-      return state.invites.length;
-    }
+  //   if (state is DietitianInviteActionLoading) {
+  //     return state.invites.length;
+  //   }
 
-    if (state is DietitianInviteActionSuccess) {
-      return state.invites.length;
-    }
+  //   if (state is DietitianInviteActionSuccess) {
+  //     return state.invites.length;
+  //   }
 
-    return 0;
-  }
+  //   return 0;
+  // }
 
   Widget _buildHeader() {
     return Padding(

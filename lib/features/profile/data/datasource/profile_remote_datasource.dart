@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+
 import '../../../../core/network/endpoints.dart';
 import '../../../../core/network/network_manager.dart';
 import '../../../auth/data/models/response/user_model.dart';
@@ -17,6 +19,9 @@ abstract class ProfileRemoteDataSource {
   Future<PatientProfileModel> updatePatientProfile(
     UpdatePatientProfileRequestModel request,
   );
+  Future<UserModel> uploadAvatar(String filePath);
+
+  Future<UserModel> deleteAvatar();
 }
 
 class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
@@ -82,5 +87,30 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
       data: request.toJson(),
     );
     return PatientProfileModel.fromJson(response.data!);
+  }
+
+  @override
+  Future<UserModel> uploadAvatar(String filePath) async {
+    final fileName = filePath.split('/').last;
+
+    final formData = FormData.fromMap({
+      'avatar': await MultipartFile.fromFile(filePath, filename: fileName),
+    });
+
+    final response = await _networkManager.uploadFile<Map<String, dynamic>>(
+      Endpoints.uploadAvatar,
+      formData,
+    );
+
+    return UserModel.fromJson(response.data!);
+  }
+
+  @override
+  Future<UserModel> deleteAvatar() async {
+    final response = await _networkManager.delete<Map<String, dynamic>>(
+      Endpoints.deleteAvatar,
+    );
+
+    return UserModel.fromJson(response.data!);
   }
 }

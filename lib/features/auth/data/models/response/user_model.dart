@@ -7,6 +7,7 @@ class UserModel extends UserEntity {
     super.phoneNumber,
     super.firstName,
     super.lastName,
+    super.avatar,
     super.birthday,
     super.age,
     super.weight,
@@ -47,6 +48,7 @@ class UserModel extends UserEntity {
       phoneNumber: data['phoneNumber'] as String?,
       firstName: apiFirstName,
       lastName: apiLastName,
+      avatar: data['avatar'] as String?,
       birthday: data['birthday'] != null
           ? DateTime.tryParse(data['birthday'].toString())
           : null,

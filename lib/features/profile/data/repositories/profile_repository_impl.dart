@@ -80,4 +80,14 @@ class ProfileRepositoryImpl implements ProfileRepository {
     final d = date.day.toString().padLeft(2, '0');
     return '$y-$m-$d';
   }
+
+  @override
+  Future<UserEntity> uploadAvatar(String filePath) async {
+    return _remoteDataSource.uploadAvatar(filePath);
+  }
+
+  @override
+  Future<UserEntity> deleteAvatar() async {
+    return _remoteDataSource.deleteAvatar();
+  }
 }

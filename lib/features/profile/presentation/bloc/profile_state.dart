@@ -83,3 +83,35 @@ final class PatientProfileUpdateError extends ProfileState {
 
   const PatientProfileUpdateError({required this.message});
 }
+
+final class ProfileAvatarUploading extends ProfileState {
+  const ProfileAvatarUploading();
+}
+
+final class ProfileAvatarUploadSuccess extends ProfileState {
+  final UserEntity user;
+
+  const ProfileAvatarUploadSuccess({required this.user});
+}
+
+final class ProfileAvatarUploadError extends ProfileState {
+  final String message;
+
+  const ProfileAvatarUploadError({required this.message});
+}
+
+final class ProfileAvatarDeleting extends ProfileState {
+  const ProfileAvatarDeleting();
+}
+
+final class ProfileAvatarDeleteSuccess extends ProfileState {
+  final UserEntity user;
+
+  const ProfileAvatarDeleteSuccess({required this.user});
+}
+
+final class ProfileAvatarDeleteError extends ProfileState {
+  final String message;
+
+  const ProfileAvatarDeleteError({required this.message});
+}

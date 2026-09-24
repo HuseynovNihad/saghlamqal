@@ -24,12 +24,12 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int _currentIndex = 0;
 
-  static const int _profileIndex = 3;
+  static const int _profileIndex = 2;
 
   late final List<Widget> _pages = const [
     HomePage(),
     FavoritesPage(),
-    DietitiansPage(),
+    // DietitiansPage(),
     ProfilePage(),
   ];
 
@@ -81,11 +81,11 @@ static const _items = [
     iconFill: AppAssets.favoriteFill,
     label: 'Favoritlər',
   ),
-  (
-    icon: AppAssets.dietitian,
-    iconFill: AppAssets.dietitian,
-    label: 'Dietoloqlar',
-  ),
+  // (
+  //   icon: AppAssets.dietitian,
+  //   iconFill: AppAssets.dietitian,
+  //   label: 'Dietoloqlar',
+  // ),
   (
     icon: AppAssets.profile,
     iconFill: AppAssets.profileFill,

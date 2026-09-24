@@ -4,6 +4,7 @@ class UserEntity {
   final String? phoneNumber;
   final String? firstName;
   final String? lastName;
+  final String? avatar;
   final DateTime? birthday;
   final int? age;
   final double? weight;
@@ -22,6 +23,7 @@ class UserEntity {
     this.phoneNumber,
     this.firstName,
     this.lastName,
+    this.avatar,
     this.birthday,
     this.age,
     this.weight,
