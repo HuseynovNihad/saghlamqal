@@ -3,10 +3,12 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 
 import '../config/app_config.dart';
-import '../storage/token_storage.dart';
 import '../di/injection_container.dart';
+import '../localization/locale_repository.dart';
+import '../storage/token_storage.dart';
 
 import 'interceptors/auth_interceptor.dart';
+import 'interceptors/language_interceptor.dart';
 import 'models/network_exceptions.dart';
 
 class NetworkManager {
@@ -14,16 +16,14 @@ class NetworkManager {
 
   NetworkManager() {
     final tokenStorage = sl<TokenStorage>();
+    final localeRepository = sl<LocaleRepository>();
 
     _dio = Dio(
       BaseOptions(
         baseUrl: AppConfig.baseUrl,
-
-        // Debug üçün bir az artırırıq.
         connectTimeout: const Duration(seconds: 30),
         receiveTimeout: const Duration(seconds: 30),
         sendTimeout: const Duration(seconds: 30),
-
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -32,7 +32,10 @@ class NetworkManager {
     );
 
     _dio.interceptors.addAll([
+      LanguageInterceptor(localeRepository),
       AuthInterceptor(tokenStorage),
+
+      // Debug zamanı lazım olsa aktiv et:
       // if (kDebugMode) AppLogInterceptor(),
     ]);
   }
@@ -69,51 +72,61 @@ class NetworkManager {
   Future<Response<T>> get<T>(
     String path, {
     Map<String, dynamic>? queryParameters,
-  }) => request<T>(path, method: 'GET', queryParameters: queryParameters);
+  }) {
+    return request<T>(path, method: 'GET', queryParameters: queryParameters);
+  }
 
   Future<Response<T>> post<T>(
     String path, {
     dynamic data,
     Map<String, dynamic>? queryParameters,
-  }) => request<T>(
-    path,
-    method: 'POST',
-    data: data,
-    queryParameters: queryParameters,
-  );
+  }) {
+    return request<T>(
+      path,
+      method: 'POST',
+      data: data,
+      queryParameters: queryParameters,
+    );
+  }
 
   Future<Response<T>> put<T>(
     String path, {
     dynamic data,
     Map<String, dynamic>? queryParameters,
-  }) => request<T>(
-    path,
-    method: 'PUT',
-    data: data,
-    queryParameters: queryParameters,
-  );
+  }) {
+    return request<T>(
+      path,
+      method: 'PUT',
+      data: data,
+      queryParameters: queryParameters,
+    );
+  }
 
   Future<Response<T>> patch<T>(
     String path, {
     dynamic data,
     Map<String, dynamic>? queryParameters,
-  }) => request<T>(
-    path,
-    method: 'PATCH',
-    data: data,
-    queryParameters: queryParameters,
-  );
+  }) {
+    return request<T>(
+      path,
+      method: 'PATCH',
+      data: data,
+      queryParameters: queryParameters,
+    );
+  }
 
   Future<Response<T>> delete<T>(
     String path, {
     dynamic data,
     Map<String, dynamic>? queryParameters,
-  }) => request<T>(
-    path,
-    method: 'DELETE',
-    data: data,
-    queryParameters: queryParameters,
-  );
+  }) {
+    return request<T>(
+      path,
+      method: 'DELETE',
+      data: data,
+      queryParameters: queryParameters,
+    );
+  }
 
   Future<Response<T>> uploadFile<T>(String path, FormData formData) {
     return request<T>(

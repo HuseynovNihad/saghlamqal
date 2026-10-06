@@ -10,6 +10,8 @@ import '../../features/favorites/favorite_di.dart';
 import '../../features/home/home_di.dart';
 import '../../features/scan/scan_di.dart';
 import '../../features/water_reminder/water_reminder_di.dart';
+
+import '../localization/locale_repository.dart';
 import '../network/network_manager.dart';
 import '../storage/onboarding_storage.dart';
 import '../storage/token_storage.dart';
@@ -17,20 +19,30 @@ import '../storage/token_storage.dart';
 final sl = GetIt.instance;
 
 Future<void> init() async {
-  // ================= CORE =================
-  sl.registerLazySingleton<NetworkManager>(() => NetworkManager());
-
   // ================= LOCAL STORAGE =================
-  final prefs = await SharedPreferences.getInstance();
-  sl.registerLazySingleton(() => prefs);
 
-  sl.registerLazySingleton<TokenStorage>(() => TokenStorage(sl()));
+  final prefs = await SharedPreferences.getInstance();
+
+  sl.registerLazySingleton<SharedPreferences>(() => prefs);
+
+  sl.registerLazySingleton<TokenStorage>(
+    () => TokenStorage(sl<SharedPreferences>()),
+  );
 
   sl.registerLazySingleton<OnboardingStorage>(
     () => OnboardingStorage(sl<SharedPreferences>()),
   );
 
+  sl.registerLazySingleton<LocaleRepository>(
+    () => LocaleRepository(sl<SharedPreferences>()),
+  );
+
+  // ================= CORE =================
+
+  sl.registerLazySingleton<NetworkManager>(() => NetworkManager());
+
   // ================= FEATURES =================
+
   await initAuth(sl);
   await initHome(sl);
   await initScan(sl);
