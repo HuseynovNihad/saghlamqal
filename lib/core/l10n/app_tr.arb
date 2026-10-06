@@ -1,0 +1,8 @@
+{
+  "@@locale": "tr",
+  "languageTitle": "Dil seçimi",
+  "systemLanguage": "Sistem dili",
+  "continueButton": "Devam et",
+  "settingsTitle": "Ayarlar",
+  "languageSaveError": "Dil seçimi kaydedilemedi. Lütfen tekrar deneyin"
+}

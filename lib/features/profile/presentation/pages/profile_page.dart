@@ -7,10 +7,12 @@ import '../../../../core/constants/app_assets.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/di/injection_container.dart';
+import '../../../../core/l10n/localization_extension.dart';
 import '../../../../core/router/app_routes.dart';
 import '../../../../core/utils/sized_box_extension.dart';
 import '../../../../shared/widgets/animated_refresh_indicator.dart';
 import '../../../../shared/widgets/custom_alert_dialog.dart';
+import '../../../../shared/widgets/language_selection_sheet.dart';
 import '../../../../shared/widgets/unauthenticated_view.dart';
 import '../../../auth/presentation/bloc/auth_bloc.dart';
 import '../../../auth/presentation/bloc/auth_event.dart';
@@ -125,6 +127,13 @@ class _ProfileView extends StatelessWidget {
                                 onTap: () {
                                   context.push(AppRoutes.patientCode);
                                 },
+                              ),
+
+                              MenuItem(
+                                svgAsset: AppAssets.settings,
+                                label: context.l10n.languageTitle,
+                                onTap: () =>
+                                    showLanguageSelectionSheet(context),
                               ),
 
                               // BlocBuilder<

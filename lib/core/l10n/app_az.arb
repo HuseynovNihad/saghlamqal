@@ -1,0 +1,8 @@
+{
+  "@@locale": "az",
+  "languageTitle": "Dil seçimi",
+  "systemLanguage": "Sistem dili",
+  "continueButton": "Davam et",
+  "settingsTitle": "Ayarlar",
+  "languageSaveError": "Dil seçimi saxlanmadı. Yenidən cəhd edin"
+}

@@ -1,0 +1,8 @@
+{
+  "@@locale": "en",
+  "languageTitle": "Language",
+  "systemLanguage": "System language",
+  "continueButton": "Continue",
+  "settingsTitle": "Settings",
+  "languageSaveError": "Could not save your language. Please try again"
+}

@@ -1,0 +1,8 @@
+{
+  "@@locale": "ru",
+  "languageTitle": "Выбор языка",
+  "systemLanguage": "Язык системы",
+  "continueButton": "Продолжить",
+  "settingsTitle": "Настройки",
+  "languageSaveError": "Не удалось сохранить язык. Попробуйте ещё раз"
+}
