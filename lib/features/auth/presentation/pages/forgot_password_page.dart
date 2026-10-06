@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/constants/app_assets.dart';
 import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/l10n/localization_extension.dart';
 import '../../../../core/router/app_routes.dart';
 import '../../../../core/utils/asset_extension.dart';
 import '../../../../core/utils/padding_extension.dart';
@@ -28,7 +29,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final _formKey = GlobalKey<FormState>();
 
   void _submit() {
-    if (!_formKey.currentState!.validate()) return;
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
     context.read<AuthBloc>().add(
       ForgotPasswordSubmitted(email: _emailController.text.trim()),
     );
@@ -37,6 +41,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   @override
   void dispose() {
     _emailController.dispose();
+
     super.dispose();
   }
 
@@ -52,16 +57,23 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 message: state.message,
                 type: SnackBarType.error,
               );
-            } else if (state is AuthForgotPasswordSent) {
+
+              return;
+            }
+
+            if (state is AuthForgotPasswordSent) {
               CustomSnackBar.show(
                 context,
-                message: 'Şifrə sıfırlama kodu göndərildi',
+                message: context.l10n.authPasswordResetCodeSent,
                 type: SnackBarType.success,
               );
+
               context.push(AppRoutes.resetOtp, extra: state.email);
             }
           },
           builder: (context, state) {
+            final isLoading = state is AuthLoading;
+
             return SingleChildScrollView(
               child: Padding(
                 padding: 16.p,
@@ -70,35 +82,55 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      // ==============================
+                      // LOGO
+                      // ==============================
                       Column(
                         children: [
                           AppAssets.appLogo.png(width: 75, height: 75),
-                          Text("SağlamQal", style: AppTextStyles.h1),
+                          Text('SağlamQal', style: AppTextStyles.h1),
                         ],
                       ),
+
                       24.hs,
+
                       Container(
                         padding: 20.p,
-
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text("Şifrəni Unutdum", style: AppTextStyles.h2),
-                            16.hs,
+                            // ==========================
+                            // TITLE
+                            // ==========================
                             Text(
-                              "Email ünvanınızı daxil edin, şifrə sıfırlama kodu göndərəcəyik",
+                              context.l10n.authForgotPasswordTitle,
+                              style: AppTextStyles.h2,
+                            ),
+
+                            16.hs,
+
+                            // ==========================
+                            // DESCRIPTION
+                            // ==========================
+                            Text(
+                              context.l10n.authForgotPasswordDescription,
                               textAlign: TextAlign.center,
                               style: AppTextStyles.bodyMedium.copyWith(
                                 color: Colors.grey,
                               ),
                             ),
+
                             32.hs,
+
+                            // ==========================
+                            // EMAIL
+                            // ==========================
                             TextFormField(
                               controller: _emailController,
                               keyboardType: TextInputType.emailAddress,
                               decoration: InputDecoration(
-                                labelText: 'Email',
-                                hintText: 'example@email.com',
+                                labelText: context.l10n.authEmailLabel,
+                                hintText: context.l10n.authEmailExample,
                                 prefixIcon: const Icon(Icons.email_outlined),
                                 border: OutlineInputBorder(borderRadius: 12.br),
                                 focusedBorder: OutlineInputBorder(
@@ -111,27 +143,46 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                               ),
                               validator: (value) {
                                 if (value == null || value.trim().isEmpty) {
-                                  return 'Email daxil edin';
+                                  return context.l10n.authEmailRequired;
                                 }
+
                                 final emailRegex = RegExp(
                                   r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
                                 );
+
                                 if (!emailRegex.hasMatch(value.trim())) {
-                                  return 'Düzgün email daxil edin';
+                                  return context.l10n.authEmailInvalid;
                                 }
+
                                 return null;
                               },
                             ),
+
                             32.hs,
+
+                            // ==========================
+                            // SEND CODE
+                            // ==========================
                             CustomElevatedButton(
-                              text: "Kodu Göndər",
-                              isLoading: state is AuthLoading,
-                              onPressed: _submit,
+                              text: context.l10n.authSendCodeButton,
+                              isLoading: isLoading,
+                              onPressed: isLoading ? null : _submit,
                             ),
+
                             16.hs,
+
+                            // ==========================
+                            // BACK
+                            // ==========================
                             CustomTextButton(
-                              text: "Geri qayıt",
-                              onPressed: () => context.pop(),
+                              text: context.l10n.authBackButton,
+                              onPressed: () {
+                                if (isLoading) {
+                                  return;
+                                }
+
+                                context.pop();
+                              },
                             ),
                           ],
                         ),

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/l10n/localization_extension.dart';
 import '../../../../shared/widgets/custom_snackbar.dart';
 
 import '../bloc/auth_bloc.dart';
@@ -27,8 +28,11 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
   final _formKey = GlobalKey<FormState>();
 
   final _phoneNumberController = TextEditingController();
+
   final _weightController = TextEditingController();
+
   final _targetWeightController = TextEditingController();
+
   final _heightController = TextEditingController();
 
   DateTime? _selectedBirthday;
@@ -78,6 +82,10 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
     super.dispose();
   }
 
+  // ============================================================
+  // SUBMIT
+  // ============================================================
+
   void _submit() {
     FocusManager.instance.primaryFocus?.unfocus();
 
@@ -85,16 +93,20 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
 
     setState(() {
       _birthdayError = _selectedBirthday == null
-          ? 'Doğum tarixini seçin'
+          ? context.l10n.profileBirthdayRequired
           : null;
 
-      _genderError = _selectedGender == null ? 'Cins seçin' : null;
+      _genderError = _selectedGender == null
+          ? context.l10n.profileGenderRequired
+          : null;
 
       _activityLevelError = _selectedActivityLevel == null
-          ? 'Aktivlik səviyyəsi seçin'
+          ? context.l10n.profileActivityLevelRequired
           : null;
 
-      _goalError = _selectedGoal == null ? 'Məqsəd seçin' : null;
+      _goalError = _selectedGoal == null
+          ? context.l10n.profileGoalRequired
+          : null;
     });
 
     if (!formValid ||
@@ -122,7 +134,7 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
     if (currentWeight == null || height == null) {
       CustomSnackBar.show(
         context,
-        message: 'Çəki və boy məlumatlarını düzgün daxil edin',
+        message: context.l10n.profileWeightHeightInvalid,
         type: SnackBarType.error,
       );
 
@@ -142,6 +154,10 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
       ),
     );
   }
+
+  // ============================================================
+  // BUILD
+  // ============================================================
 
   @override
   Widget build(BuildContext context) {
@@ -183,11 +199,14 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
 
                             const SizedBox(height: 18),
 
+                            // ==========================
+                            // PERSONAL INFORMATION
+                            // ==========================
                             _buildSectionCard(
                               icon: Icons.person_outline_rounded,
-                              title: 'Şəxsi məlumatlar',
+                              title: context.l10n.profilePersonalInfoTitle,
                               description:
-                                  'Sizi daha yaxşı tanımaq üçün əsas məlumatları tamamlayın.',
+                                  context.l10n.profilePersonalInfoDescription,
                               children: [
                                 PhoneNumberField(
                                   controller: _phoneNumberController,
@@ -225,11 +244,14 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
 
                             const SizedBox(height: 16),
 
+                            // ==========================
+                            // BODY METRICS
+                            // ==========================
                             _buildSectionCard(
                               icon: Icons.monitor_weight_outlined,
-                              title: 'Bədən göstəriciləri',
+                              title: context.l10n.profileBodyMetricsTitle,
                               description:
-                                  'Boy və çəki məlumatlarınız gündəlik ehtiyacların hesablanmasına kömək edir.',
+                                  context.l10n.profileBodyMetricsDescription,
                               children: [
                                 WeightHeightField(
                                   weightController: _weightController,
@@ -244,11 +266,14 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
 
                             const SizedBox(height: 16),
 
+                            // ==========================
+                            // ACTIVITY LEVEL
+                            // ==========================
                             _buildSectionCard(
                               icon: Icons.directions_run_rounded,
-                              title: 'Aktivlik səviyyəsi',
+                              title: context.l10n.profileActivityLevelTitle,
                               description:
-                                  'Adi gününüzə ən yaxın fiziki aktivlik səviyyəsini seçin.',
+                                  context.l10n.profileActivityLevelDescription,
                               children: [
                                 ActivityLevelField(
                                   value: _selectedActivityLevel,
@@ -265,11 +290,13 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
 
                             const SizedBox(height: 16),
 
+                            // ==========================
+                            // GOAL
+                            // ==========================
                             _buildSectionCard(
                               icon: Icons.flag_outlined,
-                              title: 'Məqsədiniz',
-                              description:
-                                  'SağlamQal planınızı seçdiyiniz məqsədə uyğun fərdiləşdirəcək.',
+                              title: context.l10n.profileGoalTitle,
+                              description: context.l10n.profileGoalDescription,
                               children: [
                                 GoalField(
                                   value: _selectedGoal,
@@ -306,6 +333,10 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
       ),
     );
   }
+
+  // ============================================================
+  // HEADER
+  // ============================================================
 
   Widget _buildHeader() {
     return Container(
@@ -368,7 +399,7 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
                     const SizedBox(width: 6),
 
                     Text(
-                      'Son addım',
+                      context.l10n.profileLastStep,
                       style: AppTextStyles.bodySmall.copyWith(
                         color: AppColors.secondary,
                         fontSize: 10,
@@ -384,7 +415,7 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
           const SizedBox(height: 13),
 
           Text(
-            'Profilinizi tamamlayaq',
+            context.l10n.profileCompleteTitle,
             style: AppTextStyles.bodyMedium.copyWith(
               fontSize: 23,
               height: 1.15,
@@ -397,7 +428,7 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
           const SizedBox(height: 6),
 
           Text(
-            'Sizə uyğun kalori və qidalanma planı hazırlamaq üçün bir neçə məlumat lazımdır.',
+            context.l10n.profileCompleteDescription,
             style: AppTextStyles.bodySmall.copyWith(
               color: AppColors.bodyText,
               height: 1.45,
@@ -421,6 +452,10 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
     );
   }
 
+  // ============================================================
+  // PROGRESS LINE
+  // ============================================================
+
   Widget _buildProgressLine({required bool active}) {
     return Container(
       height: 3,
@@ -430,6 +465,10 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
       ),
     );
   }
+
+  // ============================================================
+  // SECTION CARD
+  // ============================================================
 
   Widget _buildSectionCard({
     required IconData icon,
@@ -511,6 +550,10 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
     );
   }
 
+  // ============================================================
+  // TARGET WEIGHT
+  // ============================================================
+
   Widget _buildTargetWeightField() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -518,7 +561,7 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
         Row(
           children: [
             Text(
-              'Hədəf çəki',
+              context.l10n.profileTargetWeightLabel,
               style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.headline,
                 fontWeight: FontWeight.w600,
@@ -535,7 +578,7 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
                 borderRadius: BorderRadius.circular(100),
               ),
               child: Text(
-                'İstəyə bağlı',
+                context.l10n.profileOptional,
                 style: AppTextStyles.bodySmall.copyWith(
                   color: AppColors.secondary,
                   fontSize: 9,
@@ -553,8 +596,8 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
           textInputAction: TextInputAction.done,
           decoration: InputDecoration(
-            hintText: 'Məsələn: 65',
-            suffixText: 'kq',
+            hintText: context.l10n.profileTargetWeightHint,
+            suffixText: context.l10n.unitKg,
             filled: true,
             fillColor: AppColors.textfieldColor,
             isDense: true,
@@ -603,11 +646,11 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
             final weight = double.tryParse(value.trim().replaceAll(',', '.'));
 
             if (weight == null) {
-              return 'Düzgün çəki daxil edin';
+              return context.l10n.profileInvalidWeight;
             }
 
             if (weight < 20 || weight > 500) {
-              return 'Çəki 20-500 kq aralığında olmalıdır';
+              return context.l10n.profileWeightRangeError;
             }
 
             return null;
@@ -616,6 +659,10 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
       ],
     );
   }
+
+  // ============================================================
+  // PRIVACY NOTE
+  // ============================================================
 
   Widget _buildPrivacyNote() {
     return Container(
@@ -647,7 +694,7 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
 
           Expanded(
             child: Text(
-              'Məlumatlarınız yalnız sizə uyğun fərdi plan yaratmaq üçün istifadə olunur.',
+              context.l10n.profilePrivacyNote,
               style: AppTextStyles.bodySmall.copyWith(
                 color: AppColors.bodyText,
                 height: 1.45,
@@ -659,6 +706,10 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
       ),
     );
   }
+
+  // ============================================================
+  // SUBMIT BUTTON
+  // ============================================================
 
   Widget _buildSubmitButton(bool isLoading) {
     return SizedBox(
@@ -688,19 +739,19 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
                     color: Colors.white,
                   ),
                 )
-              : const Row(
-                  key: ValueKey('button'),
+              : Row(
+                  key: const ValueKey('button'),
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Profili tamamla',
-                      style: TextStyle(
+                      context.l10n.profileCompleteButton,
+                      style: const TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    SizedBox(width: 8),
-                    Icon(Icons.arrow_forward_rounded, size: 19),
+                    const SizedBox(width: 8),
+                    const Icon(Icons.arrow_forward_rounded, size: 19),
                   ],
                 ),
         ),

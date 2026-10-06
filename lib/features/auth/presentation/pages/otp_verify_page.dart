@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/constants/app_assets.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/enums/otp_verify_mode.dart';
+import '../../../../core/l10n/localization_extension.dart';
 import '../../../../core/router/app_routes.dart';
 import '../../../../core/utils/asset_extension.dart';
 import '../../../../core/utils/padding_extension.dart';
@@ -248,9 +249,6 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
     return Scaffold(
       body: SafeArea(
         child: BlocConsumer<AuthBloc, AuthState>(
-          // ====================================================
-          // LISTENER
-          // ====================================================
           listener: (context, state) {
             // --------------------------------------------------
             // ERROR
@@ -275,7 +273,7 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
             if (state is AuthOtpResent) {
               CustomSnackBar.show(
                 context,
-                message: 'Yeni kod göndərildi',
+                message: context.l10n.authOtpCodeResent,
                 type: SnackBarType.success,
               );
 
@@ -289,7 +287,7 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
             if (state is AuthForgotPasswordSent) {
               CustomSnackBar.show(
                 context,
-                message: 'Yeni kod göndərildi',
+                message: context.l10n.authOtpCodeResent,
                 type: SnackBarType.success,
               );
 
@@ -310,10 +308,6 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
               return;
             }
           },
-
-          // ====================================================
-          // BUILDER
-          // ====================================================
           builder: (context, state) {
             final bool isLoading = state is AuthLoading;
 
@@ -351,7 +345,7 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
                           // TITLE
                           // ====================================
                           Text(
-                            _getTitle(),
+                            _getTitle(context),
                             style: AppTextStyles.h2,
                             textAlign: TextAlign.center,
                           ),
@@ -362,7 +356,7 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
                           // DESCRIPTION
                           // ====================================
                           Text(
-                            _getDescription(),
+                            _getDescription(context),
                             textAlign: TextAlign.center,
                             style: AppTextStyles.bodyMedium.copyWith(
                               color: Colors.grey,
@@ -435,22 +429,27 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'Kodu almadınız? ',
+                                '${context.l10n.authOtpDidNotReceive} ',
                                 style: AppTextStyles.bodyMedium.copyWith(
                                   color: Colors.grey,
                                 ),
                               ),
                               if (_canResend)
                                 CustomTextButton(
-                                  text: 'Yenidən göndər',
+                                  text: context.l10n.authOtpResend,
                                   onPressed: () {
-                                    if (isLoading) return;
+                                    if (isLoading) {
+                                      return;
+                                    }
+
                                     _resend();
                                   },
                                 )
                               else
                                 Text(
-                                  '$_secondsLeft san',
+                                  context.l10n.authOtpSecondsRemaining(
+                                    _secondsLeft,
+                                  ),
                                   style: AppTextStyles.bodyMedium.copyWith(
                                     color: Colors.grey,
                                   ),
@@ -474,16 +473,16 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
   // TITLE
   // ============================================================
 
-  String _getTitle() {
+  String _getTitle(BuildContext context) {
     switch (widget.mode) {
       case OtpVerifyMode.register:
-        return 'Email Təsdiqləmə';
+        return context.l10n.authOtpEmailVerificationTitle;
 
       case OtpVerifyMode.resetPassword:
-        return 'Şifrə Sıfırlama';
+        return context.l10n.authOtpPasswordResetTitle;
 
       case OtpVerifyMode.restoreAccount:
-        return 'Hesab Bərpası';
+        return context.l10n.authOtpAccountRestoreTitle;
     }
   }
 
@@ -491,16 +490,16 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
   // DESCRIPTION
   // ============================================================
 
-  String _getDescription() {
+  String _getDescription(BuildContext context) {
     switch (widget.mode) {
       case OtpVerifyMode.register:
-        return 'Emailinizə göndərilən 6 rəqəmli kodu daxil edin';
+        return context.l10n.authOtpEmailVerificationDescription;
 
       case OtpVerifyMode.resetPassword:
-        return 'Şifrənizi yeniləmək üçün emailinizə göndərilən 6 rəqəmli kodu daxil edin';
+        return context.l10n.authOtpPasswordResetDescription;
 
       case OtpVerifyMode.restoreAccount:
-        return 'Hesabınızı bərpa etmək üçün emailinizə göndərilən 6 rəqəmli kodu daxil edin';
+        return context.l10n.authOtpAccountRestoreDescription;
     }
   }
 }

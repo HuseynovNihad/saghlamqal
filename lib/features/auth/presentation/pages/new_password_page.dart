@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/constants/app_assets.dart';
 import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/l10n/localization_extension.dart';
 import '../../../../core/router/app_routes.dart';
 import '../../../../core/utils/asset_extension.dart';
 import '../../../../core/utils/padding_extension.dart';
@@ -37,14 +38,18 @@ class NewPasswordPage extends StatefulWidget {
 
 class _NewPasswordPageState extends State<NewPasswordPage> {
   final _formKey = GlobalKey<FormState>();
+
   final _newPasswordController = TextEditingController();
+
   final _confirmPasswordController = TextEditingController();
 
   bool _obscureNew = true;
   bool _obscureConfirm = true;
 
   void _submit() {
-    if (!_formKey.currentState!.validate()) return;
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
 
     context.read<AuthBloc>().add(
       ResetPasswordSubmitted(
@@ -60,6 +65,7 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
   void dispose() {
     _newPasswordController.dispose();
     _confirmPasswordController.dispose();
+
     super.dispose();
   }
 
@@ -69,31 +75,47 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
       body: SafeArea(
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
-            log('📍 NewPasswordPage listener | state=${state.runtimeType}');
+            log(
+              '📍 NewPasswordPage listener | '
+              'state=${state.runtimeType}',
+            );
+
             if (state is AuthError) {
               CustomSnackBar.show(
                 context,
                 message: state.message,
                 type: SnackBarType.error,
               );
-            } else if (state is AuthPasswordResetSuccess) {
+
+              return;
+            }
+
+            if (state is AuthPasswordResetSuccess) {
               log(
-                '📍 AuthPasswordResetSuccess alındı, login-ə keçid planlaşdırılır',
+                '📍 AuthPasswordResetSuccess alındı, '
+                'login-ə keçid planlaşdırılır',
               );
+
               CustomSnackBar.show(
                 context,
-                message: 'Şifrəniz uğurla yeniləndi',
+                message: context.l10n.authPasswordResetSuccess,
                 type: SnackBarType.success,
               );
+
               WidgetsBinding.instance.addPostFrameCallback((_) {
-                if (context.mounted) {
-                  context.read<AuthBloc>().add(const AuthStateReset());
-                  context.go(AppRoutes.login);
+                if (!context.mounted) {
+                  return;
                 }
+
+                context.read<AuthBloc>().add(const AuthStateReset());
+
+                context.go(AppRoutes.login);
               });
             }
           },
           builder: (context, state) {
+            final isLoading = state is AuthLoading;
+
             return SingleChildScrollView(
               child: Padding(
                 padding: 16.p,
@@ -102,13 +124,18 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      // ==============================
+                      // LOGO
+                      // ==============================
                       Column(
                         children: [
                           AppAssets.appLogo.png(width: 75, height: 75),
-                          Text("SağlamQal", style: AppTextStyles.h1),
+                          Text('SağlamQal', style: AppTextStyles.h1),
                         ],
                       ),
+
                       24.hs,
+
                       Container(
                         padding: 20.p,
                         decoration: BoxDecoration(
@@ -118,23 +145,38 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text("Yeni Şifrə", style: AppTextStyles.h2),
-                            16.hs,
+                            // ==========================
+                            // TITLE
+                            // ==========================
                             Text(
-                              "Yeni şifrənizi daxil edin",
+                              context.l10n.authNewPasswordTitle,
+                              style: AppTextStyles.h2,
+                            ),
+
+                            16.hs,
+
+                            // ==========================
+                            // DESCRIPTION
+                            // ==========================
+                            Text(
+                              context.l10n.authNewPasswordDescription,
                               textAlign: TextAlign.center,
                               style: AppTextStyles.bodyMedium.copyWith(
                                 color: Colors.grey,
                               ),
                             ),
+
                             32.hs,
 
-                            // Yeni şifrə
+                            // ==========================
+                            // NEW PASSWORD
+                            // ==========================
                             TextFormField(
                               controller: _newPasswordController,
                               obscureText: _obscureNew,
+                              enabled: !isLoading,
                               decoration: InputDecoration(
-                                labelText: 'Yeni şifrə',
+                                labelText: context.l10n.authNewPasswordLabel,
                                 prefixIcon: const Icon(Icons.lock_outline),
                                 suffixIcon: IconButton(
                                   icon: Icon(
@@ -142,9 +184,13 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                                         ? Icons.visibility_off_outlined
                                         : Icons.visibility_outlined,
                                   ),
-                                  onPressed: () => setState(
-                                    () => _obscureNew = !_obscureNew,
-                                  ),
+                                  onPressed: isLoading
+                                      ? null
+                                      : () {
+                                          setState(() {
+                                            _obscureNew = !_obscureNew;
+                                          });
+                                        },
                                 ),
                                 border: OutlineInputBorder(borderRadius: 12.br),
                                 focusedBorder: OutlineInputBorder(
@@ -157,22 +203,29 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Şifrə daxil edin';
+                                  return context.l10n.authPasswordRequired;
                                 }
+
                                 if (value.length < 6) {
-                                  return 'Şifrə ən az 6 simvol olmalıdır';
+                                  return context.l10n.authPasswordMinLength;
                                 }
+
                                 return null;
                               },
                             ),
+
                             16.hs,
 
-                            // Şifrəni təsdiqlə
+                            // ==========================
+                            // CONFIRM PASSWORD
+                            // ==========================
                             TextFormField(
                               controller: _confirmPasswordController,
                               obscureText: _obscureConfirm,
+                              enabled: !isLoading,
                               decoration: InputDecoration(
-                                labelText: 'Şifrəni təsdiqlə',
+                                labelText:
+                                    context.l10n.authConfirmPasswordLabel,
                                 prefixIcon: const Icon(Icons.lock_outline),
                                 suffixIcon: IconButton(
                                   icon: Icon(
@@ -180,9 +233,13 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                                         ? Icons.visibility_off_outlined
                                         : Icons.visibility_outlined,
                                   ),
-                                  onPressed: () => setState(
-                                    () => _obscureConfirm = !_obscureConfirm,
-                                  ),
+                                  onPressed: isLoading
+                                      ? null
+                                      : () {
+                                          setState(() {
+                                            _obscureConfirm = !_obscureConfirm;
+                                          });
+                                        },
                                 ),
                                 border: OutlineInputBorder(borderRadius: 12.br),
                                 focusedBorder: OutlineInputBorder(
@@ -195,25 +252,44 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Şifrəni təsdiqləyin';
+                                  return context
+                                      .l10n
+                                      .authConfirmPasswordRequired;
                                 }
+
                                 if (value != _newPasswordController.text) {
-                                  return 'Şifrələr uyğun gəlmir';
+                                  return context.l10n.authPasswordsDoNotMatch;
                                 }
+
                                 return null;
                               },
                             ),
+
                             32.hs,
 
+                            // ==========================
+                            // UPDATE PASSWORD
+                            // ==========================
                             CustomElevatedButton(
-                              text: "Şifrəni Yenilə",
-                              isLoading: state is AuthLoading,
+                              text: context.l10n.authUpdatePasswordButton,
+                              isLoading: isLoading,
                               onPressed: _submit,
                             ),
+
                             16.hs,
+
+                            // ==========================
+                            // BACK
+                            // ==========================
                             CustomTextButton(
-                              text: "Geri qayıt",
-                              onPressed: () => context.pop(),
+                              text: context.l10n.authBackButton,
+                              onPressed: () {
+                                if (isLoading) {
+                                  return;
+                                }
+
+                                context.pop();
+                              },
                             ),
                           ],
                         ),

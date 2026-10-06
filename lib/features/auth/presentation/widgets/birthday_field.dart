@@ -4,6 +4,7 @@ import 'package:kalori_tracker/core/utils/asset_extension.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/l10n/localization_extension.dart';
 import '../../../../core/utils/radius_extension.dart';
 import '../../../../core/utils/sized_box_extension.dart';
 import '../../../../shared/widgets/date_picker.dart';
@@ -22,6 +23,14 @@ class BirthdayField extends StatelessWidget {
     this.errorText,
   });
 
+  String _formatDate(DateTime date) {
+    final day = date.day.toString().padLeft(2, '0');
+    final month = date.month.toString().padLeft(2, '0');
+    final year = date.year.toString();
+
+    return '$day.$month.$year';
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -30,13 +39,21 @@ class BirthdayField extends StatelessWidget {
           context,
           initialDate: selectedBirthday,
         );
-        if (date != null) onChanged(date);
+
+        if (date != null) {
+          onChanged(date);
+        }
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Doğum tarixi", style: AppTextStyles.fieldLabel),
+          Text(
+            context.l10n.profileBirthdayLabel,
+            style: AppTextStyles.fieldLabel,
+          ),
+
           8.hs,
+
           Container(
             width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
@@ -56,14 +73,17 @@ class BirthdayField extends StatelessWidget {
                   width: 16,
                   color: Colors.grey,
                 ),
+
                 8.ws,
+
                 Expanded(
                   child: Text(
                     selectedBirthday != null
-                        ? "${selectedBirthday!.day.toString().padLeft(2, '0')}."
-                              "${selectedBirthday!.month.toString().padLeft(2, '0')}."
-                              "${selectedBirthday!.year}  ($calculatedAge yaş)"
-                        : "Doğum tarixini seçin",
+                        ? context.l10n.profileBirthdayWithAge(
+                            _formatDate(selectedBirthday!),
+                            calculatedAge!,
+                          )
+                        : context.l10n.profileBirthdaySelect,
                     style: AppTextStyles.bodyMedium.copyWith(
                       color: selectedBirthday != null
                           ? Colors.black
@@ -71,10 +91,12 @@ class BirthdayField extends StatelessWidget {
                     ),
                   ),
                 ),
+
                 const Icon(Icons.arrow_drop_down, color: Colors.grey),
               ],
             ),
           ),
+
           if (errorText != null) ...[
             4.hs,
             Text(errorText!, style: AppTextStyles.errorText),

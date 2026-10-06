@@ -1,98 +1,98 @@
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 
-import '../../../../../core/constants/app_assets.dart';
-import '../../../../../core/constants/app_text_styles.dart';
-import '../../../../../core/utils/app_validators.dart';
-import '../../../../../core/utils/padding_extension.dart';
-import '../../../../../core/utils/sized_box_extension.dart';
-import '../../../../../shared/widgets/custom_text_button.dart';
-import '../../../../../shared/widgets/custom_text_field.dart';
-import '../register_nav_buttons.dart';
-import '../section_header.dart';
+// import '../../../../../core/constants/app_assets.dart';
+// import '../../../../../core/constants/app_text_styles.dart';
+// import '../../../../../core/utils/app_validators.dart';
+// import '../../../../../core/utils/padding_extension.dart';
+// import '../../../../../core/utils/sized_box_extension.dart';
+// import '../../../../../shared/widgets/custom_text_button.dart';
+// import '../../../../../shared/widgets/custom_text_field.dart';
+// import '../register_nav_buttons.dart';
+// import '../section_header.dart';
 
-class RegisterSecurityStep extends StatelessWidget {
-  final GlobalKey<FormState> formKey;
-  final TextEditingController passwordController;
-  final TextEditingController confirmPasswordController;
-  final bool isLoading;
-  final VoidCallback onRegister;
-  final VoidCallback onBack;
-  final VoidCallback onLoginTap;
+// class RegisterSecurityStep extends StatelessWidget {
+//   final GlobalKey<FormState> formKey;
+//   final TextEditingController passwordController;
+//   final TextEditingController confirmPasswordController;
+//   final bool isLoading;
+//   final VoidCallback onRegister;
+//   final VoidCallback onBack;
+//   final VoidCallback onLoginTap;
 
-  const RegisterSecurityStep({
-    super.key,
-    required this.formKey,
-    required this.passwordController,
-    required this.confirmPasswordController,
-    required this.isLoading,
-    required this.onRegister,
-    required this.onBack,
-    required this.onLoginTap,
-  });
+//   const RegisterSecurityStep({
+//     super.key,
+//     required this.formKey,
+//     required this.passwordController,
+//     required this.confirmPasswordController,
+//     required this.isLoading,
+//     required this.onRegister,
+//     required this.onBack,
+//     required this.onLoginTap,
+//   });
 
-  @override
-  Widget build(BuildContext context) {
-    return Form(
-      key: formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const SectionHeader(icon: AppAssets.security, title: 'Təhlükəsizlik'),
-          12.hs,
-          CustomTextField(
-            label: "Şifrə",
-            hintText: "Şifrənizi daxil edin",
-            controller: passwordController,
-            isPassword: true,
-            validator: (value) => AppValidators.combine(value, [
-              AppValidators.isNotEmpty,
-              AppValidators.password,
-            ]),
-          ),
-          16.hs,
-          CustomTextField(
-            label: "Şifrəni təsdiqlə",
-            hintText: "Şifrənizi təkrar daxil edin",
-            controller: confirmPasswordController,
-            isPassword: true,
-            validator: (value) {
-              if (value != passwordController.text) {
-                return 'Şifrələr uyğun deyil';
-              }
-              return AppValidators.combine(value, [AppValidators.isNotEmpty]);
-            },
-          ),
-          24.hs,
-          RegisterNavButtons(
-            showBack: true,
-            nextLabel: "Qeydiyyatdan keç",
-            isLoading: isLoading,
-            onNext: onRegister,
-            onBack: onBack,
-          ),
-          16.hs,
-          Row(
-            children: [
-              const Expanded(child: Divider(thickness: 1)),
-              Padding(padding: 8.px, child: const Text("və ya")),
-              const Expanded(child: Divider(thickness: 1)),
-            ],
-          ),
-          8.hs,
-          Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Hesabın var? ",
-                  style: AppTextStyles.bodyMedium.copyWith(color: Colors.grey),
-                ),
-                CustomTextButton(text: "Daxil ol", onPressed: onLoginTap),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Form(
+//       key: formKey,
+//       child: Column(
+//         crossAxisAlignment: CrossAxisAlignment.center,
+//         children: [
+//           const SectionHeader(icon: AppAssets.security, title: 'Təhlükəsizlik'),
+//           12.hs,
+//           CustomTextField(
+//             label: "Şifrə",
+//             hintText: "Şifrənizi daxil edin",
+//             controller: passwordController,
+//             isPassword: true,
+//             validator: (value) => AppValidators.combine(value, [
+//               AppValidators.isNotEmpty,
+//               AppValidators.password,
+//             ]),
+//           ),
+//           16.hs,
+//           CustomTextField(
+//             label: "Şifrəni təsdiqlə",
+//             hintText: "Şifrənizi təkrar daxil edin",
+//             controller: confirmPasswordController,
+//             isPassword: true,
+//             validator: (value) {
+//               if (value != passwordController.text) {
+//                 return 'Şifrələr uyğun deyil';
+//               }
+//               return AppValidators.combine(value, [AppValidators.isNotEmpty]);
+//             },
+//           ),
+//           24.hs,
+//           RegisterNavButtons(
+//             showBack: true,
+//             nextLabel: "Qeydiyyatdan keç",
+//             isLoading: isLoading,
+//             onNext: onRegister,
+//             onBack: onBack,
+//           ),
+//           16.hs,
+//           Row(
+//             children: [
+//               const Expanded(child: Divider(thickness: 1)),
+//               Padding(padding: 8.px, child: const Text("və ya")),
+//               const Expanded(child: Divider(thickness: 1)),
+//             ],
+//           ),
+//           8.hs,
+//           Center(
+//             child: Row(
+//               mainAxisAlignment: MainAxisAlignment.center,
+//               children: [
+//                 Text(
+//                   "Hesabın var? ",
+//                   style: AppTextStyles.bodyMedium.copyWith(color: Colors.grey),
+//                 ),
+//                 CustomTextButton(text: "Daxil ol", onPressed: onLoginTap),
+//               ],
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }

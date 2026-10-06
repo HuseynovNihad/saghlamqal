@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/localization_extension.dart';
 import '../../../../core/utils/app_validators.dart';
 import '../../../../core/utils/sized_box_extension.dart';
 import '../../../../shared/widgets/controller_stepper_field.dart';
@@ -22,8 +23,8 @@ class WeightHeightField extends StatelessWidget {
         Expanded(
           child: ControllerStepperField(
             controller: weightController,
-            label: 'Çəki',
-            unit: 'kq',
+            label: context.l10n.profileWeightLabel,
+            unit: context.l10n.unitKg,
             min: 20,
             max: 300,
             step: 0.1,
@@ -31,7 +32,12 @@ class WeightHeightField extends StatelessWidget {
             decimals: 1,
             allowManualInput: true,
             validator: (value) {
-              return AppValidators.combine(value, [AppValidators.isNotEmpty]);
+              return AppValidators.combine(value, [
+                (value) => AppValidators.isNotEmpty(
+                  value,
+                  message: context.l10n.validationRequired,
+                ),
+              ]);
             },
           ),
         ),
@@ -41,8 +47,8 @@ class WeightHeightField extends StatelessWidget {
         Expanded(
           child: ControllerStepperField(
             controller: heightController,
-            label: 'Boy',
-            unit: 'sm',
+            label: context.l10n.profileHeightLabel,
+            unit: context.l10n.unitCm,
             min: 50,
             max: 250,
             step: 1,
@@ -50,7 +56,12 @@ class WeightHeightField extends StatelessWidget {
             decimals: 0,
             allowManualInput: false,
             validator: (value) {
-              return AppValidators.combine(value, [AppValidators.isNotEmpty]);
+              return AppValidators.combine(value, [
+                (value) => AppValidators.isNotEmpty(
+                  value,
+                  message: context.l10n.validationRequired,
+                ),
+              ]);
             },
           ),
         ),

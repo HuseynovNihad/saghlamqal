@@ -9,6 +9,7 @@ import '../../../../core/constants/app_assets.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/enums/otp_verify_mode.dart';
+import '../../../../core/l10n/localization_extension.dart';
 import '../../../../core/router/app_routes.dart';
 import '../../../../core/utils/app_validators.dart';
 import '../../../../core/utils/asset_extension.dart';
@@ -49,7 +50,9 @@ class _LoginPageState extends State<LoginPage> {
   // ============================================================
 
   void _login() {
-    if (!_formKey.currentState!.validate()) return;
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
 
     context.read<AuthBloc>().add(
       LoginSubmitted(
@@ -109,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
 
         CustomSnackBar.show(
           context,
-          message: 'Google ID token alınmadı. Yenidən cəhd edin.',
+          message: context.l10n.authGoogleIdTokenMissing,
           type: SnackBarType.error,
         );
 
@@ -126,6 +129,7 @@ class _LoginPageState extends State<LoginPage> {
         '[GoogleLogin] GoogleSignInException: '
         '${e.code} | ${e.description}',
       );
+
       if (e.code == GoogleSignInExceptionCode.canceled) {
         return;
       }
@@ -136,7 +140,7 @@ class _LoginPageState extends State<LoginPage> {
 
       CustomSnackBar.show(
         context,
-        message: 'Google ilə giriş mümkün olmadı. Yenidən cəhd edin.',
+        message: context.l10n.authGoogleLoginFailed,
         type: SnackBarType.error,
       );
     } catch (e, stackTrace) {
@@ -148,7 +152,7 @@ class _LoginPageState extends State<LoginPage> {
 
       CustomSnackBar.show(
         context,
-        message: 'Google ilə giriş zamanı xəta baş verdi.',
+        message: context.l10n.authGoogleLoginError,
         type: SnackBarType.error,
       );
     } finally {
@@ -183,12 +187,9 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
       ),
-      title: 'Hesab deaktivdir',
-      message:
-          'Hesabınız deaktiv edilmişdir. '
-          'Yenidən aktivləşdirmək üçün emailinizə '
-          'doğrulama kodu göndəriləcək.',
-      confirmText: 'Aktivləşdir',
+      title: context.l10n.authAccountDeactivatedTitle,
+      message: context.l10n.authAccountDeactivatedMessage,
+      confirmText: context.l10n.authReactivateButton,
       onConfirm: () {
         context.read<AuthBloc>().add(ReactivateAccountRequested(email: email));
       },
@@ -218,11 +219,9 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
       ),
-      title: 'Şifrə təyin edilməyib',
-      message:
-          'Bu hesab Google ilə yaradılıb. '
-          'Email və şifrə ilə daxil olmaq üçün hesabınıza şifrə təyin edin.',
-      confirmText: 'Şifrə təyin et',
+      title: context.l10n.authPasswordNotSetTitle,
+      message: context.l10n.authPasswordNotSetMessage,
+      confirmText: context.l10n.authSetPasswordButton,
       onConfirm: () {
         context.read<AuthBloc>().add(ForgotPasswordSubmitted(email: email));
       },
@@ -249,12 +248,8 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-
       body: SafeArea(
         child: BlocConsumer<AuthBloc, AuthState>(
-          // ====================================================
-          // LISTENER
-          // ====================================================
           listener: (context, state) {
             if (state is AuthError) {
               CustomSnackBar.show(
@@ -318,10 +313,6 @@ class _LoginPageState extends State<LoginPage> {
               return;
             }
           },
-
-          // ====================================================
-          // BUILDER
-          // ====================================================
           builder: (context, state) {
             final bool authLoading = state is AuthLoading;
 
@@ -333,9 +324,9 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    // ==========================================
+                    // ==============================
                     // LOGO
-                    // ==========================================
+                    // ==============================
                     Column(
                       children: [
                         AppAssets.appLogo.png(width: 75, height: 75),
@@ -352,44 +343,53 @@ class _LoginPageState extends State<LoginPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text('Daxil ol', style: AppTextStyles.h2),
+                            // ==========================
+                            // TITLE
+                            // ==========================
+                            Text(
+                              context.l10n.authLoginTitle,
+                              style: AppTextStyles.h2,
+                            ),
 
                             20.hs,
 
-                            // ==================================
+                            // ==========================
                             // EMAIL
-                            // ==================================
+                            // ==========================
                             CustomTextField(
-                              label: 'Email',
-                              hintText: 'Emailinizi daxil edin',
+                              label: context.l10n.authEmailLabel,
+                              hintText: context.l10n.authEmailHint,
                               controller: _emailController,
                               keyboardType: TextInputType.emailAddress,
-                              validator: (value) => AppValidators.combine(
+                              validator: (value) => AppValidators.email(
                                 value,
-                                [AppValidators.isNotEmpty, AppValidators.email],
+                                requiredMessage: context.l10n.authEmailRequired,
+                                invalidMessage: context.l10n.authEmailInvalid,
                               ),
                             ),
 
                             16.hs,
 
-                            // ==================================
+                            // ==========================
                             // PASSWORD
-                            // ==================================
+                            // ==========================
                             CustomTextField(
-                              label: 'Şifrə',
-                              hintText: 'Şifrənizi daxil edin',
+                              label: context.l10n.authPasswordLabel,
+                              hintText: context.l10n.authPasswordHint,
                               controller: _passwordController,
                               isPassword: true,
-                              validator: (value) =>
-                                  AppValidators.combine(value, [
-                                    AppValidators.isNotEmpty,
-                                    AppValidators.password,
-                                  ]),
+                              validator: (value) => AppValidators.password(
+                                value,
+                                requiredMessage:
+                                    context.l10n.authPasswordRequired,
+                                minLengthMessage:
+                                    context.l10n.authPasswordMinLength,
+                              ),
                             ),
 
-                            // ==================================
+                            // ==========================
                             // FORGOT PASSWORD
-                            // ==================================
+                            // ==========================
                             Align(
                               alignment: Alignment.centerRight,
                               child: TextButton(
@@ -399,7 +399,7 @@ class _LoginPageState extends State<LoginPage> {
                                         context.push(AppRoutes.forgotPassword);
                                       },
                                 child: Text(
-                                  'Şifrənizi unutmusunuz?',
+                                  context.l10n.authForgotPasswordLink,
                                   style: AppTextStyles.bodySmall.copyWith(
                                     color: Colors.blue,
                                   ),
@@ -409,20 +409,20 @@ class _LoginPageState extends State<LoginPage> {
 
                             16.hs,
 
-                            // ==================================
-                            // NORMAL LOGIN BUTTON
-                            // ==================================
+                            // ==========================
+                            // LOGIN BUTTON
+                            // ==========================
                             CustomElevatedButton(
-                              text: 'Daxil ol',
+                              text: context.l10n.authLoginButton,
                               isLoading: authLoading && !_googleLoading,
                               onPressed: anyLoading ? null : _login,
                             ),
 
                             20.hs,
 
-                            // ==================================
+                            // ==========================
                             // DIVIDER
-                            // ==================================
+                            // ==========================
                             Row(
                               children: [
                                 const Expanded(child: Divider(thickness: 1)),
@@ -431,7 +431,7 @@ class _LoginPageState extends State<LoginPage> {
                                     horizontal: 12,
                                   ),
                                   child: Text(
-                                    'və ya',
+                                    context.l10n.authOr,
                                     style: AppTextStyles.bodySmall.copyWith(
                                       color: Colors.grey,
                                     ),
@@ -443,9 +443,9 @@ class _LoginPageState extends State<LoginPage> {
 
                             20.hs,
 
-                            // ==================================
+                            // ==========================
                             // GOOGLE BUTTON
-                            // ==================================
+                            // ==========================
                             SizedBox(
                               width: double.infinity,
                               height: 52,
@@ -476,10 +476,9 @@ class _LoginPageState extends State<LoginPage> {
                                             height: 24,
                                           ),
                                           const SizedBox(width: 12),
-
-                                          const Text(
-                                            'Google ilə davam et',
-                                            style: TextStyle(
+                                          Text(
+                                            context.l10n.authContinueWithGoogle,
+                                            style: const TextStyle(
                                               fontSize: 15,
                                               fontWeight: FontWeight.w600,
                                             ),
@@ -491,21 +490,21 @@ class _LoginPageState extends State<LoginPage> {
 
                             20.hs,
 
-                            // ==================================
+                            // ==========================
                             // REGISTER
-                            // ==================================
+                            // ==========================
                             Center(
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    'Hesabın yoxdur? ',
+                                    '${context.l10n.authNoAccount} ',
                                     style: AppTextStyles.bodyMedium.copyWith(
                                       color: Colors.grey,
                                     ),
                                   ),
                                   CustomTextButton(
-                                    text: 'Qeydiyyat',
+                                    text: context.l10n.authRegisterLink,
                                     onPressed: () {
                                       if (anyLoading) {
                                         return;

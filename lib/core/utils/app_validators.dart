@@ -1,56 +1,70 @@
 class AppValidators {
-  static String? isNotEmpty(String? value, {String? message}) {
+  static String? isNotEmpty(String? value, {required String message}) {
     if (value == null || value.trim().isEmpty) {
-      return message ?? "Bu sahə boş qala bilməz";
+      return message;
     }
+
     return null;
   }
 
-  static String? email(String? value) {
+  static String? email(
+    String? value, {
+    required String requiredMessage,
+    required String invalidMessage,
+  }) {
     final v = value?.trim();
 
     if (v == null || v.isEmpty) {
-      return "E-poçt daxil edin";
+      return requiredMessage;
     }
 
     final regex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,}$');
 
     if (!regex.hasMatch(v)) {
-      return "Düzgün e-poçt ünvanı daxil edin";
+      return invalidMessage;
     }
 
     return null;
   }
 
-  static String? password(String? value) {
+  static String? password(
+    String? value, {
+    required String requiredMessage,
+    required String minLengthMessage,
+  }) {
     final v = value?.trim();
 
     if (v == null || v.isEmpty) {
-      return "Şifrə daxil edin";
+      return requiredMessage;
     }
 
     if (v.length < 6) {
-      return "Şifrə ən az 6 simvoldan ibarət olmalıdır";
+      return minLengthMessage;
     }
 
     return null;
   }
 
-  static String? phone(String? value) {
+  static String? phone(
+    String? value, {
+    required String requiredMessage,
+    required String digitsOnlyMessage,
+    required String invalidMessage,
+  }) {
     final v = value?.trim();
 
     if (v == null || v.isEmpty) {
-      return "Telefon nömrəsi daxil edin";
+      return requiredMessage;
     }
 
     final digitsOnly = RegExp(r'^\d+$');
 
     if (!digitsOnly.hasMatch(v)) {
-      return "Telefon yalnız rəqəmlərdən ibarət olmalıdır";
+      return digitsOnlyMessage;
     }
 
     if (v.length < 9 || v.length > 15) {
-      return "Düzgün telefon nömrəsi daxil edin";
+      return invalidMessage;
     }
 
     return null;
@@ -62,10 +76,12 @@ class AppValidators {
   ) {
     for (final validator in validators) {
       final result = validator(value);
+
       if (result != null) {
         return result;
       }
     }
+
     return null;
   }
 }

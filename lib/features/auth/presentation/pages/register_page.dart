@@ -9,6 +9,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import '../../../../core/constants/app_assets.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/enums/otp_verify_mode.dart';
+import '../../../../core/l10n/localization_extension.dart';
 import '../../../../core/router/app_routes.dart';
 import '../../../../core/utils/app_validators.dart';
 import '../../../../core/utils/asset_extension.dart';
@@ -101,7 +102,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
         CustomSnackBar.show(
           context,
-          message: 'Google giriş məlumatları alınmadı',
+          message: context.l10n.authGoogleCredentialsMissing,
           type: SnackBarType.error,
         );
 
@@ -128,7 +129,10 @@ class _RegisterPageState extends State<RegisterPage> {
           log('[GoogleLogin] aud: ${payload['aud']}');
           log('[GoogleLogin] iss: ${payload['iss']}');
           log('[GoogleLogin] email: ${payload['email']}');
-          log('[GoogleLogin] email_verified: ${payload['email_verified']}');
+          log(
+            '[GoogleLogin] email_verified: '
+            '${payload['email_verified']}',
+          );
           log('[GoogleLogin] exp: ${payload['exp']}');
           log('==============================================');
         } else {
@@ -162,18 +166,19 @@ class _RegisterPageState extends State<RegisterPage> {
         '${e.code} | ${e.description}',
       );
 
-      if (!mounted) {
+      if (e.code == GoogleSignInExceptionCode.canceled) {
+        log('[GoogleLogin] Login cancelled by user');
+
         return;
       }
 
-      if (e.code == GoogleSignInExceptionCode.canceled) {
-        log('[GoogleLogin] Login cancelled by user');
+      if (!mounted) {
         return;
       }
 
       CustomSnackBar.show(
         context,
-        message: 'Google ilə giriş zamanı xəta baş verdi',
+        message: context.l10n.authGoogleLoginError,
         type: SnackBarType.error,
       );
     } catch (e, stackTrace) {
@@ -185,7 +190,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
       CustomSnackBar.show(
         context,
-        message: 'Google ilə giriş zamanı xəta baş verdi',
+        message: context.l10n.authGoogleLoginError,
         type: SnackBarType.error,
       );
     } finally {
@@ -246,9 +251,6 @@ class _RegisterPageState extends State<RegisterPage> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: BlocConsumer<AuthBloc, AuthState>(
-          // ====================================================
-          // LISTENER
-          // ====================================================
           listener: (context, state) {
             if (state is AuthError) {
               CustomSnackBar.show(
@@ -288,12 +290,9 @@ class _RegisterPageState extends State<RegisterPage> {
               return;
             }
           },
-
-          // ====================================================
-          // BUILDER
-          // ====================================================
           builder: (context, state) {
             final bool authLoading = state is AuthLoading;
+
             final bool anyLoading = authLoading || _googleLoading;
 
             return SingleChildScrollView(
@@ -322,9 +321,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            // ==================================
+                            // ==============================
                             // NAME
-                            // ==================================
+                            // ==============================
                             NameField(
                               firstNameController: _firstNameController,
                               lastNameController: _lastNameController,
@@ -332,56 +331,59 @@ class _RegisterPageState extends State<RegisterPage> {
 
                             16.hs,
 
-                            // ==================================
+                            // ==============================
                             // EMAIL
-                            // ==================================
+                            // ==============================
                             CustomTextField(
-                              label: 'Email',
-                              hintText: 'Emailinizi daxil edin',
+                              label: context.l10n.authEmailLabel,
+                              hintText: context.l10n.authEmailHint,
                               controller: _emailController,
                               keyboardType: TextInputType.emailAddress,
-                              validator: (value) => AppValidators.combine(
+                              validator: (value) => AppValidators.email(
                                 value,
-                                [AppValidators.isNotEmpty, AppValidators.email],
+                                requiredMessage: context.l10n.authEmailRequired,
+                                invalidMessage: context.l10n.authEmailInvalid,
                               ),
                             ),
 
                             16.hs,
 
-                            // ==================================
+                            // ==============================
                             // PASSWORD
-                            // ==================================
+                            // ==============================
                             CustomTextField(
-                              label: 'Şifrə',
-                              hintText: 'Şifrənizi daxil edin',
+                              label: context.l10n.authPasswordLabel,
+                              hintText: context.l10n.authPasswordHint,
                               controller: _passwordController,
                               isPassword: true,
-                              validator: (value) =>
-                                  AppValidators.combine(value, [
-                                    AppValidators.isNotEmpty,
-                                    AppValidators.password,
-                                  ]),
+                              validator: (value) => AppValidators.password(
+                                value,
+                                requiredMessage:
+                                    context.l10n.authPasswordRequired,
+                                minLengthMessage:
+                                    context.l10n.authPasswordMinLength,
+                              ),
                             ),
 
                             16.hs,
 
-                            // ==================================
+                            // ==============================
                             // CONFIRM PASSWORD
-                            // ==================================
+                            // ==============================
                             CustomTextField(
-                              label: 'Şifrəni təsdiqlə',
-                              hintText: 'Şifrənizi təkrar daxil edin',
+                              label: context.l10n.authConfirmPasswordLabel,
+                              hintText: context.l10n.authConfirmPasswordHint,
                               controller: _confirmPasswordController,
                               isPassword: true,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return AppValidators.combine(value, [
-                                    AppValidators.isNotEmpty,
-                                  ]);
+                                  return context
+                                      .l10n
+                                      .authConfirmPasswordRequired;
                                 }
 
                                 if (value != _passwordController.text) {
-                                  return 'Şifrələr uyğun deyil';
+                                  return context.l10n.authPasswordsDoNotMatch;
                                 }
 
                                 return null;
@@ -390,20 +392,20 @@ class _RegisterPageState extends State<RegisterPage> {
 
                             24.hs,
 
-                            // ==================================
+                            // ==============================
                             // REGISTER BUTTON
-                            // ==================================
+                            // ==============================
                             CustomElevatedButton(
-                              text: 'Qeydiyyatdan keç',
+                              text: context.l10n.authRegisterButton,
                               isLoading: authLoading && !_googleLoading,
                               onPressed: anyLoading ? null : _register,
                             ),
 
                             20.hs,
 
-                            // ==================================
+                            // ==============================
                             // DIVIDER
-                            // ==================================
+                            // ==============================
                             Row(
                               children: [
                                 const Expanded(child: Divider(thickness: 1)),
@@ -412,7 +414,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     horizontal: 12,
                                   ),
                                   child: Text(
-                                    'və ya',
+                                    context.l10n.authOr,
                                     style: AppTextStyles.bodySmall.copyWith(
                                       color: Colors.grey,
                                     ),
@@ -424,9 +426,9 @@ class _RegisterPageState extends State<RegisterPage> {
 
                             20.hs,
 
-                            // ==================================
+                            // ==============================
                             // GOOGLE BUTTON
-                            // ==================================
+                            // ==============================
                             SizedBox(
                               width: double.infinity,
                               height: 52,
@@ -457,9 +459,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                             height: 24,
                                           ),
                                           12.ws,
-                                          const Text(
-                                            'Google ilə davam et',
-                                            style: TextStyle(
+                                          Text(
+                                            context.l10n.authContinueWithGoogle,
+                                            style: const TextStyle(
                                               fontSize: 15,
                                               fontWeight: FontWeight.w600,
                                             ),
@@ -471,20 +473,20 @@ class _RegisterPageState extends State<RegisterPage> {
 
                             20.hs,
 
-                            // ==================================
+                            // ==============================
                             // LOGIN
-                            // ==================================
+                            // ==============================
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Hesabın var? ',
+                                  '${context.l10n.authHaveAccount} ',
                                   style: AppTextStyles.bodyMedium.copyWith(
                                     color: Colors.grey,
                                   ),
                                 ),
                                 CustomTextButton(
-                                  text: 'Daxil ol',
+                                  text: context.l10n.authLoginButton,
                                   onPressed: () {
                                     if (anyLoading) {
                                       return;

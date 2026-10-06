@@ -1,8 +1,11 @@
 import 'dart:developer';
+import 'dart:ui' show Locale, PlatformDispatcher;
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/di/injection_container.dart';
+import '../../../../core/l10n/app_localizations.dart';
+import '../../../../core/localization/locale_repository.dart';
 import '../../../../core/network/models/network_exceptions.dart';
 import '../../../../core/storage/token_storage.dart';
 
@@ -99,8 +102,36 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   // ERROR HANDLING
   // ─────────────────────────────────────────────────────────────
 
-  String _mapError(Object e) {
-    final result = _resolveErrorMessage(e);
+  Locale _resolveLocale() {
+    final savedLanguage = sl<LocaleRepository>().getSavedLanguage();
+
+    if (savedLanguage != null) {
+      return Locale(savedLanguage.code);
+    }
+
+    final systemLanguageCode = PlatformDispatcher.instance.locale.languageCode;
+
+    final isSupported = AppLocalizations.supportedLocales.any(
+      (locale) => locale.languageCode == systemLanguageCode,
+    );
+
+    if (isSupported) {
+      return Locale(systemLanguageCode);
+    }
+
+    return const Locale('az');
+  }
+
+  Future<String> _genericErrorMessage() async {
+    final locale = _resolveLocale();
+
+    final l10n = await AppLocalizations.delegate.load(locale);
+
+    return l10n.authGenericError;
+  }
+
+  Future<String> _mapError(Object e) async {
+    final result = await _resolveErrorMessage(e);
 
     log(
       '[AuthBloc] Səhifəyə göstərilən xəta: '
@@ -110,7 +141,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     return result;
   }
 
-  String _resolveErrorMessage(Object e) {
+  Future<String> _resolveErrorMessage(Object e) async {
     if (e is AppException) {
       return e.message;
     }
@@ -119,13 +150,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         e is FormatException ||
         e.toString().contains('is not a subtype') ||
         e.toString().contains('type ')) {
-      return 'Xəta baş verdi, yenidən cəhd edin';
+      return _genericErrorMessage();
     }
 
     final message = e.toString();
 
     if (message.length > 150 || message.contains('Exception:')) {
-      return 'Xəta baş verdi, yenidən cəhd edin';
+      return _genericErrorMessage();
     }
 
     return message;
@@ -186,6 +217,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
 
       await sl<TokenStorage>().saveToken(response.token);
+
       await sl<TokenStorage>().saveRefreshToken(response.refreshToken);
 
       emit(AuthAuthenticated(user: response.user, token: response.token));
@@ -204,7 +236,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         return;
       }
 
-      emit(AuthError(_mapError(e)));
+      emit(AuthError(await _mapError(e)));
     }
   }
 
@@ -257,7 +289,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       emit(AuthAuthenticated(user: response.user, token: response.token));
     } catch (e) {
-      emit(AuthError(_mapError(e)));
+      emit(AuthError(await _mapError(e)));
     }
   }
 
@@ -284,7 +316,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       emit(AuthRegistered(email: event.email));
     } catch (e) {
-      emit(AuthError(_mapError(e)));
+      emit(AuthError(await _mapError(e)));
     }
   }
 
@@ -322,7 +354,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       emit(AuthAuthenticated(user: user, token: token));
     } catch (e) {
-      emit(AuthError(_mapError(e)));
+      emit(AuthError(await _mapError(e)));
     }
   }
 
@@ -345,7 +377,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       emit(AuthAuthenticated(user: response.user, token: response.token));
     } catch (e) {
-      emit(AuthError(_mapError(e)));
+      emit(AuthError(await _mapError(e)));
     }
   }
 
@@ -373,7 +405,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         '$e | type: ${e.runtimeType}',
       );
 
-      emit(AuthError(_mapError(e)));
+      emit(AuthError(await _mapError(e)));
     }
   }
 
@@ -392,7 +424,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       emit(AuthForgotPasswordSent(email: event.email));
     } catch (e) {
-      emit(AuthError(_mapError(e)));
+      emit(AuthError(await _mapError(e)));
     }
   }
 
@@ -416,7 +448,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       emit(const AuthPasswordResetSuccess());
     } catch (e) {
-      emit(AuthError(_mapError(e)));
+      emit(AuthError(await _mapError(e)));
     }
   }
 
@@ -467,7 +499,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       emit(const AuthAccountDeleted());
     } catch (e) {
-      emit(AuthError(_mapError(e)));
+      emit(AuthError(await _mapError(e)));
     }
   }
 
@@ -486,7 +518,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       emit(AuthRestoreOtpSent(email: event.email));
     } catch (e) {
-      emit(AuthError(_mapError(e)));
+      emit(AuthError(await _mapError(e)));
     }
   }
 
@@ -512,7 +544,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       emit(AuthAuthenticated(user: response.user, token: response.token));
     } catch (e) {
-      emit(AuthError(_mapError(e)));
+      emit(AuthError(await _mapError(e)));
     }
   }
 

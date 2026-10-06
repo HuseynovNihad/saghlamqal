@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/l10n/localization_extension.dart';
 import '../../../../core/utils/padding_extension.dart';
 import '../../../../core/utils/radius_extension.dart';
 import '../../../../core/utils/sized_box_extension.dart';
@@ -18,45 +19,47 @@ class ActivityLevelField extends StatelessWidget {
     this.errorText,
   });
 
-  static const List<Map<String, String>> _activityLevels = [
-    {
-      'value': 'sedentary',
-      'label': 'Oturaq',
-      'subtext': 'Demək olar ki, heç bir fiziki aktivlik yoxdur',
-      'icon': '🛋️',
-    },
-    {
-      'value': 'light',
-      'label': 'Az aktiv',
-      'subtext': 'Həftədə 1-3 gün yüngül idman',
-      'icon': '🚶',
-    },
-    {
-      'value': 'moderate',
-      'label': 'Orta aktiv',
-      'subtext': 'Həftədə 3-5 gün orta səviyyəli idman',
-      'icon': '🏃',
-    },
-    {
-      'value': 'active',
-      'label': 'Çox aktiv',
-      'subtext': 'Həftədə 6-7 gün intensiv idman',
-      'icon': '🏋️',
-    },
-    {
-      'value': 'very_active',
-      'label': 'Həddindən çox aktiv',
-      'subtext': 'Gündə 2 dəfə idman və ya ağır fiziki iş',
-      'icon': '🔥',
-    },
-  ];
   @override
   Widget build(BuildContext context) {
+    final activityLevels = [
+      {
+        'value': 'sedentary',
+        'label': context.l10n.activitySedentaryLabel,
+        'subtext': context.l10n.activitySedentaryDescription,
+        'icon': '🛋️',
+      },
+      {
+        'value': 'light',
+        'label': context.l10n.activityLightLabel,
+        'subtext': context.l10n.activityLightDescription,
+        'icon': '🚶',
+      },
+      {
+        'value': 'moderate',
+        'label': context.l10n.activityModerateLabel,
+        'subtext': context.l10n.activityModerateDescription,
+        'icon': '🏃',
+      },
+      {
+        'value': 'active',
+        'label': context.l10n.activityActiveLabel,
+        'subtext': context.l10n.activityActiveDescription,
+        'icon': '🏋️',
+      },
+      {
+        'value': 'very_active',
+        'label': context.l10n.activityVeryActiveLabel,
+        'subtext': context.l10n.activityVeryActiveDescription,
+        'icon': '🔥',
+      },
+    ];
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ...(_activityLevels.map((level) {
+        ...activityLevels.map((level) {
           final isSelected = value == level['value'];
+
           return GestureDetector(
             onTap: () => onChanged(level['value']),
             child: AnimatedContainer(
@@ -78,7 +81,9 @@ class ActivityLevelField extends StatelessWidget {
               child: Row(
                 children: [
                   Text(level['icon']!, style: const TextStyle(fontSize: 24)),
+
                   12.ws,
+
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,7 +97,9 @@ class ActivityLevelField extends StatelessWidget {
                                 : FontWeight.w600,
                           ),
                         ),
+
                         2.hs,
+
                         Text(
                           level['subtext']!,
                           style: AppTextStyles.bodySmall.copyWith(
@@ -105,7 +112,9 @@ class ActivityLevelField extends StatelessWidget {
                       ],
                     ),
                   ),
+
                   4.ws,
+
                   AnimatedContainer(
                     duration: const Duration(milliseconds: 200),
                     width: 20,
@@ -130,7 +139,8 @@ class ActivityLevelField extends StatelessWidget {
               ),
             ),
           );
-        })),
+        }),
+
         if (errorText != null) ...[
           4.hs,
           Text(errorText!, style: AppTextStyles.errorText),

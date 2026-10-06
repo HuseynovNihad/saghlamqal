@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/l10n/localization_extension.dart';
 import '../../../../core/utils/padding_extension.dart';
 import '../../../../core/utils/radius_extension.dart';
 import '../../../../core/utils/sized_box_extension.dart';
@@ -18,24 +19,31 @@ class GenderField extends StatelessWidget {
     this.errorText,
   });
 
-  static const List<Map<String, String>> _genders = [
-    {'value': 'male', 'label': 'Kişi', 'icon': '👨'},
-    {'value': 'female', 'label': 'Qadın', 'icon': '👩'},
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final genders = [
+      {'value': 'male', 'label': context.l10n.profileGenderMale, 'icon': '👨'},
+      {
+        'value': 'female',
+        'label': context.l10n.profileGenderFemale,
+        'icon': '👩',
+      },
+    ];
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Cins", style: AppTextStyles.bodyMedium),
+        Text(context.l10n.profileGenderLabel, style: AppTextStyles.bodyMedium),
+
         4.hs,
+
         Row(
-          children: _genders.map((g) {
-            final isSelected = value == g['value'];
+          children: genders.map((gender) {
+            final isSelected = value == gender['value'];
+
             return Expanded(
               child: GestureDetector(
-                onTap: () => onChanged(g['value']),
+                onTap: () => onChanged(gender['value']),
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 200),
                   margin: 8.pr,
@@ -55,10 +63,15 @@ class GenderField extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(g['icon']!, style: const TextStyle(fontSize: 20)),
-                      8.ws,
                       Text(
-                        g['label']!,
+                        gender['icon']!,
+                        style: const TextStyle(fontSize: 20),
+                      ),
+
+                      8.ws,
+
+                      Text(
+                        gender['label']!,
                         style: AppTextStyles.bodyMedium.copyWith(
                           color: isSelected
                               ? AppColors.headline
@@ -75,6 +88,7 @@ class GenderField extends StatelessWidget {
             );
           }).toList(),
         ),
+
         if (errorText != null) ...[
           4.hs,
           Text(
