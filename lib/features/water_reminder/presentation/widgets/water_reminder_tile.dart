@@ -5,6 +5,7 @@ import '../../../../core/constants/app_assets.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/di/injection_container.dart';
+import '../../../../core/l10n/localization_extension.dart';
 import '../../../../core/utils/asset_extension.dart';
 import '../../../../core/utils/radius_extension.dart';
 import '../../../../core/utils/sized_box_extension.dart';
@@ -37,9 +38,7 @@ class _Tile extends StatelessWidget {
         if (state.permissionDenied) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: const Text(
-                'Bildiriş icazəsi verilmədi. Ayarlardan aktiv edin.',
-              ),
+              content: Text(context.l10n.waterReminderPermissionDenied),
               backgroundColor: Colors.red.shade400,
               behavior: SnackBarBehavior.floating,
             ),
@@ -57,30 +56,36 @@ class _Tile extends StatelessWidget {
                     width: 36,
                     height: 36,
                     decoration: BoxDecoration(
-                      color: Color(0xFFF5F5F5),
+                      color: const Color(0xFFF5F5F5),
                       borderRadius: 12.br,
                     ),
                     child: Center(
                       child: AppAssets.hydrationPrimary.svg(
                         width: 16,
                         height: 16,
-                        color: Color(0xFF888888),
+                        color: const Color(0xFF888888),
                       ),
                     ),
                   ),
+
                   12.ws,
+
                   Expanded(
                     child: Text(
-                      'Su xatırlatması',
+                      context.l10n.waterReminderTitle,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.bodySmall,
                     ),
                   ),
+
                   Transform.scale(
                     scale: 0.8,
                     child: Switch.adaptive(
                       value: state.isEnabled,
-                      onChanged: (v) =>
-                          context.read<WaterReminderCubit>().toggle(v),
+                      onChanged: (value) {
+                        context.read<WaterReminderCubit>().toggle(value);
+                      },
                       activeColor: AppColors.primary,
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     ),
@@ -88,6 +93,7 @@ class _Tile extends StatelessWidget {
                 ],
               ),
             ),
+
             if (!isLast) const Divider(height: 1, color: Color(0xFFF3F3F3)),
           ],
         );

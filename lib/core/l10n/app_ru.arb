@@ -308,5 +308,34 @@
   "onboardingStart": "Начать",
   "onboardingContinue": "Продолжить",
   "onboardingLetsStart": "Начнём",
-  "onboardingSkip": "Пропустить →"
+  "onboardingSkip": "Пропустить →",
+  "waterReminderTitle": "Напоминание о воде",
+  "waterReminderUpcoming": "Следующее напоминание о воде",
+  "waterReminderDisabled": "Напоминания о воде отключены",
+
+  "waterReminderNextTime": "Следующее напоминание: {time}",
+
+  "waterReminderPermissionDenied": "Разрешение на уведомления не предоставлено. Включите его в настройках.",
+
+  "waterReminderChannelName": "Напоминания о воде",
+  "waterReminderChannelDescription": "Напоминает пить воду в течение дня",
+
+  "waterReminderNotificationMorningStart": "🌅 Начните день со стакана воды!",
+  "waterReminderNotificationMorning": "☀️ Уже выпили воду утром?",
+  "waterReminderNotificationBeforeLunch": "💧 Время выпить воды перед обедом!",
+  "waterReminderNotificationAfterLunch": "🥗 Выпейте воды после обеда!",
+  "waterReminderNotificationEnergy": "⚡ Выпейте воды для бодрости!",
+  "waterReminderNotificationAfternoon": "🌿 Время выпить воды после обеда!",
+  "waterReminderNotificationBeforeDinner": "🍽️ Выпейте воды перед ужином!",
+  "waterReminderNotificationLastGlass": "🌙 Время для последнего стакана воды сегодня!",
+  "waterReminderNotificationDefault": "💧 Время выпить воды!",
+
+  "waterReminderMessageOne": "Выпейте стакан воды и почувствуйте себя лучше! 🌊",
+  "waterReminderMessageTwo": "Обезвоживание вызывает усталость. Время выпить воды! 💪",
+  "waterReminderMessageThree": "Выпейте стакан воды, чтобы поддерживать здоровье! ✨",
+  "waterReminderMessageFour": "Вашему организму нужна вода. Позаботьтесь о себе! 💧",
+  "waterReminderMessageFive": "Сделайте вдох и выпейте стакан воды! 🌿",
+  "waterReminderMessageSix": "Не забывайте пить воду и во второй половине дня! 💦",
+  "waterReminderMessageSeven": "Выпейте стакан воды перед обедом! 🥗",
+  "waterReminderMessageEight": "Не забудьте выпить воды перед ужином! 🍽️"
 }

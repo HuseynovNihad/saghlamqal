@@ -11,11 +11,14 @@ Future<void> initWaterReminder(GetIt sl) async {
   // ─────────────────────────────────────────────────────────────
 
   if (!sl.isRegistered<FlutterLocalNotificationsPlugin>()) {
-    sl.registerLazySingleton(() => FlutterLocalNotificationsPlugin());
+    sl.registerLazySingleton<FlutterLocalNotificationsPlugin>(
+      FlutterLocalNotificationsPlugin.new,
+    );
   }
 
   if (!sl.isRegistered<SharedPreferences>()) {
     final prefs = await SharedPreferences.getInstance();
+
     sl.registerSingleton<SharedPreferences>(prefs);
   }
 
@@ -23,12 +26,14 @@ Future<void> initWaterReminder(GetIt sl) async {
   // SERVICE
   // ─────────────────────────────────────────────────────────────
 
-  sl.registerLazySingleton(
-    () => WaterReminderService(
-      notifications: sl<FlutterLocalNotificationsPlugin>(),
-      prefs: sl<SharedPreferences>(),
-    ),
-  );
+  if (!sl.isRegistered<WaterReminderService>()) {
+    sl.registerLazySingleton<WaterReminderService>(
+      () => WaterReminderService(
+        notifications: sl<FlutterLocalNotificationsPlugin>(),
+        prefs: sl<SharedPreferences>(),
+      ),
+    );
+  }
 
   await sl<WaterReminderService>().initialize();
 
@@ -36,7 +41,9 @@ Future<void> initWaterReminder(GetIt sl) async {
   // CUBIT
   // ─────────────────────────────────────────────────────────────
 
-  sl.registerLazySingleton(
-    () => WaterReminderCubit(service: sl<WaterReminderService>()),
-  );
+  if (!sl.isRegistered<WaterReminderCubit>()) {
+    sl.registerLazySingleton<WaterReminderCubit>(
+      () => WaterReminderCubit(service: sl<WaterReminderService>()),
+    );
+  }
 }

@@ -828,4 +828,89 @@ class AppLocalizationsAz extends AppLocalizations {
 
   @override
   String get onboardingSkip => 'Keç →';
+
+  @override
+  String get waterReminderTitle => 'Su xatırlatması';
+
+  @override
+  String get waterReminderUpcoming => 'Növbəti su xatırlatması';
+
+  @override
+  String get waterReminderDisabled => 'Su xatırlatması aktiv deyil';
+
+  @override
+  String waterReminderNextTime(String time) {
+    return 'Növbəti xatırlatma: $time';
+  }
+
+  @override
+  String get waterReminderPermissionDenied =>
+      'Bildiriş icazəsi verilmədi. Ayarlardan aktiv edin.';
+
+  @override
+  String get waterReminderChannelName => 'Su xatırlatması';
+
+  @override
+  String get waterReminderChannelDescription =>
+      'Gün ərzində su içməyi xatırladır';
+
+  @override
+  String get waterReminderNotificationMorningStart => '🌅 Günə su ilə başla!';
+
+  @override
+  String get waterReminderNotificationMorning => '☀️ Səhər suyunu içdin?';
+
+  @override
+  String get waterReminderNotificationBeforeLunch =>
+      '💧 Nahardan əvvəl su vaxtı!';
+
+  @override
+  String get waterReminderNotificationAfterLunch => '🥗 Nahardan sonra su iç!';
+
+  @override
+  String get waterReminderNotificationEnergy => '⚡ Enerji üçün su iç!';
+
+  @override
+  String get waterReminderNotificationAfternoon =>
+      '🌿 Günortadan sonra su vaxtı!';
+
+  @override
+  String get waterReminderNotificationBeforeDinner =>
+      '🍽️ Axşam yeməyindən əvvəl su iç!';
+
+  @override
+  String get waterReminderNotificationLastGlass => '🌙 Günün son stəkanı!';
+
+  @override
+  String get waterReminderNotificationDefault => '💧 Su içmə vaxtıdır!';
+
+  @override
+  String get waterReminderMessageOne =>
+      'Bir stəkan su iç, özünü yaxşı hiss et! 🌊';
+
+  @override
+  String get waterReminderMessageTwo =>
+      'Susuzluq yorğunluq gətirir. Su vaxtıdır! 💪';
+
+  @override
+  String get waterReminderMessageThree =>
+      'Sağlam qalmaq üçün bir stəkan su iç! ✨';
+
+  @override
+  String get waterReminderMessageFour =>
+      'Bədəninin suya ehtiyacı var. Özünə qayğı göstər! 💧';
+
+  @override
+  String get waterReminderMessageFive => 'Bir nəfəs al və bir stəkan su iç! 🌿';
+
+  @override
+  String get waterReminderMessageSix =>
+      'Günortadan sonra da su içməyi unutma! 💦';
+
+  @override
+  String get waterReminderMessageSeven => 'Nahardan əvvəl bir stəkan su iç! 🥗';
+
+  @override
+  String get waterReminderMessageEight =>
+      'Axşam yeməyindən əvvəl su içməyi unutma! 🍽️';
 }

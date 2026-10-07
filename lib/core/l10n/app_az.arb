@@ -399,5 +399,41 @@
   "onboardingStart": "Başla",
   "onboardingContinue": "Davam et",
   "onboardingLetsStart": "Başlayaq",
-  "onboardingSkip": "Keç →"
+  "onboardingSkip": "Keç →",
+  "waterReminderTitle": "Su xatırlatması",
+  "waterReminderUpcoming": "Növbəti su xatırlatması",
+  "waterReminderDisabled": "Su xatırlatması aktiv deyil",
+
+  "waterReminderNextTime": "Növbəti xatırlatma: {time}",
+  "@waterReminderNextTime": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+
+  "waterReminderPermissionDenied": "Bildiriş icazəsi verilmədi. Ayarlardan aktiv edin.",
+
+  "waterReminderChannelName": "Su xatırlatması",
+  "waterReminderChannelDescription": "Gün ərzində su içməyi xatırladır",
+
+  "waterReminderNotificationMorningStart": "🌅 Günə su ilə başla!",
+  "waterReminderNotificationMorning": "☀️ Səhər suyunu içdin?",
+  "waterReminderNotificationBeforeLunch": "💧 Nahardan əvvəl su vaxtı!",
+  "waterReminderNotificationAfterLunch": "🥗 Nahardan sonra su iç!",
+  "waterReminderNotificationEnergy": "⚡ Enerji üçün su iç!",
+  "waterReminderNotificationAfternoon": "🌿 Günortadan sonra su vaxtı!",
+  "waterReminderNotificationBeforeDinner": "🍽️ Axşam yeməyindən əvvəl su iç!",
+  "waterReminderNotificationLastGlass": "🌙 Günün son stəkanı!",
+  "waterReminderNotificationDefault": "💧 Su içmə vaxtıdır!",
+
+  "waterReminderMessageOne": "Bir stəkan su iç, özünü yaxşı hiss et! 🌊",
+  "waterReminderMessageTwo": "Susuzluq yorğunluq gətirir. Su vaxtıdır! 💪",
+  "waterReminderMessageThree": "Sağlam qalmaq üçün bir stəkan su iç! ✨",
+  "waterReminderMessageFour": "Bədəninin suya ehtiyacı var. Özünə qayğı göstər! 💧",
+  "waterReminderMessageFive": "Bir nəfəs al və bir stəkan su iç! 🌿",
+  "waterReminderMessageSix": "Günortadan sonra da su içməyi unutma! 💦",
+  "waterReminderMessageSeven": "Nahardan əvvəl bir stəkan su iç! 🥗",
+  "waterReminderMessageEight": "Axşam yeməyindən əvvəl su içməyi unutma! 🍽️"
 }

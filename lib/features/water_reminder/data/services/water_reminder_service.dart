@@ -1,13 +1,16 @@
+import 'dart:ui';
+
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
+import '../../../../core/l10n/app_localizations.dart';
+import '../../../../core/localization/locale_repository.dart';
+
 class WaterReminderService {
   static const String _channelId = 'water_reminder_channel';
-  static const String _channelName = 'Su Xatırlatması';
-  static const String _channelDesc = 'Gün ərzində su içməyi xatırladır';
 
   static const String _keyEnabled = 'water_reminder_enabled';
 
@@ -15,14 +18,20 @@ class WaterReminderService {
 
   static const List<int> _scheduledHours = [7, 9, 11, 13, 15, 17, 19, 21];
 
+  static const Set<String> _supportedLanguages = {'az', 'en', 'ru', 'tr'};
+
   final FlutterLocalNotificationsPlugin _notifications;
+
   final SharedPreferences _prefs;
+
+  final LocaleRepository _localeRepository;
 
   WaterReminderService({
     required FlutterLocalNotificationsPlugin notifications,
     required SharedPreferences prefs,
   }) : _notifications = notifications,
-       _prefs = prefs;
+       _prefs = prefs,
+       _localeRepository = LocaleRepository(prefs);
 
   Future<void> initialize() async {
     tz.initializeTimeZones();
@@ -63,6 +72,7 @@ class WaterReminderService {
 
     if (savedValue == null) {
       await _prefs.setBool(_keyEnabled, true);
+
       return true;
     }
 
@@ -106,55 +116,65 @@ class WaterReminderService {
     }
   }
 
-  String _getTitle(int hour) {
-    if (hour == 7) {
-      return '🌅 Günə su ilə başla!';
+  Future<void> rescheduleForCurrentLanguage() async {
+    final enabled = await isEnabled();
+
+    if (!enabled) {
+      return;
     }
 
-    if (hour == 9) {
-      return '☀️ Səhər suyunu içdin?';
-    }
-
-    if (hour == 11) {
-      return '💧 Nahardan əvvəl su vaxtı!';
-    }
-
-    if (hour == 13) {
-      return '🥗 Nahardan sonra su iç!';
-    }
-
-    if (hour == 15) {
-      return '⚡ Enerji üçün su iç!';
-    }
-
-    if (hour == 17) {
-      return '🌿 Günortadan sonra su vaxtı!';
-    }
-
-    if (hour == 19) {
-      return '🍽️ Axşam yeməyindən əvvəl!';
-    }
-
-    if (hour == 21) {
-      return '🌙 Günün son stəkanı!';
-    }
-
-    return '💧 Su içmə vaxtıdır!';
+    await _schedule();
   }
 
-  final List<String> messages = [
-    'Bir stəkan su iç, özünü yaxşı hiss et! 🌊',
-    'Susuzluq yorğunluq gətirir. Su vaxtıdır! 💪',
-    'Sağlıqlı qalmaq üçün bir stəkan su! ✨',
-    'Beynin 75% sudur. Onu qidalandır! 🧠',
-    'Bir nəfəs al və bir stəkan su iç! 🌿',
-    'Günortadan sonra da su içməyi unutma! 💦',
-    'Nahardan əvvəl bir stəkan su iç! 🥗',
-    'Axşam yeməyindən əvvəl su içməyi unutma! 🍽️',
-  ];
+  AppLocalizations _getLocalizations() {
+    final savedLanguage = _localeRepository.getSavedLanguage();
+
+    if (savedLanguage != null) {
+      return lookupAppLocalizations(savedLanguage.locale);
+    }
+
+    final systemLanguageCode = PlatformDispatcher.instance.locale.languageCode
+        .toLowerCase();
+
+    final languageCode = _supportedLanguages.contains(systemLanguageCode)
+        ? systemLanguageCode
+        : 'az';
+
+    return lookupAppLocalizations(Locale(languageCode));
+  }
+
+  String _getTitle(int hour, AppLocalizations l10n) {
+    return switch (hour) {
+      7 => l10n.waterReminderNotificationMorningStart,
+      9 => l10n.waterReminderNotificationMorning,
+      11 => l10n.waterReminderNotificationBeforeLunch,
+      13 => l10n.waterReminderNotificationAfterLunch,
+      15 => l10n.waterReminderNotificationEnergy,
+      17 => l10n.waterReminderNotificationAfternoon,
+      19 => l10n.waterReminderNotificationBeforeDinner,
+      21 => l10n.waterReminderNotificationLastGlass,
+      _ => l10n.waterReminderNotificationDefault,
+    };
+  }
+
+  List<String> _getMessages(AppLocalizations l10n) {
+    return [
+      l10n.waterReminderMessageOne,
+      l10n.waterReminderMessageTwo,
+      l10n.waterReminderMessageThree,
+      l10n.waterReminderMessageFour,
+      l10n.waterReminderMessageFive,
+      l10n.waterReminderMessageSix,
+      l10n.waterReminderMessageSeven,
+      l10n.waterReminderMessageEight,
+    ];
+  }
 
   Future<void> _schedule() async {
     await _cancelAll();
+
+    final l10n = _getLocalizations();
+    final messages = _getMessages(l10n);
 
     for (int i = 0; i < _scheduledHours.length; i++) {
       final hour = _scheduledHours[i];
@@ -162,8 +182,10 @@ class WaterReminderService {
       await _scheduleDailyReminder(
         id: _baseNotificationId + i,
         hour: hour,
-        title: _getTitle(hour),
+        title: _getTitle(hour, l10n),
         body: messages[i % messages.length],
+        channelName: l10n.waterReminderChannelName,
+        channelDescription: l10n.waterReminderChannelDescription,
       );
     }
   }
@@ -173,6 +195,8 @@ class WaterReminderService {
     required int hour,
     required String title,
     required String body,
+    required String channelName,
+    required String channelDescription,
   }) async {
     final now = tz.TZDateTime.now(tz.local);
 
@@ -194,15 +218,15 @@ class WaterReminderService {
         title: title,
         body: body,
         scheduledDate: scheduledDate,
-        notificationDetails: const NotificationDetails(
+        notificationDetails: NotificationDetails(
           android: AndroidNotificationDetails(
             _channelId,
-            _channelName,
-            channelDescription: _channelDesc,
+            channelName,
+            channelDescription: channelDescription,
             importance: Importance.high,
             priority: Priority.high,
           ),
-          iOS: DarwinNotificationDetails(
+          iOS: const DarwinNotificationDetails(
             presentAlert: true,
             presentBadge: true,
             presentSound: true,
@@ -212,7 +236,7 @@ class WaterReminderService {
         matchDateTimeComponents: DateTimeComponents.time,
       );
     } catch (_) {
-      // Bir notification planlanmasa belə,
+      // Bir bildiriş planlanmasa belə,
       // tətbiqin işləməsini dayandırmırıq.
     }
   }

@@ -308,5 +308,34 @@
   "onboardingStart": "Başla",
   "onboardingContinue": "Devam et",
   "onboardingLetsStart": "Hadi başlayalım",
-  "onboardingSkip": "Geç →"
+  "onboardingSkip": "Geç →",
+  "waterReminderTitle": "Su hatırlatıcısı",
+  "waterReminderUpcoming": "Sonraki su hatırlatması",
+  "waterReminderDisabled": "Su hatırlatıcısı kapalı",
+
+  "waterReminderNextTime": "Sonraki hatırlatma: {time}",
+
+  "waterReminderPermissionDenied": "Bildirim izni verilmedi. Ayarlardan etkinleştirin.",
+
+  "waterReminderChannelName": "Su hatırlatıcıları",
+  "waterReminderChannelDescription": "Gün boyunca su içmeni hatırlatır",
+
+  "waterReminderNotificationMorningStart": "🌅 Güne suyla başla!",
+  "waterReminderNotificationMorning": "☀️ Sabah suyunu içtin mi?",
+  "waterReminderNotificationBeforeLunch": "💧 Öğle yemeğinden önce su zamanı!",
+  "waterReminderNotificationAfterLunch": "🥗 Öğle yemeğinden sonra su iç!",
+  "waterReminderNotificationEnergy": "⚡ Enerji için su iç!",
+  "waterReminderNotificationAfternoon": "🌿 Öğleden sonra su zamanı!",
+  "waterReminderNotificationBeforeDinner": "🍽️ Akşam yemeğinden önce su iç!",
+  "waterReminderNotificationLastGlass": "🌙 Günün son bardağı!",
+  "waterReminderNotificationDefault": "💧 Su içme zamanı!",
+
+  "waterReminderMessageOne": "Bir bardak su iç, kendini daha iyi hisset! 🌊",
+  "waterReminderMessageTwo": "Susuzluk yorgunluğa neden olabilir. Su zamanı! 💪",
+  "waterReminderMessageThree": "Sağlıklı kalmak için bir bardak su iç! ✨",
+  "waterReminderMessageFour": "Vücudunun suya ihtiyacı var. Kendine iyi bak! 💧",
+  "waterReminderMessageFive": "Bir nefes al ve bir bardak su iç! 🌿",
+  "waterReminderMessageSix": "Öğleden sonra da su içmeyi unutma! 💦",
+  "waterReminderMessageSeven": "Öğle yemeğinden önce bir bardak su iç! 🥗",
+  "waterReminderMessageEight": "Akşam yemeğinden önce su içmeyi unutma! 🍽️"
 }

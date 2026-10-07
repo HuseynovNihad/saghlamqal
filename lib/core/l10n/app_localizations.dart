@@ -1589,6 +1589,150 @@ abstract class AppLocalizations {
   /// In az, this message translates to:
   /// **'Keç →'**
   String get onboardingSkip;
+
+  /// No description provided for @waterReminderTitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Su xatırlatması'**
+  String get waterReminderTitle;
+
+  /// No description provided for @waterReminderUpcoming.
+  ///
+  /// In az, this message translates to:
+  /// **'Növbəti su xatırlatması'**
+  String get waterReminderUpcoming;
+
+  /// No description provided for @waterReminderDisabled.
+  ///
+  /// In az, this message translates to:
+  /// **'Su xatırlatması aktiv deyil'**
+  String get waterReminderDisabled;
+
+  /// No description provided for @waterReminderNextTime.
+  ///
+  /// In az, this message translates to:
+  /// **'Növbəti xatırlatma: {time}'**
+  String waterReminderNextTime(String time);
+
+  /// No description provided for @waterReminderPermissionDenied.
+  ///
+  /// In az, this message translates to:
+  /// **'Bildiriş icazəsi verilmədi. Ayarlardan aktiv edin.'**
+  String get waterReminderPermissionDenied;
+
+  /// No description provided for @waterReminderChannelName.
+  ///
+  /// In az, this message translates to:
+  /// **'Su xatırlatması'**
+  String get waterReminderChannelName;
+
+  /// No description provided for @waterReminderChannelDescription.
+  ///
+  /// In az, this message translates to:
+  /// **'Gün ərzində su içməyi xatırladır'**
+  String get waterReminderChannelDescription;
+
+  /// No description provided for @waterReminderNotificationMorningStart.
+  ///
+  /// In az, this message translates to:
+  /// **'🌅 Günə su ilə başla!'**
+  String get waterReminderNotificationMorningStart;
+
+  /// No description provided for @waterReminderNotificationMorning.
+  ///
+  /// In az, this message translates to:
+  /// **'☀️ Səhər suyunu içdin?'**
+  String get waterReminderNotificationMorning;
+
+  /// No description provided for @waterReminderNotificationBeforeLunch.
+  ///
+  /// In az, this message translates to:
+  /// **'💧 Nahardan əvvəl su vaxtı!'**
+  String get waterReminderNotificationBeforeLunch;
+
+  /// No description provided for @waterReminderNotificationAfterLunch.
+  ///
+  /// In az, this message translates to:
+  /// **'🥗 Nahardan sonra su iç!'**
+  String get waterReminderNotificationAfterLunch;
+
+  /// No description provided for @waterReminderNotificationEnergy.
+  ///
+  /// In az, this message translates to:
+  /// **'⚡ Enerji üçün su iç!'**
+  String get waterReminderNotificationEnergy;
+
+  /// No description provided for @waterReminderNotificationAfternoon.
+  ///
+  /// In az, this message translates to:
+  /// **'🌿 Günortadan sonra su vaxtı!'**
+  String get waterReminderNotificationAfternoon;
+
+  /// No description provided for @waterReminderNotificationBeforeDinner.
+  ///
+  /// In az, this message translates to:
+  /// **'🍽️ Axşam yeməyindən əvvəl su iç!'**
+  String get waterReminderNotificationBeforeDinner;
+
+  /// No description provided for @waterReminderNotificationLastGlass.
+  ///
+  /// In az, this message translates to:
+  /// **'🌙 Günün son stəkanı!'**
+  String get waterReminderNotificationLastGlass;
+
+  /// No description provided for @waterReminderNotificationDefault.
+  ///
+  /// In az, this message translates to:
+  /// **'💧 Su içmə vaxtıdır!'**
+  String get waterReminderNotificationDefault;
+
+  /// No description provided for @waterReminderMessageOne.
+  ///
+  /// In az, this message translates to:
+  /// **'Bir stəkan su iç, özünü yaxşı hiss et! 🌊'**
+  String get waterReminderMessageOne;
+
+  /// No description provided for @waterReminderMessageTwo.
+  ///
+  /// In az, this message translates to:
+  /// **'Susuzluq yorğunluq gətirir. Su vaxtıdır! 💪'**
+  String get waterReminderMessageTwo;
+
+  /// No description provided for @waterReminderMessageThree.
+  ///
+  /// In az, this message translates to:
+  /// **'Sağlam qalmaq üçün bir stəkan su iç! ✨'**
+  String get waterReminderMessageThree;
+
+  /// No description provided for @waterReminderMessageFour.
+  ///
+  /// In az, this message translates to:
+  /// **'Bədəninin suya ehtiyacı var. Özünə qayğı göstər! 💧'**
+  String get waterReminderMessageFour;
+
+  /// No description provided for @waterReminderMessageFive.
+  ///
+  /// In az, this message translates to:
+  /// **'Bir nəfəs al və bir stəkan su iç! 🌿'**
+  String get waterReminderMessageFive;
+
+  /// No description provided for @waterReminderMessageSix.
+  ///
+  /// In az, this message translates to:
+  /// **'Günortadan sonra da su içməyi unutma! 💦'**
+  String get waterReminderMessageSix;
+
+  /// No description provided for @waterReminderMessageSeven.
+  ///
+  /// In az, this message translates to:
+  /// **'Nahardan əvvəl bir stəkan su iç! 🥗'**
+  String get waterReminderMessageSeven;
+
+  /// No description provided for @waterReminderMessageEight.
+  ///
+  /// In az, this message translates to:
+  /// **'Axşam yeməyindən əvvəl su içməyi unutma! 🍽️'**
+  String get waterReminderMessageEight;
 }
 
 class _AppLocalizationsDelegate

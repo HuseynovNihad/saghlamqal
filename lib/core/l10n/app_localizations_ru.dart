@@ -846,4 +846,94 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get onboardingSkip => 'Пропустить →';
+
+  @override
+  String get waterReminderTitle => 'Напоминание о воде';
+
+  @override
+  String get waterReminderUpcoming => 'Следующее напоминание о воде';
+
+  @override
+  String get waterReminderDisabled => 'Напоминания о воде отключены';
+
+  @override
+  String waterReminderNextTime(String time) {
+    return 'Следующее напоминание: $time';
+  }
+
+  @override
+  String get waterReminderPermissionDenied =>
+      'Разрешение на уведомления не предоставлено. Включите его в настройках.';
+
+  @override
+  String get waterReminderChannelName => 'Напоминания о воде';
+
+  @override
+  String get waterReminderChannelDescription =>
+      'Напоминает пить воду в течение дня';
+
+  @override
+  String get waterReminderNotificationMorningStart =>
+      '🌅 Начните день со стакана воды!';
+
+  @override
+  String get waterReminderNotificationMorning => '☀️ Уже выпили воду утром?';
+
+  @override
+  String get waterReminderNotificationBeforeLunch =>
+      '💧 Время выпить воды перед обедом!';
+
+  @override
+  String get waterReminderNotificationAfterLunch =>
+      '🥗 Выпейте воды после обеда!';
+
+  @override
+  String get waterReminderNotificationEnergy => '⚡ Выпейте воды для бодрости!';
+
+  @override
+  String get waterReminderNotificationAfternoon =>
+      '🌿 Время выпить воды после обеда!';
+
+  @override
+  String get waterReminderNotificationBeforeDinner =>
+      '🍽️ Выпейте воды перед ужином!';
+
+  @override
+  String get waterReminderNotificationLastGlass =>
+      '🌙 Время для последнего стакана воды сегодня!';
+
+  @override
+  String get waterReminderNotificationDefault => '💧 Время выпить воды!';
+
+  @override
+  String get waterReminderMessageOne =>
+      'Выпейте стакан воды и почувствуйте себя лучше! 🌊';
+
+  @override
+  String get waterReminderMessageTwo =>
+      'Обезвоживание вызывает усталость. Время выпить воды! 💪';
+
+  @override
+  String get waterReminderMessageThree =>
+      'Выпейте стакан воды, чтобы поддерживать здоровье! ✨';
+
+  @override
+  String get waterReminderMessageFour =>
+      'Вашему организму нужна вода. Позаботьтесь о себе! 💧';
+
+  @override
+  String get waterReminderMessageFive =>
+      'Сделайте вдох и выпейте стакан воды! 🌿';
+
+  @override
+  String get waterReminderMessageSix =>
+      'Не забывайте пить воду и во второй половине дня! 💦';
+
+  @override
+  String get waterReminderMessageSeven =>
+      'Выпейте стакан воды перед обедом! 🥗';
+
+  @override
+  String get waterReminderMessageEight =>
+      'Не забудьте выпить воды перед ужином! 🍽️';
 }

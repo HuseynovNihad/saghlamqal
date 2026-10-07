@@ -3,18 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'core/constants/app_colors.dart';
+import 'core/di/injection_container.dart';
 import 'core/l10n/app_localizations.dart';
 import 'core/localization/app_language.dart';
 import 'core/localization/locale_cubit.dart';
-import 'core/localization/locale_repository.dart';
 import 'core/router/app_router.dart';
 import 'features/auth/presentation/bloc/auth_bloc.dart';
 import 'features/favorites/presentation/bloc/favorites_bloc.dart';
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key, required this.localeRepository});
-
-  final LocaleRepository localeRepository;
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +20,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<AuthBloc>.value(value: AppRouter.authBloc),
         BlocProvider<FavoritesBloc>.value(value: AppRouter.favoritesBloc),
-        BlocProvider<LocaleCubit>(create: (_) => LocaleCubit(localeRepository)),
+        BlocProvider<LocaleCubit>.value(value: sl<LocaleCubit>()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(360, 690),
@@ -61,7 +59,6 @@ class MyApp extends StatelessWidget {
                   colorScheme: ColorScheme.fromSeed(
                     seedColor: AppColors.primary,
                     surface: AppColors.surface,
-                    background: AppColors.background,
                   ),
                   appBarTheme: const AppBarTheme(
                     backgroundColor: Colors.transparent,

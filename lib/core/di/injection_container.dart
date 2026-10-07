@@ -9,8 +9,10 @@ import '../../features/dietitians/dietitians_di.dart';
 import '../../features/favorites/favorite_di.dart';
 import '../../features/home/home_di.dart';
 import '../../features/scan/scan_di.dart';
+import '../../features/water_reminder/data/services/water_reminder_service.dart';
 import '../../features/water_reminder/water_reminder_di.dart';
 
+import '../localization/locale_cubit.dart';
 import '../localization/locale_repository.dart';
 import '../network/network_manager.dart';
 import '../storage/onboarding_storage.dart';
@@ -48,7 +50,17 @@ Future<void> init() async {
   await initScan(sl);
   await initFavorites(sl);
   await initPhotoScan(sl);
+
   await initWaterReminder(sl);
+  sl.registerLazySingleton<LocaleCubit>(
+    () => LocaleCubit(
+      sl<LocaleRepository>(),
+      onLanguageChanged: () {
+        return sl<WaterReminderService>().rescheduleForCurrentLanguage();
+      },
+    ),
+  );
+
   await initProfile(sl);
   await initDietitianInvites(sl);
   await initDietitians(sl);

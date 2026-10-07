@@ -5,6 +5,7 @@ import '../../../../core/constants/app_assets.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/di/injection_container.dart';
+import '../../../../core/l10n/localization_extension.dart';
 import '../../../../core/utils/asset_extension.dart';
 import '../../../../core/utils/padding_extension.dart';
 import '../../../../core/utils/radius_extension.dart';
@@ -31,6 +32,8 @@ class _Card extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<WaterReminderCubit, WaterReminderState>(
       builder: (context, state) {
+        final nextReminderTime = state.nextReminderTime ?? '--:--';
+
         return Container(
           width: double.infinity,
           decoration: BoxDecoration(
@@ -53,25 +56,33 @@ class _Card extends StatelessWidget {
                   color: const Color(0xFF4A6CF7),
                 ),
               ),
+
               14.ws,
+
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       state.isEnabled
-                          ? 'Gələcək su xatırlatması'
-                          : 'Su xatırlatması aktiv deyildir',
+                          ? context.l10n.waterReminderUpcoming
+                          : context.l10n.waterReminderDisabled,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.bodySmall.copyWith(
                         fontWeight: FontWeight.w600,
                         fontSize: 14,
                         color: const Color(0xFF1A1A2E),
                       ),
                     ),
+
                     if (state.isEnabled) ...[
                       4.hs,
+
                       Text(
-                        'Növbəti xatırlatma: ${state.nextReminderTime}',
+                        context.l10n.waterReminderNextTime(nextReminderTime),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.bodySmall.copyWith(
                           fontSize: 12,
                           color: const Color(0xFF8A8FA8),

@@ -836,4 +836,95 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get onboardingSkip => 'Skip →';
+
+  @override
+  String get waterReminderTitle => 'Water reminder';
+
+  @override
+  String get waterReminderUpcoming => 'Upcoming water reminder';
+
+  @override
+  String get waterReminderDisabled => 'Water reminder is turned off';
+
+  @override
+  String waterReminderNextTime(String time) {
+    return 'Next reminder: $time';
+  }
+
+  @override
+  String get waterReminderPermissionDenied =>
+      'Notification permission was denied. Enable it in Settings.';
+
+  @override
+  String get waterReminderChannelName => 'Water reminders';
+
+  @override
+  String get waterReminderChannelDescription =>
+      'Reminds you to drink water throughout the day';
+
+  @override
+  String get waterReminderNotificationMorningStart =>
+      '🌅 Start your day with water!';
+
+  @override
+  String get waterReminderNotificationMorning => '☀️ Had your morning water?';
+
+  @override
+  String get waterReminderNotificationBeforeLunch =>
+      '💧 Time for water before lunch!';
+
+  @override
+  String get waterReminderNotificationAfterLunch =>
+      '🥗 Drink some water after lunch!';
+
+  @override
+  String get waterReminderNotificationEnergy =>
+      '⚡ Drink water for an energy boost!';
+
+  @override
+  String get waterReminderNotificationAfternoon =>
+      '🌿 Time for some afternoon water!';
+
+  @override
+  String get waterReminderNotificationBeforeDinner =>
+      '🍽️ Have some water before dinner!';
+
+  @override
+  String get waterReminderNotificationLastGlass =>
+      '🌙 Time for your last glass of the day!';
+
+  @override
+  String get waterReminderNotificationDefault => '💧 Time to drink some water!';
+
+  @override
+  String get waterReminderMessageOne =>
+      'Drink a glass of water and feel refreshed! 🌊';
+
+  @override
+  String get waterReminderMessageTwo =>
+      'Dehydration can make you feel tired. Time for water! 💪';
+
+  @override
+  String get waterReminderMessageThree =>
+      'Have a glass of water to stay healthy! ✨';
+
+  @override
+  String get waterReminderMessageFour =>
+      'Your body needs water. Take care of yourself! 💧';
+
+  @override
+  String get waterReminderMessageFive =>
+      'Take a breath and drink a glass of water! 🌿';
+
+  @override
+  String get waterReminderMessageSix =>
+      'Don\'t forget to drink water this afternoon! 💦';
+
+  @override
+  String get waterReminderMessageSeven =>
+      'Have a glass of water before lunch! 🥗';
+
+  @override
+  String get waterReminderMessageEight =>
+      'Don\'t forget to drink water before dinner! 🍽️';
 }

@@ -308,5 +308,34 @@
   "onboardingStart": "Get started",
   "onboardingContinue": "Continue",
   "onboardingLetsStart": "Let’s start",
-  "onboardingSkip": "Skip →"
+  "onboardingSkip": "Skip →",
+  "waterReminderTitle": "Water reminder",
+  "waterReminderUpcoming": "Upcoming water reminder",
+  "waterReminderDisabled": "Water reminder is turned off",
+
+  "waterReminderNextTime": "Next reminder: {time}",
+
+  "waterReminderPermissionDenied": "Notification permission was denied. Enable it in Settings.",
+
+  "waterReminderChannelName": "Water reminders",
+  "waterReminderChannelDescription": "Reminds you to drink water throughout the day",
+
+  "waterReminderNotificationMorningStart": "🌅 Start your day with water!",
+  "waterReminderNotificationMorning": "☀️ Had your morning water?",
+  "waterReminderNotificationBeforeLunch": "💧 Time for water before lunch!",
+  "waterReminderNotificationAfterLunch": "🥗 Drink some water after lunch!",
+  "waterReminderNotificationEnergy": "⚡ Drink water for an energy boost!",
+  "waterReminderNotificationAfternoon": "🌿 Time for some afternoon water!",
+  "waterReminderNotificationBeforeDinner": "🍽️ Have some water before dinner!",
+  "waterReminderNotificationLastGlass": "🌙 Time for your last glass of the day!",
+  "waterReminderNotificationDefault": "💧 Time to drink some water!",
+
+  "waterReminderMessageOne": "Drink a glass of water and feel refreshed! 🌊",
+  "waterReminderMessageTwo": "Dehydration can make you feel tired. Time for water! 💪",
+  "waterReminderMessageThree": "Have a glass of water to stay healthy! ✨",
+  "waterReminderMessageFour": "Your body needs water. Take care of yourself! 💧",
+  "waterReminderMessageFive": "Take a breath and drink a glass of water! 🌿",
+  "waterReminderMessageSix": "Don't forget to drink water this afternoon! 💦",
+  "waterReminderMessageSeven": "Have a glass of water before lunch! 🥗",
+  "waterReminderMessageEight": "Don't forget to drink water before dinner! 🍽️"
 }
