@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kalori_tracker/core/utils/asset_extension.dart';
-import 'package:kalori_tracker/core/utils/radius_extension.dart';
 
 import '../../../../core/constants/app_assets.dart';
 import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/l10n/localization_extension.dart';
 import '../../../../core/router/app_routes.dart';
+import '../../../../core/utils/asset_extension.dart';
 import '../../../../core/utils/padding_extension.dart';
+import '../../../../core/utils/radius_extension.dart';
 import '../../../../core/utils/sized_box_extension.dart';
 
 class GuestPreviewSection extends StatelessWidget {
@@ -29,7 +30,7 @@ class GuestPreviewSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Sağlıqlı həyat\nsənin əlindədir.',
+            context.l10n.homeGuestPreviewTitle,
             style: AppTextStyles.h2.copyWith(
               color: Colors.white,
               fontSize: 24,
@@ -38,36 +39,49 @@ class GuestPreviewSection extends StatelessWidget {
               letterSpacing: -0.5,
             ),
           ),
+
           24.hs,
-          const _FeatureItem(
+
+          _FeatureItem(
             iconAsset: AppAssets.trackChanges,
-            label: 'Gündəlik kalori & makro izləmə',
+            label: context.l10n.homeGuestFeatureCalories,
           ),
+
           12.hs,
-          const _FeatureItem(
+
+          _FeatureItem(
             iconAsset: AppAssets.hydration,
-            label: 'Su istehlakı monitorinqi',
+            label: context.l10n.homeGuestFeatureHydration,
           ),
+
           12.hs,
-          const _FeatureItem(
+
+          _FeatureItem(
             iconAsset: AppAssets.history,
-            label: 'Oxuduğun məhsulların tarixi',
+            label: context.l10n.homeGuestFeatureHistory,
           ),
+
           28.hs,
+
           SizedBox(
             width: double.infinity,
             height: 50,
             child: ElevatedButton(
-              onPressed: () => context.go(AppRoutes.login),
+              onPressed: () {
+                context.go(AppRoutes.login);
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white,
                 foregroundColor: const Color(0xFF1A3A8F),
                 elevation: 0,
                 shape: RoundedRectangleBorder(borderRadius: 16.br),
               ),
-              child: const Text(
-                'Daxil ol',
-                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+              child: Text(
+                context.l10n.authLoginButton,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 15,
+                ),
               ),
             ),
           ),
@@ -91,18 +105,22 @@ class _FeatureItem extends StatelessWidget {
           width: 32,
           height: 32,
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.15),
+            color: Colors.white.withValues(alpha: 0.15),
             borderRadius: 8.br,
           ),
           child: Center(
             child: iconAsset.svg(width: 16, height: 16, color: Colors.white),
           ),
         ),
+
         12.ws,
-        Text(
-          label,
-          style: AppTextStyles.bodySmall.copyWith(
-            color: Colors.white.withOpacity(0.8),
+
+        Expanded(
+          child: Text(
+            label,
+            style: AppTextStyles.bodySmall.copyWith(
+              color: Colors.white.withValues(alpha: 0.8),
+            ),
           ),
         ),
       ],

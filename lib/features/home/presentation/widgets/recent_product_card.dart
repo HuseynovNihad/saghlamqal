@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kalori_tracker/core/utils/asset_extension.dart';
 
 import '../../../../../core/constants/app_colors.dart';
 import '../../../../../core/constants/app_text_styles.dart';
+import '../../../../../core/l10n/localization_extension.dart';
 import '../../../../../core/utils/radius_extension.dart';
 import '../../../../../core/utils/sized_box_extension.dart';
 import '../../../../core/constants/app_assets.dart';
+import '../../../../core/utils/asset_extension.dart';
 import '../../../../shared/widgets/custom_snackbar.dart';
 import '../../../favorites/presentation/bloc/favorites_bloc.dart';
 import '../../domain/entities/recent_product_entity.dart';
@@ -28,6 +29,7 @@ class _RecentProductCardState extends State<RecentProductCard> {
   @override
   void initState() {
     super.initState();
+
     _isFavorite = widget.product.isFavorite;
     _favoriteId = widget.product.favoriteId;
   }
@@ -35,6 +37,7 @@ class _RecentProductCardState extends State<RecentProductCard> {
   @override
   void didUpdateWidget(covariant RecentProductCard oldWidget) {
     super.didUpdateWidget(oldWidget);
+
     if (oldWidget.product.id != widget.product.id ||
         oldWidget.product.isFavorite != widget.product.isFavorite ||
         oldWidget.product.favoriteId != widget.product.favoriteId) {
@@ -43,29 +46,45 @@ class _RecentProductCardState extends State<RecentProductCard> {
     }
   }
 
-  String _formatDate(DateTime date) {
+  String _formatDate(BuildContext context, DateTime date) {
     final localDate = date.toLocal();
     final now = DateTime.now();
-    final today = DateTime(now.year, now.month, now.day);
-    final dateOnly = DateTime(localDate.year, localDate.month, localDate.day);
-    final timeStr =
-        '${localDate.hour.toString().padLeft(2, '0')}:${localDate.minute.toString().padLeft(2, '0')}';
 
-    if (dateOnly == today) return 'Bugün, $timeStr';
+    final today = DateTime(now.year, now.month, now.day);
+
+    final dateOnly = DateTime(localDate.year, localDate.month, localDate.day);
+
+    final timeStr =
+        '${localDate.hour.toString().padLeft(2, '0')}:'
+        '${localDate.minute.toString().padLeft(2, '0')}';
+
+    if (dateOnly == today) {
+      return context.l10n.commonTodayAt(timeStr);
+    }
 
     final yesterday = today.subtract(const Duration(days: 1));
-    if (dateOnly == yesterday) return 'Dünən, $timeStr';
 
-    return '${localDate.day.toString().padLeft(2, '0')}.${localDate.month.toString().padLeft(2, '0')}.${localDate.year}, $timeStr';
+    if (dateOnly == yesterday) {
+      return context.l10n.commonYesterdayAt(timeStr);
+    }
+
+    return '${localDate.day.toString().padLeft(2, '0')}.'
+        '${localDate.month.toString().padLeft(2, '0')}.'
+        '${localDate.year}, $timeStr';
   }
 
   void _onFavoriteToggle(BuildContext context, FavoritesBloc favoritesBloc) {
     final product = widget.product;
 
+    final productName = product.name?.trim().isNotEmpty == true
+        ? product.name!.trim()
+        : context.l10n.commonProduct;
+
     if (_isFavorite) {
       if (_favoriteId != null) {
         favoritesBloc.add(RemoveFavoriteEvent(_favoriteId!));
       }
+
       setState(() {
         _isFavorite = false;
         _favoriteId = null;
@@ -73,13 +92,13 @@ class _RecentProductCardState extends State<RecentProductCard> {
 
       CustomSnackBar.show(
         context,
-        message: '${product.name ?? 'Məhsul'} favoritlərdən silindi',
+        message: context.l10n.homeProductRemovedFavorite(productName),
         type: SnackBarType.info,
       );
     } else {
       favoritesBloc.add(
         AddFavoriteEvent(
-          name: product.name ?? 'Məhsul',
+          name: productName,
           icon: product.icon,
           calories: product.calories,
           protein: product.protein,
@@ -93,11 +112,14 @@ class _RecentProductCardState extends State<RecentProductCard> {
           historyId: product.id,
         ),
       );
-      setState(() => _isFavorite = true);
+
+      setState(() {
+        _isFavorite = true;
+      });
 
       CustomSnackBar.show(
         context,
-        message: '${product.name ?? 'Məhsul'} favoritlərə əlavə edildi',
+        message: context.l10n.homeProductAddedFavorite(productName),
         type: SnackBarType.success,
       );
     }
@@ -107,6 +129,10 @@ class _RecentProductCardState extends State<RecentProductCard> {
   Widget build(BuildContext context) {
     final product = widget.product;
 
+    final productName = product.name?.trim().isNotEmpty == true
+        ? product.name!.trim()
+        : context.l10n.commonProduct;
+
     return BlocConsumer<FavoritesBloc, FavoritesState>(
       listener: (context, favState) {
         if (favState is FavoriteActionSuccess &&
@@ -115,12 +141,15 @@ class _RecentProductCardState extends State<RecentProductCard> {
           final added = favState.favorites.isNotEmpty
               ? favState.favorites.last
               : null;
+
           if (added != null) {
-            setState(() => _favoriteId = added.id);
+            setState(() {
+              _favoriteId = added.id;
+            });
           }
         }
       },
-      builder: (context, favState) {
+      builder: (context, _) {
         final favoritesBloc = context.read<FavoritesBloc>();
 
         return Stack(
@@ -152,7 +181,9 @@ class _RecentProductCardState extends State<RecentProductCard> {
                           ),
                         ),
                       ),
+
                       12.ws,
+
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsets.only(right: 32),
@@ -163,7 +194,7 @@ class _RecentProductCardState extends State<RecentProductCard> {
                                 children: [
                                   Expanded(
                                     child: Text(
-                                      product.name ?? 'Məhsul',
+                                      productName,
                                       style: AppTextStyles.bodyMedium.copyWith(
                                         fontWeight: FontWeight.w700,
                                         fontSize: 16,
@@ -172,7 +203,9 @@ class _RecentProductCardState extends State<RecentProductCard> {
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
+
                                   8.ws,
+
                                   Container(
                                     padding: const EdgeInsets.symmetric(
                                       horizontal: 8,
@@ -183,7 +216,8 @@ class _RecentProductCardState extends State<RecentProductCard> {
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     child: Text(
-                                      '${product.calories} KKAL',
+                                      '${product.calories} '
+                                      '${context.l10n.unitKcal.toUpperCase()}',
                                       style: AppTextStyles.bodySmall.copyWith(
                                         color: const Color(0xFF34A853),
                                         fontWeight: FontWeight.w700,
@@ -193,37 +227,51 @@ class _RecentProductCardState extends State<RecentProductCard> {
                                   ),
                                 ],
                               ),
+
                               8.hs,
+
                               IntrinsicHeight(
                                 child: Row(
                                   children: [
                                     RecentProductMacro(
-                                      label: 'ZÜLAL',
-                                      value: '${product.protein}g',
+                                      label: context.l10n.nutritionProteinUpper,
+                                      value:
+                                          '${product.protein} ${context.l10n.unitGram}',
                                       color: const Color(0xFFE05C3A),
                                     ),
+
                                     8.ws,
+
                                     VerticalDivider(
                                       color: AppColors.borderColor,
                                       thickness: 0.8,
                                       width: 1,
                                     ),
+
                                     8.ws,
+
                                     RecentProductMacro(
-                                      label: 'KARBO',
-                                      value: '${product.carbs}g',
+                                      label:
+                                          context.l10n.nutritionCarbsShortUpper,
+                                      value:
+                                          '${product.carbs} ${context.l10n.unitGram}',
                                       color: const Color(0xFF2F7BE8),
                                     ),
+
                                     8.ws,
+
                                     VerticalDivider(
                                       color: AppColors.borderColor,
                                       thickness: 0.8,
                                       width: 1,
                                     ),
+
                                     8.ws,
+
                                     RecentProductMacro(
-                                      label: 'YAĞ',
-                                      value: '${product.fat}g',
+                                      label: context.l10n.nutritionFatUpper,
+                                      value:
+                                          '${product.fat} ${context.l10n.unitGram}',
                                       color: const Color(0xFFF5A623),
                                     ),
                                   ],
@@ -235,26 +283,32 @@ class _RecentProductCardState extends State<RecentProductCard> {
                       ),
                     ],
                   ),
+
                   if (product.vitamins != null &&
                       product.vitamins!.entries.any(
                         (e) => e.value != null,
                       )) ...[
                     12.hs,
+
                     Divider(
                       color: AppColors.borderColor,
                       thickness: 0.5,
                       height: 0.7,
                     ),
+
                     12.hs,
+
                     Text(
-                      'Vitaminlər',
+                      context.l10n.commonVitamins,
                       style: AppTextStyles.bodySmall.copyWith(
                         fontSize: 11,
                         fontWeight: FontWeight.w600,
                         color: const Color(0xFF77787F),
                       ),
                     ),
+
                     6.hs,
+
                     Wrap(
                       spacing: 6,
                       runSpacing: 4,
@@ -262,6 +316,7 @@ class _RecentProductCardState extends State<RecentProductCard> {
                           .where((e) => e.value != null)
                           .map((e) {
                             final value = e.value!;
+
                             return Container(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 7,
@@ -272,7 +327,8 @@ class _RecentProductCardState extends State<RecentProductCard> {
                                 borderRadius: BorderRadius.circular(6),
                               ),
                               child: Text(
-                                '${e.key}: ${value % 1 == 0 ? value.toInt() : value}',
+                                '${e.key}: '
+                                '${value % 1 == 0 ? value.toInt() : value}',
                                 style: AppTextStyles.bodySmall.copyWith(
                                   fontSize: 10,
                                   fontWeight: FontWeight.w500,
@@ -284,13 +340,17 @@ class _RecentProductCardState extends State<RecentProductCard> {
                           .toList(),
                     ),
                   ],
+
                   12.hs,
+
                   Divider(
                     color: AppColors.borderColor,
                     thickness: 0.5,
                     height: 0.7,
                   ),
+
                   12.hs,
+
                   Row(
                     children: [
                       AppAssets.calendar.svg(
@@ -298,9 +358,11 @@ class _RecentProductCardState extends State<RecentProductCard> {
                         width: 14,
                         color: Colors.grey,
                       ),
+
                       6.ws,
+
                       Text(
-                        _formatDate(product.createdAt),
+                        _formatDate(context, product.createdAt),
                         style: AppTextStyles.bodySmall.copyWith(
                           fontSize: 11,
                           color: Colors.grey.shade400,
@@ -311,11 +373,14 @@ class _RecentProductCardState extends State<RecentProductCard> {
                 ],
               ),
             ),
+
             Positioned(
               top: 12,
               right: 12,
               child: GestureDetector(
-                onTap: () => _onFavoriteToggle(context, favoritesBloc),
+                onTap: () {
+                  _onFavoriteToggle(context, favoritesBloc);
+                },
                 child: _isFavorite
                     ? AppAssets.favoriteFill.svg(height: 22, width: 22)
                     : AppAssets.favorite.svg(

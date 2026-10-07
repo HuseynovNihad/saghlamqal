@@ -147,5 +147,115 @@
   "validationRequired": "Bu sahə boş qala bilməz",
   "validationPhoneRequired": "Telefon nömrəsi daxil edin",
   "validationPhoneDigitsOnly": "Telefon yalnız rəqəmlərdən ibarət olmalıdır",
-  "validationPhoneInvalid": "Düzgün telefon nömrəsi daxil edin"
+  "validationPhoneInvalid": "Düzgün telefon nömrəsi daxil edin",
+  "homeGreetingMorning": "Sabahınız xeyir",
+  "homeGreetingAfternoon": "Günortanız xeyir",
+  "homeGreetingEvening": "Axşamınız xeyir",
+  "homeGuest": "Qonaq",
+  "homeTodayStoryReady": "Bugünkü hekayən başlamağa hazırdır.",
+
+  "navHome": "Ana səhifə",
+  "navFavorites": "Favoritlər",
+  "navProfile": "Profilim",
+
+  "homePhotoScanTitle": "Şəklini çək,\nkaloriləri öyrən",
+  "homePhotoScanSubtitle": "Saniyələr içində kalorilərini öyrən",
+  "homePhotoScanOpenCamera": "Kameranı aç",
+
+  "homeGuestPreviewTitle": "Sağlıqlı həyat\nsənin əlindədir.",
+  "homeGuestFeatureCalories": "Gündəlik kalori & makro izləmə",
+  "homeGuestFeatureHydration": "Su istehlakı monitorinqi",
+  "homeGuestFeatureHistory": "Oxuduğun məhsulların tarixi",
+
+  "homeDailyRecommendation": "Gündəlik tövsiyə",
+
+  "macroProtein": "Zülal",
+  "macroCarbohydrate": "Karbohidrat",
+  "macroFat": "Yağ",
+
+  "nutritionEnergyUpper": "ENERJİ",
+  "nutritionDurationUpper": "MÜDDƏT",
+  "nutritionServingUpper": "PORSİYA",
+  "nutritionProteinUpper": "ZÜLAL",
+  "nutritionCarbohydrateUpper": "KARBOHİDRAT",
+  "nutritionCarbsShortUpper": "KARBO",
+  "nutritionFatUpper": "YAĞ",
+
+  "unitKcal": "kcal",
+  "unitGram": "q",
+  "unitMinuteShort": "dəq",
+  "unitPerson": "nəfər",
+  "unitLiter": "L",
+
+  "homeHydrationTitle": "Hidrasiya",
+  "homeHydrationRecommendation": "Tövsiyə: {value}",
+  "@homeHydrationRecommendation": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+
+  "homeMealOfTheDayUpper": "GÜNÜN YEMƏYİ",
+  "homeViewRecipe": "Reseptə baxın",
+  "homeIngredients": "Tərkiblər",
+  "homePreparationSteps": "Hazırlama mərhələləri",
+
+  "homeRecentProductsTitle": "Son oxudulanlar",
+  "homeViewAll": "Hamısına bax",
+  "homeRecentProductsCount": "{count} məhsul",
+  "@homeRecentProductsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "homeNoProductsScanned": "Hələ heç bir məhsul\noxudulmayıb",
+  "homeScanProductsHint": "Məhsulları əlavə etmək üçün barkodu scan edin",
+  "homeScanNow": "İndi scan et",
+
+  "commonProduct": "Məhsul",
+  "commonVitamins": "Vitaminlər",
+
+  "commonTodayAt": "Bugün, {time}",
+  "@commonTodayAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+
+  "commonYesterdayAt": "Dünən, {time}",
+  "@commonYesterdayAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+
+  "homeProductAddedFavorite": "{product} favoritlərə əlavə edildi",
+  "@homeProductAddedFavorite": {
+    "placeholders": {
+      "product": {
+        "type": "String"
+      }
+    }
+  },
+
+  "homeProductRemovedFavorite": "{product} favoritlərdən silindi",
+  "@homeProductRemovedFavorite": {
+    "placeholders": {
+      "product": {
+        "type": "String"
+      }
+    }
+  },
+
+  "homeBarcodeScanTitle": "Barkod Oxut",
+  "homeBarcodeScanSubtitle": "Məhsulun kalorisini dərhal öyrən"
 }

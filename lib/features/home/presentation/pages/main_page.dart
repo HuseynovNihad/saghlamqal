@@ -5,11 +5,11 @@ import '../../../../core/constants/app_assets.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/di/injection_container.dart';
+import '../../../../core/l10n/localization_extension.dart';
 import '../../../../core/utils/asset_extension.dart';
 import '../../../../core/utils/padding_extension.dart';
 import '../../../../core/utils/sized_box_extension.dart';
 import '../../../dietitian_invites/presentation/bloc/dietitian_invites_bloc.dart';
-import '../../../dietitians/presentation/pages/dietitians_page.dart';
 import '../../../favorites/presentation/pages/favorite_page.dart';
 import '../../../profile/presentation/pages/profile_page.dart';
 import 'home_page.dart';
@@ -29,7 +29,6 @@ class _MainPageState extends State<MainPage> {
   late final List<Widget> _pages = const [
     HomePage(),
     FavoritesPage(),
-    // DietitiansPage(),
     ProfilePage(),
   ];
 
@@ -70,32 +69,27 @@ class _BottomNavBar extends StatelessWidget {
 
   const _BottomNavBar({required this.currentIndex, required this.onTap});
 
-static const _items = [
-  (
-    icon: AppAssets.home,
-    iconFill: AppAssets.homeFill,
-    label: 'Ana səhifə',
-  ),
-  (
-    icon: AppAssets.favorite,
-    iconFill: AppAssets.favoriteFill,
-    label: 'Favoritlər',
-  ),
-  // (
-  //   icon: AppAssets.dietitian,
-  //   iconFill: AppAssets.dietitian,
-  //   label: 'Dietoloqlar',
-  // ),
-  (
-    icon: AppAssets.profile,
-    iconFill: AppAssets.profileFill,
-    label: 'Profilim',
-  ),
-];
-
   @override
   Widget build(BuildContext context) {
     final bottomInset = MediaQuery.of(context).padding.bottom;
+
+    final items = [
+      (
+        icon: AppAssets.home,
+        iconFill: AppAssets.homeFill,
+        label: context.l10n.navHome,
+      ),
+      (
+        icon: AppAssets.favorite,
+        iconFill: AppAssets.favoriteFill,
+        label: context.l10n.navFavorites,
+      ),
+      (
+        icon: AppAssets.profile,
+        iconFill: AppAssets.profileFill,
+        label: context.l10n.navProfile,
+      ),
+    ];
 
     return Material(
       type: MaterialType.transparency,
@@ -121,8 +115,8 @@ static const _items = [
             ],
           ),
           child: Row(
-            children: List.generate(_items.length, (i) {
-              final item = _items[i];
+            children: List.generate(items.length, (i) {
+              final item = items[i];
               final isSelected = currentIndex == i;
 
               return Expanded(
@@ -163,9 +157,13 @@ static const _items = [
                               : Colors.grey.shade400,
                         ),
                       ),
+
                       4.hs,
+
                       Text(
                         item.label,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.bodySmall.copyWith(
                           color: isSelected
                               ? AppColors.primary

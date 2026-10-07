@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/l10n/localization_extension.dart';
 import '../../../../core/utils/padding_extension.dart';
 import '../../../../core/utils/radius_extension.dart';
 import '../../../../core/utils/sized_box_extension.dart';
@@ -16,10 +17,14 @@ class DailyGoalCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (state is HomeLoading) return const _DailyGoalSkeleton();
+    if (state is HomeLoading) {
+      return const _DailyGoalSkeleton();
+    }
+
     if (state is HomeLoaded) {
       return _LoggedInCard(dailyGoal: (state as HomeLoaded).dailyGoal);
     }
+
     return const SizedBox.shrink();
   }
 }
@@ -47,7 +52,7 @@ class _LoggedInCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                'Gündəlik tövsiyə',
+                context.l10n.homeDailyRecommendation,
                 style: AppTextStyles.bodySmall.copyWith(
                   color: Colors.grey.shade500,
                   fontSize: 14,
@@ -69,7 +74,7 @@ class _LoggedInCard extends StatelessWidget {
                   ),
                   4.ws,
                   Text(
-                    'kcal',
+                    context.l10n.unitKcal,
                     style: AppTextStyles.bodyMedium.copyWith(
                       fontSize: 13,
                       fontWeight: FontWeight.w400,
@@ -80,24 +85,30 @@ class _LoggedInCard extends StatelessWidget {
               ),
             ],
           ),
+
           18.hs,
+
           Row(
             children: [
               _MacroChip(
-                label: 'Zülal',
-                value: '${dailyGoal.dailyProtein}g',
+                label: context.l10n.macroProtein,
+                value: '${dailyGoal.dailyProtein} ${context.l10n.unitGram}',
                 color: const Color(0xFF4ADE80),
               ),
+
               10.ws,
+
               _MacroChip(
-                label: 'Karbohidrat',
-                value: '${dailyGoal.dailyCarbs}g',
+                label: context.l10n.macroCarbohydrate,
+                value: '${dailyGoal.dailyCarbs} ${context.l10n.unitGram}',
                 color: const Color(0xFFFBBF24),
               ),
+
               10.ws,
+
               _MacroChip(
-                label: 'Yağ',
-                value: '${dailyGoal.dailyFat}g',
+                label: context.l10n.macroFat,
+                value: '${dailyGoal.dailyFat} ${context.l10n.unitGram}',
                 color: const Color(0xFFF87171),
               ),
             ],
@@ -125,7 +136,7 @@ class _MacroChip extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
         decoration: BoxDecoration(
-          color: Color(0xFFF5F5F5),
+          color: const Color(0xFFF5F5F5),
           borderRadius: 14.br,
           border: Border.all(color: AppColors.borderColor, width: 0.8),
         ),
@@ -142,7 +153,9 @@ class _MacroChip extends StatelessWidget {
                     shape: BoxShape.circle,
                   ),
                 ),
+
                 4.ws,
+
                 Flexible(
                   child: Text(
                     label,
@@ -151,14 +164,16 @@ class _MacroChip extends StatelessWidget {
                     style: AppTextStyles.bodySmall.copyWith(
                       fontSize: 10,
                       fontWeight: FontWeight.w500,
-                      color: Color(0xFF888888),
+                      color: const Color(0xFF888888),
                       letterSpacing: 0.2,
                     ),
                   ),
                 ),
               ],
             ),
+
             4.hs,
+
             Text(
               value,
               style: AppTextStyles.h2.copyWith(
@@ -191,31 +206,37 @@ class _DailyGoalSkeleton extends StatelessWidget {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
+            children: const [
               ShimmerBox(width: 120, height: 14, radius: 6),
               ShimmerBox(width: 80, height: 28, radius: 6),
             ],
           ),
+
           18.hs,
+
           Row(
             children: [
-              Expanded(
+              const Expanded(
                 child: ShimmerBox(
                   width: double.infinity,
                   height: 62,
                   radius: 14,
                 ),
               ),
+
               10.ws,
-              Expanded(
+
+              const Expanded(
                 child: ShimmerBox(
                   width: double.infinity,
                   height: 62,
                   radius: 14,
                 ),
               ),
+
               10.ws,
-              Expanded(
+
+              const Expanded(
                 child: ShimmerBox(
                   width: double.infinity,
                   height: 62,

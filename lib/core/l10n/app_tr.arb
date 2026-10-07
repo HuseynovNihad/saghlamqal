@@ -147,5 +147,71 @@
   "validationRequired": "Bu alan boş bırakılamaz",
   "validationPhoneRequired": "Telefon numaranızı girin",
   "validationPhoneDigitsOnly": "Telefon numarası yalnızca rakamlardan oluşmalıdır",
-  "validationPhoneInvalid": "Geçerli bir telefon numarası girin"
+  "validationPhoneInvalid": "Geçerli bir telefon numarası girin",
+  "homeGreetingMorning": "Günaydın",
+  "homeGreetingAfternoon": "İyi günler",
+  "homeGreetingEvening": "İyi akşamlar",
+  "homeGuest": "Misafir",
+  "homeTodayStoryReady": "Bugünkü hikâyen başlamaya hazır.",
+
+  "navHome": "Ana sayfa",
+  "navFavorites": "Favoriler",
+  "navProfile": "Profilim",
+
+  "homePhotoScanTitle": "Fotoğrafını çek,\nkalorileri öğren",
+  "homePhotoScanSubtitle": "Kalorileri saniyeler içinde öğren",
+  "homePhotoScanOpenCamera": "Kamerayı aç",
+
+  "homeGuestPreviewTitle": "Sağlıklı yaşam\nsenin ellerinde.",
+  "homeGuestFeatureCalories": "Günlük kalori & makro takibi",
+  "homeGuestFeatureHydration": "Su tüketimi takibi",
+  "homeGuestFeatureHistory": "Taradığın ürünlerin geçmişi",
+
+  "homeDailyRecommendation": "Günlük öneri",
+
+  "macroProtein": "Protein",
+  "macroCarbohydrate": "Karbonhidrat",
+  "macroFat": "Yağ",
+
+  "nutritionEnergyUpper": "ENERJİ",
+  "nutritionDurationUpper": "SÜRE",
+  "nutritionServingUpper": "PORSİYON",
+  "nutritionProteinUpper": "PROTEİN",
+  "nutritionCarbohydrateUpper": "KARBONHİDRAT",
+  "nutritionCarbsShortUpper": "KARB.",
+  "nutritionFatUpper": "YAĞ",
+
+  "unitKcal": "kcal",
+  "unitGram": "g",
+  "unitMinuteShort": "dk",
+  "unitPerson": "kişi",
+  "unitLiter": "L",
+
+  "homeHydrationTitle": "Hidrasyon",
+  "homeHydrationRecommendation": "Önerilen: {value}",
+
+  "homeMealOfTheDayUpper": "GÜNÜN YEMEĞİ",
+  "homeViewRecipe": "Tarifi görüntüle",
+  "homeIngredients": "Malzemeler",
+  "homePreparationSteps": "Hazırlama adımları",
+
+  "homeRecentProductsTitle": "Son tarananlar",
+  "homeViewAll": "Tümünü gör",
+  "homeRecentProductsCount": "{count} ürün",
+
+  "homeNoProductsScanned": "Henüz hiçbir ürün\ntaranmadı",
+  "homeScanProductsHint": "Ürün eklemek için barkodu tara",
+  "homeScanNow": "Şimdi tara",
+
+  "commonProduct": "Ürün",
+  "commonVitamins": "Vitaminler",
+
+  "commonTodayAt": "Bugün, {time}",
+  "commonYesterdayAt": "Dün, {time}",
+
+  "homeProductAddedFavorite": "{product} favorilere eklendi",
+  "homeProductRemovedFavorite": "{product} favorilerden kaldırıldı",
+
+  "homeBarcodeScanTitle": "Barkodu Tara",
+  "homeBarcodeScanSubtitle": "Ürünün kalorisini anında öğren"
 }

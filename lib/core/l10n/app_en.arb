@@ -147,5 +147,71 @@
   "validationRequired": "This field cannot be empty",
   "validationPhoneRequired": "Enter your phone number",
   "validationPhoneDigitsOnly": "Phone number must contain digits only",
-  "validationPhoneInvalid": "Enter a valid phone number"
+  "validationPhoneInvalid": "Enter a valid phone number",
+  "homeGreetingMorning": "Good morning",
+  "homeGreetingAfternoon": "Good afternoon",
+  "homeGreetingEvening": "Good evening",
+  "homeGuest": "Guest",
+  "homeTodayStoryReady": "Your story for today is ready to begin.",
+
+  "navHome": "Home",
+  "navFavorites": "Favorites",
+  "navProfile": "My profile",
+
+  "homePhotoScanTitle": "Take a photo,\nlearn the calories",
+  "homePhotoScanSubtitle": "Learn the calories in seconds",
+  "homePhotoScanOpenCamera": "Open camera",
+
+  "homeGuestPreviewTitle": "A healthy life\nis in your hands.",
+  "homeGuestFeatureCalories": "Daily calorie & macro tracking",
+  "homeGuestFeatureHydration": "Water intake tracking",
+  "homeGuestFeatureHistory": "History of scanned products",
+
+  "homeDailyRecommendation": "Daily recommendation",
+
+  "macroProtein": "Protein",
+  "macroCarbohydrate": "Carbohydrates",
+  "macroFat": "Fat",
+
+  "nutritionEnergyUpper": "ENERGY",
+  "nutritionDurationUpper": "DURATION",
+  "nutritionServingUpper": "SERVING",
+  "nutritionProteinUpper": "PROTEIN",
+  "nutritionCarbohydrateUpper": "CARBOHYDRATES",
+  "nutritionCarbsShortUpper": "CARBS",
+  "nutritionFatUpper": "FAT",
+
+  "unitKcal": "kcal",
+  "unitGram": "g",
+  "unitMinuteShort": "min",
+  "unitPerson": "person",
+  "unitLiter": "L",
+
+  "homeHydrationTitle": "Hydration",
+  "homeHydrationRecommendation": "Recommended: {value}",
+
+  "homeMealOfTheDayUpper": "MEAL OF THE DAY",
+  "homeViewRecipe": "View recipe",
+  "homeIngredients": "Ingredients",
+  "homePreparationSteps": "Preparation steps",
+
+  "homeRecentProductsTitle": "Recently scanned",
+  "homeViewAll": "View all",
+  "homeRecentProductsCount": "{count, plural, =1{1 product} other{{count} products}}",
+
+  "homeNoProductsScanned": "No products have been\nscanned yet",
+  "homeScanProductsHint": "Scan a barcode to add products",
+  "homeScanNow": "Scan now",
+
+  "commonProduct": "Product",
+  "commonVitamins": "Vitamins",
+
+  "commonTodayAt": "Today, {time}",
+  "commonYesterdayAt": "Yesterday, {time}",
+
+  "homeProductAddedFavorite": "{product} was added to favorites",
+  "homeProductRemovedFavorite": "{product} was removed from favorites",
+
+  "homeBarcodeScanTitle": "Scan Barcode",
+  "homeBarcodeScanSubtitle": "Instantly check the product's calories"
 }

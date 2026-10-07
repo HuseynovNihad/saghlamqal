@@ -391,4 +391,176 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get validationPhoneInvalid => 'Enter a valid phone number';
+
+  @override
+  String get homeGreetingMorning => 'Good morning';
+
+  @override
+  String get homeGreetingAfternoon => 'Good afternoon';
+
+  @override
+  String get homeGreetingEvening => 'Good evening';
+
+  @override
+  String get homeGuest => 'Guest';
+
+  @override
+  String get homeTodayStoryReady => 'Your story for today is ready to begin.';
+
+  @override
+  String get navHome => 'Home';
+
+  @override
+  String get navFavorites => 'Favorites';
+
+  @override
+  String get navProfile => 'My profile';
+
+  @override
+  String get homePhotoScanTitle => 'Take a photo,\nlearn the calories';
+
+  @override
+  String get homePhotoScanSubtitle => 'Learn the calories in seconds';
+
+  @override
+  String get homePhotoScanOpenCamera => 'Open camera';
+
+  @override
+  String get homeGuestPreviewTitle => 'A healthy life\nis in your hands.';
+
+  @override
+  String get homeGuestFeatureCalories => 'Daily calorie & macro tracking';
+
+  @override
+  String get homeGuestFeatureHydration => 'Water intake tracking';
+
+  @override
+  String get homeGuestFeatureHistory => 'History of scanned products';
+
+  @override
+  String get homeDailyRecommendation => 'Daily recommendation';
+
+  @override
+  String get macroProtein => 'Protein';
+
+  @override
+  String get macroCarbohydrate => 'Carbohydrates';
+
+  @override
+  String get macroFat => 'Fat';
+
+  @override
+  String get nutritionEnergyUpper => 'ENERGY';
+
+  @override
+  String get nutritionDurationUpper => 'DURATION';
+
+  @override
+  String get nutritionServingUpper => 'SERVING';
+
+  @override
+  String get nutritionProteinUpper => 'PROTEIN';
+
+  @override
+  String get nutritionCarbohydrateUpper => 'CARBOHYDRATES';
+
+  @override
+  String get nutritionCarbsShortUpper => 'CARBS';
+
+  @override
+  String get nutritionFatUpper => 'FAT';
+
+  @override
+  String get unitKcal => 'kcal';
+
+  @override
+  String get unitGram => 'g';
+
+  @override
+  String get unitMinuteShort => 'min';
+
+  @override
+  String get unitPerson => 'person';
+
+  @override
+  String get unitLiter => 'L';
+
+  @override
+  String get homeHydrationTitle => 'Hydration';
+
+  @override
+  String homeHydrationRecommendation(String value) {
+    return 'Recommended: $value';
+  }
+
+  @override
+  String get homeMealOfTheDayUpper => 'MEAL OF THE DAY';
+
+  @override
+  String get homeViewRecipe => 'View recipe';
+
+  @override
+  String get homeIngredients => 'Ingredients';
+
+  @override
+  String get homePreparationSteps => 'Preparation steps';
+
+  @override
+  String get homeRecentProductsTitle => 'Recently scanned';
+
+  @override
+  String get homeViewAll => 'View all';
+
+  @override
+  String homeRecentProductsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count products',
+      one: '1 product',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get homeNoProductsScanned => 'No products have been\nscanned yet';
+
+  @override
+  String get homeScanProductsHint => 'Scan a barcode to add products';
+
+  @override
+  String get homeScanNow => 'Scan now';
+
+  @override
+  String get commonProduct => 'Product';
+
+  @override
+  String get commonVitamins => 'Vitamins';
+
+  @override
+  String commonTodayAt(String time) {
+    return 'Today, $time';
+  }
+
+  @override
+  String commonYesterdayAt(String time) {
+    return 'Yesterday, $time';
+  }
+
+  @override
+  String homeProductAddedFavorite(String product) {
+    return '$product was added to favorites';
+  }
+
+  @override
+  String homeProductRemovedFavorite(String product) {
+    return '$product was removed from favorites';
+  }
+
+  @override
+  String get homeBarcodeScanTitle => 'Scan Barcode';
+
+  @override
+  String get homeBarcodeScanSubtitle =>
+      'Instantly check the product\'s calories';
 }

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/l10n/localization_extension.dart';
 import '../../../../core/router/app_routes.dart';
 import '../../../../core/utils/padding_extension.dart';
 import '../../../../core/utils/radius_extension.dart';
@@ -22,10 +23,15 @@ class MealOfTheDayCard extends StatelessWidget {
       return const _MealSkeleton();
     }
 
-    if (state is! HomeLoaded) return const SizedBox.shrink();
+    if (state is! HomeLoaded) {
+      return const SizedBox.shrink();
+    }
 
     final meal = (state as HomeLoaded).mealOfTheDay;
-    if (meal == null) return const SizedBox.shrink();
+
+    if (meal == null) {
+      return const SizedBox.shrink();
+    }
 
     return _MealContent(meal: meal);
   }
@@ -64,38 +70,16 @@ class _MealContent extends StatelessWidget {
                   ),
                 ),
               ),
-              // Positioned(
-              //   top: 12,
-              //   left: 12,
-              //   child: Container(
-              //     padding: const EdgeInsets.symmetric(
-              //       horizontal: 10,
-              //       vertical: 5,
-              //     ),
-              //     decoration: BoxDecoration(
-              //       color: AppColors.primary.withOpacity(0.7),
-              //       borderRadius: 20.br,
-              //     ),
-              //     child: Text(
-              //       meal.tag,
-              //       style: AppTextStyles.bodySmall.copyWith(
-              //         color: Colors.white,
-              //         fontSize: 10,
-              //         fontWeight: FontWeight.w500,
-              //         letterSpacing: 0.6,
-              //       ),
-              //     ),
-              //   ),
-              // ),
             ],
           ),
+
           Padding(
             padding: 16.p,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'GÜNÜN YEMƏYİ',
+                  context.l10n.homeMealOfTheDayUpper,
                   style: AppTextStyles.bodySmall.copyWith(
                     color: AppColors.primary,
                     fontWeight: FontWeight.w700,
@@ -103,7 +87,9 @@ class _MealContent extends StatelessWidget {
                     letterSpacing: 1.0,
                   ),
                 ),
+
                 8.hs,
+
                 Text(
                   meal.title,
                   style: AppTextStyles.h2.copyWith(
@@ -111,23 +97,33 @@ class _MealContent extends StatelessWidget {
                     height: 1.2,
                   ),
                 ),
+
                 14.hs,
+
                 Row(
                   children: [
-                    _StatItem(label: 'ENERJİ', value: '${meal.kcal} kcal'),
+                    _StatItem(
+                      label: context.l10n.nutritionEnergyUpper,
+                      value: '${meal.kcal} ${context.l10n.unitKcal}',
+                    ),
+
                     Container(
                       width: 1,
                       height: 32,
                       color: Colors.grey.shade200,
                       margin: const EdgeInsets.symmetric(horizontal: 16),
                     ),
+
                     _StatItem(
-                      label: 'MÜDDƏT',
-                      value: '${meal.timeMinutes} dəq',
+                      label: context.l10n.nutritionDurationUpper,
+                      value:
+                          '${meal.timeMinutes} ${context.l10n.unitMinuteShort}',
                     ),
                   ],
                 ),
+
                 14.hs,
+
                 Text(
                   meal.description,
                   style: AppTextStyles.bodySmall.copyWith(
@@ -135,20 +131,26 @@ class _MealContent extends StatelessWidget {
                     height: 1.5,
                   ),
                 ),
+
                 14.hs,
+
                 GestureDetector(
-                  onTap: () => context.push(AppRoutes.recipe, extra: meal),
+                  onTap: () {
+                    context.push(AppRoutes.recipe, extra: meal);
+                  },
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        'Reseptə baxın',
+                        context.l10n.homeViewRecipe,
                         style: AppTextStyles.bodySmall.copyWith(
                           color: AppColors.primary,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
+
                       4.ws,
+
                       const Icon(
                         Icons.arrow_forward_ios,
                         size: 12,
@@ -186,7 +188,9 @@ class _StatItem extends StatelessWidget {
             letterSpacing: 0.8,
           ),
         ),
+
         const SizedBox(height: 2),
+
         Text(
           value,
           style: const TextStyle(
@@ -217,40 +221,63 @@ class _MealSkeleton extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-            child: ShimmerBox(width: double.infinity, height: 220, radius: 0),
+            child: const ShimmerBox(
+              width: double.infinity,
+              height: 220,
+              radius: 0,
+            ),
           ),
+
           Padding(
             padding: 16.p,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ShimmerBox(width: 80, height: 11, radius: 4),
+                const ShimmerBox(width: 80, height: 11, radius: 4),
+
                 8.hs,
-                ShimmerBox(width: double.infinity, height: 22, radius: 6),
+
+                const ShimmerBox(width: double.infinity, height: 22, radius: 6),
+
                 4.hs,
-                ShimmerBox(width: 180, height: 22, radius: 6),
+
+                const ShimmerBox(width: 180, height: 22, radius: 6),
+
                 14.hs,
+
                 Row(
                   children: [
-                    ShimmerBox(width: 80, height: 36, radius: 6),
+                    const ShimmerBox(width: 80, height: 36, radius: 6),
+
                     16.ws,
+
                     Container(
                       width: 1,
                       height: 32,
                       color: Colors.grey.shade200,
                     ),
+
                     16.ws,
-                    ShimmerBox(width: 80, height: 36, radius: 6),
+
+                    const ShimmerBox(width: 80, height: 36, radius: 6),
                   ],
                 ),
+
                 14.hs,
-                ShimmerBox(width: double.infinity, height: 12, radius: 4),
+
+                const ShimmerBox(width: double.infinity, height: 12, radius: 4),
+
                 6.hs,
-                ShimmerBox(width: double.infinity, height: 12, radius: 4),
+
+                const ShimmerBox(width: double.infinity, height: 12, radius: 4),
+
                 6.hs,
-                ShimmerBox(width: 200, height: 12, radius: 4),
+
+                const ShimmerBox(width: 200, height: 12, radius: 4),
+
                 14.hs,
-                ShimmerBox(width: 100, height: 14, radius: 4),
+
+                const ShimmerBox(width: 100, height: 14, radius: 4),
               ],
             ),
           ),

@@ -809,6 +809,312 @@ abstract class AppLocalizations {
   /// In az, this message translates to:
   /// **'Düzgün telefon nömrəsi daxil edin'**
   String get validationPhoneInvalid;
+
+  /// No description provided for @homeGreetingMorning.
+  ///
+  /// In az, this message translates to:
+  /// **'Sabahınız xeyir'**
+  String get homeGreetingMorning;
+
+  /// No description provided for @homeGreetingAfternoon.
+  ///
+  /// In az, this message translates to:
+  /// **'Günortanız xeyir'**
+  String get homeGreetingAfternoon;
+
+  /// No description provided for @homeGreetingEvening.
+  ///
+  /// In az, this message translates to:
+  /// **'Axşamınız xeyir'**
+  String get homeGreetingEvening;
+
+  /// No description provided for @homeGuest.
+  ///
+  /// In az, this message translates to:
+  /// **'Qonaq'**
+  String get homeGuest;
+
+  /// No description provided for @homeTodayStoryReady.
+  ///
+  /// In az, this message translates to:
+  /// **'Bugünkü hekayən başlamağa hazırdır.'**
+  String get homeTodayStoryReady;
+
+  /// No description provided for @navHome.
+  ///
+  /// In az, this message translates to:
+  /// **'Ana səhifə'**
+  String get navHome;
+
+  /// No description provided for @navFavorites.
+  ///
+  /// In az, this message translates to:
+  /// **'Favoritlər'**
+  String get navFavorites;
+
+  /// No description provided for @navProfile.
+  ///
+  /// In az, this message translates to:
+  /// **'Profilim'**
+  String get navProfile;
+
+  /// No description provided for @homePhotoScanTitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Şəklini çək,\nkaloriləri öyrən'**
+  String get homePhotoScanTitle;
+
+  /// No description provided for @homePhotoScanSubtitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Saniyələr içində kalorilərini öyrən'**
+  String get homePhotoScanSubtitle;
+
+  /// No description provided for @homePhotoScanOpenCamera.
+  ///
+  /// In az, this message translates to:
+  /// **'Kameranı aç'**
+  String get homePhotoScanOpenCamera;
+
+  /// No description provided for @homeGuestPreviewTitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Sağlıqlı həyat\nsənin əlindədir.'**
+  String get homeGuestPreviewTitle;
+
+  /// No description provided for @homeGuestFeatureCalories.
+  ///
+  /// In az, this message translates to:
+  /// **'Gündəlik kalori & makro izləmə'**
+  String get homeGuestFeatureCalories;
+
+  /// No description provided for @homeGuestFeatureHydration.
+  ///
+  /// In az, this message translates to:
+  /// **'Su istehlakı monitorinqi'**
+  String get homeGuestFeatureHydration;
+
+  /// No description provided for @homeGuestFeatureHistory.
+  ///
+  /// In az, this message translates to:
+  /// **'Oxuduğun məhsulların tarixi'**
+  String get homeGuestFeatureHistory;
+
+  /// No description provided for @homeDailyRecommendation.
+  ///
+  /// In az, this message translates to:
+  /// **'Gündəlik tövsiyə'**
+  String get homeDailyRecommendation;
+
+  /// No description provided for @macroProtein.
+  ///
+  /// In az, this message translates to:
+  /// **'Zülal'**
+  String get macroProtein;
+
+  /// No description provided for @macroCarbohydrate.
+  ///
+  /// In az, this message translates to:
+  /// **'Karbohidrat'**
+  String get macroCarbohydrate;
+
+  /// No description provided for @macroFat.
+  ///
+  /// In az, this message translates to:
+  /// **'Yağ'**
+  String get macroFat;
+
+  /// No description provided for @nutritionEnergyUpper.
+  ///
+  /// In az, this message translates to:
+  /// **'ENERJİ'**
+  String get nutritionEnergyUpper;
+
+  /// No description provided for @nutritionDurationUpper.
+  ///
+  /// In az, this message translates to:
+  /// **'MÜDDƏT'**
+  String get nutritionDurationUpper;
+
+  /// No description provided for @nutritionServingUpper.
+  ///
+  /// In az, this message translates to:
+  /// **'PORSİYA'**
+  String get nutritionServingUpper;
+
+  /// No description provided for @nutritionProteinUpper.
+  ///
+  /// In az, this message translates to:
+  /// **'ZÜLAL'**
+  String get nutritionProteinUpper;
+
+  /// No description provided for @nutritionCarbohydrateUpper.
+  ///
+  /// In az, this message translates to:
+  /// **'KARBOHİDRAT'**
+  String get nutritionCarbohydrateUpper;
+
+  /// No description provided for @nutritionCarbsShortUpper.
+  ///
+  /// In az, this message translates to:
+  /// **'KARBO'**
+  String get nutritionCarbsShortUpper;
+
+  /// No description provided for @nutritionFatUpper.
+  ///
+  /// In az, this message translates to:
+  /// **'YAĞ'**
+  String get nutritionFatUpper;
+
+  /// No description provided for @unitKcal.
+  ///
+  /// In az, this message translates to:
+  /// **'kcal'**
+  String get unitKcal;
+
+  /// No description provided for @unitGram.
+  ///
+  /// In az, this message translates to:
+  /// **'q'**
+  String get unitGram;
+
+  /// No description provided for @unitMinuteShort.
+  ///
+  /// In az, this message translates to:
+  /// **'dəq'**
+  String get unitMinuteShort;
+
+  /// No description provided for @unitPerson.
+  ///
+  /// In az, this message translates to:
+  /// **'nəfər'**
+  String get unitPerson;
+
+  /// No description provided for @unitLiter.
+  ///
+  /// In az, this message translates to:
+  /// **'L'**
+  String get unitLiter;
+
+  /// No description provided for @homeHydrationTitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Hidrasiya'**
+  String get homeHydrationTitle;
+
+  /// No description provided for @homeHydrationRecommendation.
+  ///
+  /// In az, this message translates to:
+  /// **'Tövsiyə: {value}'**
+  String homeHydrationRecommendation(String value);
+
+  /// No description provided for @homeMealOfTheDayUpper.
+  ///
+  /// In az, this message translates to:
+  /// **'GÜNÜN YEMƏYİ'**
+  String get homeMealOfTheDayUpper;
+
+  /// No description provided for @homeViewRecipe.
+  ///
+  /// In az, this message translates to:
+  /// **'Reseptə baxın'**
+  String get homeViewRecipe;
+
+  /// No description provided for @homeIngredients.
+  ///
+  /// In az, this message translates to:
+  /// **'Tərkiblər'**
+  String get homeIngredients;
+
+  /// No description provided for @homePreparationSteps.
+  ///
+  /// In az, this message translates to:
+  /// **'Hazırlama mərhələləri'**
+  String get homePreparationSteps;
+
+  /// No description provided for @homeRecentProductsTitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Son oxudulanlar'**
+  String get homeRecentProductsTitle;
+
+  /// No description provided for @homeViewAll.
+  ///
+  /// In az, this message translates to:
+  /// **'Hamısına bax'**
+  String get homeViewAll;
+
+  /// No description provided for @homeRecentProductsCount.
+  ///
+  /// In az, this message translates to:
+  /// **'{count} məhsul'**
+  String homeRecentProductsCount(int count);
+
+  /// No description provided for @homeNoProductsScanned.
+  ///
+  /// In az, this message translates to:
+  /// **'Hələ heç bir məhsul\noxudulmayıb'**
+  String get homeNoProductsScanned;
+
+  /// No description provided for @homeScanProductsHint.
+  ///
+  /// In az, this message translates to:
+  /// **'Məhsulları əlavə etmək üçün barkodu scan edin'**
+  String get homeScanProductsHint;
+
+  /// No description provided for @homeScanNow.
+  ///
+  /// In az, this message translates to:
+  /// **'İndi scan et'**
+  String get homeScanNow;
+
+  /// No description provided for @commonProduct.
+  ///
+  /// In az, this message translates to:
+  /// **'Məhsul'**
+  String get commonProduct;
+
+  /// No description provided for @commonVitamins.
+  ///
+  /// In az, this message translates to:
+  /// **'Vitaminlər'**
+  String get commonVitamins;
+
+  /// No description provided for @commonTodayAt.
+  ///
+  /// In az, this message translates to:
+  /// **'Bugün, {time}'**
+  String commonTodayAt(String time);
+
+  /// No description provided for @commonYesterdayAt.
+  ///
+  /// In az, this message translates to:
+  /// **'Dünən, {time}'**
+  String commonYesterdayAt(String time);
+
+  /// No description provided for @homeProductAddedFavorite.
+  ///
+  /// In az, this message translates to:
+  /// **'{product} favoritlərə əlavə edildi'**
+  String homeProductAddedFavorite(String product);
+
+  /// No description provided for @homeProductRemovedFavorite.
+  ///
+  /// In az, this message translates to:
+  /// **'{product} favoritlərdən silindi'**
+  String homeProductRemovedFavorite(String product);
+
+  /// No description provided for @homeBarcodeScanTitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Barkod Oxut'**
+  String get homeBarcodeScanTitle;
+
+  /// No description provided for @homeBarcodeScanSubtitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Məhsulun kalorisini dərhal öyrən'**
+  String get homeBarcodeScanSubtitle;
 }
 
 class _AppLocalizationsDelegate

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/constants/app_assets.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/l10n/localization_extension.dart';
 import '../../../../core/router/app_routes.dart';
 import '../../../../core/utils/asset_extension.dart';
 
@@ -49,6 +50,7 @@ class PhotoScanCtaButton extends StatelessWidget {
                 ),
               ),
             ),
+
             Positioned.fill(
               child: Row(
                 children: [
@@ -66,16 +68,18 @@ class PhotoScanCtaButton extends StatelessWidget {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Text(
-                                  'Şəklini çək,\nkaloriləri öyrən',
+                                  context.l10n.homePhotoScanTitle,
                                   style: AppTextStyles.h1.copyWith(
                                     fontWeight: FontWeight.w600,
                                     fontSize: screenWidth * 0.055,
                                     height: 1.2,
                                   ),
                                 ),
+
                                 SizedBox(height: screenHeight * 0.008),
+
                                 Text(
-                                  'Saniyələr içində \nkalorilərini öyrən',
+                                  context.l10n.homePhotoScanSubtitle,
                                   style: AppTextStyles.bodySmall.copyWith(
                                     color: Colors.grey.shade600,
                                     fontSize: screenWidth * 0.032,
@@ -85,11 +89,13 @@ class PhotoScanCtaButton extends StatelessWidget {
                               ],
                             ),
                           ),
+
                           _ActionPillButton(screenWidth: screenWidth),
                         ],
                       ),
                     ),
                   ),
+
                   const Expanded(flex: 40, child: SizedBox.shrink()),
                 ],
               ),
@@ -103,6 +109,7 @@ class PhotoScanCtaButton extends StatelessWidget {
 
 class _ActionPillButton extends StatelessWidget {
   final double screenWidth;
+
   const _ActionPillButton({required this.screenWidth});
 
   @override
@@ -124,13 +131,19 @@ class _ActionPillButton extends StatelessWidget {
             height: screenWidth * 0.04,
             color: Colors.white,
           ),
+
           SizedBox(width: screenWidth * 0.02),
-          Text(
-            'Kameranı aç',
-            style: AppTextStyles.bodyMedium.copyWith(
-              color: Colors.white,
-              fontWeight: FontWeight.w600,
-              fontSize: screenWidth * 0.032,
+
+          Flexible(
+            child: Text(
+              context.l10n.homePhotoScanOpenCamera,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+                fontSize: screenWidth * 0.032,
+              ),
             ),
           ),
         ],

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/l10n/localization_extension.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../../core/router/app_routes.dart';
 import '../../../../core/utils/sized_box_extension.dart';
@@ -40,6 +41,7 @@ class _HomeViewState extends State<_HomeView> {
   @override
   void initState() {
     super.initState();
+
     context.read<HomeBloc>().add(const HomeStarted());
   }
 
@@ -55,6 +57,7 @@ class _HomeViewState extends State<_HomeView> {
         child: BlocBuilder<AuthBloc, AuthState>(
           builder: (context, authState) {
             final isLoggedIn = authState is AuthAuthenticated;
+
             final name = isLoggedIn ? authState.user.firstName : null;
 
             return BlocBuilder<HomeBloc, HomeState>(
@@ -68,10 +71,13 @@ class _HomeViewState extends State<_HomeView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _Header(name: name),
+
                       24.hs,
+
                       PhotoScanCtaButton(
                         onTap: () async {
                           await context.push(AppRoutes.photoScan);
+
                           if (context.mounted) {
                             context.read<HomeBloc>().add(
                               const HomeRefreshRecent(),
@@ -79,7 +85,9 @@ class _HomeViewState extends State<_HomeView> {
                           }
                         },
                       ),
+
                       16.hs,
+
                       if (!isLoggedIn) ...[
                         const GuestPreviewSection(),
                       ] else ...[
@@ -91,7 +99,9 @@ class _HomeViewState extends State<_HomeView> {
                         16.hs,
                         RecentProductsSection(state: homeState),
                       ],
+
                       16.hs,
+
                       MealOfTheDayCard(state: homeState),
                     ],
                   ),
@@ -110,15 +120,28 @@ class _Header extends StatelessWidget {
 
   const _Header({this.name});
 
-  String get _greeting {
+  String _getGreeting(BuildContext context) {
     final hour = DateTime.now().hour;
-    if (hour < 12) return 'Sabahınız xeyir';
-    if (hour < 17) return 'Günortanız xeyir';
-    return 'Axşamınız xeyir';
+
+    if (hour < 12) {
+      return context.l10n.homeGreetingMorning;
+    }
+
+    if (hour < 17) {
+      return context.l10n.homeGreetingAfternoon;
+    }
+
+    return context.l10n.homeGreetingEvening;
   }
 
   @override
   Widget build(BuildContext context) {
+    final greeting = _getGreeting(context);
+
+    final displayName = name?.trim().isNotEmpty == true
+        ? name!.trim()
+        : context.l10n.homeGuest;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -130,14 +153,16 @@ class _Header extends StatelessWidget {
               letterSpacing: -0.5,
             ),
             children: [
-              TextSpan(text: '$_greeting,\n'),
-              TextSpan(text: name != null ? '$name' : 'Qonaq'),
+              TextSpan(text: '$greeting,\n'),
+              TextSpan(text: displayName),
             ],
           ),
         ),
+
         6.hs,
+
         Text(
-          'Bugünkü hekayən başlamağa hazırdır.',
+          context.l10n.homeTodayStoryReady,
           style: AppTextStyles.bodySmall.copyWith(color: Colors.grey.shade600),
         ),
       ],

@@ -390,4 +390,169 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get validationPhoneInvalid => 'Geçerli bir telefon numarası girin';
+
+  @override
+  String get homeGreetingMorning => 'Günaydın';
+
+  @override
+  String get homeGreetingAfternoon => 'İyi günler';
+
+  @override
+  String get homeGreetingEvening => 'İyi akşamlar';
+
+  @override
+  String get homeGuest => 'Misafir';
+
+  @override
+  String get homeTodayStoryReady => 'Bugünkü hikâyen başlamaya hazır.';
+
+  @override
+  String get navHome => 'Ana sayfa';
+
+  @override
+  String get navFavorites => 'Favoriler';
+
+  @override
+  String get navProfile => 'Profilim';
+
+  @override
+  String get homePhotoScanTitle => 'Fotoğrafını çek,\nkalorileri öğren';
+
+  @override
+  String get homePhotoScanSubtitle => 'Kalorileri saniyeler içinde öğren';
+
+  @override
+  String get homePhotoScanOpenCamera => 'Kamerayı aç';
+
+  @override
+  String get homeGuestPreviewTitle => 'Sağlıklı yaşam\nsenin ellerinde.';
+
+  @override
+  String get homeGuestFeatureCalories => 'Günlük kalori & makro takibi';
+
+  @override
+  String get homeGuestFeatureHydration => 'Su tüketimi takibi';
+
+  @override
+  String get homeGuestFeatureHistory => 'Taradığın ürünlerin geçmişi';
+
+  @override
+  String get homeDailyRecommendation => 'Günlük öneri';
+
+  @override
+  String get macroProtein => 'Protein';
+
+  @override
+  String get macroCarbohydrate => 'Karbonhidrat';
+
+  @override
+  String get macroFat => 'Yağ';
+
+  @override
+  String get nutritionEnergyUpper => 'ENERJİ';
+
+  @override
+  String get nutritionDurationUpper => 'SÜRE';
+
+  @override
+  String get nutritionServingUpper => 'PORSİYON';
+
+  @override
+  String get nutritionProteinUpper => 'PROTEİN';
+
+  @override
+  String get nutritionCarbohydrateUpper => 'KARBONHİDRAT';
+
+  @override
+  String get nutritionCarbsShortUpper => 'KARB.';
+
+  @override
+  String get nutritionFatUpper => 'YAĞ';
+
+  @override
+  String get unitKcal => 'kcal';
+
+  @override
+  String get unitGram => 'g';
+
+  @override
+  String get unitMinuteShort => 'dk';
+
+  @override
+  String get unitPerson => 'kişi';
+
+  @override
+  String get unitLiter => 'L';
+
+  @override
+  String get homeHydrationTitle => 'Hidrasyon';
+
+  @override
+  String homeHydrationRecommendation(String value) {
+    return 'Önerilen: $value';
+  }
+
+  @override
+  String get homeMealOfTheDayUpper => 'GÜNÜN YEMEĞİ';
+
+  @override
+  String get homeViewRecipe => 'Tarifi görüntüle';
+
+  @override
+  String get homeIngredients => 'Malzemeler';
+
+  @override
+  String get homePreparationSteps => 'Hazırlama adımları';
+
+  @override
+  String get homeRecentProductsTitle => 'Son tarananlar';
+
+  @override
+  String get homeViewAll => 'Tümünü gör';
+
+  @override
+  String homeRecentProductsCount(int count) {
+    return '$count ürün';
+  }
+
+  @override
+  String get homeNoProductsScanned => 'Henüz hiçbir ürün\ntaranmadı';
+
+  @override
+  String get homeScanProductsHint => 'Ürün eklemek için barkodu tara';
+
+  @override
+  String get homeScanNow => 'Şimdi tara';
+
+  @override
+  String get commonProduct => 'Ürün';
+
+  @override
+  String get commonVitamins => 'Vitaminler';
+
+  @override
+  String commonTodayAt(String time) {
+    return 'Bugün, $time';
+  }
+
+  @override
+  String commonYesterdayAt(String time) {
+    return 'Dün, $time';
+  }
+
+  @override
+  String homeProductAddedFavorite(String product) {
+    return '$product favorilere eklendi';
+  }
+
+  @override
+  String homeProductRemovedFavorite(String product) {
+    return '$product favorilerden kaldırıldı';
+  }
+
+  @override
+  String get homeBarcodeScanTitle => 'Barkodu Tara';
+
+  @override
+  String get homeBarcodeScanSubtitle => 'Ürünün kalorisini anında öğren';
 }

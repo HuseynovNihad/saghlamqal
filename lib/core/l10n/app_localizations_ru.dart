@@ -392,4 +392,181 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get validationPhoneInvalid => 'Введите корректный номер телефона';
+
+  @override
+  String get homeGreetingMorning => 'Доброе утро';
+
+  @override
+  String get homeGreetingAfternoon => 'Добрый день';
+
+  @override
+  String get homeGreetingEvening => 'Добрый вечер';
+
+  @override
+  String get homeGuest => 'Гость';
+
+  @override
+  String get homeTodayStoryReady => 'Ваша сегодняшняя история готова начаться.';
+
+  @override
+  String get navHome => 'Главная';
+
+  @override
+  String get navFavorites => 'Избранное';
+
+  @override
+  String get navProfile => 'Мой профиль';
+
+  @override
+  String get homePhotoScanTitle => 'Сделайте фото,\nузнайте калорийность';
+
+  @override
+  String get homePhotoScanSubtitle =>
+      'Узнайте калорийность за несколько секунд';
+
+  @override
+  String get homePhotoScanOpenCamera => 'Открыть камеру';
+
+  @override
+  String get homeGuestPreviewTitle => 'Здоровая жизнь\nв ваших руках.';
+
+  @override
+  String get homeGuestFeatureCalories =>
+      'Ежедневный учёт калорий и макронутриентов';
+
+  @override
+  String get homeGuestFeatureHydration => 'Контроль потребления воды';
+
+  @override
+  String get homeGuestFeatureHistory => 'История отсканированных продуктов';
+
+  @override
+  String get homeDailyRecommendation => 'Дневная рекомендация';
+
+  @override
+  String get macroProtein => 'Белок';
+
+  @override
+  String get macroCarbohydrate => 'Углеводы';
+
+  @override
+  String get macroFat => 'Жиры';
+
+  @override
+  String get nutritionEnergyUpper => 'ЭНЕРГИЯ';
+
+  @override
+  String get nutritionDurationUpper => 'ВРЕМЯ';
+
+  @override
+  String get nutritionServingUpper => 'ПОРЦИЯ';
+
+  @override
+  String get nutritionProteinUpper => 'БЕЛОК';
+
+  @override
+  String get nutritionCarbohydrateUpper => 'УГЛЕВОДЫ';
+
+  @override
+  String get nutritionCarbsShortUpper => 'УГЛ.';
+
+  @override
+  String get nutritionFatUpper => 'ЖИРЫ';
+
+  @override
+  String get unitKcal => 'ккал';
+
+  @override
+  String get unitGram => 'г';
+
+  @override
+  String get unitMinuteShort => 'мин';
+
+  @override
+  String get unitPerson => 'чел.';
+
+  @override
+  String get unitLiter => 'л';
+
+  @override
+  String get homeHydrationTitle => 'Гидратация';
+
+  @override
+  String homeHydrationRecommendation(String value) {
+    return 'Рекомендуется: $value';
+  }
+
+  @override
+  String get homeMealOfTheDayUpper => 'БЛЮДО ДНЯ';
+
+  @override
+  String get homeViewRecipe => 'Смотреть рецепт';
+
+  @override
+  String get homeIngredients => 'Ингредиенты';
+
+  @override
+  String get homePreparationSteps => 'Этапы приготовления';
+
+  @override
+  String get homeRecentProductsTitle => 'Недавно отсканированные';
+
+  @override
+  String get homeViewAll => 'Посмотреть все';
+
+  @override
+  String homeRecentProductsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count товара',
+      many: '$count товаров',
+      few: '$count товара',
+      one: '$count товар',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get homeNoProductsScanned => 'Пока ни один продукт\nне отсканирован';
+
+  @override
+  String get homeScanProductsHint =>
+      'Отсканируйте штрихкод, чтобы добавить продукт';
+
+  @override
+  String get homeScanNow => 'Сканировать';
+
+  @override
+  String get commonProduct => 'Продукт';
+
+  @override
+  String get commonVitamins => 'Витамины';
+
+  @override
+  String commonTodayAt(String time) {
+    return 'Сегодня, $time';
+  }
+
+  @override
+  String commonYesterdayAt(String time) {
+    return 'Вчера, $time';
+  }
+
+  @override
+  String homeProductAddedFavorite(String product) {
+    return '$product добавлен в избранное';
+  }
+
+  @override
+  String homeProductRemovedFavorite(String product) {
+    return '$product удалён из избранного';
+  }
+
+  @override
+  String get homeBarcodeScanTitle => 'Сканировать штрихкод';
+
+  @override
+  String get homeBarcodeScanSubtitle =>
+      'Мгновенно узнайте калорийность продукта';
 }

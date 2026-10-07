@@ -147,5 +147,71 @@
   "validationRequired": "Это поле не может быть пустым",
   "validationPhoneRequired": "Введите номер телефона",
   "validationPhoneDigitsOnly": "Номер телефона должен содержать только цифры",
-  "validationPhoneInvalid": "Введите корректный номер телефона"
+  "validationPhoneInvalid": "Введите корректный номер телефона",
+  "homeGreetingMorning": "Доброе утро",
+  "homeGreetingAfternoon": "Добрый день",
+  "homeGreetingEvening": "Добрый вечер",
+  "homeGuest": "Гость",
+  "homeTodayStoryReady": "Ваша сегодняшняя история готова начаться.",
+
+  "navHome": "Главная",
+  "navFavorites": "Избранное",
+  "navProfile": "Мой профиль",
+
+  "homePhotoScanTitle": "Сделайте фото,\nузнайте калорийность",
+  "homePhotoScanSubtitle": "Узнайте калорийность за несколько секунд",
+  "homePhotoScanOpenCamera": "Открыть камеру",
+
+  "homeGuestPreviewTitle": "Здоровая жизнь\nв ваших руках.",
+  "homeGuestFeatureCalories": "Ежедневный учёт калорий и макронутриентов",
+  "homeGuestFeatureHydration": "Контроль потребления воды",
+  "homeGuestFeatureHistory": "История отсканированных продуктов",
+
+  "homeDailyRecommendation": "Дневная рекомендация",
+
+  "macroProtein": "Белок",
+  "macroCarbohydrate": "Углеводы",
+  "macroFat": "Жиры",
+
+  "nutritionEnergyUpper": "ЭНЕРГИЯ",
+  "nutritionDurationUpper": "ВРЕМЯ",
+  "nutritionServingUpper": "ПОРЦИЯ",
+  "nutritionProteinUpper": "БЕЛОК",
+  "nutritionCarbohydrateUpper": "УГЛЕВОДЫ",
+  "nutritionCarbsShortUpper": "УГЛ.",
+  "nutritionFatUpper": "ЖИРЫ",
+
+  "unitKcal": "ккал",
+  "unitGram": "г",
+  "unitMinuteShort": "мин",
+  "unitPerson": "чел.",
+  "unitLiter": "л",
+
+  "homeHydrationTitle": "Гидратация",
+  "homeHydrationRecommendation": "Рекомендуется: {value}",
+
+  "homeMealOfTheDayUpper": "БЛЮДО ДНЯ",
+  "homeViewRecipe": "Смотреть рецепт",
+  "homeIngredients": "Ингредиенты",
+  "homePreparationSteps": "Этапы приготовления",
+
+  "homeRecentProductsTitle": "Недавно отсканированные",
+  "homeViewAll": "Посмотреть все",
+  "homeRecentProductsCount": "{count, plural, one{{count} товар} few{{count} товара} many{{count} товаров} other{{count} товара}}",
+
+  "homeNoProductsScanned": "Пока ни один продукт\nне отсканирован",
+  "homeScanProductsHint": "Отсканируйте штрихкод, чтобы добавить продукт",
+  "homeScanNow": "Сканировать",
+
+  "commonProduct": "Продукт",
+  "commonVitamins": "Витамины",
+
+  "commonTodayAt": "Сегодня, {time}",
+  "commonYesterdayAt": "Вчера, {time}",
+
+  "homeProductAddedFavorite": "{product} добавлен в избранное",
+  "homeProductRemovedFavorite": "{product} удалён из избранного",
+
+  "homeBarcodeScanTitle": "Сканировать штрихкод",
+  "homeBarcodeScanSubtitle": "Мгновенно узнайте калорийность продукта"
 }

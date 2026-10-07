@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/l10n/localization_extension.dart';
 import '../../../../core/utils/padding_extension.dart';
 import '../../../../core/utils/sized_box_extension.dart';
 import '../../domain/entities/recent_product_entity.dart';
@@ -36,7 +37,7 @@ class RecentProductsPage extends StatelessWidget {
           ),
         ),
         title: Text(
-          'Son oxudulanlar',
+          context.l10n.homeRecentProductsTitle,
           style: AppTextStyles.bodyMedium.copyWith(
             fontWeight: FontWeight.w700,
             fontSize: 18,
@@ -58,11 +59,11 @@ class RecentProductsPage extends StatelessWidget {
                           vertical: 6,
                         ),
                         decoration: BoxDecoration(
-                          color: AppColors.primary.withOpacity(0.1),
+                          color: AppColors.primary.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Text(
-                          '${products.length} məhsul',
+                          context.l10n.homeRecentProductsCount(products.length),
                           style: AppTextStyles.bodySmall.copyWith(
                             color: AppColors.primary,
                             fontWeight: FontWeight.w600,
@@ -77,8 +78,9 @@ class RecentProductsPage extends StatelessWidget {
                     padding: const EdgeInsets.fromLTRB(24, 0, 24, 32),
                     itemCount: products.length,
                     separatorBuilder: (_, __) => 10.hs,
-                    itemBuilder: (_, i) =>
-                        RecentProductCard(product: products[i]),
+                    itemBuilder: (_, i) {
+                      return RecentProductCard(product: products[i]);
+                    },
                   ),
                 ),
               ],

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/l10n/localization_extension.dart';
 import '../../../../core/router/app_routes.dart';
 import '../../../../core/utils/padding_extension.dart';
 import '../../../../core/utils/radius_extension.dart';
@@ -27,21 +28,27 @@ class RecentProductsSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              'Son oxudulanlar',
-              style: AppTextStyles.bodyMedium.copyWith(
-                fontWeight: FontWeight.w600,
-                fontSize: 16,
+            Expanded(
+              child: Text(
+                context.l10n.homeRecentProductsTitle,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.bodyMedium.copyWith(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                ),
               ),
             ),
-            if (products.isNotEmpty)
+
+            if (products.isNotEmpty) ...[
+              12.ws,
               GestureDetector(
-                onTap: () =>
-                    context.push(AppRoutes.recentProducts, extra: products),
+                onTap: () {
+                  context.push(AppRoutes.recentProducts, extra: products);
+                },
                 child: Text(
-                  'Hamısına bax',
+                  context.l10n.homeViewAll,
                   style: AppTextStyles.bodySmall.copyWith(
                     color: AppColors.primary,
                     fontWeight: FontWeight.w700,
@@ -50,9 +57,12 @@ class RecentProductsSection extends StatelessWidget {
                   ),
                 ),
               ),
+            ],
           ],
         ),
+
         12.hs,
+
         if (state is HomeLoading)
           const _RecentProductsSkeleton()
         else if (products.isEmpty)
@@ -61,10 +71,11 @@ class RecentProductsSection extends StatelessWidget {
           ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: products.length.clamp(0, 5),
+            itemCount: products.length > 5 ? 5 : products.length,
             separatorBuilder: (_, __) => 10.hs,
-            itemBuilder: (context, index) =>
-                RecentProductCard(product: products[index]),
+            itemBuilder: (context, index) {
+              return RecentProductCard(product: products[index]);
+            },
           ),
       ],
     );
@@ -100,9 +111,11 @@ class _EmptyState extends StatelessWidget {
               color: Colors.grey.shade400,
             ),
           ),
+
           16.hs,
+
           Text(
-            'Hələ heç bir məhsul\noxudulmayıb',
+            context.l10n.homeNoProductsScanned,
             textAlign: TextAlign.center,
             style: AppTextStyles.bodyMedium.copyWith(
               fontWeight: FontWeight.w700,
@@ -111,9 +124,11 @@ class _EmptyState extends StatelessWidget {
               height: 1.4,
             ),
           ),
+
           8.hs,
+
           Text(
-            'Məhsulları əlavə etmək üçün barkodu scan\nedin',
+            context.l10n.homeScanProductsHint,
             textAlign: TextAlign.center,
             style: AppTextStyles.bodySmall.copyWith(
               color: Colors.grey.shade400,
@@ -121,7 +136,9 @@ class _EmptyState extends StatelessWidget {
               height: 1.5,
             ),
           ),
+
           20.hs,
+
           SizedBox(
             width: double.infinity,
             height: 48,
@@ -135,7 +152,9 @@ class _EmptyState extends StatelessWidget {
                 color: Colors.white,
               ),
               label: Text(
-                'İndi scan et',
+                context.l10n.homeScanNow,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.bodyMedium.copyWith(
                   color: Colors.white,
                   fontWeight: FontWeight.w600,
@@ -177,20 +196,30 @@ class _RecentProductsSkeleton extends StatelessWidget {
             ),
             child: Row(
               children: [
-                ShimmerBox(width: 52, height: 52, radius: 12),
+                const ShimmerBox(width: 52, height: 52, radius: 12),
+
                 12.ws,
+
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ShimmerBox(width: double.infinity, height: 14, radius: 6),
+                      const ShimmerBox(
+                        width: double.infinity,
+                        height: 14,
+                        radius: 6,
+                      ),
+
                       8.hs,
-                      ShimmerBox(width: 100, height: 12, radius: 6),
+
+                      const ShimmerBox(width: 100, height: 12, radius: 6),
                     ],
                   ),
                 ),
+
                 12.ws,
-                ShimmerBox(width: 48, height: 28, radius: 8),
+
+                const ShimmerBox(width: 48, height: 28, radius: 8),
               ],
             ),
           ),

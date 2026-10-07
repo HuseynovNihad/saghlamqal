@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kalori_tracker/core/constants/app_assets.dart';
-import 'package:kalori_tracker/core/constants/app_colors.dart';
 
+import '../../../../core/constants/app_assets.dart';
+import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/l10n/localization_extension.dart';
 import '../../../../core/utils/asset_extension.dart';
 import '../../../../core/utils/radius_extension.dart';
 import '../../../../core/utils/sized_box_extension.dart';
@@ -66,13 +67,16 @@ class _HydrationContentState extends State<_HydrationContent>
   @override
   void didUpdateWidget(_HydrationContent oldWidget) {
     super.didUpdateWidget(oldWidget);
+
     if (oldWidget.hydration.consumed != widget.hydration.consumed) {
       final oldFill = oldWidget.hydration.fillRatio;
+
       final newFill = widget.hydration.fillRatio;
 
       _fillAnimation = Tween<double>(begin: oldFill, end: newFill).animate(
         CurvedAnimation(parent: _fillController, curve: Curves.easeOut),
       );
+
       _fillController
         ..reset()
         ..forward();
@@ -83,11 +87,17 @@ class _HydrationContentState extends State<_HydrationContent>
   void dispose() {
     _waveController.dispose();
     _fillController.dispose();
+
     super.dispose();
   }
 
-  String _fmt(double v) =>
-      v == v.roundToDouble() ? '${v.toInt()}L' : '${v.toStringAsFixed(2)}L';
+  String _formatLiters(BuildContext context, double value) {
+    final formattedValue = value == value.roundToDouble()
+        ? value.toInt().toString()
+        : value.toStringAsFixed(2);
+
+    return '$formattedValue ${context.l10n.unitLiter}';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +138,7 @@ class _HydrationContentState extends State<_HydrationContent>
                   Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.15),
+                      color: Colors.white.withValues(alpha: 0.15),
                       borderRadius: 10.br,
                     ),
                     child: AppAssets.hydration.svg(
@@ -137,12 +147,14 @@ class _HydrationContentState extends State<_HydrationContent>
                       color: Colors.white,
                     ),
                   ),
+
                   const Spacer(),
+
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        _fmt(hydration.consumed),
+                        _formatLiters(context, hydration.consumed),
                         style: AppTextStyles.h2.copyWith(
                           fontWeight: FontWeight.w600,
                           color: Colors.white,
@@ -150,44 +162,54 @@ class _HydrationContentState extends State<_HydrationContent>
                           letterSpacing: -0.5,
                         ),
                       ),
+
                       4.hs,
+
                       Text(
-                        'Tövsiyə: ${_fmt(hydration.dailyGoal)}',
+                        context.l10n.homeHydrationRecommendation(
+                          _formatLiters(context, hydration.dailyGoal),
+                        ),
                         style: AppTextStyles.bodySmall.copyWith(
                           fontSize: 11,
-                          color: Colors.white.withOpacity(0.7),
+                          color: Colors.white.withValues(alpha: 0.7),
                         ),
                       ),
                     ],
                   ),
                 ],
               ),
+
               16.hs,
+
               Text(
-                'Hidrasiya',
+                context.l10n.homeHydrationTitle,
                 style: AppTextStyles.h3.copyWith(
                   fontWeight: FontWeight.w700,
                   color: Colors.white,
                   letterSpacing: -0.3,
                 ),
               ),
+
               16.hs,
+
               Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 14,
                   vertical: 10,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.12),
+                  color: Colors.white.withValues(alpha: 0.12),
                   borderRadius: 12.br,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [0.25, 0.5, 0.75].map((amount) {
                     return GestureDetector(
-                      onTap: () => context.read<HomeBloc>().add(
-                        HomeAddWaterPressed(amount: amount),
-                      ),
+                      onTap: () {
+                        context.read<HomeBloc>().add(
+                          HomeAddWaterPressed(amount: amount),
+                        );
+                      },
                       child: Container(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 14,
@@ -198,7 +220,7 @@ class _HydrationContentState extends State<_HydrationContent>
                           borderRadius: 8.br,
                         ),
                         child: Text(
-                          '+${amount}L',
+                          '+${_formatLiters(context, amount)}',
                           style: AppTextStyles.bodySmall.copyWith(
                             fontSize: 12,
                             fontWeight: FontWeight.w600,
@@ -238,22 +260,28 @@ class _HydrationSkeleton extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ShimmerBox(width: 36, height: 36, radius: 10),
+              const ShimmerBox(width: 36, height: 36, radius: 10),
+
               const Spacer(),
+
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  ShimmerBox(width: 60, height: 20, radius: 6),
+                  const ShimmerBox(width: 60, height: 20, radius: 6),
                   4.hs,
-                  ShimmerBox(width: 90, height: 12, radius: 6),
+                  const ShimmerBox(width: 90, height: 12, radius: 6),
                 ],
               ),
             ],
           ),
+
           16.hs,
-          ShimmerBox(width: 80, height: 18, radius: 6),
+
+          const ShimmerBox(width: 80, height: 18, radius: 6),
+
           16.hs,
-          ShimmerBox(width: double.infinity, height: 44, radius: 12),
+
+          const ShimmerBox(width: double.infinity, height: 44, radius: 12),
         ],
       ),
     );
