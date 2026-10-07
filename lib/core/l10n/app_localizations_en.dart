@@ -774,4 +774,66 @@ class AppLocalizationsEn extends AppLocalizations {
   String favoritesCarbsValue(int value) {
     return '$value g C';
   }
+
+  @override
+  String get onboardingFirstTitle => 'Your first step';
+
+  @override
+  String get onboardingFirstHighlight => 'toward better health';
+
+  @override
+  String get onboardingFirstSubtitle =>
+      'With SağlamQal, know what you eat every day, track it, and make better choices. Point the camera and we’ll do the rest.';
+
+  @override
+  String get onboardingSecondTitle => 'Take a photo';
+
+  @override
+  String get onboardingSecondHighlight => 'learn everything';
+
+  @override
+  String get onboardingSecondSubtitle =>
+      'Take a photo and let AI show the calories and nutritional values in seconds.';
+
+  @override
+  String get onboardingThirdTitle => 'Stay hydrated';
+
+  @override
+  String get onboardingThirdHighlight => 'we’ll remind you';
+
+  @override
+  String get onboardingThirdSubtitle =>
+      'Track your water intake throughout the day. SağlamQal will remind you when it’s time to drink.';
+
+  @override
+  String get onboardingFourthTitle => 'Save your favorites';
+
+  @override
+  String get onboardingFourthHighlight => 'view your history';
+
+  @override
+  String get onboardingFourthSubtitle =>
+      'Add the products you like to your favorites. Your entire scan history stays in one place.';
+
+  @override
+  String get onboardingFifthTitle => 'What should we';
+
+  @override
+  String get onboardingFifthHighlight => 'cook today?';
+
+  @override
+  String get onboardingFifthSubtitle =>
+      'Discover new healthy recipes every day, from ingredients to step-by-step instructions.';
+
+  @override
+  String get onboardingStart => 'Get started';
+
+  @override
+  String get onboardingContinue => 'Continue';
+
+  @override
+  String get onboardingLetsStart => 'Let’s start';
+
+  @override
+  String get onboardingSkip => 'Skip →';
 }

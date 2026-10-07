@@ -28,7 +28,11 @@ class OnboardTitle extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
         ),
-        Row(
+
+        Wrap(
+          crossAxisAlignment: WrapCrossAlignment.center,
+          spacing: 6,
+          runSpacing: 2,
           children: [
             Text(
               titleHighlight,
@@ -37,7 +41,6 @@ class OnboardTitle extends StatelessWidget {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            6.ws,
             Text(emoji, style: const TextStyle(fontSize: 28)),
           ],
         ),

@@ -375,5 +375,29 @@
         "type": "int"
       }
     }
-  }
+  },
+  "onboardingFirstTitle": "Sağlamlığına doğru",
+  "onboardingFirstHighlight": "ilk addım",
+  "onboardingFirstSubtitle": "SağlamQal ilə hər gün nə yediyini bil, izlə və daha yaxşı seç. Kameranı tut, qalanını biz edək.",
+
+  "onboardingSecondTitle": "Şəkil çək",
+  "onboardingSecondHighlight": "hər şeyi öyrən",
+  "onboardingSecondSubtitle": "Şəkil çək — AI saniyələr içində kalorini və qida dəyərini göstərsin.",
+
+  "onboardingThirdTitle": "Susuz qalma",
+  "onboardingThirdHighlight": "xatırladaq",
+  "onboardingThirdSubtitle": "Gün ərzində su içməni izlə. Vaxtı gələndə SağlamQal sənə xatırladacaq.",
+
+  "onboardingFourthTitle": "Sevdiklərini saxla",
+  "onboardingFourthHighlight": "keçmişinə bax",
+  "onboardingFourthSubtitle": "Bəyəndiklərini favoritlərə əlavə et. Bütün scan tarixçən bir yerdə.",
+
+  "onboardingFifthTitle": "Bu gün",
+  "onboardingFifthHighlight": "nə bişirək?",
+  "onboardingFifthSubtitle": "Hər gün yeni, sağlam reseptlər. Maddələrdən addım-addım izahatına qədər.",
+
+  "onboardingStart": "Başla",
+  "onboardingContinue": "Davam et",
+  "onboardingLetsStart": "Başlayaq",
+  "onboardingSkip": "Keç →"
 }

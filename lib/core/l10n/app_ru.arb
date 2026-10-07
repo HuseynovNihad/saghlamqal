@@ -284,5 +284,29 @@
 
   "favoritesCaloriesValue": "{value} ккал",
   "favoritesProteinValue": "{value} г Б",
-  "favoritesCarbsValue": "{value} г У"
+  "favoritesCarbsValue": "{value} г У",
+  "onboardingFirstTitle": "Первый шаг",
+  "onboardingFirstHighlight": "к здоровью",
+  "onboardingFirstSubtitle": "С SağlamQal вы сможете каждый день следить за своим питанием и делать более здоровый выбор. Наведите камеру — остальное сделаем мы.",
+
+  "onboardingSecondTitle": "Сделайте фото",
+  "onboardingSecondHighlight": "узнайте всё",
+  "onboardingSecondSubtitle": "Сделайте фото, и ИИ за несколько секунд покажет калорийность и пищевую ценность.",
+
+  "onboardingThirdTitle": "Не забывайте пить воду",
+  "onboardingThirdHighlight": "мы напомним",
+  "onboardingThirdSubtitle": "Следите за потреблением воды в течение дня. SağlamQal напомнит, когда придёт время выпить воды.",
+
+  "onboardingFourthTitle": "Сохраняйте любимое",
+  "onboardingFourthHighlight": "смотрите историю",
+  "onboardingFourthSubtitle": "Добавляйте понравившиеся продукты в избранное. Вся история сканирований хранится в одном месте.",
+
+  "onboardingFifthTitle": "Что приготовим",
+  "onboardingFifthHighlight": "сегодня?",
+  "onboardingFifthSubtitle": "Каждый день новые полезные рецепты — от ингредиентов до пошагового приготовления.",
+
+  "onboardingStart": "Начать",
+  "onboardingContinue": "Продолжить",
+  "onboardingLetsStart": "Начнём",
+  "onboardingSkip": "Пропустить →"
 }

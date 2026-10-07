@@ -22,7 +22,7 @@ class OnboardPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    final size = MediaQuery.sizeOf(context);
     final panelHeight = size.height * 0.41;
 
     return Stack(
@@ -43,7 +43,7 @@ class OnboardPage extends StatelessWidget {
                 end: Alignment.topCenter,
                 colors: [
                   AppColors.onboardPanelDark,
-                  AppColors.onboardPanelDark.withOpacity(0.92),
+                  AppColors.onboardPanelDark.withValues(alpha: 0.92),
                   Colors.transparent,
                 ],
                 stops: const [0.0, 0.3, 0.6],
@@ -51,6 +51,7 @@ class OnboardPage extends StatelessWidget {
             ),
           ),
         ),
+
         Positioned(
           bottom: 0,
           left: 0,

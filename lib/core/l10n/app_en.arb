@@ -284,5 +284,29 @@
 
   "favoritesCaloriesValue": "{value} kcal",
   "favoritesProteinValue": "{value} g P",
-  "favoritesCarbsValue": "{value} g C"
+  "favoritesCarbsValue": "{value} g C",
+  "onboardingFirstTitle": "Your first step",
+  "onboardingFirstHighlight": "toward better health",
+  "onboardingFirstSubtitle": "With SağlamQal, know what you eat every day, track it, and make better choices. Point the camera and we’ll do the rest.",
+
+  "onboardingSecondTitle": "Take a photo",
+  "onboardingSecondHighlight": "learn everything",
+  "onboardingSecondSubtitle": "Take a photo and let AI show the calories and nutritional values in seconds.",
+
+  "onboardingThirdTitle": "Stay hydrated",
+  "onboardingThirdHighlight": "we’ll remind you",
+  "onboardingThirdSubtitle": "Track your water intake throughout the day. SağlamQal will remind you when it’s time to drink.",
+
+  "onboardingFourthTitle": "Save your favorites",
+  "onboardingFourthHighlight": "view your history",
+  "onboardingFourthSubtitle": "Add the products you like to your favorites. Your entire scan history stays in one place.",
+
+  "onboardingFifthTitle": "What should we",
+  "onboardingFifthHighlight": "cook today?",
+  "onboardingFifthSubtitle": "Discover new healthy recipes every day, from ingredients to step-by-step instructions.",
+
+  "onboardingStart": "Get started",
+  "onboardingContinue": "Continue",
+  "onboardingLetsStart": "Let’s start",
+  "onboardingSkip": "Skip →"
 }

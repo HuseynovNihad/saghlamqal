@@ -36,7 +36,7 @@ class OnboardHeroImage extends StatelessWidget {
                   end: Alignment.bottomCenter,
                   colors: [
                     Colors.transparent,
-                    AppColors.onboardPanelDark.withOpacity(0.85),
+                    AppColors.onboardPanelDark.withValues(alpha: 0.85),
                     AppColors.onboardPanelDark,
                   ],
                 ),

@@ -766,4 +766,66 @@ class AppLocalizationsTr extends AppLocalizations {
   String favoritesCarbsValue(int value) {
     return '$value g K';
   }
+
+  @override
+  String get onboardingFirstTitle => 'Sağlığına doğru';
+
+  @override
+  String get onboardingFirstHighlight => 'ilk adım';
+
+  @override
+  String get onboardingFirstSubtitle =>
+      'SağlamQal ile her gün ne yediğini bil, takip et ve daha iyi seçimler yap. Kamerayı tut, gerisini biz halledelim.';
+
+  @override
+  String get onboardingSecondTitle => 'Fotoğraf çek';
+
+  @override
+  String get onboardingSecondHighlight => 'her şeyi öğren';
+
+  @override
+  String get onboardingSecondSubtitle =>
+      'Fotoğraf çek, AI saniyeler içinde kalori ve besin değerlerini göstersin.';
+
+  @override
+  String get onboardingThirdTitle => 'Susuz kalma';
+
+  @override
+  String get onboardingThirdHighlight => 'biz hatırlatalım';
+
+  @override
+  String get onboardingThirdSubtitle =>
+      'Gün boyunca su tüketimini takip et. Zamanı geldiğinde SağlamQal sana hatırlatsın.';
+
+  @override
+  String get onboardingFourthTitle => 'Sevdiklerini kaydet';
+
+  @override
+  String get onboardingFourthHighlight => 'geçmişine bak';
+
+  @override
+  String get onboardingFourthSubtitle =>
+      'Beğendiğin ürünleri favorilerine ekle. Tüm tarama geçmişin tek bir yerde.';
+
+  @override
+  String get onboardingFifthTitle => 'Bugün';
+
+  @override
+  String get onboardingFifthHighlight => 'ne pişirelim?';
+
+  @override
+  String get onboardingFifthSubtitle =>
+      'Her gün yeni ve sağlıklı tarifler. Malzemelerden adım adım hazırlanışına kadar.';
+
+  @override
+  String get onboardingStart => 'Başla';
+
+  @override
+  String get onboardingContinue => 'Devam et';
+
+  @override
+  String get onboardingLetsStart => 'Hadi başlayalım';
+
+  @override
+  String get onboardingSkip => 'Geç →';
 }

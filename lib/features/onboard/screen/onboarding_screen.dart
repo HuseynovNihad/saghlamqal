@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/l10n/localization_extension.dart';
 import '../models/onboarding_data.dart';
 import '../widgets/onboard_page.dart';
 
@@ -17,8 +18,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   int _currentIndex = 0;
 
-  void _next() {
-    if (_currentIndex < onboardingPages.length - 1) {
+  void _next(int totalPages) {
+    if (_currentIndex < totalPages - 1) {
       _controller.nextPage(
         duration: const Duration(milliseconds: 400),
         curve: Curves.easeInOut,
@@ -31,11 +32,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   void dispose() {
     _controller.dispose();
+
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final onboardingPages = getOnboardingPages(context.l10n);
+
     return Scaffold(
       body: PageView.builder(
         controller: _controller,
@@ -45,12 +49,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             _currentIndex = index;
           });
         },
-        itemBuilder: (_, index) {
+        itemBuilder: (context, index) {
           return OnboardPage(
             data: onboardingPages[index],
             currentIndex: _currentIndex,
             totalPages: onboardingPages.length,
-            onNext: _next,
+            onNext: () {
+              _next(onboardingPages.length);
+            },
             onSkip: widget.onFinish,
           );
         },

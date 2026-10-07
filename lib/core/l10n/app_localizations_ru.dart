@@ -784,4 +784,66 @@ class AppLocalizationsRu extends AppLocalizations {
   String favoritesCarbsValue(int value) {
     return '$value г У';
   }
+
+  @override
+  String get onboardingFirstTitle => 'Первый шаг';
+
+  @override
+  String get onboardingFirstHighlight => 'к здоровью';
+
+  @override
+  String get onboardingFirstSubtitle =>
+      'С SağlamQal вы сможете каждый день следить за своим питанием и делать более здоровый выбор. Наведите камеру — остальное сделаем мы.';
+
+  @override
+  String get onboardingSecondTitle => 'Сделайте фото';
+
+  @override
+  String get onboardingSecondHighlight => 'узнайте всё';
+
+  @override
+  String get onboardingSecondSubtitle =>
+      'Сделайте фото, и ИИ за несколько секунд покажет калорийность и пищевую ценность.';
+
+  @override
+  String get onboardingThirdTitle => 'Не забывайте пить воду';
+
+  @override
+  String get onboardingThirdHighlight => 'мы напомним';
+
+  @override
+  String get onboardingThirdSubtitle =>
+      'Следите за потреблением воды в течение дня. SağlamQal напомнит, когда придёт время выпить воды.';
+
+  @override
+  String get onboardingFourthTitle => 'Сохраняйте любимое';
+
+  @override
+  String get onboardingFourthHighlight => 'смотрите историю';
+
+  @override
+  String get onboardingFourthSubtitle =>
+      'Добавляйте понравившиеся продукты в избранное. Вся история сканирований хранится в одном месте.';
+
+  @override
+  String get onboardingFifthTitle => 'Что приготовим';
+
+  @override
+  String get onboardingFifthHighlight => 'сегодня?';
+
+  @override
+  String get onboardingFifthSubtitle =>
+      'Каждый день новые полезные рецепты — от ингредиентов до пошагового приготовления.';
+
+  @override
+  String get onboardingStart => 'Начать';
+
+  @override
+  String get onboardingContinue => 'Продолжить';
+
+  @override
+  String get onboardingLetsStart => 'Начнём';
+
+  @override
+  String get onboardingSkip => 'Пропустить →';
 }

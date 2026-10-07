@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/l10n/localization_extension.dart';
 import '../../../core/constants/app_text_styles.dart';
 import '../../../core/utils/padding_extension.dart';
 import '../../../core/utils/radius_extension.dart';
@@ -76,8 +77,9 @@ class _Subtitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
+      textAlign: TextAlign.center,
       style: AppTextStyles.bodySmall.copyWith(
-        color: AppColors.surface.withOpacity(0.85),
+        color: AppColors.surface.withValues(alpha: 0.85),
         fontWeight: FontWeight.w400,
       ),
     );
@@ -98,7 +100,7 @@ class _DotIndicator extends StatelessWidget {
         count: count,
         effect: ExpandingDotsEffect(
           activeDotColor: AppColors.onboardLightGreen,
-          dotColor: AppColors.surface.withOpacity(0.3),
+          dotColor: AppColors.surface.withValues(alpha: 0.3),
           dotHeight: 7,
           dotWidth: 7,
           expansionFactor: 3,
@@ -131,15 +133,21 @@ class _CtaButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              label,
-              style: AppTextStyles.bodyMedium.copyWith(
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
-                color: Colors.white,
+            Flexible(
+              child: Text(
+                label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.bodyMedium.copyWith(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
+                ),
               ),
             ),
+
             4.ws,
+
             const Icon(Icons.arrow_forward_rounded, size: 20),
           ],
         ),
@@ -162,7 +170,7 @@ class _SkipLink extends StatelessWidget {
         child: Padding(
           padding: 4.py,
           child: Text(
-            'Keç →',
+            context.l10n.onboardingSkip,
             style: AppTextStyles.bodySmall.copyWith(
               color: AppColors.onboardSkipGreen,
               fontWeight: FontWeight.w500,

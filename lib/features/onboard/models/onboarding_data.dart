@@ -1,4 +1,5 @@
 import '../../../core/constants/app_assets.dart';
+import '../../../core/l10n/app_localizations.dart';
 
 class OnboardingData {
   final String image;
@@ -18,50 +19,47 @@ class OnboardingData {
   });
 }
 
-final List<OnboardingData> onboardingPages = [
-  OnboardingData(
-    image: AppAssets.onboard1AppScreen,
-    title: 'Sağlamlığına doğru',
-    titleHighlight: 'ilk addım',
-    titleEmoji: '👋',
-    subtitle:
-        'SağlamQal ilə hər gün nə yediyini bil, izlə və daha yaxşı seç. Kameranı tut, qalanını biz edək.',
-    buttonLabel: 'Başla',
-  ),
-  OnboardingData(
-    image: AppAssets.onboard2,
-    title: 'Şəkil çək',
-    titleHighlight: 'hər şeyi öyrən',
-    titleEmoji: '🔍',
-    subtitle:
-        'Şəkil çək — AI saniyələr içində kalorini və qida dəyərini göstərsin.',
-    buttonLabel: 'Davam et',
-  ),
-  OnboardingData(
-    image: AppAssets.onboard3,
-    title: 'Susuz qalma',
-    titleHighlight: 'xatırladaq',
-    titleEmoji: '💧',
-    subtitle:
-        'Gün ərzində su içməni izlə. Vaxtı gələndə SağlamQal sənə xatırladacaq.',
-    buttonLabel: 'Davam et',
-  ),
-  OnboardingData(
-    image: AppAssets.onboard4,
-    title: 'Sevdiklərini saxla',
-    titleHighlight: 'keçmişinə bax',
-    titleEmoji: '⭐',
-    subtitle:
-        'Bəyəndiklərini favoritlərə əlavə et. Bütün scan tarixçən bir yerdə.',
-    buttonLabel: 'Davam et',
-  ),
-  OnboardingData(
-    image: AppAssets.onboard5,
-    title: 'Bu gün',
-    titleHighlight: 'nə bişirək?',
-    titleEmoji: '🥗',
-    subtitle:
-        'Hər gün yeni, sağlam reseptlər. Maddələrdən addım-addım izahatına qədər.',
-    buttonLabel: 'Başlayaq',
-  ),
-];
+List<OnboardingData> getOnboardingPages(AppLocalizations l10n) {
+  return [
+    OnboardingData(
+      image: AppAssets.onboard1AppScreen,
+      title: l10n.onboardingFirstTitle,
+      titleHighlight: l10n.onboardingFirstHighlight,
+      titleEmoji: '👋',
+      subtitle: l10n.onboardingFirstSubtitle,
+      buttonLabel: l10n.onboardingStart,
+    ),
+    OnboardingData(
+      image: AppAssets.onboard2,
+      title: l10n.onboardingSecondTitle,
+      titleHighlight: l10n.onboardingSecondHighlight,
+      titleEmoji: '🔍',
+      subtitle: l10n.onboardingSecondSubtitle,
+      buttonLabel: l10n.onboardingContinue,
+    ),
+    OnboardingData(
+      image: AppAssets.onboard3,
+      title: l10n.onboardingThirdTitle,
+      titleHighlight: l10n.onboardingThirdHighlight,
+      titleEmoji: '💧',
+      subtitle: l10n.onboardingThirdSubtitle,
+      buttonLabel: l10n.onboardingContinue,
+    ),
+    OnboardingData(
+      image: AppAssets.onboard4,
+      title: l10n.onboardingFourthTitle,
+      titleHighlight: l10n.onboardingFourthHighlight,
+      titleEmoji: '⭐',
+      subtitle: l10n.onboardingFourthSubtitle,
+      buttonLabel: l10n.onboardingContinue,
+    ),
+    OnboardingData(
+      image: AppAssets.onboard5,
+      title: l10n.onboardingFifthTitle,
+      titleHighlight: l10n.onboardingFifthHighlight,
+      titleEmoji: '🥗',
+      subtitle: l10n.onboardingFifthSubtitle,
+      buttonLabel: l10n.onboardingLetsStart,
+    ),
+  ];
+}

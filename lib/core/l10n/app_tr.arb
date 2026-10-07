@@ -284,5 +284,29 @@
 
   "favoritesCaloriesValue": "{value} kcal",
   "favoritesProteinValue": "{value} g P",
-  "favoritesCarbsValue": "{value} g K"
+  "favoritesCarbsValue": "{value} g K",
+  "onboardingFirstTitle": "Sağlığına doğru",
+  "onboardingFirstHighlight": "ilk adım",
+  "onboardingFirstSubtitle": "SağlamQal ile her gün ne yediğini bil, takip et ve daha iyi seçimler yap. Kamerayı tut, gerisini biz halledelim.",
+
+  "onboardingSecondTitle": "Fotoğraf çek",
+  "onboardingSecondHighlight": "her şeyi öğren",
+  "onboardingSecondSubtitle": "Fotoğraf çek, AI saniyeler içinde kalori ve besin değerlerini göstersin.",
+
+  "onboardingThirdTitle": "Susuz kalma",
+  "onboardingThirdHighlight": "biz hatırlatalım",
+  "onboardingThirdSubtitle": "Gün boyunca su tüketimini takip et. Zamanı geldiğinde SağlamQal sana hatırlatsın.",
+
+  "onboardingFourthTitle": "Sevdiklerini kaydet",
+  "onboardingFourthHighlight": "geçmişine bak",
+  "onboardingFourthSubtitle": "Beğendiğin ürünleri favorilerine ekle. Tüm tarama geçmişin tek bir yerde.",
+
+  "onboardingFifthTitle": "Bugün",
+  "onboardingFifthHighlight": "ne pişirelim?",
+  "onboardingFifthSubtitle": "Her gün yeni ve sağlıklı tarifler. Malzemelerden adım adım hazırlanışına kadar.",
+
+  "onboardingStart": "Başla",
+  "onboardingContinue": "Devam et",
+  "onboardingLetsStart": "Hadi başlayalım",
+  "onboardingSkip": "Geç →"
 }

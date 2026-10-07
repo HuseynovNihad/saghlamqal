@@ -766,4 +766,66 @@ class AppLocalizationsAz extends AppLocalizations {
   String favoritesCarbsValue(int value) {
     return '$value q K';
   }
+
+  @override
+  String get onboardingFirstTitle => 'Sağlamlığına doğru';
+
+  @override
+  String get onboardingFirstHighlight => 'ilk addım';
+
+  @override
+  String get onboardingFirstSubtitle =>
+      'SağlamQal ilə hər gün nə yediyini bil, izlə və daha yaxşı seç. Kameranı tut, qalanını biz edək.';
+
+  @override
+  String get onboardingSecondTitle => 'Şəkil çək';
+
+  @override
+  String get onboardingSecondHighlight => 'hər şeyi öyrən';
+
+  @override
+  String get onboardingSecondSubtitle =>
+      'Şəkil çək — AI saniyələr içində kalorini və qida dəyərini göstərsin.';
+
+  @override
+  String get onboardingThirdTitle => 'Susuz qalma';
+
+  @override
+  String get onboardingThirdHighlight => 'xatırladaq';
+
+  @override
+  String get onboardingThirdSubtitle =>
+      'Gün ərzində su içməni izlə. Vaxtı gələndə SağlamQal sənə xatırladacaq.';
+
+  @override
+  String get onboardingFourthTitle => 'Sevdiklərini saxla';
+
+  @override
+  String get onboardingFourthHighlight => 'keçmişinə bax';
+
+  @override
+  String get onboardingFourthSubtitle =>
+      'Bəyəndiklərini favoritlərə əlavə et. Bütün scan tarixçən bir yerdə.';
+
+  @override
+  String get onboardingFifthTitle => 'Bu gün';
+
+  @override
+  String get onboardingFifthHighlight => 'nə bişirək?';
+
+  @override
+  String get onboardingFifthSubtitle =>
+      'Hər gün yeni, sağlam reseptlər. Maddələrdən addım-addım izahatına qədər.';
+
+  @override
+  String get onboardingStart => 'Başla';
+
+  @override
+  String get onboardingContinue => 'Davam et';
+
+  @override
+  String get onboardingLetsStart => 'Başlayaq';
+
+  @override
+  String get onboardingSkip => 'Keç →';
 }

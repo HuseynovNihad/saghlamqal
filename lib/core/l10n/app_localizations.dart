@@ -1475,6 +1475,120 @@ abstract class AppLocalizations {
   /// In az, this message translates to:
   /// **'{value} q K'**
   String favoritesCarbsValue(int value);
+
+  /// No description provided for @onboardingFirstTitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Sağlamlığına doğru'**
+  String get onboardingFirstTitle;
+
+  /// No description provided for @onboardingFirstHighlight.
+  ///
+  /// In az, this message translates to:
+  /// **'ilk addım'**
+  String get onboardingFirstHighlight;
+
+  /// No description provided for @onboardingFirstSubtitle.
+  ///
+  /// In az, this message translates to:
+  /// **'SağlamQal ilə hər gün nə yediyini bil, izlə və daha yaxşı seç. Kameranı tut, qalanını biz edək.'**
+  String get onboardingFirstSubtitle;
+
+  /// No description provided for @onboardingSecondTitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Şəkil çək'**
+  String get onboardingSecondTitle;
+
+  /// No description provided for @onboardingSecondHighlight.
+  ///
+  /// In az, this message translates to:
+  /// **'hər şeyi öyrən'**
+  String get onboardingSecondHighlight;
+
+  /// No description provided for @onboardingSecondSubtitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Şəkil çək — AI saniyələr içində kalorini və qida dəyərini göstərsin.'**
+  String get onboardingSecondSubtitle;
+
+  /// No description provided for @onboardingThirdTitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Susuz qalma'**
+  String get onboardingThirdTitle;
+
+  /// No description provided for @onboardingThirdHighlight.
+  ///
+  /// In az, this message translates to:
+  /// **'xatırladaq'**
+  String get onboardingThirdHighlight;
+
+  /// No description provided for @onboardingThirdSubtitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Gün ərzində su içməni izlə. Vaxtı gələndə SağlamQal sənə xatırladacaq.'**
+  String get onboardingThirdSubtitle;
+
+  /// No description provided for @onboardingFourthTitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Sevdiklərini saxla'**
+  String get onboardingFourthTitle;
+
+  /// No description provided for @onboardingFourthHighlight.
+  ///
+  /// In az, this message translates to:
+  /// **'keçmişinə bax'**
+  String get onboardingFourthHighlight;
+
+  /// No description provided for @onboardingFourthSubtitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Bəyəndiklərini favoritlərə əlavə et. Bütün scan tarixçən bir yerdə.'**
+  String get onboardingFourthSubtitle;
+
+  /// No description provided for @onboardingFifthTitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Bu gün'**
+  String get onboardingFifthTitle;
+
+  /// No description provided for @onboardingFifthHighlight.
+  ///
+  /// In az, this message translates to:
+  /// **'nə bişirək?'**
+  String get onboardingFifthHighlight;
+
+  /// No description provided for @onboardingFifthSubtitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Hər gün yeni, sağlam reseptlər. Maddələrdən addım-addım izahatına qədər.'**
+  String get onboardingFifthSubtitle;
+
+  /// No description provided for @onboardingStart.
+  ///
+  /// In az, this message translates to:
+  /// **'Başla'**
+  String get onboardingStart;
+
+  /// No description provided for @onboardingContinue.
+  ///
+  /// In az, this message translates to:
+  /// **'Davam et'**
+  String get onboardingContinue;
+
+  /// No description provided for @onboardingLetsStart.
+  ///
+  /// In az, this message translates to:
+  /// **'Başlayaq'**
+  String get onboardingLetsStart;
+
+  /// No description provided for @onboardingSkip.
+  ///
+  /// In az, this message translates to:
+  /// **'Keç →'**
+  String get onboardingSkip;
 }
 
 class _AppLocalizationsDelegate
