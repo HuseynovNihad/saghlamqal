@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/constants/app_assets.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/l10n/localization_extension.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../../core/utils/asset_extension.dart';
 import '../../../../core/utils/padding_extension.dart';
@@ -25,13 +26,14 @@ class FavoritesPage extends StatefulWidget {
 }
 
 class _FavoritesPageState extends State<FavoritesPage> {
+  bool _isSearchOpen = false;
+
   @override
   void initState() {
     super.initState();
+
     AppRouter.favoritesBloc.add(GetFavoritesEvent());
   }
-
-  bool _isSearchOpen = false;
 
   @override
   Widget build(BuildContext context) {
@@ -41,23 +43,22 @@ class _FavoritesPageState extends State<FavoritesPage> {
         child: BlocBuilder<AuthBloc, AuthState>(
           builder: (context, authState) {
             if (authState is! AuthAuthenticated) {
-              return const UnauthenticatedView(
+              return UnauthenticatedView(
                 headerIcon: AppAssets.favorite,
-                title: 'Sağlam seçimlərini\nsaxla',
-                subtitle:
-                    'Oxutduğun məhsulları əlavə et,\nkalori və dəyərlərini izlə.',
+                title: context.l10n.favoritesGuestTitle,
+                subtitle: context.l10n.favoritesGuestSubtitle,
                 features: [
                   UnauthFeatureItem(
                     icon: AppAssets.favorite,
-                    label: 'Məhsulları saxla',
+                    label: context.l10n.favoritesGuestFeatureSaveProducts,
                   ),
                   UnauthFeatureItem(
                     icon: AppAssets.collections,
-                    label: 'Kolleksiyalar yarat',
+                    label: context.l10n.favoritesGuestFeatureCreateCollections,
                   ),
                   UnauthFeatureItem(
                     icon: AppAssets.search,
-                    label: 'İstənilən vaxt tap',
+                    label: context.l10n.favoritesGuestFeatureFindAnytime,
                   ),
                 ],
               );
@@ -68,23 +69,30 @@ class _FavoritesPageState extends State<FavoritesPage> {
               children: [
                 FavoritesHeader(
                   isSearchOpen: _isSearchOpen,
-                  onSearchTap: () =>
-                      setState(() => _isSearchOpen = !_isSearchOpen),
+                  onSearchTap: () {
+                    setState(() {
+                      _isSearchOpen = !_isSearchOpen;
+                    });
+                  },
                 ),
+
                 Expanded(
                   child: BlocBuilder<FavoritesBloc, FavoritesState>(
                     builder: (context, state) {
                       return switch (state) {
                         FavoritesInitial() => const SizedBox.shrink(),
+
                         FavoritesLoading() => const Center(
                           child: CircularProgressIndicator(
                             color: AppColors.primary,
                           ),
                         ),
+
                         FavoritesLoaded s => _FavoritesContent(
                           state: s,
                           isSearchOpen: _isSearchOpen,
                         ),
+
                         FavoriteActionLoading s => _FavoritesContent(
                           state: FavoritesLoaded(
                             favorites: s.favorites,
@@ -93,6 +101,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                           isActionLoading: true,
                           isSearchOpen: _isSearchOpen,
                         ),
+
                         FavoriteActionSuccess s => _FavoritesContent(
                           state: FavoritesLoaded(
                             favorites: s.favorites,
@@ -100,6 +109,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                           ),
                           isSearchOpen: _isSearchOpen,
                         ),
+
                         FavoritesError s => FavoritesErrorView(
                           message: s.message,
                         ),
@@ -133,11 +143,13 @@ class _FavoritesContent extends StatefulWidget {
 
 class _FavoritesContentState extends State<_FavoritesContent> {
   String _query = '';
+
   final TextEditingController _controller = TextEditingController();
 
   @override
   void didUpdateWidget(_FavoritesContent oldWidget) {
     super.didUpdateWidget(oldWidget);
+
     if (!widget.isSearchOpen) {
       _controller.clear();
       _query = '';
@@ -147,6 +159,7 @@ class _FavoritesContentState extends State<_FavoritesContent> {
   @override
   void dispose() {
     _controller.dispose();
+
     super.dispose();
   }
 
@@ -154,7 +167,9 @@ class _FavoritesContentState extends State<_FavoritesContent> {
   Widget build(BuildContext context) {
     final filtered = widget.state.favorites
         .where(
-          (f) => (f.name ?? '').toLowerCase().contains(_query.toLowerCase()),
+          (favorite) => (favorite.name ?? '').toLowerCase().contains(
+            _query.toLowerCase(),
+          ),
         )
         .toList();
 
@@ -178,7 +193,7 @@ class _FavoritesContentState extends State<_FavoritesContent> {
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
                       child: CustomTextField(
-                        hintText: 'Axtar...',
+                        hintText: context.l10n.favoritesSearchHint,
                         controller: _controller,
                         prefixIcon: Padding(
                           padding: 10.p,
@@ -193,25 +208,36 @@ class _FavoritesContentState extends State<_FavoritesContent> {
                                 icon: const Icon(Icons.clear, size: 20),
                                 onPressed: () {
                                   _controller.clear();
-                                  setState(() => _query = '');
+
+                                  setState(() {
+                                    _query = '';
+                                  });
                                 },
                               )
                             : null,
-                        onChanged: (v) => setState(() => _query = v),
+                        onChanged: (value) {
+                          setState(() {
+                            _query = value;
+                          });
+                        },
                       ),
                     ),
                   ),
                 ),
               ),
+
               if (filtered.isEmpty)
                 const SliverFillRemaining(child: FavoritesEmptyView())
               else ...[
-                const FavoritesSectionLabel(label: 'Saxlanılmış məhsullar'),
+                FavoritesSectionLabel(
+                  label: context.l10n.favoritesSavedProducts,
+                ),
                 FavoritesItemsSection(favorites: filtered),
               ],
             ],
           ),
         ),
+
         if (widget.isActionLoading)
           const Positioned(
             top: 0,

@@ -3,9 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/l10n/localization_extension.dart';
 import '../../../../core/utils/radius_extension.dart';
 import '../../../../core/utils/sized_box_extension.dart';
-import '../../../favorites/presentation/bloc/favorites_bloc.dart';
+import '../bloc/favorites_bloc.dart';
 import '../../data/models/collection_icon_styles.dart';
 
 class CreateCollectionBottomSheet extends StatefulWidget {
@@ -18,27 +19,49 @@ class CreateCollectionBottomSheet extends StatefulWidget {
 
 class _CreateCollectionBottomSheetState
     extends State<CreateCollectionBottomSheet> {
-  final _nameController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+
   String? _selectedIconId;
 
-  final List<Map<String, String>> _icons = const [
-    {'id': 'gym', 'label': 'İdman'},
-    {'id': 'breakfast', 'label': 'Səhər yeməyi'},
-    {'id': 'lunch', 'label': 'Nahar'},
-    {'id': 'dinner', 'label': 'Axşam yeməyi'},
-    {'id': 'snack', 'label': 'Snack'},
-    {'id': 'salad', 'label': 'Salat'},
-    {'id': 'fruit', 'label': 'Meyvə'},
-    {'id': 'drink', 'label': 'İçki'},
-    {'id': 'diet', 'label': 'Diyet'},
-    {'id': 'protein', 'label': 'Protein'},
-    {'id': 'vegan', 'label': 'Vegan'},
-    {'id': 'dessert', 'label': 'Desert'},
+  static const List<String> _iconIds = [
+    'gym',
+    'breakfast',
+    'lunch',
+    'dinner',
+    'snack',
+    'salad',
+    'fruit',
+    'drink',
+    'diet',
+    'protein',
+    'vegan',
+    'dessert',
   ];
+
+  String _getIconLabel(BuildContext context, String id) {
+    return switch (id) {
+      'gym' => context.l10n.favoritesIconGym,
+      'breakfast' => context.l10n.favoritesIconBreakfast,
+      'lunch' => context.l10n.favoritesIconLunch,
+      'dinner' => context.l10n.favoritesIconDinner,
+      'snack' => context.l10n.favoritesIconSnack,
+      'salad' => context.l10n.favoritesIconSalad,
+      'fruit' => context.l10n.favoritesIconFruit,
+      'drink' => context.l10n.favoritesIconDrink,
+      'diet' => context.l10n.favoritesIconDiet,
+      'protein' => context.l10n.favoritesIconProtein,
+      'vegan' => context.l10n.favoritesIconVegan,
+      'dessert' => context.l10n.favoritesIconDessert,
+      _ => id,
+    };
+  }
 
   void _submit() {
     final name = _nameController.text.trim();
-    if (name.isEmpty || _selectedIconId == null) return;
+
+    if (name.isEmpty || _selectedIconId == null) {
+      return;
+    }
 
     context.read<FavoritesBloc>().add(
       CreateCollectionEvent(
@@ -47,21 +70,23 @@ class _CreateCollectionBottomSheetState
         icon: _selectedIconId!,
       ),
     );
+
     Navigator.pop(context);
   }
 
   @override
   void dispose() {
     _nameController.dispose();
+
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context).viewInsets.bottom + 24,
@@ -83,9 +108,16 @@ class _CreateCollectionBottomSheetState
               ),
             ),
           ),
+
           20.hs,
-          Text('Yeni kolleksiya', style: AppTextStyles.h2),
+
+          Text(
+            context.l10n.favoritesCreateCollectionTitle,
+            style: AppTextStyles.h2,
+          ),
+
           16.hs,
+
           Row(
             children: [
               if (_selectedIconId != null) ...[
@@ -107,14 +139,18 @@ class _CreateCollectionBottomSheetState
                     ),
                   ),
                 ),
+
                 12.ws,
               ],
+
               Expanded(
                 child: TextField(
                   controller: _nameController,
-                  onChanged: (_) => setState(() {}),
+                  onChanged: (_) {
+                    setState(() {});
+                  },
                   decoration: InputDecoration(
-                    hintText: 'Kolleksiya adı...',
+                    hintText: context.l10n.favoritesCollectionNameHint,
                     hintStyle: AppTextStyles.bodyMedium.copyWith(
                       color: Colors.grey,
                     ),
@@ -140,16 +176,17 @@ class _CreateCollectionBottomSheetState
           ),
 
           20.hs,
+
           Text(
-            'İkon seç',
+            context.l10n.favoritesSelectIcon,
             style: AppTextStyles.bodySmall.copyWith(
               fontWeight: FontWeight.w600,
               color: Colors.grey.shade600,
             ),
           ),
+
           12.hs,
 
-          // İkon grid
           GridView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -159,14 +196,17 @@ class _CreateCollectionBottomSheetState
               crossAxisSpacing: 10,
               childAspectRatio: 0.9,
             ),
-            itemCount: _icons.length,
+            itemCount: _iconIds.length,
             itemBuilder: (context, index) {
-              final icon = _icons[index];
-              final id = icon['id']!;
+              final id = _iconIds[index];
               final isSelected = _selectedIconId == id;
 
               return GestureDetector(
-                onTap: () => setState(() => _selectedIconId = id),
+                onTap: () {
+                  setState(() {
+                    _selectedIconId = id;
+                  });
+                },
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 200),
                   decoration: BoxDecoration(
@@ -190,17 +230,22 @@ class _CreateCollectionBottomSheetState
                         CollectionIconStyles.emoji(id),
                         style: const TextStyle(fontSize: 22),
                       ),
+
                       4.hs,
-                      Text(
-                        icon['label']!,
-                        style: TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.w500,
-                          color: CollectionIconStyles.textColor(id),
+
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                        child: Text(
+                          _getIconLabel(context, id),
+                          style: TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w500,
+                            color: CollectionIconStyles.textColor(id),
+                          ),
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        textAlign: TextAlign.center,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
                       ),
                     ],
                   ),
@@ -210,6 +255,7 @@ class _CreateCollectionBottomSheetState
           ),
 
           20.hs,
+
           SizedBox(
             width: double.infinity,
             height: 50,
@@ -226,7 +272,7 @@ class _CreateCollectionBottomSheetState
                 elevation: 0,
               ),
               child: Text(
-                'Yarat',
+                context.l10n.favoritesCreate,
                 style: AppTextStyles.bodyMedium.copyWith(
                   color: Colors.white,
                   fontWeight: FontWeight.w600,

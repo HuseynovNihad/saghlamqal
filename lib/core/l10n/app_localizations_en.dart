@@ -649,4 +649,129 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get networkUnexpectedError => 'An unexpected error occurred.';
+
+  @override
+  String get favoritesGuestTitle => 'Save your\nhealthy choices';
+
+  @override
+  String get favoritesGuestSubtitle =>
+      'Save scanned products and\ntrack their calories and nutrition.';
+
+  @override
+  String get favoritesGuestFeatureSaveProducts => 'Save products';
+
+  @override
+  String get favoritesGuestFeatureCreateCollections => 'Create collections';
+
+  @override
+  String get favoritesGuestFeatureFindAnytime => 'Find anytime';
+
+  @override
+  String get favoritesSearchHint => 'Search...';
+
+  @override
+  String get favoritesSavedProducts => 'Saved products';
+
+  @override
+  String get favoritesTitle => 'Favorites';
+
+  @override
+  String favoritesSavedCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count products saved',
+      one: '1 product saved',
+      zero: 'No products saved',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get favoritesEmptyTitle => 'Nothing saved yet';
+
+  @override
+  String get favoritesEmptySubtitle =>
+      'Scan products and add them to your favorites';
+
+  @override
+  String get favoritesRetry => 'Try again';
+
+  @override
+  String get favoritesCreateCollectionTitle => 'New collection';
+
+  @override
+  String get favoritesCollectionNameHint => 'Collection name...';
+
+  @override
+  String get favoritesSelectIcon => 'Select icon';
+
+  @override
+  String get favoritesCreate => 'Create';
+
+  @override
+  String get favoritesNew => 'New';
+
+  @override
+  String get favoritesIconGym => 'Gym';
+
+  @override
+  String get favoritesIconBreakfast => 'Breakfast';
+
+  @override
+  String get favoritesIconLunch => 'Lunch';
+
+  @override
+  String get favoritesIconDinner => 'Dinner';
+
+  @override
+  String get favoritesIconSnack => 'Snack';
+
+  @override
+  String get favoritesIconSalad => 'Salad';
+
+  @override
+  String get favoritesIconFruit => 'Fruit';
+
+  @override
+  String get favoritesIconDrink => 'Drink';
+
+  @override
+  String get favoritesIconDiet => 'Diet';
+
+  @override
+  String get favoritesIconProtein => 'Protein';
+
+  @override
+  String get favoritesIconVegan => 'Vegan';
+
+  @override
+  String get favoritesIconDessert => 'Dessert';
+
+  @override
+  String favoritesCollectionItemCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count products',
+      one: '1 product',
+      zero: '0 products',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String favoritesCaloriesValue(int value) {
+    return '$value kcal';
+  }
+
+  @override
+  String favoritesProteinValue(int value) {
+    return '$value g P';
+  }
+
+  @override
+  String favoritesCarbsValue(int value) {
+    return '$value g C';
+  }
 }

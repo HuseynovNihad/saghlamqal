@@ -655,4 +655,133 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get networkUnexpectedError => 'Произошла непредвиденная ошибка.';
+
+  @override
+  String get favoritesGuestTitle => 'Сохраняйте свои\nполезные выборы';
+
+  @override
+  String get favoritesGuestSubtitle =>
+      'Сохраняйте отсканированные продукты\nи следите за калориями и составом.';
+
+  @override
+  String get favoritesGuestFeatureSaveProducts => 'Сохраняйте продукты';
+
+  @override
+  String get favoritesGuestFeatureCreateCollections => 'Создавайте коллекции';
+
+  @override
+  String get favoritesGuestFeatureFindAnytime => 'Находите в любое время';
+
+  @override
+  String get favoritesSearchHint => 'Поиск...';
+
+  @override
+  String get favoritesSavedProducts => 'Сохранённые продукты';
+
+  @override
+  String get favoritesTitle => 'Избранное';
+
+  @override
+  String favoritesSavedCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count продукта сохранено',
+      many: '$count продуктов сохранено',
+      few: '$count продукта сохранено',
+      one: '$count продукт сохранён',
+      zero: 'Нет сохранённых продуктов',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get favoritesEmptyTitle => 'Пока ничего не сохранено';
+
+  @override
+  String get favoritesEmptySubtitle =>
+      'Сканируйте продукты и добавляйте их в избранное';
+
+  @override
+  String get favoritesRetry => 'Попробовать снова';
+
+  @override
+  String get favoritesCreateCollectionTitle => 'Новая коллекция';
+
+  @override
+  String get favoritesCollectionNameHint => 'Название коллекции...';
+
+  @override
+  String get favoritesSelectIcon => 'Выберите значок';
+
+  @override
+  String get favoritesCreate => 'Создать';
+
+  @override
+  String get favoritesNew => 'Новая';
+
+  @override
+  String get favoritesIconGym => 'Спорт';
+
+  @override
+  String get favoritesIconBreakfast => 'Завтрак';
+
+  @override
+  String get favoritesIconLunch => 'Обед';
+
+  @override
+  String get favoritesIconDinner => 'Ужин';
+
+  @override
+  String get favoritesIconSnack => 'Перекус';
+
+  @override
+  String get favoritesIconSalad => 'Салат';
+
+  @override
+  String get favoritesIconFruit => 'Фрукты';
+
+  @override
+  String get favoritesIconDrink => 'Напитки';
+
+  @override
+  String get favoritesIconDiet => 'Диета';
+
+  @override
+  String get favoritesIconProtein => 'Белок';
+
+  @override
+  String get favoritesIconVegan => 'Веган';
+
+  @override
+  String get favoritesIconDessert => 'Десерт';
+
+  @override
+  String favoritesCollectionItemCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count продукта',
+      many: '$count продуктов',
+      few: '$count продукта',
+      one: '$count продукт',
+      zero: '0 продуктов',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String favoritesCaloriesValue(int value) {
+    return '$value ккал';
+  }
+
+  @override
+  String favoritesProteinValue(int value) {
+    return '$value г Б';
+  }
+
+  @override
+  String favoritesCarbsValue(int value) {
+    return '$value г У';
+  }
 }

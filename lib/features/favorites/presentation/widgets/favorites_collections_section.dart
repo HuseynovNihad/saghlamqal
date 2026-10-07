@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/l10n/localization_extension.dart';
 import '../../../../core/utils/padding_extension.dart';
 import '../../../../core/utils/radius_extension.dart';
 import '../../../../core/utils/sized_box_extension.dart';
@@ -29,17 +30,20 @@ class FavoritesCollectionsSection extends StatelessWidget {
           itemBuilder: (context, index) {
             if (index == collections.length) {
               return _AddCollectionCard(
-                onTap: () => showModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  backgroundColor: Colors.transparent,
-                  builder: (_) => BlocProvider.value(
-                    value: context.read<FavoritesBloc>(),
-                    child: const CreateCollectionBottomSheet(),
-                  ),
-                ),
+                onTap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor: Colors.transparent,
+                    builder: (_) => BlocProvider.value(
+                      value: context.read<FavoritesBloc>(),
+                      child: const CreateCollectionBottomSheet(),
+                    ),
+                  );
+                },
               );
             }
+
             return FavoriteCollectionCard(
               collection: collections[index],
               onDelete: () {
@@ -82,7 +86,7 @@ class _AddCollectionCard extends StatelessWidget {
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color: AppColors.primary.withOpacity(0.1),
+                color: AppColors.primary.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: const Icon(
@@ -91,9 +95,11 @@ class _AddCollectionCard extends StatelessWidget {
                 size: 22,
               ),
             ),
+
             8.hs,
+
             Text(
-              'Yeni',
+              context.l10n.favoritesNew,
               style: AppTextStyles.bodySmall.copyWith(
                 color: AppColors.primary,
                 fontWeight: FontWeight.w500,

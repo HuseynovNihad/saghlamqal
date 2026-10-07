@@ -302,5 +302,78 @@
   "networkTimeoutError": "Bağlantı vaxtı bitdi. İnterneti yoxlayın.",
   "networkServerError": "Server xətası baş verdi.",
   "networkNoConnectionError": "İnternet bağlantısı yoxdur.",
-  "networkUnexpectedError": "Gözlənilməz bir xəta baş verdi."
+  "networkUnexpectedError": "Gözlənilməz bir xəta baş verdi.",
+  "favoritesGuestTitle": "Sağlam seçimlərini\nsaxla",
+  "favoritesGuestSubtitle": "Oxutduğun məhsulları əlavə et,\nkalori və dəyərlərini izlə.",
+  "favoritesGuestFeatureSaveProducts": "Məhsulları saxla",
+  "favoritesGuestFeatureCreateCollections": "Kolleksiyalar yarat",
+  "favoritesGuestFeatureFindAnytime": "İstənilən vaxt tap",
+  "favoritesSearchHint": "Axtar...",
+  "favoritesSavedProducts": "Saxlanılmış məhsullar",
+  "favoritesTitle": "Favoritlər",
+  "favoritesSavedCount": "{count, plural, =0{Heç bir məhsul saxlanılmayıb} =1{1 məhsul saxlanılıb} other{{count} məhsul saxlanılıb}}",
+  "@favoritesSavedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "favoritesEmptyTitle": "Hələ heç nə saxlanılmayıb",
+  "favoritesEmptySubtitle": "Məhsulları tarayaraq favoritlərə əlavə et",
+  "favoritesRetry": "Yenidən cəhd et",
+  "favoritesCreateCollectionTitle": "Yeni kolleksiya",
+  "favoritesCollectionNameHint": "Kolleksiya adı...",
+  "favoritesSelectIcon": "İkon seç",
+  "favoritesCreate": "Yarat",
+  "favoritesNew": "Yeni",
+
+  "favoritesIconGym": "İdman",
+  "favoritesIconBreakfast": "Səhər yeməyi",
+  "favoritesIconLunch": "Nahar",
+  "favoritesIconDinner": "Axşam yeməyi",
+  "favoritesIconSnack": "Ara yemək",
+  "favoritesIconSalad": "Salat",
+  "favoritesIconFruit": "Meyvə",
+  "favoritesIconDrink": "İçki",
+  "favoritesIconDiet": "Pəhriz",
+  "favoritesIconProtein": "Protein",
+  "favoritesIconVegan": "Vegan",
+  "favoritesIconDessert": "Desert",
+
+  "favoritesCollectionItemCount": "{count, plural, =0{0 məhsul} =1{1 məhsul} other{{count} məhsul}}",
+  "@favoritesCollectionItemCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "favoritesCaloriesValue": "{value} kkal",
+  "@favoritesCaloriesValue": {
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  },
+
+  "favoritesProteinValue": "{value} q Z",
+  "@favoritesProteinValue": {
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  },
+
+  "favoritesCarbsValue": "{value} q K",
+  "@favoritesCarbsValue": {
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  }
 }

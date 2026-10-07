@@ -1277,6 +1277,204 @@ abstract class AppLocalizations {
   /// In az, this message translates to:
   /// **'Gözlənilməz bir xəta baş verdi.'**
   String get networkUnexpectedError;
+
+  /// No description provided for @favoritesGuestTitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Sağlam seçimlərini\nsaxla'**
+  String get favoritesGuestTitle;
+
+  /// No description provided for @favoritesGuestSubtitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Oxutduğun məhsulları əlavə et,\nkalori və dəyərlərini izlə.'**
+  String get favoritesGuestSubtitle;
+
+  /// No description provided for @favoritesGuestFeatureSaveProducts.
+  ///
+  /// In az, this message translates to:
+  /// **'Məhsulları saxla'**
+  String get favoritesGuestFeatureSaveProducts;
+
+  /// No description provided for @favoritesGuestFeatureCreateCollections.
+  ///
+  /// In az, this message translates to:
+  /// **'Kolleksiyalar yarat'**
+  String get favoritesGuestFeatureCreateCollections;
+
+  /// No description provided for @favoritesGuestFeatureFindAnytime.
+  ///
+  /// In az, this message translates to:
+  /// **'İstənilən vaxt tap'**
+  String get favoritesGuestFeatureFindAnytime;
+
+  /// No description provided for @favoritesSearchHint.
+  ///
+  /// In az, this message translates to:
+  /// **'Axtar...'**
+  String get favoritesSearchHint;
+
+  /// No description provided for @favoritesSavedProducts.
+  ///
+  /// In az, this message translates to:
+  /// **'Saxlanılmış məhsullar'**
+  String get favoritesSavedProducts;
+
+  /// No description provided for @favoritesTitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Favoritlər'**
+  String get favoritesTitle;
+
+  /// No description provided for @favoritesSavedCount.
+  ///
+  /// In az, this message translates to:
+  /// **'{count, plural, =0{Heç bir məhsul saxlanılmayıb} =1{1 məhsul saxlanılıb} other{{count} məhsul saxlanılıb}}'**
+  String favoritesSavedCount(int count);
+
+  /// No description provided for @favoritesEmptyTitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Hələ heç nə saxlanılmayıb'**
+  String get favoritesEmptyTitle;
+
+  /// No description provided for @favoritesEmptySubtitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Məhsulları tarayaraq favoritlərə əlavə et'**
+  String get favoritesEmptySubtitle;
+
+  /// No description provided for @favoritesRetry.
+  ///
+  /// In az, this message translates to:
+  /// **'Yenidən cəhd et'**
+  String get favoritesRetry;
+
+  /// No description provided for @favoritesCreateCollectionTitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Yeni kolleksiya'**
+  String get favoritesCreateCollectionTitle;
+
+  /// No description provided for @favoritesCollectionNameHint.
+  ///
+  /// In az, this message translates to:
+  /// **'Kolleksiya adı...'**
+  String get favoritesCollectionNameHint;
+
+  /// No description provided for @favoritesSelectIcon.
+  ///
+  /// In az, this message translates to:
+  /// **'İkon seç'**
+  String get favoritesSelectIcon;
+
+  /// No description provided for @favoritesCreate.
+  ///
+  /// In az, this message translates to:
+  /// **'Yarat'**
+  String get favoritesCreate;
+
+  /// No description provided for @favoritesNew.
+  ///
+  /// In az, this message translates to:
+  /// **'Yeni'**
+  String get favoritesNew;
+
+  /// No description provided for @favoritesIconGym.
+  ///
+  /// In az, this message translates to:
+  /// **'İdman'**
+  String get favoritesIconGym;
+
+  /// No description provided for @favoritesIconBreakfast.
+  ///
+  /// In az, this message translates to:
+  /// **'Səhər yeməyi'**
+  String get favoritesIconBreakfast;
+
+  /// No description provided for @favoritesIconLunch.
+  ///
+  /// In az, this message translates to:
+  /// **'Nahar'**
+  String get favoritesIconLunch;
+
+  /// No description provided for @favoritesIconDinner.
+  ///
+  /// In az, this message translates to:
+  /// **'Axşam yeməyi'**
+  String get favoritesIconDinner;
+
+  /// No description provided for @favoritesIconSnack.
+  ///
+  /// In az, this message translates to:
+  /// **'Ara yemək'**
+  String get favoritesIconSnack;
+
+  /// No description provided for @favoritesIconSalad.
+  ///
+  /// In az, this message translates to:
+  /// **'Salat'**
+  String get favoritesIconSalad;
+
+  /// No description provided for @favoritesIconFruit.
+  ///
+  /// In az, this message translates to:
+  /// **'Meyvə'**
+  String get favoritesIconFruit;
+
+  /// No description provided for @favoritesIconDrink.
+  ///
+  /// In az, this message translates to:
+  /// **'İçki'**
+  String get favoritesIconDrink;
+
+  /// No description provided for @favoritesIconDiet.
+  ///
+  /// In az, this message translates to:
+  /// **'Pəhriz'**
+  String get favoritesIconDiet;
+
+  /// No description provided for @favoritesIconProtein.
+  ///
+  /// In az, this message translates to:
+  /// **'Protein'**
+  String get favoritesIconProtein;
+
+  /// No description provided for @favoritesIconVegan.
+  ///
+  /// In az, this message translates to:
+  /// **'Vegan'**
+  String get favoritesIconVegan;
+
+  /// No description provided for @favoritesIconDessert.
+  ///
+  /// In az, this message translates to:
+  /// **'Desert'**
+  String get favoritesIconDessert;
+
+  /// No description provided for @favoritesCollectionItemCount.
+  ///
+  /// In az, this message translates to:
+  /// **'{count, plural, =0{0 məhsul} =1{1 məhsul} other{{count} məhsul}}'**
+  String favoritesCollectionItemCount(int count);
+
+  /// No description provided for @favoritesCaloriesValue.
+  ///
+  /// In az, this message translates to:
+  /// **'{value} kkal'**
+  String favoritesCaloriesValue(int value);
+
+  /// No description provided for @favoritesProteinValue.
+  ///
+  /// In az, this message translates to:
+  /// **'{value} q Z'**
+  String favoritesProteinValue(int value);
+
+  /// No description provided for @favoritesCarbsValue.
+  ///
+  /// In az, this message translates to:
+  /// **'{value} q K'**
+  String favoritesCarbsValue(int value);
 }
 
 class _AppLocalizationsDelegate

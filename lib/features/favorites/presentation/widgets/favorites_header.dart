@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kalori_tracker/core/utils/asset_extension.dart';
 
 import '../../../../core/constants/app_assets.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/l10n/localization_extension.dart';
+import '../../../../core/utils/asset_extension.dart';
 import '../bloc/favorites_bloc.dart';
 
 class FavoritesHeader extends StatelessWidget {
@@ -23,35 +24,45 @@ class FavoritesHeader extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
       child: Row(
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Favoritlər',
-                style: AppTextStyles.h1.copyWith(
-                  fontSize: 26,
-                  fontWeight: FontWeight.w600,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  context.l10n.favoritesTitle,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.h1.copyWith(
+                    fontSize: 26,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-              ),
-              BlocBuilder<FavoritesBloc, FavoritesState>(
-                builder: (context, state) {
-                  final count = switch (state) {
-                    FavoritesLoaded s => s.favorites.length,
-                    FavoriteActionLoading s => s.favorites.length,
-                    FavoriteActionSuccess s => s.favorites.length,
-                    _ => 0,
-                  };
-                  return Text(
-                    '$count məhsul saxlanılıb',
-                    style: AppTextStyles.bodyMedium.copyWith(
-                      fontWeight: FontWeight.w400,
-                    ),
-                  );
-                },
-              ),
-            ],
+
+                BlocBuilder<FavoritesBloc, FavoritesState>(
+                  builder: (context, state) {
+                    final count = switch (state) {
+                      FavoritesLoaded s => s.favorites.length,
+                      FavoriteActionLoading s => s.favorites.length,
+                      FavoriteActionSuccess s => s.favorites.length,
+                      _ => 0,
+                    };
+
+                    return Text(
+                      context.l10n.favoritesSavedCount(count),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.bodyMedium.copyWith(
+                        fontWeight: FontWeight.w400,
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
-          const Spacer(),
+
+          const SizedBox(width: 12),
+
           _SearchButton(isActive: isSearchOpen, onTap: onSearchTap),
         ],
       ),

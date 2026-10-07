@@ -19,11 +19,13 @@ class FavoritesItemsSection extends StatelessWidget {
         itemCount: favorites.length,
         separatorBuilder: (_, __) => 10.hs,
         itemBuilder: (context, index) {
+          final favorite = favorites[index];
+
           return FavoriteItemCard(
-            item: favorites[index],
+            item: favorite,
             onRemove: () {
               context.read<FavoritesBloc>().add(
-                RemoveFavoriteEvent(favorites[index].id),
+                RemoveFavoriteEvent(favorite.id),
               );
             },
             onAdd: () {},

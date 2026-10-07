@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/l10n/localization_extension.dart';
 import '../../../../core/utils/padding_extension.dart';
 import '../../../../core/utils/radius_extension.dart';
 import '../../data/models/collection_icon_styles.dart';
@@ -64,6 +65,7 @@ class FavoriteCollectionCard extends StatelessWidget {
             child: Text(
               collection.name,
               maxLines: 2,
+              textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.bodySmall.copyWith(
                 fontWeight: FontWeight.w600,
@@ -76,8 +78,9 @@ class FavoriteCollectionCard extends StatelessWidget {
           4.verticalSpace,
 
           Text(
-            '${collection.itemCount} məhsul',
+            context.l10n.favoritesCollectionItemCount(collection.itemCount),
             maxLines: 1,
+            textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.bodySmall.copyWith(fontSize: 10),
           ),

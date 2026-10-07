@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/constants/app_assets.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/l10n/localization_extension.dart';
 import '../../../../core/utils/asset_extension.dart';
 import '../../../../core/utils/radius_extension.dart';
 import '../../../../shared/widgets/custom_snackbar.dart';
@@ -33,9 +34,13 @@ class FavoriteItemCard extends StatelessWidget {
       child: Row(
         children: [
           _buildEmoji(),
+
           8.horizontalSpace,
-          Expanded(child: _buildInfo()),
+
+          Expanded(child: _buildInfo(context)),
+
           8.horizontalSpace,
+
           _buildActions(context),
         ],
       ),
@@ -52,19 +57,23 @@ class FavoriteItemCard extends StatelessWidget {
       ),
       child: Center(
         child: Text(
-          (item.icon != null && item.icon!.isNotEmpty) ? item.icon! : '🍎',
+          item.icon != null && item.icon!.isNotEmpty ? item.icon! : '🍎',
           style: const TextStyle(fontSize: 22),
         ),
       ),
     );
   }
 
-  Widget _buildInfo() {
+  Widget _buildInfo(BuildContext context) {
+    final productName = item.name?.trim().isNotEmpty == true
+        ? item.name!.trim()
+        : context.l10n.commonProduct;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          item.name ?? "Məhsul",
+          productName,
           style: AppTextStyles.bodyMedium.copyWith(
             fontWeight: FontWeight.w600,
             color: AppColors.headline,
@@ -72,24 +81,37 @@ class FavoriteItemCard extends StatelessWidget {
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
+
         6.verticalSpace,
-        _buildMacros(),
+
+        _buildMacros(context),
       ],
     );
   }
 
-  Widget _buildMacros() {
+  Widget _buildMacros(BuildContext context) {
+    final calories = item.calories?.toInt() ?? 0;
+    final protein = item.protein?.toInt() ?? 0;
+    final carbs = item.carbs?.toInt() ?? 0;
+
     return Row(
       children: [
         _MacroPill(
-          label: '${item.calories?.toInt()} kkal',
+          label: context.l10n.favoritesCaloriesValue(calories),
           color: AppColors.primary,
         ),
+
         4.horizontalSpace,
-        _MacroPill(label: '${item.protein?.toInt()}q Z', color: AppColors.info),
-        4.horizontalSpace,
+
         _MacroPill(
-          label: '${item.carbs?.toInt()}q K',
+          label: context.l10n.favoritesProteinValue(protein),
+          color: AppColors.info,
+        ),
+
+        4.horizontalSpace,
+
+        _MacroPill(
+          label: context.l10n.favoritesCarbsValue(carbs),
           color: AppColors.warning,
         ),
       ],
@@ -97,22 +119,22 @@ class FavoriteItemCard extends StatelessWidget {
   }
 
   Widget _buildActions(BuildContext context) {
-    return Column(
-      children: [
-        GestureDetector(
-          onTap: () {
-            onRemove();
+    return GestureDetector(
+      onTap: () {
+        final productName = item.name?.trim().isNotEmpty == true
+            ? item.name!.trim()
+            : context.l10n.commonProduct;
 
-            CustomSnackBar.show(
-              context,
-              message: '${item.name} favoritlərdən silindi',
-              type: SnackBarType.info,
-              position: SnackBarPosition.top,
-            );
-          },
-          child: AppAssets.favoriteFill.svg(height: 20, width: 20),
-        ),
-      ],
+        onRemove();
+
+        CustomSnackBar.show(
+          context,
+          message: context.l10n.homeProductRemovedFavorite(productName),
+          type: SnackBarType.info,
+          position: SnackBarPosition.top,
+        );
+      },
+      child: AppAssets.favoriteFill.svg(height: 20, width: 20),
     );
   }
 }
@@ -128,7 +150,7 @@ class _MacroPill extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.12),
+        color: color.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(6),
       ),
       child: Text(
