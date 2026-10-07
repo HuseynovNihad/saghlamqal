@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../core/constants/app_colors.dart';
+import '../../../../../core/l10n/localization_extension.dart';
 
 class ActivityLevelChips extends StatelessWidget {
   const ActivityLevelChips({
@@ -17,20 +18,19 @@ class ActivityLevelChips extends StatelessWidget {
   });
 
   final String? selected;
-
   final ValueChanged<String> onChanged;
-
   final List<String> options;
 
-  static const Map<String, String> _labels = {
-    'sedentary': 'Hərəkətsiz',
-    'light': 'Az Aktiv',
-    'moderate': 'Orta Aktiv',
-    'active': 'Aktiv',
-    'very_active': 'Çox Aktiv',
-  };
-
-  String _label(String value) => _labels[value.toLowerCase()] ?? value;
+  String _label(BuildContext context, String value) {
+    return switch (value.toLowerCase()) {
+      'sedentary' => context.l10n.profileActivitySedentary,
+      'light' => context.l10n.profileActivityLight,
+      'moderate' => context.l10n.profileActivityModerate,
+      'active' => context.l10n.profileActivityActive,
+      'very_active' => context.l10n.profileActivityVeryActive,
+      _ => value,
+    };
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,9 +42,11 @@ class ActivityLevelChips extends StatelessWidget {
         separatorBuilder: (_, __) => const SizedBox(width: 8),
         itemBuilder: (context, index) {
           final option = options[index];
+
           final isSelected =
               selected != null &&
               selected!.toLowerCase() == option.toLowerCase();
+
           return GestureDetector(
             onTap: () => onChanged(option),
             child: Container(
@@ -60,7 +62,7 @@ class ActivityLevelChips extends StatelessWidget {
               ),
               alignment: Alignment.center,
               child: Text(
-                _label(option),
+                _label(context, option),
                 style: TextStyle(
                   color: isSelected ? Colors.white : AppColors.headline,
                   fontWeight: FontWeight.w600,

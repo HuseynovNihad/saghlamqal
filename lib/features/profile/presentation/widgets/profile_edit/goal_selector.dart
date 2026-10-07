@@ -1,63 +1,69 @@
 import 'package:flutter/material.dart';
+
 import '../../../../../core/constants/app_colors.dart';
+import '../../../../../core/l10n/localization_extension.dart';
 
 class GoalOption {
   const GoalOption({
     required this.value,
-    required this.label,
     required this.icon,
     required this.color,
+    this.label,
   });
 
   final String value;
-  final String label;
+  final String? label;
   final IconData icon;
   final Color color;
 }
 
 class GoalSelector extends StatelessWidget {
-  GoalSelector({
+  const GoalSelector({
     super.key,
     required this.selected,
     required this.onChanged,
-    List<GoalOption>? options,
-  }) : options =
-           options ??
-           [
-             GoalOption(
-               value: 'lose_weight',
-               label: 'Arıqlamaq',
-               icon: Icons.trending_down_rounded,
-               color: AppColors.primary,
-             ),
-             GoalOption(
-               value: 'maintain_weight',
-               label: 'Çəkini Saxlamaq',
-               icon: Icons.balance_rounded,
-               color: AppColors.secondary,
-             ),
-             GoalOption(
-               value: 'gain_weight',
-               label: 'Kökəlmək',
-               icon: Icons.fitness_center_rounded,
-               color: AppColors.secondary,
-             ),
-           ];
+    this.options,
+  });
 
   final String? selected;
-
   final ValueChanged<String> onChanged;
+  final List<GoalOption>? options;
 
-  final List<GoalOption> options;
+  List<GoalOption> _defaultOptions(BuildContext context) {
+    return [
+      GoalOption(
+        value: 'lose_weight',
+        label: context.l10n.profileGoalLoseWeight,
+        icon: Icons.trending_down_rounded,
+        color: AppColors.primary,
+      ),
+      GoalOption(
+        value: 'maintain_weight',
+        label: context.l10n.profileGoalMaintainWeight,
+        icon: Icons.balance_rounded,
+        color: AppColors.secondary,
+      ),
+      GoalOption(
+        value: 'gain_weight',
+        label: context.l10n.profileGoalGainWeight,
+        icon: Icons.fitness_center_rounded,
+        color: AppColors.secondary,
+      ),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
+    final resolvedOptions = options ?? _defaultOptions(context);
+
     return Row(
-      children: options.map((goal) {
+      children: resolvedOptions.map((goal) {
         final isSelected =
             selected != null &&
             selected!.toLowerCase() == goal.value.toLowerCase();
-        final isLast = goal.value == options.last.value;
+
+        final isLast = goal.value == resolvedOptions.last.value;
+
         return Expanded(
           child: Padding(
             padding: EdgeInsets.only(right: isLast ? 0 : 8),
@@ -70,7 +76,7 @@ class GoalSelector extends StatelessWidget {
                 ),
                 decoration: BoxDecoration(
                   color: isSelected
-                      ? AppColors.primary.withOpacity(0.08)
+                      ? AppColors.primary.withValues(alpha: 0.08)
                       : AppColors.surface,
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
@@ -85,8 +91,10 @@ class GoalSelector extends StatelessWidget {
                     Icon(goal.icon, color: goal.color, size: 26),
                     const SizedBox(height: 8),
                     Text(
-                      goal.label,
+                      goal.label ?? goal.value,
                       textAlign: TextAlign.center,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         color: isSelected
                             ? AppColors.primary

@@ -435,5 +435,152 @@
   "waterReminderMessageFive": "Bir nəfəs al və bir stəkan su iç! 🌿",
   "waterReminderMessageSix": "Günortadan sonra da su içməyi unutma! 💦",
   "waterReminderMessageSeven": "Nahardan əvvəl bir stəkan su iç! 🥗",
-  "waterReminderMessageEight": "Axşam yeməyindən əvvəl su içməyi unutma! 🍽️"
+  "waterReminderMessageEight": "Axşam yeməyindən əvvəl su içməyi unutma! 🍽️",
+  "profileTitle": "Profil",
+
+  "profileGuestTitle": "Profilinə\ndaxil ol",
+  "profileGuestSubtitle": "Profil məlumatlarını idarə et,\ntənzimləmələrini öz zövqünə uyğunlaşdır.",
+  "profileGuestFeatureEdit": "Profil məlumatlarını redaktə et",
+  "profileGuestFeatureSettings": "Parametrləri idarə et",
+  "profileGuestFeaturePrivacy": "Məxfilik və təhlükəsizliyi idarə et",
+
+  "profileSectionAccountSettings": "Hesab və Parametrlər",
+  "profileSectionNotifications": "Bildirişlər",
+  "profileSectionSupport": "Dəstək",
+
+  "profileEditMenu": "Profili redaktə et",
+  "profilePatientCodeMenu": "Pasiyent kodum",
+
+  "privacyPolicyTitle": "Məxfilik Siyasəti",
+  "termsOfServiceTitle": "İstifadəçi Şərtləri",
+  "aboutUsTitle": "Haqqımızda",
+
+  "profileLogout": "Çıxış",
+  "profileLogoutTitle": "Çıxış et",
+  "profileLogoutMessage": "Hesabınızdan çıxmaq istədiyinizə əminsiniz?",
+
+  "profileDeleteAccount": "Hesabı sil",
+  "profileDeleteAccountMessage": "Hesabınız deaktiv ediləcək. İstədiyiniz zaman yenidən aktivləşdirə bilərsiniz.",
+  "profileDeleteConfirm": "Sil",
+
+  "profileLoadFailed": "Məlumat yüklənmədi",
+  "profileLoadErrorDescription": "İnternet bağlantınızı yoxlayıb yenidən cəhd edin.",
+  "profileRetry": "Yenidən cəhd et",
+
+  "patientCodeTitle": "Pasiyent kodum",
+  "patientCodeCopied": "Pasiyent kodu kopyalandı",
+
+  "patientCodeShareText": "SağlamQal pasiyent kodum: {patientCode}",
+  "@patientCodeShareText": {
+    "placeholders": {
+      "patientCode": {
+        "type": "String"
+      }
+    }
+  },
+
+  "patientCodeShareSubject": "SağlamQal pasiyent kodu",
+  "patientCodeCopy": "Kodu kopyala",
+  "patientCodeShare": "Paylaş",
+
+  "patientCodeHeaderTitle": "Dietoloqunuz sizi bu kodla tapa bilər",
+  "patientCodeHeaderDescription": "Aşağıdakı kodu dietoloqunuzla paylaşın. O, bu kod vasitəsilə sizi tapıb pasiyent kimi dəvət edə bilər.",
+
+  "patientCodeLabel": "Pasiyent kodu",
+  "patientCodePrivacyNote": "Kodunuzu yalnız əlaqə qurmaq istədiyiniz dietoloqla paylaşın.",
+
+  "patientCodeNotFoundTitle": "Pasiyent kodu tapılmadı",
+  "patientCodeNotFoundDescription": "Hazırda hesabınız üçün pasiyent kodu mövcud deyil.",
+
+  "profileEditTitle": "Profil redaktəsi",
+  "profileImageCaptureError": "Şəkil çəkilərkən xəta baş verdi",
+  "profileImageSelectionError": "Şəkil seçilərkən xəta baş verdi",
+  "profileNoChanges": "Heç bir dəyişiklik yoxdur",
+  "profileAvatarUpdated": "Profil şəkli yeniləndi",
+  "profileAvatarDeleted": "Profil şəkli silindi",
+  "profileSaved": "Profil yadda saxlanıldı",
+
+  "aboutUsEmail": "E-poçt",
+  "aboutUsWebsite": "Vebsayt",
+
+  "aboutUsInvalidLink": "Keçərsiz link: {url}",
+  "@aboutUsInvalidLink": {
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+
+  "aboutUsLinkOpenFailed": "Link açıla bilmədi: {url}",
+  "@aboutUsLinkOpenFailed": {
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+
+  "aboutUsLinkError": "Xəta baş verdi: {error}",
+  "@aboutUsLinkError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "profileEditPersonalInfo": "Şəxsi məlumatlar",
+  "profileEditFirstName": "Ad",
+  "profileEditFirstNameHint": "Adınızı daxil edin",
+  "profileEditLastName": "Soyad",
+  "profileEditLastNameHint": "Soyadınızı daxil edin",
+  "profileEditEmail": "Email",
+  "profileEditPhone": "Əlaqə nömrəsi",
+  "profileEditBirthday": "Doğum tarixi",
+  "profileEditBirthdayHint": "Doğum tarixinizi seçin",
+
+  "profileEditPhysicalInfo": "Fiziki məlumatlar",
+  "profileEditHeight": "Boy",
+  "profileEditCurrentWeight": "Cari çəki",
+  "profileEditTargetWeight": "Hədəf çəki",
+  "profileEditUnitCm": "sm",
+  "profileEditUnitKg": "kq",
+  "profileEditProgressMessage": "Əla gedir! Doğru yoldasan.",
+
+  "profileEditPreferences": "Tərcihlər",
+  "profileEditGender": "Cins",
+  "profileEditActivityLevel": "Aktivlik səviyyəsi",
+  "profileEditGoal": "Hədəfin",
+  "profileEditConsistencyHint": "Ardıcıllıq önəmlidir. Kiçik addımlar böyük dəyişikliklərə aparır!",
+
+  "profileGenderMale": "Kişi",
+  "profileGenderFemale": "Qadın",
+
+  "profileActivitySedentary": "Hərəkətsiz",
+  "profileActivityLight": "Az aktiv",
+  "profileActivityModerate": "Orta aktiv",
+  "profileActivityActive": "Aktiv",
+  "profileActivityVeryActive": "Çox aktiv",
+
+  "profileGoalLoseWeight": "Arıqlamaq",
+  "profileGoalMaintainWeight": "Çəkini saxlamaq",
+  "profileGoalGainWeight": "Kökəlmək",
+
+  "profileAvatarChangeTitle": "Profil şəklini dəyiş",
+  "profileAvatarChangeSubtitle": "Yeni şəkil çək və ya qalereyadan seç",
+  "profileAvatarCamera": "Kamera",
+  "profileAvatarCameraSubtitle": "Yeni şəkil çək",
+  "profileAvatarGallery": "Qalereya",
+  "profileAvatarGallerySubtitle": "Şəkillərdən seç",
+  "profileAvatarDelete": "Profil şəklini sil",
+
+  "profileAvatarCropTitle": "Profil şəklini seç",
+  "profileAvatarCropArea": "Profil şəklində görünəcək hissə",
+  "profileAvatarCropMoveHint": "Şəkli sürüşdür və yaxınlaşdır",
+  "profileAvatarCropDone": "Hazırdır",
+  "profileAvatarCropError": "Şəkil kəsilərkən xəta baş verdi",
+  "profileAvatarImageOpenError": "Şəkil açıla bilmədi",
+  "profileAvatarImageOpenErrorDescription": "Başqa bir şəkil seçərək yenidən cəhd et.",
+
+  "profileEditSaveChanges": "Yadda saxla"
 }

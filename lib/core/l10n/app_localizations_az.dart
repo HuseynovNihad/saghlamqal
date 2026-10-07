@@ -913,4 +913,296 @@ class AppLocalizationsAz extends AppLocalizations {
   @override
   String get waterReminderMessageEight =>
       'Axşam yeməyindən əvvəl su içməyi unutma! 🍽️';
+
+  @override
+  String get profileTitle => 'Profil';
+
+  @override
+  String get profileGuestTitle => 'Profilinə\ndaxil ol';
+
+  @override
+  String get profileGuestSubtitle =>
+      'Profil məlumatlarını idarə et,\ntənzimləmələrini öz zövqünə uyğunlaşdır.';
+
+  @override
+  String get profileGuestFeatureEdit => 'Profil məlumatlarını redaktə et';
+
+  @override
+  String get profileGuestFeatureSettings => 'Parametrləri idarə et';
+
+  @override
+  String get profileGuestFeaturePrivacy =>
+      'Məxfilik və təhlükəsizliyi idarə et';
+
+  @override
+  String get profileSectionAccountSettings => 'Hesab və Parametrlər';
+
+  @override
+  String get profileSectionNotifications => 'Bildirişlər';
+
+  @override
+  String get profileSectionSupport => 'Dəstək';
+
+  @override
+  String get profileEditMenu => 'Profili redaktə et';
+
+  @override
+  String get profilePatientCodeMenu => 'Pasiyent kodum';
+
+  @override
+  String get privacyPolicyTitle => 'Məxfilik Siyasəti';
+
+  @override
+  String get termsOfServiceTitle => 'İstifadəçi Şərtləri';
+
+  @override
+  String get aboutUsTitle => 'Haqqımızda';
+
+  @override
+  String get profileLogout => 'Çıxış';
+
+  @override
+  String get profileLogoutTitle => 'Çıxış et';
+
+  @override
+  String get profileLogoutMessage =>
+      'Hesabınızdan çıxmaq istədiyinizə əminsiniz?';
+
+  @override
+  String get profileDeleteAccount => 'Hesabı sil';
+
+  @override
+  String get profileDeleteAccountMessage =>
+      'Hesabınız deaktiv ediləcək. İstədiyiniz zaman yenidən aktivləşdirə bilərsiniz.';
+
+  @override
+  String get profileDeleteConfirm => 'Sil';
+
+  @override
+  String get profileLoadFailed => 'Məlumat yüklənmədi';
+
+  @override
+  String get profileLoadErrorDescription =>
+      'İnternet bağlantınızı yoxlayıb yenidən cəhd edin.';
+
+  @override
+  String get profileRetry => 'Yenidən cəhd et';
+
+  @override
+  String get patientCodeTitle => 'Pasiyent kodum';
+
+  @override
+  String get patientCodeCopied => 'Pasiyent kodu kopyalandı';
+
+  @override
+  String patientCodeShareText(String patientCode) {
+    return 'SağlamQal pasiyent kodum: $patientCode';
+  }
+
+  @override
+  String get patientCodeShareSubject => 'SağlamQal pasiyent kodu';
+
+  @override
+  String get patientCodeCopy => 'Kodu kopyala';
+
+  @override
+  String get patientCodeShare => 'Paylaş';
+
+  @override
+  String get patientCodeHeaderTitle => 'Dietoloqunuz sizi bu kodla tapa bilər';
+
+  @override
+  String get patientCodeHeaderDescription =>
+      'Aşağıdakı kodu dietoloqunuzla paylaşın. O, bu kod vasitəsilə sizi tapıb pasiyent kimi dəvət edə bilər.';
+
+  @override
+  String get patientCodeLabel => 'Pasiyent kodu';
+
+  @override
+  String get patientCodePrivacyNote =>
+      'Kodunuzu yalnız əlaqə qurmaq istədiyiniz dietoloqla paylaşın.';
+
+  @override
+  String get patientCodeNotFoundTitle => 'Pasiyent kodu tapılmadı';
+
+  @override
+  String get patientCodeNotFoundDescription =>
+      'Hazırda hesabınız üçün pasiyent kodu mövcud deyil.';
+
+  @override
+  String get profileEditTitle => 'Profil redaktəsi';
+
+  @override
+  String get profileImageCaptureError => 'Şəkil çəkilərkən xəta baş verdi';
+
+  @override
+  String get profileImageSelectionError => 'Şəkil seçilərkən xəta baş verdi';
+
+  @override
+  String get profileNoChanges => 'Heç bir dəyişiklik yoxdur';
+
+  @override
+  String get profileAvatarUpdated => 'Profil şəkli yeniləndi';
+
+  @override
+  String get profileAvatarDeleted => 'Profil şəkli silindi';
+
+  @override
+  String get profileSaved => 'Profil yadda saxlanıldı';
+
+  @override
+  String get aboutUsEmail => 'E-poçt';
+
+  @override
+  String get aboutUsWebsite => 'Vebsayt';
+
+  @override
+  String aboutUsInvalidLink(String url) {
+    return 'Keçərsiz link: $url';
+  }
+
+  @override
+  String aboutUsLinkOpenFailed(String url) {
+    return 'Link açıla bilmədi: $url';
+  }
+
+  @override
+  String aboutUsLinkError(String error) {
+    return 'Xəta baş verdi: $error';
+  }
+
+  @override
+  String get profileEditPersonalInfo => 'Şəxsi məlumatlar';
+
+  @override
+  String get profileEditFirstName => 'Ad';
+
+  @override
+  String get profileEditFirstNameHint => 'Adınızı daxil edin';
+
+  @override
+  String get profileEditLastName => 'Soyad';
+
+  @override
+  String get profileEditLastNameHint => 'Soyadınızı daxil edin';
+
+  @override
+  String get profileEditEmail => 'Email';
+
+  @override
+  String get profileEditPhone => 'Əlaqə nömrəsi';
+
+  @override
+  String get profileEditBirthday => 'Doğum tarixi';
+
+  @override
+  String get profileEditBirthdayHint => 'Doğum tarixinizi seçin';
+
+  @override
+  String get profileEditPhysicalInfo => 'Fiziki məlumatlar';
+
+  @override
+  String get profileEditHeight => 'Boy';
+
+  @override
+  String get profileEditCurrentWeight => 'Cari çəki';
+
+  @override
+  String get profileEditTargetWeight => 'Hədəf çəki';
+
+  @override
+  String get profileEditUnitCm => 'sm';
+
+  @override
+  String get profileEditUnitKg => 'kq';
+
+  @override
+  String get profileEditProgressMessage => 'Əla gedir! Doğru yoldasan.';
+
+  @override
+  String get profileEditPreferences => 'Tərcihlər';
+
+  @override
+  String get profileEditGender => 'Cins';
+
+  @override
+  String get profileEditActivityLevel => 'Aktivlik səviyyəsi';
+
+  @override
+  String get profileEditGoal => 'Hədəfin';
+
+  @override
+  String get profileEditConsistencyHint =>
+      'Ardıcıllıq önəmlidir. Kiçik addımlar böyük dəyişikliklərə aparır!';
+
+  @override
+  String get profileActivitySedentary => 'Hərəkətsiz';
+
+  @override
+  String get profileActivityLight => 'Az aktiv';
+
+  @override
+  String get profileActivityModerate => 'Orta aktiv';
+
+  @override
+  String get profileActivityActive => 'Aktiv';
+
+  @override
+  String get profileActivityVeryActive => 'Çox aktiv';
+
+  @override
+  String get profileGoalLoseWeight => 'Arıqlamaq';
+
+  @override
+  String get profileGoalMaintainWeight => 'Çəkini saxlamaq';
+
+  @override
+  String get profileGoalGainWeight => 'Kökəlmək';
+
+  @override
+  String get profileAvatarChangeTitle => 'Profil şəklini dəyiş';
+
+  @override
+  String get profileAvatarChangeSubtitle =>
+      'Yeni şəkil çək və ya qalereyadan seç';
+
+  @override
+  String get profileAvatarCamera => 'Kamera';
+
+  @override
+  String get profileAvatarCameraSubtitle => 'Yeni şəkil çək';
+
+  @override
+  String get profileAvatarGallery => 'Qalereya';
+
+  @override
+  String get profileAvatarGallerySubtitle => 'Şəkillərdən seç';
+
+  @override
+  String get profileAvatarDelete => 'Profil şəklini sil';
+
+  @override
+  String get profileAvatarCropTitle => 'Profil şəklini seç';
+
+  @override
+  String get profileAvatarCropArea => 'Profil şəklində görünəcək hissə';
+
+  @override
+  String get profileAvatarCropMoveHint => 'Şəkli sürüşdür və yaxınlaşdır';
+
+  @override
+  String get profileAvatarCropDone => 'Hazırdır';
+
+  @override
+  String get profileAvatarCropError => 'Şəkil kəsilərkən xəta baş verdi';
+
+  @override
+  String get profileAvatarImageOpenError => 'Şəkil açıla bilmədi';
+
+  @override
+  String get profileAvatarImageOpenErrorDescription =>
+      'Başqa bir şəkil seçərək yenidən cəhd et.';
+
+  @override
+  String get profileEditSaveChanges => 'Yadda saxla';
 }

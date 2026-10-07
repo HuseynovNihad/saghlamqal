@@ -5,6 +5,7 @@ import 'package:crop_your_image/crop_your_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../core/constants/app_colors.dart';
+import '../../../../../core/l10n/localization_extension.dart';
 
 class AvatarCropPage extends StatefulWidget {
   const AvatarCropPage({super.key, required this.imagePath});
@@ -27,12 +28,14 @@ class _AvatarCropPageState extends State<AvatarCropPage> {
   @override
   void initState() {
     super.initState();
+
     _loadImage();
   }
 
   Future<void> _loadImage() async {
     try {
       final file = File(widget.imagePath);
+
       final bytes = await file.readAsBytes();
 
       if (!mounted) {
@@ -86,7 +89,7 @@ class _AvatarCropPageState extends State<AvatarCropPage> {
         });
 
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Şəkil kəsilərkən xəta baş verdi')),
+          SnackBar(content: Text(context.l10n.profileAvatarCropError)),
         );
     }
   }
@@ -129,11 +132,11 @@ class _AvatarCropPageState extends State<AvatarCropPage> {
               ),
             ),
 
-            const Expanded(
+            Expanded(
               child: Text(
-                'Profil şəklini seç',
+                context.l10n.profileAvatarCropTitle,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 17,
                   fontWeight: FontWeight.w600,
@@ -166,39 +169,20 @@ class _AvatarCropPageState extends State<AvatarCropPage> {
         return Stack(
           fit: StackFit.expand,
           children: [
-            // ─────────────────────────────────────
-            // IMAGE
-            // Şəkil bütün mövcud sahəni tutur
-            // ─────────────────────────────────────
             Positioned.fill(
               child: Crop(
                 image: _imageBytes!,
                 controller: _cropController,
-
-                // Profil şəkli 1:1 saxlanılır
                 aspectRatio: 1,
-
                 baseColor: Colors.black,
-
-                // Package-in öz maskasını göstərmirik
                 maskColor: Colors.transparent,
-
                 interactive: true,
-
-                // Crop sahəsinin ölçüsünü dəyişmək olmur
                 fixCropRect: true,
-
-                // Package-in dairə və nöqtələrini söndürürük
                 withCircleUi: false,
-
                 onCropped: _handleCropResult,
               ),
             ),
 
-            // ─────────────────────────────────────
-            // PROFILE CIRCLE
-            // Yalnız bu dairə görünür
-            // ─────────────────────────────────────
             Center(
               child: IgnorePointer(
                 child: Container(
@@ -212,9 +196,6 @@ class _AvatarCropPageState extends State<AvatarCropPage> {
               ),
             ),
 
-            // ─────────────────────────────────────
-            // LABEL
-            // ─────────────────────────────────────
             Positioned(
               top: (constraints.maxHeight - cropSize) / 2 - 44,
               left: 0,
@@ -225,16 +206,21 @@ class _AvatarCropPageState extends State<AvatarCropPage> {
                   children: [
                     Icon(
                       Icons.account_circle_outlined,
-                      color: Colors.white.withOpacity(0.75),
+                      color: Colors.white.withValues(alpha: 0.75),
                       size: 16,
                     ),
+
                     const SizedBox(width: 6),
-                    Text(
-                      'Profil şəklində görünəcək hissə',
-                      style: TextStyle(
-                        color: Colors.white.withOpacity(0.80),
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
+
+                    Flexible(
+                      child: Text(
+                        context.l10n.profileAvatarCropArea,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white.withValues(alpha: 0.80),
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
                   ],
@@ -258,7 +244,7 @@ class _AvatarCropPageState extends State<AvatarCropPage> {
               width: 64,
               height: 64,
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.10),
+                color: Colors.white.withValues(alpha: 0.10),
                 shape: BoxShape.circle,
               ),
               child: const Icon(
@@ -270,10 +256,10 @@ class _AvatarCropPageState extends State<AvatarCropPage> {
 
             const SizedBox(height: 16),
 
-            const Text(
-              'Şəkil açıla bilmədi',
+            Text(
+              context.l10n.profileAvatarImageOpenError,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
@@ -283,10 +269,10 @@ class _AvatarCropPageState extends State<AvatarCropPage> {
             const SizedBox(height: 8),
 
             Text(
-              'Başqa bir şəkil seçərək yenidən cəhd et.',
+              context.l10n.profileAvatarImageOpenErrorDescription,
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Colors.white.withOpacity(0.65),
+                color: Colors.white.withValues(alpha: 0.65),
                 fontSize: 13,
               ),
             ),
@@ -307,17 +293,20 @@ class _AvatarCropPageState extends State<AvatarCropPage> {
               Icon(
                 Icons.pinch_rounded,
                 size: 18,
-                color: Colors.white.withOpacity(0.65),
+                color: Colors.white.withValues(alpha: 0.65),
               ),
 
               const SizedBox(width: 8),
 
-              Text(
-                'Şəkli sürüşdür və yaxınlaşdır',
-                style: TextStyle(
-                  color: Colors.white.withOpacity(0.65),
-                  fontSize: 13,
-                  fontWeight: FontWeight.w400,
+              Flexible(
+                child: Text(
+                  context.l10n.profileAvatarCropMoveHint,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white.withValues(alpha: 0.65),
+                    fontSize: 13,
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
               ),
             ],
@@ -335,7 +324,9 @@ class _AvatarCropPageState extends State<AvatarCropPage> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primary,
                 foregroundColor: Colors.white,
-                disabledBackgroundColor: AppColors.primary.withOpacity(0.5),
+                disabledBackgroundColor: AppColors.primary.withValues(
+                  alpha: 0.5,
+                ),
                 elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18),
@@ -350,14 +341,14 @@ class _AvatarCropPageState extends State<AvatarCropPage> {
                         color: Colors.white,
                       ),
                     )
-                  : const Row(
+                  : Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.check_rounded, size: 21),
-                        SizedBox(width: 8),
+                        const Icon(Icons.check_rounded, size: 21),
+                        const SizedBox(width: 8),
                         Text(
-                          'Hazırdır',
-                          style: TextStyle(
+                          context.l10n.profileAvatarCropDone,
+                          style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w600,
                           ),

@@ -337,5 +337,122 @@
   "waterReminderMessageFive": "Bir nefes al ve bir bardak su iç! 🌿",
   "waterReminderMessageSix": "Öğleden sonra da su içmeyi unutma! 💦",
   "waterReminderMessageSeven": "Öğle yemeğinden önce bir bardak su iç! 🥗",
-  "waterReminderMessageEight": "Akşam yemeğinden önce su içmeyi unutma! 🍽️"
+  "waterReminderMessageEight": "Akşam yemeğinden önce su içmeyi unutma! 🍽️",
+  "profileTitle": "Profil",
+
+  "profileGuestTitle": "Profiline\ngiriş yap",
+  "profileGuestSubtitle": "Profil bilgilerini yönet,\nayarlarını kendine göre özelleştir.",
+  "profileGuestFeatureEdit": "Profil bilgilerini düzenle",
+  "profileGuestFeatureSettings": "Ayarları yönet",
+  "profileGuestFeaturePrivacy": "Gizlilik ve güvenliği yönet",
+
+  "profileSectionAccountSettings": "Hesap ve Ayarlar",
+  "profileSectionNotifications": "Bildirimler",
+  "profileSectionSupport": "Destek",
+
+  "profileEditMenu": "Profili düzenle",
+  "profilePatientCodeMenu": "Hasta kodum",
+
+  "privacyPolicyTitle": "Gizlilik Politikası",
+  "termsOfServiceTitle": "Kullanım Koşulları",
+  "aboutUsTitle": "Hakkımızda",
+
+  "profileLogout": "Çıkış",
+  "profileLogoutTitle": "Çıkış yap",
+  "profileLogoutMessage": "Hesabınızdan çıkmak istediğinizden emin misiniz?",
+
+  "profileDeleteAccount": "Hesabı sil",
+  "profileDeleteAccountMessage": "Hesabınız devre dışı bırakılacak. İstediğiniz zaman yeniden etkinleştirebilirsiniz.",
+  "profileDeleteConfirm": "Sil",
+
+  "profileLoadFailed": "Bilgiler yüklenemedi",
+  "profileLoadErrorDescription": "İnternet bağlantınızı kontrol edip tekrar deneyin.",
+  "profileRetry": "Tekrar dene",
+
+  "patientCodeTitle": "Hasta kodum",
+  "patientCodeCopied": "Hasta kodu kopyalandı",
+
+  "patientCodeShareText": "SağlamQal hasta kodum: {patientCode}",
+
+  "patientCodeShareSubject": "SağlamQal hasta kodu",
+  "patientCodeCopy": "Kodu kopyala",
+  "patientCodeShare": "Paylaş",
+
+  "patientCodeHeaderTitle": "Diyetisyeniniz sizi bu kodla bulabilir",
+  "patientCodeHeaderDescription": "Aşağıdaki kodu diyetisyeninizle paylaşın. Bu kod sayesinde sizi bulup hasta olarak davet edebilir.",
+
+  "patientCodeLabel": "Hasta kodu",
+  "patientCodePrivacyNote": "Kodunuzu yalnızca iletişim kurmak istediğiniz diyetisyenle paylaşın.",
+
+  "patientCodeNotFoundTitle": "Hasta kodu bulunamadı",
+  "patientCodeNotFoundDescription": "Şu anda hesabınız için bir hasta kodu bulunmuyor.",
+
+  "profileEditTitle": "Profil düzenleme",
+  "profileImageCaptureError": "Fotoğraf çekilirken bir hata oluştu",
+  "profileImageSelectionError": "Fotoğraf seçilirken bir hata oluştu",
+  "profileNoChanges": "Kaydedilecek değişiklik yok",
+  "profileAvatarUpdated": "Profil fotoğrafı güncellendi",
+  "profileAvatarDeleted": "Profil fotoğrafı silindi",
+  "profileSaved": "Profil kaydedildi",
+
+  "aboutUsEmail": "E-posta",
+  "aboutUsWebsite": "Web sitesi",
+
+  "aboutUsInvalidLink": "Geçersiz bağlantı: {url}",
+  "aboutUsLinkOpenFailed": "Bağlantı açılamadı: {url}",
+  "aboutUsLinkError": "Bir hata oluştu: {error}",
+  "profileEditPersonalInfo": "Kişisel bilgiler",
+  "profileEditFirstName": "Ad",
+  "profileEditFirstNameHint": "Adınızı girin",
+  "profileEditLastName": "Soyad",
+  "profileEditLastNameHint": "Soyadınızı girin",
+  "profileEditEmail": "E-posta",
+  "profileEditPhone": "Telefon numarası",
+  "profileEditBirthday": "Doğum tarihi",
+  "profileEditBirthdayHint": "Doğum tarihinizi seçin",
+
+  "profileEditPhysicalInfo": "Fiziksel bilgiler",
+  "profileEditHeight": "Boy",
+  "profileEditCurrentWeight": "Mevcut kilo",
+  "profileEditTargetWeight": "Hedef kilo",
+  "profileEditUnitCm": "cm",
+  "profileEditUnitKg": "kg",
+  "profileEditProgressMessage": "Harika gidiyorsun! Doğru yoldasın.",
+
+  "profileEditPreferences": "Tercihler",
+  "profileEditGender": "Cinsiyet",
+  "profileEditActivityLevel": "Aktivite seviyesi",
+  "profileEditGoal": "Hedefin",
+  "profileEditConsistencyHint": "Tutarlılık önemlidir. Küçük adımlar büyük değişimlere yol açar!",
+
+  "profileGenderMale": "Erkek",
+  "profileGenderFemale": "Kadın",
+
+  "profileActivitySedentary": "Hareketsiz",
+  "profileActivityLight": "Az aktif",
+  "profileActivityModerate": "Orta aktif",
+  "profileActivityActive": "Aktif",
+  "profileActivityVeryActive": "Çok aktif",
+
+  "profileGoalLoseWeight": "Kilo vermek",
+  "profileGoalMaintainWeight": "Kiloyu korumak",
+  "profileGoalGainWeight": "Kilo almak",
+
+  "profileAvatarChangeTitle": "Profil fotoğrafını değiştir",
+  "profileAvatarChangeSubtitle": "Yeni fotoğraf çek veya galeriden seç",
+  "profileAvatarCamera": "Kamera",
+  "profileAvatarCameraSubtitle": "Yeni fotoğraf çek",
+  "profileAvatarGallery": "Galeri",
+  "profileAvatarGallerySubtitle": "Fotoğraf seç",
+  "profileAvatarDelete": "Profil fotoğrafını sil",
+
+  "profileAvatarCropTitle": "Profil fotoğrafını seç",
+  "profileAvatarCropArea": "Profil fotoğrafında görünecek alan",
+  "profileAvatarCropMoveHint": "Fotoğrafı hareket ettir ve yakınlaştır",
+  "profileAvatarCropDone": "Hazır",
+  "profileAvatarCropError": "Fotoğraf kırpılırken bir hata oluştu",
+  "profileAvatarImageOpenError": "Fotoğraf açılamadı",
+  "profileAvatarImageOpenErrorDescription": "Başka bir fotoğraf seçip tekrar deneyin.",
+
+  "profileEditSaveChanges": "Değişiklikleri kaydet"
 }

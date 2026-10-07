@@ -927,4 +927,300 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get waterReminderMessageEight =>
       'Don\'t forget to drink water before dinner! 🍽️';
+
+  @override
+  String get profileTitle => 'Profile';
+
+  @override
+  String get profileGuestTitle => 'Sign in to\nyour profile';
+
+  @override
+  String get profileGuestSubtitle =>
+      'Manage your profile information and\npersonalize your settings.';
+
+  @override
+  String get profileGuestFeatureEdit => 'Edit profile information';
+
+  @override
+  String get profileGuestFeatureSettings => 'Manage settings';
+
+  @override
+  String get profileGuestFeaturePrivacy => 'Manage privacy and security';
+
+  @override
+  String get profileSectionAccountSettings => 'Account & Settings';
+
+  @override
+  String get profileSectionNotifications => 'Notifications';
+
+  @override
+  String get profileSectionSupport => 'Support';
+
+  @override
+  String get profileEditMenu => 'Edit profile';
+
+  @override
+  String get profilePatientCodeMenu => 'My patient code';
+
+  @override
+  String get privacyPolicyTitle => 'Privacy Policy';
+
+  @override
+  String get termsOfServiceTitle => 'Terms of Service';
+
+  @override
+  String get aboutUsTitle => 'About Us';
+
+  @override
+  String get profileLogout => 'Log out';
+
+  @override
+  String get profileLogoutTitle => 'Log out';
+
+  @override
+  String get profileLogoutMessage =>
+      'Are you sure you want to log out of your account?';
+
+  @override
+  String get profileDeleteAccount => 'Delete account';
+
+  @override
+  String get profileDeleteAccountMessage =>
+      'Your account will be deactivated. You can reactivate it at any time.';
+
+  @override
+  String get profileDeleteConfirm => 'Delete';
+
+  @override
+  String get profileLoadFailed => 'Failed to load information';
+
+  @override
+  String get profileLoadErrorDescription =>
+      'Check your internet connection and try again.';
+
+  @override
+  String get profileRetry => 'Try again';
+
+  @override
+  String get patientCodeTitle => 'My patient code';
+
+  @override
+  String get patientCodeCopied => 'Patient code copied';
+
+  @override
+  String patientCodeShareText(String patientCode) {
+    return 'My SağlamQal patient code: $patientCode';
+  }
+
+  @override
+  String get patientCodeShareSubject => 'SağlamQal patient code';
+
+  @override
+  String get patientCodeCopy => 'Copy code';
+
+  @override
+  String get patientCodeShare => 'Share';
+
+  @override
+  String get patientCodeHeaderTitle =>
+      'Your dietitian can find you with this code';
+
+  @override
+  String get patientCodeHeaderDescription =>
+      'Share the code below with your dietitian. They can use it to find you and invite you as a patient.';
+
+  @override
+  String get patientCodeLabel => 'Patient code';
+
+  @override
+  String get patientCodePrivacyNote =>
+      'Only share your code with the dietitian you want to connect with.';
+
+  @override
+  String get patientCodeNotFoundTitle => 'Patient code not found';
+
+  @override
+  String get patientCodeNotFoundDescription =>
+      'There is currently no patient code available for your account.';
+
+  @override
+  String get profileEditTitle => 'Edit profile';
+
+  @override
+  String get profileImageCaptureError =>
+      'An error occurred while taking the photo';
+
+  @override
+  String get profileImageSelectionError =>
+      'An error occurred while selecting the photo';
+
+  @override
+  String get profileNoChanges => 'No changes to save';
+
+  @override
+  String get profileAvatarUpdated => 'Profile photo updated';
+
+  @override
+  String get profileAvatarDeleted => 'Profile photo deleted';
+
+  @override
+  String get profileSaved => 'Profile saved';
+
+  @override
+  String get aboutUsEmail => 'Email';
+
+  @override
+  String get aboutUsWebsite => 'Website';
+
+  @override
+  String aboutUsInvalidLink(String url) {
+    return 'Invalid link: $url';
+  }
+
+  @override
+  String aboutUsLinkOpenFailed(String url) {
+    return 'Could not open link: $url';
+  }
+
+  @override
+  String aboutUsLinkError(String error) {
+    return 'An error occurred: $error';
+  }
+
+  @override
+  String get profileEditPersonalInfo => 'Personal information';
+
+  @override
+  String get profileEditFirstName => 'First name';
+
+  @override
+  String get profileEditFirstNameHint => 'Enter your first name';
+
+  @override
+  String get profileEditLastName => 'Last name';
+
+  @override
+  String get profileEditLastNameHint => 'Enter your last name';
+
+  @override
+  String get profileEditEmail => 'Email';
+
+  @override
+  String get profileEditPhone => 'Phone number';
+
+  @override
+  String get profileEditBirthday => 'Date of birth';
+
+  @override
+  String get profileEditBirthdayHint => 'Select your date of birth';
+
+  @override
+  String get profileEditPhysicalInfo => 'Body metrics';
+
+  @override
+  String get profileEditHeight => 'Height';
+
+  @override
+  String get profileEditCurrentWeight => 'Current weight';
+
+  @override
+  String get profileEditTargetWeight => 'Target weight';
+
+  @override
+  String get profileEditUnitCm => 'cm';
+
+  @override
+  String get profileEditUnitKg => 'kg';
+
+  @override
+  String get profileEditProgressMessage =>
+      'Great progress! You\'re on the right track.';
+
+  @override
+  String get profileEditPreferences => 'Preferences';
+
+  @override
+  String get profileEditGender => 'Gender';
+
+  @override
+  String get profileEditActivityLevel => 'Activity level';
+
+  @override
+  String get profileEditGoal => 'Your goal';
+
+  @override
+  String get profileEditConsistencyHint =>
+      'Consistency matters. Small steps lead to big changes!';
+
+  @override
+  String get profileActivitySedentary => 'Sedentary';
+
+  @override
+  String get profileActivityLight => 'Lightly active';
+
+  @override
+  String get profileActivityModerate => 'Moderately active';
+
+  @override
+  String get profileActivityActive => 'Active';
+
+  @override
+  String get profileActivityVeryActive => 'Very active';
+
+  @override
+  String get profileGoalLoseWeight => 'Lose weight';
+
+  @override
+  String get profileGoalMaintainWeight => 'Maintain weight';
+
+  @override
+  String get profileGoalGainWeight => 'Gain weight';
+
+  @override
+  String get profileAvatarChangeTitle => 'Change profile photo';
+
+  @override
+  String get profileAvatarChangeSubtitle =>
+      'Take a new photo or choose from your gallery';
+
+  @override
+  String get profileAvatarCamera => 'Camera';
+
+  @override
+  String get profileAvatarCameraSubtitle => 'Take a new photo';
+
+  @override
+  String get profileAvatarGallery => 'Gallery';
+
+  @override
+  String get profileAvatarGallerySubtitle => 'Choose a photo';
+
+  @override
+  String get profileAvatarDelete => 'Delete profile photo';
+
+  @override
+  String get profileAvatarCropTitle => 'Choose profile photo';
+
+  @override
+  String get profileAvatarCropArea => 'Area visible in your profile photo';
+
+  @override
+  String get profileAvatarCropMoveHint => 'Move and zoom the photo';
+
+  @override
+  String get profileAvatarCropDone => 'Done';
+
+  @override
+  String get profileAvatarCropError =>
+      'An error occurred while cropping the photo';
+
+  @override
+  String get profileAvatarImageOpenError => 'Could not open the photo';
+
+  @override
+  String get profileAvatarImageOpenErrorDescription =>
+      'Choose another photo and try again.';
+
+  @override
+  String get profileEditSaveChanges => 'Save changes';
 }

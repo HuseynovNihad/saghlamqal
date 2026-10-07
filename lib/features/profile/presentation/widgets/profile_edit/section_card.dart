@@ -26,7 +26,7 @@ class SectionCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 16,
             offset: const Offset(0, 4),
           ),
@@ -38,21 +38,29 @@ class SectionCard extends StatelessWidget {
           Row(
             children: [
               Icon(icon, color: AppColors.primary, size: 20),
+
               const SizedBox(width: 8),
-              Text(
-                title.toUpperCase(),
-                style: const TextStyle(
-                  color: AppColors.headline,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 13,
-                  letterSpacing: 0.5,
+
+              Expanded(
+                child: Text(
+                  title.toUpperCase(),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    color: AppColors.headline,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 13,
+                    letterSpacing: 0.5,
+                  ),
                 ),
               ),
-              const Spacer(),
-              if (trailing != null) trailing!,
+
+              if (trailing != null) ...[const SizedBox(width: 8), trailing!],
             ],
           ),
+
           const SizedBox(height: 16),
+
           ...children,
         ],
       ),

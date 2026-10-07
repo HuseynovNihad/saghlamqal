@@ -40,11 +40,11 @@ class ProfileAvatar extends StatelessWidget {
               height: size,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: AppColors.primary.withOpacity(0.12),
+                color: AppColors.primary.withValues(alpha: 0.12),
                 border: Border.all(color: Colors.white, width: 3),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.08),
+                    color: Colors.black.withValues(alpha: 0.08),
                     blurRadius: 16,
                     offset: const Offset(0, 6),
                   ),
@@ -58,10 +58,9 @@ class ProfileAvatar extends StatelessWidget {
                     hasLocalImage: hasLocalImage,
                     hasNetworkImage: hasNetworkImage,
                   ),
-
                   if (isLoading)
                     Container(
-                      color: Colors.black.withOpacity(0.35),
+                      color: Colors.black.withValues(alpha: 0.35),
                       alignment: Alignment.center,
                       child: const SizedBox(
                         width: 30,
@@ -76,7 +75,6 @@ class ProfileAvatar extends StatelessWidget {
               ),
             ),
           ),
-
           Positioned(
             right: 2,
             bottom: 2,

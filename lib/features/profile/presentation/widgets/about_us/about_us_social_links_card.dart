@@ -2,21 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../core/constants/app_assets.dart';
+import '../../../../../core/l10n/localization_extension.dart';
 import '../../../../../core/utils/sized_box_extension.dart';
 import '../../../domain/entities/social_links_entity.dart';
 import 'about_us_social_button.dart';
 
 class AboutUsSocialLinksCard extends StatelessWidget {
-  final SocialLinksEntity socialLinks;
-
   const AboutUsSocialLinksCard({super.key, required this.socialLinks});
+
+  final SocialLinksEntity socialLinks;
 
   Future<void> _launch(BuildContext context, String url) async {
     final trimmed = url.trim();
     final uri = Uri.tryParse(trimmed);
 
     if (uri == null) {
-      _showError(context, 'Keçərsiz link: $trimmed');
+      _showError(context, context.l10n.aboutUsInvalidLink(trimmed));
+
       return;
     }
 
@@ -25,12 +27,13 @@ class AboutUsSocialLinksCard extends StatelessWidget {
         uri,
         mode: LaunchMode.externalApplication,
       );
+
       if (!launched && context.mounted) {
-        _showError(context, 'Link açıla bilmədi: $trimmed');
+        _showError(context, context.l10n.aboutUsLinkOpenFailed(trimmed));
       }
-    } catch (e) {
+    } catch (error) {
       if (context.mounted) {
-        _showError(context, 'Xəta baş verdi: $e');
+        _showError(context, context.l10n.aboutUsLinkError(error.toString()));
       }
     }
   }
@@ -47,16 +50,20 @@ class AboutUsSocialLinksCard extends StatelessWidget {
       children: [
         AboutUsSocialButton(
           imagePath: AppAssets.mail,
-          label: 'E-poçt',
+          label: context.l10n.aboutUsEmail,
           onTap: () => _launch(context, 'mailto:${socialLinks.email}'),
         ),
+
         12.ws,
+
         AboutUsSocialButton(
           imagePath: AppAssets.website,
-          label: 'Vebsayt',
+          label: context.l10n.aboutUsWebsite,
           onTap: () => _launch(context, socialLinks.website),
         ),
+
         12.ws,
+
         AboutUsSocialButton(
           imagePath: AppAssets.instagram,
           label: 'Instagram',

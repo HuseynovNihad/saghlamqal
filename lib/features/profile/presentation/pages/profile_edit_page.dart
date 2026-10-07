@@ -9,6 +9,7 @@ import 'package:kalori_tracker/core/utils/sized_box_extension.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/di/injection_container.dart';
+import '../../../../core/l10n/localization_extension.dart';
 import '../../../../core/utils/padding_extension.dart';
 import '../../../../shared/widgets/custom_snackbar.dart';
 import '../../../auth/domain/entities/user_entity.dart';
@@ -50,8 +51,11 @@ class _ProfileEditView extends StatefulWidget {
 
 class _ProfileEditViewState extends State<_ProfileEditView> {
   final _firstNameController = TextEditingController();
+
   final _lastNameController = TextEditingController();
+
   final _emailController = TextEditingController();
+
   final _phoneController = TextEditingController();
 
   final ImagePicker _imagePicker = ImagePicker();
@@ -67,6 +71,7 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
   static const double _maxWeight = 300;
 
   static const double _minTargetWeight = 20;
+
   static const double _maxTargetWeight = 300;
 
   static const String _phoneCountryCode = '+994';
@@ -146,15 +151,21 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
 
   void _hydrateFromUser(UserEntity user) {
     _firstNameController.text = user.firstName ?? '';
+
     _lastNameController.text = user.lastName ?? '';
+
     _emailController.text = user.email;
+
     _phoneController.text = _stripCountryCode(user.phoneNumber);
 
     _initialFirstName = _firstNameController.text;
+
     _initialLastName = _lastNameController.text;
+
     _initialPhoneDigits = _phoneController.text;
 
     _avatarInitial = _initialFor(user);
+
     _avatarUrl = user.avatar;
 
     _hasUserHydrated = true;
@@ -171,12 +182,17 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
     _goal = profile.goal;
 
     _initialBirthday = profile.birthday;
+
     _initialHeight = profile.height;
+
     _initialWeight = profile.currentWeight;
+
     _initialTargetWeight = profile.targetWeight;
 
     _initialGender = profile.gender;
+
     _initialActivityLevel = profile.activityLevel;
+
     _initialGoal = profile.goal;
 
     _hasPatientProfileHydrated = true;
@@ -192,7 +208,6 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
     }
 
     try {
-      // 1. Kamera və ya qalereyadan şəkli seçirik.
       final image = await _imagePicker.pickImage(
         source: source,
         imageQuality: 95,
@@ -205,7 +220,6 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
         return;
       }
 
-      // 2. Şəkli crop səhifəsinə göndəririk.
       final croppedBytes = await Navigator.of(context).push<Uint8List>(
         MaterialPageRoute<Uint8List>(
           fullscreenDialog: true,
@@ -215,30 +229,26 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
         ),
       );
 
-      // İstifadəçi crop ekranından geri çıxıbsa
-      // heç bir upload etmirik.
       if (croppedBytes == null || !mounted) {
         return;
       }
 
-      // 3. Crop edilmiş Uint8List-i temp fayla yazırıq.
       final croppedFile = await _createCroppedAvatarFile(croppedBytes);
 
       if (!mounted) {
         return;
       }
 
-      // 4. Lokal preview + loading.
       setState(() {
         _localAvatarPath = croppedFile.path;
+
         _isAvatarUploading = true;
       });
 
-      // 5. Backend-ə artıq crop edilmiş faylı göndəririk.
       context.read<ProfileBloc>().add(
         ProfileAvatarUploadRequested(filePath: croppedFile.path),
       );
-    } catch (e) {
+    } catch (_) {
       if (!mounted) {
         return;
       }
@@ -250,8 +260,8 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
       CustomSnackBar.show(
         context,
         message: source == ImageSource.camera
-            ? 'Şəkil çəkilərkən xəta baş verdi'
-            : 'Şəkil seçilərkən xəta baş verdi',
+            ? context.l10n.profileImageCaptureError
+            : context.l10n.profileImageSelectionError,
         type: SnackBarType.error,
       );
     }
@@ -351,7 +361,7 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
     if (!personalChanged && !physicalChanged) {
       CustomSnackBar.show(
         context,
-        message: 'Heç bir dəyişiklik yoxdur',
+        message: context.l10n.profileNoChanges,
         type: SnackBarType.info,
       );
 
@@ -421,7 +431,7 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
             Navigator.of(context).maybePop();
           },
         ),
-        title: Text('Profil redaktəsi', style: AppTextStyles.h3),
+        title: Text(context.l10n.profileEditTitle, style: AppTextStyles.h3),
       ),
       body: SafeArea(
         child: BlocConsumer<ProfileBloc, ProfileState>(
@@ -461,6 +471,7 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
             if (state is ProfileUpdateSuccess) {
               setState(() {
                 _hydrateFromUser(state.user);
+
                 _isSaving = false;
               });
 
@@ -524,7 +535,7 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
 
               CustomSnackBar.show(
                 context,
-                message: 'Profil şəkli yeniləndi',
+                message: context.l10n.profileAvatarUpdated,
                 type: SnackBarType.success,
                 position: SnackBarPosition.top,
               );
@@ -533,6 +544,7 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
             if (state is ProfileAvatarUploadError) {
               setState(() {
                 _localAvatarPath = null;
+
                 _isAvatarUploading = false;
               });
 
@@ -562,7 +574,7 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
 
               CustomSnackBar.show(
                 context,
-                message: 'Profil şəkli silindi',
+                message: context.l10n.profileAvatarDeleted,
                 type: SnackBarType.success,
                 position: SnackBarPosition.top,
               );
@@ -607,9 +619,6 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
             return ListView(
               padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
               children: [
-                // ───────────────────────────────────────
-                // AVATAR
-                // ───────────────────────────────────────
                 ProfileAvatar(
                   initial: _avatarInitial,
                   imageUrl: _avatarUrl,
@@ -620,9 +629,6 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
 
                 16.hs,
 
-                // ───────────────────────────────────────
-                // PERSONAL INFO
-                // ───────────────────────────────────────
                 PersonalInfoCard(
                   firstNameController: _firstNameController,
                   lastNameController: _lastNameController,
@@ -638,9 +644,6 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
 
                 20.hs,
 
-                // ───────────────────────────────────────
-                // BODY METRICS
-                // ───────────────────────────────────────
                 BodyMetricsCard(
                   height: _height,
                   weight: _weight,
@@ -667,9 +670,6 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
 
                 20.hs,
 
-                // ───────────────────────────────────────
-                // PREFERENCES
-                // ───────────────────────────────────────
                 PreferencesCard(
                   gender: _gender,
                   onGenderChanged: (value) {
@@ -715,7 +715,7 @@ class _ProfileEditViewState extends State<_ProfileEditView> {
     if (!personalChanged && !physicalChanged) {
       CustomSnackBar.show(
         context,
-        message: 'Profil yadda saxlanıldı',
+        message: context.l10n.profileSaved,
         type: SnackBarType.success,
         position: SnackBarPosition.top,
       );

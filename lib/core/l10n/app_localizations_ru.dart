@@ -936,4 +936,297 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get waterReminderMessageEight =>
       'Не забудьте выпить воды перед ужином! 🍽️';
+
+  @override
+  String get profileTitle => 'Профиль';
+
+  @override
+  String get profileGuestTitle => 'Войдите в\nсвой профиль';
+
+  @override
+  String get profileGuestSubtitle =>
+      'Управляйте данными профиля и\nнастраивайте приложение под себя.';
+
+  @override
+  String get profileGuestFeatureEdit => 'Редактировать данные профиля';
+
+  @override
+  String get profileGuestFeatureSettings => 'Управлять настройками';
+
+  @override
+  String get profileGuestFeaturePrivacy =>
+      'Управлять конфиденциальностью и безопасностью';
+
+  @override
+  String get profileSectionAccountSettings => 'Аккаунт и настройки';
+
+  @override
+  String get profileSectionNotifications => 'Уведомления';
+
+  @override
+  String get profileSectionSupport => 'Поддержка';
+
+  @override
+  String get profileEditMenu => 'Редактировать профиль';
+
+  @override
+  String get profilePatientCodeMenu => 'Мой код пациента';
+
+  @override
+  String get privacyPolicyTitle => 'Политика конфиденциальности';
+
+  @override
+  String get termsOfServiceTitle => 'Условия использования';
+
+  @override
+  String get aboutUsTitle => 'О нас';
+
+  @override
+  String get profileLogout => 'Выйти';
+
+  @override
+  String get profileLogoutTitle => 'Выйти из аккаунта';
+
+  @override
+  String get profileLogoutMessage =>
+      'Вы уверены, что хотите выйти из аккаунта?';
+
+  @override
+  String get profileDeleteAccount => 'Удалить аккаунт';
+
+  @override
+  String get profileDeleteAccountMessage =>
+      'Ваш аккаунт будет деактивирован. Вы сможете активировать его снова в любое время.';
+
+  @override
+  String get profileDeleteConfirm => 'Удалить';
+
+  @override
+  String get profileLoadFailed => 'Не удалось загрузить данные';
+
+  @override
+  String get profileLoadErrorDescription =>
+      'Проверьте подключение к интернету и повторите попытку.';
+
+  @override
+  String get profileRetry => 'Повторить';
+
+  @override
+  String get patientCodeTitle => 'Мой код пациента';
+
+  @override
+  String get patientCodeCopied => 'Код пациента скопирован';
+
+  @override
+  String patientCodeShareText(String patientCode) {
+    return 'Мой код пациента SağlamQal: $patientCode';
+  }
+
+  @override
+  String get patientCodeShareSubject => 'Код пациента SağlamQal';
+
+  @override
+  String get patientCodeCopy => 'Скопировать код';
+
+  @override
+  String get patientCodeShare => 'Поделиться';
+
+  @override
+  String get patientCodeHeaderTitle =>
+      'Ваш диетолог сможет найти вас по этому коду';
+
+  @override
+  String get patientCodeHeaderDescription =>
+      'Поделитесь кодом ниже со своим диетологом. По этому коду он сможет найти вас и пригласить как пациента.';
+
+  @override
+  String get patientCodeLabel => 'Код пациента';
+
+  @override
+  String get patientCodePrivacyNote =>
+      'Делитесь кодом только с диетологом, с которым хотите связаться.';
+
+  @override
+  String get patientCodeNotFoundTitle => 'Код пациента не найден';
+
+  @override
+  String get patientCodeNotFoundDescription =>
+      'Для вашего аккаунта сейчас нет кода пациента.';
+
+  @override
+  String get profileEditTitle => 'Редактирование профиля';
+
+  @override
+  String get profileImageCaptureError => 'Не удалось сделать фото';
+
+  @override
+  String get profileImageSelectionError => 'Не удалось выбрать фото';
+
+  @override
+  String get profileNoChanges => 'Нет изменений для сохранения';
+
+  @override
+  String get profileAvatarUpdated => 'Фото профиля обновлено';
+
+  @override
+  String get profileAvatarDeleted => 'Фото профиля удалено';
+
+  @override
+  String get profileSaved => 'Профиль сохранён';
+
+  @override
+  String get aboutUsEmail => 'Эл. почта';
+
+  @override
+  String get aboutUsWebsite => 'Веб-сайт';
+
+  @override
+  String aboutUsInvalidLink(String url) {
+    return 'Некорректная ссылка: $url';
+  }
+
+  @override
+  String aboutUsLinkOpenFailed(String url) {
+    return 'Не удалось открыть ссылку: $url';
+  }
+
+  @override
+  String aboutUsLinkError(String error) {
+    return 'Произошла ошибка: $error';
+  }
+
+  @override
+  String get profileEditPersonalInfo => 'Личная информация';
+
+  @override
+  String get profileEditFirstName => 'Имя';
+
+  @override
+  String get profileEditFirstNameHint => 'Введите имя';
+
+  @override
+  String get profileEditLastName => 'Фамилия';
+
+  @override
+  String get profileEditLastNameHint => 'Введите фамилию';
+
+  @override
+  String get profileEditEmail => 'Эл. почта';
+
+  @override
+  String get profileEditPhone => 'Номер телефона';
+
+  @override
+  String get profileEditBirthday => 'Дата рождения';
+
+  @override
+  String get profileEditBirthdayHint => 'Выберите дату рождения';
+
+  @override
+  String get profileEditPhysicalInfo => 'Физические данные';
+
+  @override
+  String get profileEditHeight => 'Рост';
+
+  @override
+  String get profileEditCurrentWeight => 'Текущий вес';
+
+  @override
+  String get profileEditTargetWeight => 'Целевой вес';
+
+  @override
+  String get profileEditUnitCm => 'см';
+
+  @override
+  String get profileEditUnitKg => 'кг';
+
+  @override
+  String get profileEditProgressMessage => 'Отлично! Вы на правильном пути.';
+
+  @override
+  String get profileEditPreferences => 'Предпочтения';
+
+  @override
+  String get profileEditGender => 'Пол';
+
+  @override
+  String get profileEditActivityLevel => 'Уровень активности';
+
+  @override
+  String get profileEditGoal => 'Ваша цель';
+
+  @override
+  String get profileEditConsistencyHint =>
+      'Последовательность важна. Маленькие шаги приводят к большим изменениям!';
+
+  @override
+  String get profileActivitySedentary => 'Малоподвижный';
+
+  @override
+  String get profileActivityLight => 'Лёгкая активность';
+
+  @override
+  String get profileActivityModerate => 'Умеренная активность';
+
+  @override
+  String get profileActivityActive => 'Активный';
+
+  @override
+  String get profileActivityVeryActive => 'Очень активный';
+
+  @override
+  String get profileGoalLoseWeight => 'Снизить вес';
+
+  @override
+  String get profileGoalMaintainWeight => 'Сохранить вес';
+
+  @override
+  String get profileGoalGainWeight => 'Набрать вес';
+
+  @override
+  String get profileAvatarChangeTitle => 'Изменить фото профиля';
+
+  @override
+  String get profileAvatarChangeSubtitle =>
+      'Сделайте новое фото или выберите из галереи';
+
+  @override
+  String get profileAvatarCamera => 'Камера';
+
+  @override
+  String get profileAvatarCameraSubtitle => 'Сделать новое фото';
+
+  @override
+  String get profileAvatarGallery => 'Галерея';
+
+  @override
+  String get profileAvatarGallerySubtitle => 'Выбрать фото';
+
+  @override
+  String get profileAvatarDelete => 'Удалить фото профиля';
+
+  @override
+  String get profileAvatarCropTitle => 'Выберите фото профиля';
+
+  @override
+  String get profileAvatarCropArea => 'Область, которая будет видна в профиле';
+
+  @override
+  String get profileAvatarCropMoveHint => 'Перемещайте и масштабируйте фото';
+
+  @override
+  String get profileAvatarCropDone => 'Готово';
+
+  @override
+  String get profileAvatarCropError => 'Произошла ошибка при обрезке фото';
+
+  @override
+  String get profileAvatarImageOpenError => 'Не удалось открыть фото';
+
+  @override
+  String get profileAvatarImageOpenErrorDescription =>
+      'Выберите другое фото и попробуйте снова.';
+
+  @override
+  String get profileEditSaveChanges => 'Сохранить изменения';
 }

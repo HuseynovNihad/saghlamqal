@@ -1733,6 +1733,552 @@ abstract class AppLocalizations {
   /// In az, this message translates to:
   /// **'Axşam yeməyindən əvvəl su içməyi unutma! 🍽️'**
   String get waterReminderMessageEight;
+
+  /// No description provided for @profileTitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Profil'**
+  String get profileTitle;
+
+  /// No description provided for @profileGuestTitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Profilinə\ndaxil ol'**
+  String get profileGuestTitle;
+
+  /// No description provided for @profileGuestSubtitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Profil məlumatlarını idarə et,\ntənzimləmələrini öz zövqünə uyğunlaşdır.'**
+  String get profileGuestSubtitle;
+
+  /// No description provided for @profileGuestFeatureEdit.
+  ///
+  /// In az, this message translates to:
+  /// **'Profil məlumatlarını redaktə et'**
+  String get profileGuestFeatureEdit;
+
+  /// No description provided for @profileGuestFeatureSettings.
+  ///
+  /// In az, this message translates to:
+  /// **'Parametrləri idarə et'**
+  String get profileGuestFeatureSettings;
+
+  /// No description provided for @profileGuestFeaturePrivacy.
+  ///
+  /// In az, this message translates to:
+  /// **'Məxfilik və təhlükəsizliyi idarə et'**
+  String get profileGuestFeaturePrivacy;
+
+  /// No description provided for @profileSectionAccountSettings.
+  ///
+  /// In az, this message translates to:
+  /// **'Hesab və Parametrlər'**
+  String get profileSectionAccountSettings;
+
+  /// No description provided for @profileSectionNotifications.
+  ///
+  /// In az, this message translates to:
+  /// **'Bildirişlər'**
+  String get profileSectionNotifications;
+
+  /// No description provided for @profileSectionSupport.
+  ///
+  /// In az, this message translates to:
+  /// **'Dəstək'**
+  String get profileSectionSupport;
+
+  /// No description provided for @profileEditMenu.
+  ///
+  /// In az, this message translates to:
+  /// **'Profili redaktə et'**
+  String get profileEditMenu;
+
+  /// No description provided for @profilePatientCodeMenu.
+  ///
+  /// In az, this message translates to:
+  /// **'Pasiyent kodum'**
+  String get profilePatientCodeMenu;
+
+  /// No description provided for @privacyPolicyTitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Məxfilik Siyasəti'**
+  String get privacyPolicyTitle;
+
+  /// No description provided for @termsOfServiceTitle.
+  ///
+  /// In az, this message translates to:
+  /// **'İstifadəçi Şərtləri'**
+  String get termsOfServiceTitle;
+
+  /// No description provided for @aboutUsTitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Haqqımızda'**
+  String get aboutUsTitle;
+
+  /// No description provided for @profileLogout.
+  ///
+  /// In az, this message translates to:
+  /// **'Çıxış'**
+  String get profileLogout;
+
+  /// No description provided for @profileLogoutTitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Çıxış et'**
+  String get profileLogoutTitle;
+
+  /// No description provided for @profileLogoutMessage.
+  ///
+  /// In az, this message translates to:
+  /// **'Hesabınızdan çıxmaq istədiyinizə əminsiniz?'**
+  String get profileLogoutMessage;
+
+  /// No description provided for @profileDeleteAccount.
+  ///
+  /// In az, this message translates to:
+  /// **'Hesabı sil'**
+  String get profileDeleteAccount;
+
+  /// No description provided for @profileDeleteAccountMessage.
+  ///
+  /// In az, this message translates to:
+  /// **'Hesabınız deaktiv ediləcək. İstədiyiniz zaman yenidən aktivləşdirə bilərsiniz.'**
+  String get profileDeleteAccountMessage;
+
+  /// No description provided for @profileDeleteConfirm.
+  ///
+  /// In az, this message translates to:
+  /// **'Sil'**
+  String get profileDeleteConfirm;
+
+  /// No description provided for @profileLoadFailed.
+  ///
+  /// In az, this message translates to:
+  /// **'Məlumat yüklənmədi'**
+  String get profileLoadFailed;
+
+  /// No description provided for @profileLoadErrorDescription.
+  ///
+  /// In az, this message translates to:
+  /// **'İnternet bağlantınızı yoxlayıb yenidən cəhd edin.'**
+  String get profileLoadErrorDescription;
+
+  /// No description provided for @profileRetry.
+  ///
+  /// In az, this message translates to:
+  /// **'Yenidən cəhd et'**
+  String get profileRetry;
+
+  /// No description provided for @patientCodeTitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Pasiyent kodum'**
+  String get patientCodeTitle;
+
+  /// No description provided for @patientCodeCopied.
+  ///
+  /// In az, this message translates to:
+  /// **'Pasiyent kodu kopyalandı'**
+  String get patientCodeCopied;
+
+  /// No description provided for @patientCodeShareText.
+  ///
+  /// In az, this message translates to:
+  /// **'SağlamQal pasiyent kodum: {patientCode}'**
+  String patientCodeShareText(String patientCode);
+
+  /// No description provided for @patientCodeShareSubject.
+  ///
+  /// In az, this message translates to:
+  /// **'SağlamQal pasiyent kodu'**
+  String get patientCodeShareSubject;
+
+  /// No description provided for @patientCodeCopy.
+  ///
+  /// In az, this message translates to:
+  /// **'Kodu kopyala'**
+  String get patientCodeCopy;
+
+  /// No description provided for @patientCodeShare.
+  ///
+  /// In az, this message translates to:
+  /// **'Paylaş'**
+  String get patientCodeShare;
+
+  /// No description provided for @patientCodeHeaderTitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Dietoloqunuz sizi bu kodla tapa bilər'**
+  String get patientCodeHeaderTitle;
+
+  /// No description provided for @patientCodeHeaderDescription.
+  ///
+  /// In az, this message translates to:
+  /// **'Aşağıdakı kodu dietoloqunuzla paylaşın. O, bu kod vasitəsilə sizi tapıb pasiyent kimi dəvət edə bilər.'**
+  String get patientCodeHeaderDescription;
+
+  /// No description provided for @patientCodeLabel.
+  ///
+  /// In az, this message translates to:
+  /// **'Pasiyent kodu'**
+  String get patientCodeLabel;
+
+  /// No description provided for @patientCodePrivacyNote.
+  ///
+  /// In az, this message translates to:
+  /// **'Kodunuzu yalnız əlaqə qurmaq istədiyiniz dietoloqla paylaşın.'**
+  String get patientCodePrivacyNote;
+
+  /// No description provided for @patientCodeNotFoundTitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Pasiyent kodu tapılmadı'**
+  String get patientCodeNotFoundTitle;
+
+  /// No description provided for @patientCodeNotFoundDescription.
+  ///
+  /// In az, this message translates to:
+  /// **'Hazırda hesabınız üçün pasiyent kodu mövcud deyil.'**
+  String get patientCodeNotFoundDescription;
+
+  /// No description provided for @profileEditTitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Profil redaktəsi'**
+  String get profileEditTitle;
+
+  /// No description provided for @profileImageCaptureError.
+  ///
+  /// In az, this message translates to:
+  /// **'Şəkil çəkilərkən xəta baş verdi'**
+  String get profileImageCaptureError;
+
+  /// No description provided for @profileImageSelectionError.
+  ///
+  /// In az, this message translates to:
+  /// **'Şəkil seçilərkən xəta baş verdi'**
+  String get profileImageSelectionError;
+
+  /// No description provided for @profileNoChanges.
+  ///
+  /// In az, this message translates to:
+  /// **'Heç bir dəyişiklik yoxdur'**
+  String get profileNoChanges;
+
+  /// No description provided for @profileAvatarUpdated.
+  ///
+  /// In az, this message translates to:
+  /// **'Profil şəkli yeniləndi'**
+  String get profileAvatarUpdated;
+
+  /// No description provided for @profileAvatarDeleted.
+  ///
+  /// In az, this message translates to:
+  /// **'Profil şəkli silindi'**
+  String get profileAvatarDeleted;
+
+  /// No description provided for @profileSaved.
+  ///
+  /// In az, this message translates to:
+  /// **'Profil yadda saxlanıldı'**
+  String get profileSaved;
+
+  /// No description provided for @aboutUsEmail.
+  ///
+  /// In az, this message translates to:
+  /// **'E-poçt'**
+  String get aboutUsEmail;
+
+  /// No description provided for @aboutUsWebsite.
+  ///
+  /// In az, this message translates to:
+  /// **'Vebsayt'**
+  String get aboutUsWebsite;
+
+  /// No description provided for @aboutUsInvalidLink.
+  ///
+  /// In az, this message translates to:
+  /// **'Keçərsiz link: {url}'**
+  String aboutUsInvalidLink(String url);
+
+  /// No description provided for @aboutUsLinkOpenFailed.
+  ///
+  /// In az, this message translates to:
+  /// **'Link açıla bilmədi: {url}'**
+  String aboutUsLinkOpenFailed(String url);
+
+  /// No description provided for @aboutUsLinkError.
+  ///
+  /// In az, this message translates to:
+  /// **'Xəta baş verdi: {error}'**
+  String aboutUsLinkError(String error);
+
+  /// No description provided for @profileEditPersonalInfo.
+  ///
+  /// In az, this message translates to:
+  /// **'Şəxsi məlumatlar'**
+  String get profileEditPersonalInfo;
+
+  /// No description provided for @profileEditFirstName.
+  ///
+  /// In az, this message translates to:
+  /// **'Ad'**
+  String get profileEditFirstName;
+
+  /// No description provided for @profileEditFirstNameHint.
+  ///
+  /// In az, this message translates to:
+  /// **'Adınızı daxil edin'**
+  String get profileEditFirstNameHint;
+
+  /// No description provided for @profileEditLastName.
+  ///
+  /// In az, this message translates to:
+  /// **'Soyad'**
+  String get profileEditLastName;
+
+  /// No description provided for @profileEditLastNameHint.
+  ///
+  /// In az, this message translates to:
+  /// **'Soyadınızı daxil edin'**
+  String get profileEditLastNameHint;
+
+  /// No description provided for @profileEditEmail.
+  ///
+  /// In az, this message translates to:
+  /// **'Email'**
+  String get profileEditEmail;
+
+  /// No description provided for @profileEditPhone.
+  ///
+  /// In az, this message translates to:
+  /// **'Əlaqə nömrəsi'**
+  String get profileEditPhone;
+
+  /// No description provided for @profileEditBirthday.
+  ///
+  /// In az, this message translates to:
+  /// **'Doğum tarixi'**
+  String get profileEditBirthday;
+
+  /// No description provided for @profileEditBirthdayHint.
+  ///
+  /// In az, this message translates to:
+  /// **'Doğum tarixinizi seçin'**
+  String get profileEditBirthdayHint;
+
+  /// No description provided for @profileEditPhysicalInfo.
+  ///
+  /// In az, this message translates to:
+  /// **'Fiziki məlumatlar'**
+  String get profileEditPhysicalInfo;
+
+  /// No description provided for @profileEditHeight.
+  ///
+  /// In az, this message translates to:
+  /// **'Boy'**
+  String get profileEditHeight;
+
+  /// No description provided for @profileEditCurrentWeight.
+  ///
+  /// In az, this message translates to:
+  /// **'Cari çəki'**
+  String get profileEditCurrentWeight;
+
+  /// No description provided for @profileEditTargetWeight.
+  ///
+  /// In az, this message translates to:
+  /// **'Hədəf çəki'**
+  String get profileEditTargetWeight;
+
+  /// No description provided for @profileEditUnitCm.
+  ///
+  /// In az, this message translates to:
+  /// **'sm'**
+  String get profileEditUnitCm;
+
+  /// No description provided for @profileEditUnitKg.
+  ///
+  /// In az, this message translates to:
+  /// **'kq'**
+  String get profileEditUnitKg;
+
+  /// No description provided for @profileEditProgressMessage.
+  ///
+  /// In az, this message translates to:
+  /// **'Əla gedir! Doğru yoldasan.'**
+  String get profileEditProgressMessage;
+
+  /// No description provided for @profileEditPreferences.
+  ///
+  /// In az, this message translates to:
+  /// **'Tərcihlər'**
+  String get profileEditPreferences;
+
+  /// No description provided for @profileEditGender.
+  ///
+  /// In az, this message translates to:
+  /// **'Cins'**
+  String get profileEditGender;
+
+  /// No description provided for @profileEditActivityLevel.
+  ///
+  /// In az, this message translates to:
+  /// **'Aktivlik səviyyəsi'**
+  String get profileEditActivityLevel;
+
+  /// No description provided for @profileEditGoal.
+  ///
+  /// In az, this message translates to:
+  /// **'Hədəfin'**
+  String get profileEditGoal;
+
+  /// No description provided for @profileEditConsistencyHint.
+  ///
+  /// In az, this message translates to:
+  /// **'Ardıcıllıq önəmlidir. Kiçik addımlar böyük dəyişikliklərə aparır!'**
+  String get profileEditConsistencyHint;
+
+  /// No description provided for @profileActivitySedentary.
+  ///
+  /// In az, this message translates to:
+  /// **'Hərəkətsiz'**
+  String get profileActivitySedentary;
+
+  /// No description provided for @profileActivityLight.
+  ///
+  /// In az, this message translates to:
+  /// **'Az aktiv'**
+  String get profileActivityLight;
+
+  /// No description provided for @profileActivityModerate.
+  ///
+  /// In az, this message translates to:
+  /// **'Orta aktiv'**
+  String get profileActivityModerate;
+
+  /// No description provided for @profileActivityActive.
+  ///
+  /// In az, this message translates to:
+  /// **'Aktiv'**
+  String get profileActivityActive;
+
+  /// No description provided for @profileActivityVeryActive.
+  ///
+  /// In az, this message translates to:
+  /// **'Çox aktiv'**
+  String get profileActivityVeryActive;
+
+  /// No description provided for @profileGoalLoseWeight.
+  ///
+  /// In az, this message translates to:
+  /// **'Arıqlamaq'**
+  String get profileGoalLoseWeight;
+
+  /// No description provided for @profileGoalMaintainWeight.
+  ///
+  /// In az, this message translates to:
+  /// **'Çəkini saxlamaq'**
+  String get profileGoalMaintainWeight;
+
+  /// No description provided for @profileGoalGainWeight.
+  ///
+  /// In az, this message translates to:
+  /// **'Kökəlmək'**
+  String get profileGoalGainWeight;
+
+  /// No description provided for @profileAvatarChangeTitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Profil şəklini dəyiş'**
+  String get profileAvatarChangeTitle;
+
+  /// No description provided for @profileAvatarChangeSubtitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Yeni şəkil çək və ya qalereyadan seç'**
+  String get profileAvatarChangeSubtitle;
+
+  /// No description provided for @profileAvatarCamera.
+  ///
+  /// In az, this message translates to:
+  /// **'Kamera'**
+  String get profileAvatarCamera;
+
+  /// No description provided for @profileAvatarCameraSubtitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Yeni şəkil çək'**
+  String get profileAvatarCameraSubtitle;
+
+  /// No description provided for @profileAvatarGallery.
+  ///
+  /// In az, this message translates to:
+  /// **'Qalereya'**
+  String get profileAvatarGallery;
+
+  /// No description provided for @profileAvatarGallerySubtitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Şəkillərdən seç'**
+  String get profileAvatarGallerySubtitle;
+
+  /// No description provided for @profileAvatarDelete.
+  ///
+  /// In az, this message translates to:
+  /// **'Profil şəklini sil'**
+  String get profileAvatarDelete;
+
+  /// No description provided for @profileAvatarCropTitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Profil şəklini seç'**
+  String get profileAvatarCropTitle;
+
+  /// No description provided for @profileAvatarCropArea.
+  ///
+  /// In az, this message translates to:
+  /// **'Profil şəklində görünəcək hissə'**
+  String get profileAvatarCropArea;
+
+  /// No description provided for @profileAvatarCropMoveHint.
+  ///
+  /// In az, this message translates to:
+  /// **'Şəkli sürüşdür və yaxınlaşdır'**
+  String get profileAvatarCropMoveHint;
+
+  /// No description provided for @profileAvatarCropDone.
+  ///
+  /// In az, this message translates to:
+  /// **'Hazırdır'**
+  String get profileAvatarCropDone;
+
+  /// No description provided for @profileAvatarCropError.
+  ///
+  /// In az, this message translates to:
+  /// **'Şəkil kəsilərkən xəta baş verdi'**
+  String get profileAvatarCropError;
+
+  /// No description provided for @profileAvatarImageOpenError.
+  ///
+  /// In az, this message translates to:
+  /// **'Şəkil açıla bilmədi'**
+  String get profileAvatarImageOpenError;
+
+  /// No description provided for @profileAvatarImageOpenErrorDescription.
+  ///
+  /// In az, this message translates to:
+  /// **'Başqa bir şəkil seçərək yenidən cəhd et.'**
+  String get profileAvatarImageOpenErrorDescription;
+
+  /// No description provided for @profileEditSaveChanges.
+  ///
+  /// In az, this message translates to:
+  /// **'Yadda saxla'**
+  String get profileEditSaveChanges;
 }
 
 class _AppLocalizationsDelegate

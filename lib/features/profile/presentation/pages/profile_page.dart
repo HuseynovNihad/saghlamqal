@@ -59,23 +59,22 @@ class _ProfileView extends StatelessWidget {
         child: BlocBuilder<AuthBloc, AuthState>(
           builder: (context, authState) {
             if (authState is! AuthAuthenticated) {
-              return const UnauthenticatedView(
+              return UnauthenticatedView(
                 headerIcon: AppAssets.profile,
-                title: 'Profilinə\ndaxil ol',
-                subtitle:
-                    'Profil məlumatlarını idarə et,\ntənzimləmələrini öz zövqünə uyğunlaşdır.',
+                title: context.l10n.profileGuestTitle,
+                subtitle: context.l10n.profileGuestSubtitle,
                 features: [
                   UnauthFeatureItem(
                     icon: AppAssets.edit,
-                    label: 'Profil məlumatlarını redaktə et',
+                    label: context.l10n.profileGuestFeatureEdit,
                   ),
                   UnauthFeatureItem(
                     icon: AppAssets.settings,
-                    label: 'Parametrləri idarə et',
+                    label: context.l10n.profileGuestFeatureSettings,
                   ),
                   UnauthFeatureItem(
                     icon: AppAssets.privacyTip,
-                    label: 'Məxfilik və təhlükəsizliyi idarə et',
+                    label: context.l10n.profileGuestFeaturePrivacy,
                   ),
                 ],
               );
@@ -86,7 +85,7 @@ class _ProfileView extends StatelessWidget {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildHeader(),
+                _buildHeader(context),
 
                 Expanded(
                   child: AnimatedRefreshIndicator(
@@ -109,13 +108,15 @@ class _ProfileView extends StatelessWidget {
                             imageUrl: user.avatar,
                           ),
 
-                          const SectionLabel(label: 'Hesab və Parametrlər'),
+                          SectionLabel(
+                            label: context.l10n.profileSectionAccountSettings,
+                          ),
 
                           MenuCard(
                             items: [
                               MenuItem(
                                 svgAsset: AppAssets.edit,
-                                label: 'Profili redaktə et',
+                                label: context.l10n.profileEditMenu,
                                 onTap: () {
                                   context.push(AppRoutes.profileEdit);
                                 },
@@ -123,7 +124,7 @@ class _ProfileView extends StatelessWidget {
 
                               MenuItem(
                                 svgAsset: AppAssets.patientCodeMenu,
-                                label: 'Pasiyent kodum',
+                                label: context.l10n.profilePatientCodeMenu,
                                 onTap: () {
                                   context.push(AppRoutes.patientCode);
                                 },
@@ -132,34 +133,14 @@ class _ProfileView extends StatelessWidget {
                               MenuItem(
                                 svgAsset: AppAssets.settings,
                                 label: context.l10n.languageTitle,
-                                onTap: () =>
-                                    showLanguageSelectionSheet(context),
+                                onTap: () {
+                                  showLanguageSelectionSheet(context);
+                                },
                               ),
 
-                              // BlocBuilder<
-                              //   DietitianInvitesBloc,
-                              //   DietitianInvitesState
-                              // >(
-                              //   builder: (context, state) {
-                              //     final inviteCount = _getInviteCount(state);
-
-                              //     return MenuItem(
-                              //       svgAsset: AppAssets.dietitianInvites,
-                              //       label: 'Dietoloq dəvətləri',
-                              //       badge: inviteCount > 0
-                              //           ? inviteCount > 99
-                              //                 ? '99+'
-                              //                 : inviteCount.toString()
-                              //           : null,
-                              //       onTap: () {
-                              //         context.push(AppRoutes.dietitianInvites);
-                              //       },
-                              //     );
-                              //   },
-                              // ),
                               MenuItem(
                                 svgAsset: AppAssets.privacyTip,
-                                label: 'Məxfilik Siyasəti',
+                                label: context.l10n.privacyPolicyTitle,
                                 onTap: () {
                                   context.push(AppRoutes.privacyPolicy);
                                 },
@@ -167,7 +148,7 @@ class _ProfileView extends StatelessWidget {
 
                               MenuItem(
                                 svgAsset: AppAssets.policy,
-                                label: 'İstifadəçi Şərtləri',
+                                label: context.l10n.termsOfServiceTitle,
                                 onTap: () {
                                   context.push(AppRoutes.termsOfService);
                                 },
@@ -176,17 +157,23 @@ class _ProfileView extends StatelessWidget {
                             ],
                           ),
 
-                          const SectionLabel(label: 'Bildirişlər'),
+                          SectionLabel(
+                            label: context.l10n.profileSectionNotifications,
+                          ),
 
-                          MenuCard(items: [WaterReminderTile(isLast: true)]),
+                          const MenuCard(
+                            items: [WaterReminderTile(isLast: true)],
+                          ),
 
-                          const SectionLabel(label: 'Dəstək'),
+                          SectionLabel(
+                            label: context.l10n.profileSectionSupport,
+                          ),
 
                           MenuCard(
                             items: [
                               MenuItem(
                                 svgAsset: AppAssets.about,
-                                label: 'Haqqımızda',
+                                label: context.l10n.aboutUsTitle,
                                 isLast: true,
                                 onTap: () {
                                   context.push(AppRoutes.aboutUs);
@@ -201,42 +188,12 @@ class _ProfileView extends StatelessWidget {
                             items: [
                               MenuItem(
                                 svgAsset: AppAssets.logout,
-                                label: 'Çıxış',
+                                label: context.l10n.profileLogout,
                                 iconColor: const Color(0xFFE53935),
                                 bgColor: const Color(0xFFFFF5F5),
                                 isLast: true,
                                 onTap: () {
-                                  CustomAlertDialog.show(
-                                    context,
-                                    icon: Container(
-                                      width: 64,
-                                      height: 64,
-                                      decoration: BoxDecoration(
-                                        color: AppColors.error.withOpacity(
-                                          0.12,
-                                        ),
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: Center(
-                                        child: AppAssets.logout.svg(
-                                          color: AppColors.error,
-                                          width: 28,
-                                          height: 28,
-                                          fit: BoxFit.contain,
-                                        ),
-                                      ),
-                                    ),
-                                    title: 'Çıxış et',
-                                    message:
-                                        'Hesabınızdan çıxmaq istədiyinizə əminsiniz?',
-                                    confirmText: 'Çıxış',
-                                    confirmColor: AppColors.error,
-                                    onConfirm: () {
-                                      context.read<AuthBloc>().add(
-                                        LogoutRequested(),
-                                      );
-                                    },
-                                  );
+                                  _showLogoutDialog(context);
                                 },
                               ),
                             ],
@@ -248,42 +205,12 @@ class _ProfileView extends StatelessWidget {
                             items: [
                               MenuItem(
                                 svgAsset: AppAssets.deleteAccount,
-                                label: 'Hesabı sil',
+                                label: context.l10n.profileDeleteAccount,
                                 iconColor: const Color(0xFFE53935),
                                 bgColor: const Color(0xFFFFF5F5),
                                 isLast: true,
                                 onTap: () {
-                                  CustomAlertDialog.show(
-                                    context,
-                                    icon: Container(
-                                      width: 64,
-                                      height: 64,
-                                      decoration: BoxDecoration(
-                                        color: AppColors.error.withOpacity(
-                                          0.12,
-                                        ),
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: Center(
-                                        child: AppAssets.deleteAccount.svg(
-                                          color: AppColors.error,
-                                          width: 28,
-                                          height: 28,
-                                          fit: BoxFit.contain,
-                                        ),
-                                      ),
-                                    ),
-                                    title: 'Hesabı sil',
-                                    message:
-                                        'Hesabınız deaktiv ediləcək. İstədiyiniz zaman yenidən aktivləşdirə bilərsiniz.',
-                                    confirmText: 'Sil',
-                                    confirmColor: AppColors.error,
-                                    onConfirm: () {
-                                      context.read<AuthBloc>().add(
-                                        const DeleteAccountRequested(),
-                                      );
-                                    },
-                                  );
+                                  _showDeleteAccountDialog(context);
                                 },
                               ),
                             ],
@@ -303,27 +230,69 @@ class _ProfileView extends StatelessWidget {
     );
   }
 
-  // int _getInviteCount(DietitianInvitesState state) {
-  //   if (state is DietitianInvitesLoaded) {
-  //     return state.invites.length;
-  //   }
+  void _showLogoutDialog(BuildContext context) {
+    CustomAlertDialog.show(
+      context,
+      icon: Container(
+        width: 64,
+        height: 64,
+        decoration: BoxDecoration(
+          color: AppColors.error.withValues(alpha: 0.12),
+          shape: BoxShape.circle,
+        ),
+        child: Center(
+          child: AppAssets.logout.svg(
+            color: AppColors.error,
+            width: 28,
+            height: 28,
+            fit: BoxFit.contain,
+          ),
+        ),
+      ),
+      title: context.l10n.profileLogoutTitle,
+      message: context.l10n.profileLogoutMessage,
+      confirmText: context.l10n.profileLogout,
+      confirmColor: AppColors.error,
+      onConfirm: () {
+        context.read<AuthBloc>().add(LogoutRequested());
+      },
+    );
+  }
 
-  //   if (state is DietitianInviteActionLoading) {
-  //     return state.invites.length;
-  //   }
+  void _showDeleteAccountDialog(BuildContext context) {
+    CustomAlertDialog.show(
+      context,
+      icon: Container(
+        width: 64,
+        height: 64,
+        decoration: BoxDecoration(
+          color: AppColors.error.withValues(alpha: 0.12),
+          shape: BoxShape.circle,
+        ),
+        child: Center(
+          child: AppAssets.deleteAccount.svg(
+            color: AppColors.error,
+            width: 28,
+            height: 28,
+            fit: BoxFit.contain,
+          ),
+        ),
+      ),
+      title: context.l10n.profileDeleteAccount,
+      message: context.l10n.profileDeleteAccountMessage,
+      confirmText: context.l10n.profileDeleteConfirm,
+      confirmColor: AppColors.error,
+      onConfirm: () {
+        context.read<AuthBloc>().add(const DeleteAccountRequested());
+      },
+    );
+  }
 
-  //   if (state is DietitianInviteActionSuccess) {
-  //     return state.invites.length;
-  //   }
-
-  //   return 0;
-  // }
-
-  Widget _buildHeader() {
+  Widget _buildHeader(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
       child: Text(
-        'Profil',
+        context.l10n.profileTitle,
         style: AppTextStyles.h1.copyWith(
           fontSize: 26,
           fontWeight: FontWeight.w600,

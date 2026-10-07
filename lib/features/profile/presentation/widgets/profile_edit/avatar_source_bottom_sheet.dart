@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../core/constants/app_colors.dart';
+import '../../../../../core/l10n/localization_extension.dart';
 
 class AvatarSourceBottomSheet extends StatelessWidget {
   const AvatarSourceBottomSheet({
@@ -26,7 +27,7 @@ class AvatarSourceBottomSheet extends StatelessWidget {
     return showModalBottomSheet<void>(
       context: context,
       backgroundColor: Colors.transparent,
-      barrierColor: Colors.black.withOpacity(0.30),
+      barrierColor: Colors.black.withValues(alpha: 0.30),
       isScrollControlled: true,
       useSafeArea: true,
       builder: (_) {
@@ -50,7 +51,7 @@ class AvatarSourceBottomSheet extends StatelessWidget {
         borderRadius: BorderRadius.circular(28),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: Colors.black.withValues(alpha: 0.08),
             blurRadius: 30,
             offset: const Offset(0, -4),
           ),
@@ -72,10 +73,11 @@ class AvatarSourceBottomSheet extends StatelessWidget {
               Expanded(
                 child: _AvatarSourceOption(
                   icon: Icons.camera_alt_rounded,
-                  title: 'Kamera',
-                  subtitle: 'Yeni şəkil çək',
+                  title: context.l10n.profileAvatarCamera,
+                  subtitle: context.l10n.profileAvatarCameraSubtitle,
                   onTap: () {
                     Navigator.of(context).pop();
+
                     onCameraTap();
                   },
                 ),
@@ -86,10 +88,11 @@ class AvatarSourceBottomSheet extends StatelessWidget {
               Expanded(
                 child: _AvatarSourceOption(
                   icon: Icons.photo_library_rounded,
-                  title: 'Qalereya',
-                  subtitle: 'Şəkillərdən seç',
+                  title: context.l10n.profileAvatarGallery,
+                  subtitle: context.l10n.profileAvatarGallerySubtitle,
                   onTap: () {
                     Navigator.of(context).pop();
+
                     onGalleryTap();
                   },
                 ),
@@ -105,8 +108,10 @@ class AvatarSourceBottomSheet extends StatelessWidget {
             const SizedBox(height: 14),
 
             _DeleteAvatarButton(
+              label: context.l10n.profileAvatarDelete,
               onTap: () {
                 Navigator.of(context).pop();
+
                 onDeleteTap();
               },
             ),
@@ -134,7 +139,7 @@ class AvatarSourceBottomSheet extends StatelessWidget {
           width: 46,
           height: 46,
           decoration: BoxDecoration(
-            color: AppColors.primary.withOpacity(0.08),
+            color: AppColors.primary.withValues(alpha: 0.08),
             borderRadius: BorderRadius.circular(15),
           ),
           child: const Icon(
@@ -146,22 +151,24 @@ class AvatarSourceBottomSheet extends StatelessWidget {
 
         const SizedBox(width: 12),
 
-        const Expanded(
+        Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Profil şəklini dəyiş',
-                style: TextStyle(
+                context.l10n.profileAvatarChangeTitle,
+                style: const TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w700,
                   color: Color(0xFF17231E),
                 ),
               ),
-              SizedBox(height: 4),
+
+              const SizedBox(height: 4),
+
               Text(
-                'Yeni şəkil çək və ya qalereyadan seç',
-                style: TextStyle(
+                context.l10n.profileAvatarChangeSubtitle,
+                style: const TextStyle(
                   fontSize: 13,
                   height: 1.3,
                   fontWeight: FontWeight.w400,
@@ -231,7 +238,7 @@ class _AvatarSourceOption extends StatelessWidget {
                 width: 52,
                 height: 52,
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.10),
+                  color: AppColors.primary.withValues(alpha: 0.10),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(icon, color: AppColors.primary, size: 25),
@@ -242,6 +249,8 @@ class _AvatarSourceOption extends StatelessWidget {
               Text(
                 title,
                 textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w700,
@@ -254,7 +263,7 @@ class _AvatarSourceOption extends StatelessWidget {
               Text(
                 subtitle,
                 textAlign: TextAlign.center,
-                maxLines: 1,
+                maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   fontSize: 12,
@@ -271,8 +280,9 @@ class _AvatarSourceOption extends StatelessWidget {
 }
 
 class _DeleteAvatarButton extends StatelessWidget {
-  const _DeleteAvatarButton({required this.onTap});
+  const _DeleteAvatarButton({required this.label, required this.onTap});
 
+  final String label;
   final VoidCallback onTap;
 
   @override
@@ -289,9 +299,9 @@ class _DeleteAvatarButton extends StatelessWidget {
             color: const Color(0xFFFFF6F6),
             borderRadius: BorderRadius.circular(16),
           ),
-          child: const Row(
+          child: Row(
             children: [
-              SizedBox(
+              const SizedBox(
                 width: 40,
                 height: 40,
                 child: DecoratedBox(
@@ -307,12 +317,12 @@ class _DeleteAvatarButton extends StatelessWidget {
                 ),
               ),
 
-              SizedBox(width: 12),
+              const SizedBox(width: 12),
 
               Expanded(
                 child: Text(
-                  'Profil şəklini sil',
-                  style: TextStyle(
+                  label,
+                  style: const TextStyle(
                     color: Color(0xFFE5484D),
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
@@ -320,7 +330,7 @@ class _DeleteAvatarButton extends StatelessWidget {
                 ),
               ),
 
-              Icon(
+              const Icon(
                 Icons.chevron_right_rounded,
                 color: Color(0xFFE5484D),
                 size: 21,

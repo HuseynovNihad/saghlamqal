@@ -337,5 +337,122 @@
   "waterReminderMessageFive": "Take a breath and drink a glass of water! 🌿",
   "waterReminderMessageSix": "Don't forget to drink water this afternoon! 💦",
   "waterReminderMessageSeven": "Have a glass of water before lunch! 🥗",
-  "waterReminderMessageEight": "Don't forget to drink water before dinner! 🍽️"
+  "waterReminderMessageEight": "Don't forget to drink water before dinner! 🍽️",
+  "profileTitle": "Profile",
+
+  "profileGuestTitle": "Sign in to\nyour profile",
+  "profileGuestSubtitle": "Manage your profile information and\npersonalize your settings.",
+  "profileGuestFeatureEdit": "Edit profile information",
+  "profileGuestFeatureSettings": "Manage settings",
+  "profileGuestFeaturePrivacy": "Manage privacy and security",
+
+  "profileSectionAccountSettings": "Account & Settings",
+  "profileSectionNotifications": "Notifications",
+  "profileSectionSupport": "Support",
+
+  "profileEditMenu": "Edit profile",
+  "profilePatientCodeMenu": "My patient code",
+
+  "privacyPolicyTitle": "Privacy Policy",
+  "termsOfServiceTitle": "Terms of Service",
+  "aboutUsTitle": "About Us",
+
+  "profileLogout": "Log out",
+  "profileLogoutTitle": "Log out",
+  "profileLogoutMessage": "Are you sure you want to log out of your account?",
+
+  "profileDeleteAccount": "Delete account",
+  "profileDeleteAccountMessage": "Your account will be deactivated. You can reactivate it at any time.",
+  "profileDeleteConfirm": "Delete",
+
+  "profileLoadFailed": "Failed to load information",
+  "profileLoadErrorDescription": "Check your internet connection and try again.",
+  "profileRetry": "Try again",
+
+  "patientCodeTitle": "My patient code",
+  "patientCodeCopied": "Patient code copied",
+
+  "patientCodeShareText": "My SağlamQal patient code: {patientCode}",
+
+  "patientCodeShareSubject": "SağlamQal patient code",
+  "patientCodeCopy": "Copy code",
+  "patientCodeShare": "Share",
+
+  "patientCodeHeaderTitle": "Your dietitian can find you with this code",
+  "patientCodeHeaderDescription": "Share the code below with your dietitian. They can use it to find you and invite you as a patient.",
+
+  "patientCodeLabel": "Patient code",
+  "patientCodePrivacyNote": "Only share your code with the dietitian you want to connect with.",
+
+  "patientCodeNotFoundTitle": "Patient code not found",
+  "patientCodeNotFoundDescription": "There is currently no patient code available for your account.",
+
+  "profileEditTitle": "Edit profile",
+  "profileImageCaptureError": "An error occurred while taking the photo",
+  "profileImageSelectionError": "An error occurred while selecting the photo",
+  "profileNoChanges": "No changes to save",
+  "profileAvatarUpdated": "Profile photo updated",
+  "profileAvatarDeleted": "Profile photo deleted",
+  "profileSaved": "Profile saved",
+
+  "aboutUsEmail": "Email",
+  "aboutUsWebsite": "Website",
+
+  "aboutUsInvalidLink": "Invalid link: {url}",
+  "aboutUsLinkOpenFailed": "Could not open link: {url}",
+  "aboutUsLinkError": "An error occurred: {error}",
+  "profileEditPersonalInfo": "Personal information",
+  "profileEditFirstName": "First name",
+  "profileEditFirstNameHint": "Enter your first name",
+  "profileEditLastName": "Last name",
+  "profileEditLastNameHint": "Enter your last name",
+  "profileEditEmail": "Email",
+  "profileEditPhone": "Phone number",
+  "profileEditBirthday": "Date of birth",
+  "profileEditBirthdayHint": "Select your date of birth",
+
+  "profileEditPhysicalInfo": "Body metrics",
+  "profileEditHeight": "Height",
+  "profileEditCurrentWeight": "Current weight",
+  "profileEditTargetWeight": "Target weight",
+  "profileEditUnitCm": "cm",
+  "profileEditUnitKg": "kg",
+  "profileEditProgressMessage": "Great progress! You're on the right track.",
+
+  "profileEditPreferences": "Preferences",
+  "profileEditGender": "Gender",
+  "profileEditActivityLevel": "Activity level",
+  "profileEditGoal": "Your goal",
+  "profileEditConsistencyHint": "Consistency matters. Small steps lead to big changes!",
+
+  "profileGenderMale": "Male",
+  "profileGenderFemale": "Female",
+
+  "profileActivitySedentary": "Sedentary",
+  "profileActivityLight": "Lightly active",
+  "profileActivityModerate": "Moderately active",
+  "profileActivityActive": "Active",
+  "profileActivityVeryActive": "Very active",
+
+  "profileGoalLoseWeight": "Lose weight",
+  "profileGoalMaintainWeight": "Maintain weight",
+  "profileGoalGainWeight": "Gain weight",
+
+  "profileAvatarChangeTitle": "Change profile photo",
+  "profileAvatarChangeSubtitle": "Take a new photo or choose from your gallery",
+  "profileAvatarCamera": "Camera",
+  "profileAvatarCameraSubtitle": "Take a new photo",
+  "profileAvatarGallery": "Gallery",
+  "profileAvatarGallerySubtitle": "Choose a photo",
+  "profileAvatarDelete": "Delete profile photo",
+
+  "profileAvatarCropTitle": "Choose profile photo",
+  "profileAvatarCropArea": "Area visible in your profile photo",
+  "profileAvatarCropMoveHint": "Move and zoom the photo",
+  "profileAvatarCropDone": "Done",
+  "profileAvatarCropError": "An error occurred while cropping the photo",
+  "profileAvatarImageOpenError": "Could not open the photo",
+  "profileAvatarImageOpenErrorDescription": "Choose another photo and try again.",
+
+  "profileEditSaveChanges": "Save changes"
 }

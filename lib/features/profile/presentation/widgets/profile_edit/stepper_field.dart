@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../../../core/constants/app_colors.dart';
 import '../../../../../shared/widgets/ruler_picker_sheet.dart';
 
@@ -26,6 +27,7 @@ class StepperField extends StatelessWidget {
   final int majorEvery;
   final int decimals;
   final bool allowManualInput;
+
   final ValueChanged<double> onChanged;
 
   Future<void> _openPicker(BuildContext context) async {
@@ -41,12 +43,16 @@ class StepperField extends StatelessWidget {
       initialValue: value ?? min,
       allowManualInput: allowManualInput,
     );
-    if (result != null) onChanged(result);
+
+    if (result != null) {
+      onChanged(result);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final hasValue = value != null;
+
     final displayValue = hasValue ? value!.toStringAsFixed(decimals) : '-';
 
     return Column(
@@ -59,10 +65,12 @@ class StepperField extends StatelessWidget {
             fontSize: 12,
             fontWeight: FontWeight.w500,
           ),
-          maxLines: 1,
+          maxLines: 2,
           overflow: TextOverflow.ellipsis,
         ),
+
         const SizedBox(height: 6),
+
         InkWell(
           onTap: () => _openPicker(context),
           borderRadius: BorderRadius.circular(14),
@@ -80,14 +88,19 @@ class StepperField extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.baseline,
                     textBaseline: TextBaseline.alphabetic,
                     children: [
-                      Text(
-                        displayValue,
-                        style: const TextStyle(
-                          color: AppColors.headline,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                      Flexible(
+                        child: Text(
+                          displayValue,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            color: AppColors.headline,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
+
                       if (hasValue) ...[
                         const SizedBox(width: 3),
                         Text(
@@ -101,6 +114,7 @@ class StepperField extends StatelessWidget {
                     ],
                   ),
                 ),
+
                 const Icon(
                   Icons.unfold_more_rounded,
                   size: 16,

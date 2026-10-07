@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../core/constants/app_colors.dart';
+import '../../../../../core/l10n/localization_extension.dart';
 
 class GenderSegmentedControl extends StatelessWidget {
   const GenderSegmentedControl({
@@ -11,17 +12,16 @@ class GenderSegmentedControl extends StatelessWidget {
   });
 
   final String? selected;
-
   final ValueChanged<String> onChanged;
-
   final List<String> options;
 
-  static const Map<String, String> _labels = {
-    'male': 'Kişi',
-    'female': 'Qadın',
-  };
-
-  String _label(String value) => _labels[value.toLowerCase()] ?? value;
+  String _label(BuildContext context, String value) {
+    return switch (value.toLowerCase()) {
+      'male' => context.l10n.profileGenderMale,
+      'female' => context.l10n.profileGenderFemale,
+      _ => value,
+    };
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +35,7 @@ class GenderSegmentedControl extends StatelessWidget {
           final isSelected =
               selected != null &&
               selected!.toLowerCase() == option.toLowerCase();
+
           return Expanded(
             child: GestureDetector(
               onTap: () => onChanged(option),
@@ -42,13 +43,13 @@ class GenderSegmentedControl extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 decoration: BoxDecoration(
                   color: isSelected
-                      ? AppColors.primary.withOpacity(0.15)
+                      ? AppColors.primary.withValues(alpha: 0.15)
                       : Colors.transparent,
                   borderRadius: BorderRadius.circular(13),
                 ),
                 alignment: Alignment.center,
                 child: Text(
-                  _label(option),
+                  _label(context, option),
                   style: TextStyle(
                     color: AppColors.headline,
                     fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,

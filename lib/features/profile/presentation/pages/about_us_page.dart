@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/di/injection_container.dart';
+import '../../../../core/l10n/localization_extension.dart';
 import '../../../../core/utils/sized_box_extension.dart';
 import '../bloc/profile_bloc.dart';
 import '../widgets/about_us/about_us_content.dart';
@@ -31,12 +32,14 @@ class _AboutUsView extends StatelessWidget {
         elevation: 0,
         scrolledUnderElevation: 0,
         leading: IconButton(
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
           icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 20),
           color: const Color(0xFF1A1A1A),
         ),
         title: Text(
-          'Haqqımızda',
+          context.l10n.aboutUsTitle,
           style: AppTextStyles.bodyMedium.copyWith(
             fontWeight: FontWeight.w600,
             color: const Color(0xFF1A1A1A),
@@ -62,9 +65,12 @@ class _AboutUsView extends StatelessWidget {
                     size: 48,
                     color: Color(0xFFBDBDBD),
                   ),
+
                   16.hs,
+
                   Text(
-                    'Məlumat yüklənəmədi',
+                    context.l10n.profileLoadFailed,
+                    textAlign: TextAlign.center,
                     style: AppTextStyles.bodySmall.copyWith(
                       color: const Color(0xFF888888),
                     ),

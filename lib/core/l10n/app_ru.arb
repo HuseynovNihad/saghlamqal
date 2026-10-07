@@ -337,5 +337,122 @@
   "waterReminderMessageFive": "Сделайте вдох и выпейте стакан воды! 🌿",
   "waterReminderMessageSix": "Не забывайте пить воду и во второй половине дня! 💦",
   "waterReminderMessageSeven": "Выпейте стакан воды перед обедом! 🥗",
-  "waterReminderMessageEight": "Не забудьте выпить воды перед ужином! 🍽️"
+  "waterReminderMessageEight": "Не забудьте выпить воды перед ужином! 🍽️",
+  "profileTitle": "Профиль",
+
+  "profileGuestTitle": "Войдите в\nсвой профиль",
+  "profileGuestSubtitle": "Управляйте данными профиля и\nнастраивайте приложение под себя.",
+  "profileGuestFeatureEdit": "Редактировать данные профиля",
+  "profileGuestFeatureSettings": "Управлять настройками",
+  "profileGuestFeaturePrivacy": "Управлять конфиденциальностью и безопасностью",
+
+  "profileSectionAccountSettings": "Аккаунт и настройки",
+  "profileSectionNotifications": "Уведомления",
+  "profileSectionSupport": "Поддержка",
+
+  "profileEditMenu": "Редактировать профиль",
+  "profilePatientCodeMenu": "Мой код пациента",
+
+  "privacyPolicyTitle": "Политика конфиденциальности",
+  "termsOfServiceTitle": "Условия использования",
+  "aboutUsTitle": "О нас",
+
+  "profileLogout": "Выйти",
+  "profileLogoutTitle": "Выйти из аккаунта",
+  "profileLogoutMessage": "Вы уверены, что хотите выйти из аккаунта?",
+
+  "profileDeleteAccount": "Удалить аккаунт",
+  "profileDeleteAccountMessage": "Ваш аккаунт будет деактивирован. Вы сможете активировать его снова в любое время.",
+  "profileDeleteConfirm": "Удалить",
+
+  "profileLoadFailed": "Не удалось загрузить данные",
+  "profileLoadErrorDescription": "Проверьте подключение к интернету и повторите попытку.",
+  "profileRetry": "Повторить",
+
+  "patientCodeTitle": "Мой код пациента",
+  "patientCodeCopied": "Код пациента скопирован",
+
+  "patientCodeShareText": "Мой код пациента SağlamQal: {patientCode}",
+
+  "patientCodeShareSubject": "Код пациента SağlamQal",
+  "patientCodeCopy": "Скопировать код",
+  "patientCodeShare": "Поделиться",
+
+  "patientCodeHeaderTitle": "Ваш диетолог сможет найти вас по этому коду",
+  "patientCodeHeaderDescription": "Поделитесь кодом ниже со своим диетологом. По этому коду он сможет найти вас и пригласить как пациента.",
+
+  "patientCodeLabel": "Код пациента",
+  "patientCodePrivacyNote": "Делитесь кодом только с диетологом, с которым хотите связаться.",
+
+  "patientCodeNotFoundTitle": "Код пациента не найден",
+  "patientCodeNotFoundDescription": "Для вашего аккаунта сейчас нет кода пациента.",
+
+  "profileEditTitle": "Редактирование профиля",
+  "profileImageCaptureError": "Не удалось сделать фото",
+  "profileImageSelectionError": "Не удалось выбрать фото",
+  "profileNoChanges": "Нет изменений для сохранения",
+  "profileAvatarUpdated": "Фото профиля обновлено",
+  "profileAvatarDeleted": "Фото профиля удалено",
+  "profileSaved": "Профиль сохранён",
+
+  "aboutUsEmail": "Эл. почта",
+  "aboutUsWebsite": "Веб-сайт",
+
+  "aboutUsInvalidLink": "Некорректная ссылка: {url}",
+  "aboutUsLinkOpenFailed": "Не удалось открыть ссылку: {url}",
+  "aboutUsLinkError": "Произошла ошибка: {error}",
+  "profileEditPersonalInfo": "Личная информация",
+  "profileEditFirstName": "Имя",
+  "profileEditFirstNameHint": "Введите имя",
+  "profileEditLastName": "Фамилия",
+  "profileEditLastNameHint": "Введите фамилию",
+  "profileEditEmail": "Эл. почта",
+  "profileEditPhone": "Номер телефона",
+  "profileEditBirthday": "Дата рождения",
+  "profileEditBirthdayHint": "Выберите дату рождения",
+
+  "profileEditPhysicalInfo": "Физические данные",
+  "profileEditHeight": "Рост",
+  "profileEditCurrentWeight": "Текущий вес",
+  "profileEditTargetWeight": "Целевой вес",
+  "profileEditUnitCm": "см",
+  "profileEditUnitKg": "кг",
+  "profileEditProgressMessage": "Отлично! Вы на правильном пути.",
+
+  "profileEditPreferences": "Предпочтения",
+  "profileEditGender": "Пол",
+  "profileEditActivityLevel": "Уровень активности",
+  "profileEditGoal": "Ваша цель",
+  "profileEditConsistencyHint": "Последовательность важна. Маленькие шаги приводят к большим изменениям!",
+
+  "profileGenderMale": "Мужчина",
+  "profileGenderFemale": "Женщина",
+
+  "profileActivitySedentary": "Малоподвижный",
+  "profileActivityLight": "Лёгкая активность",
+  "profileActivityModerate": "Умеренная активность",
+  "profileActivityActive": "Активный",
+  "profileActivityVeryActive": "Очень активный",
+
+  "profileGoalLoseWeight": "Снизить вес",
+  "profileGoalMaintainWeight": "Сохранить вес",
+  "profileGoalGainWeight": "Набрать вес",
+
+  "profileAvatarChangeTitle": "Изменить фото профиля",
+  "profileAvatarChangeSubtitle": "Сделайте новое фото или выберите из галереи",
+  "profileAvatarCamera": "Камера",
+  "profileAvatarCameraSubtitle": "Сделать новое фото",
+  "profileAvatarGallery": "Галерея",
+  "profileAvatarGallerySubtitle": "Выбрать фото",
+  "profileAvatarDelete": "Удалить фото профиля",
+
+  "profileAvatarCropTitle": "Выберите фото профиля",
+  "profileAvatarCropArea": "Область, которая будет видна в профиле",
+  "profileAvatarCropMoveHint": "Перемещайте и масштабируйте фото",
+  "profileAvatarCropDone": "Готово",
+  "profileAvatarCropError": "Произошла ошибка при обрезке фото",
+  "profileAvatarImageOpenError": "Не удалось открыть фото",
+  "profileAvatarImageOpenErrorDescription": "Выберите другое фото и попробуйте снова.",
+
+  "profileEditSaveChanges": "Сохранить изменения"
 }

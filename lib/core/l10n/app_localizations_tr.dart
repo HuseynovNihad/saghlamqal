@@ -914,4 +914,297 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get waterReminderMessageEight =>
       'Akşam yemeğinden önce su içmeyi unutma! 🍽️';
+
+  @override
+  String get profileTitle => 'Profil';
+
+  @override
+  String get profileGuestTitle => 'Profiline\ngiriş yap';
+
+  @override
+  String get profileGuestSubtitle =>
+      'Profil bilgilerini yönet,\nayarlarını kendine göre özelleştir.';
+
+  @override
+  String get profileGuestFeatureEdit => 'Profil bilgilerini düzenle';
+
+  @override
+  String get profileGuestFeatureSettings => 'Ayarları yönet';
+
+  @override
+  String get profileGuestFeaturePrivacy => 'Gizlilik ve güvenliği yönet';
+
+  @override
+  String get profileSectionAccountSettings => 'Hesap ve Ayarlar';
+
+  @override
+  String get profileSectionNotifications => 'Bildirimler';
+
+  @override
+  String get profileSectionSupport => 'Destek';
+
+  @override
+  String get profileEditMenu => 'Profili düzenle';
+
+  @override
+  String get profilePatientCodeMenu => 'Hasta kodum';
+
+  @override
+  String get privacyPolicyTitle => 'Gizlilik Politikası';
+
+  @override
+  String get termsOfServiceTitle => 'Kullanım Koşulları';
+
+  @override
+  String get aboutUsTitle => 'Hakkımızda';
+
+  @override
+  String get profileLogout => 'Çıkış';
+
+  @override
+  String get profileLogoutTitle => 'Çıkış yap';
+
+  @override
+  String get profileLogoutMessage =>
+      'Hesabınızdan çıkmak istediğinizden emin misiniz?';
+
+  @override
+  String get profileDeleteAccount => 'Hesabı sil';
+
+  @override
+  String get profileDeleteAccountMessage =>
+      'Hesabınız devre dışı bırakılacak. İstediğiniz zaman yeniden etkinleştirebilirsiniz.';
+
+  @override
+  String get profileDeleteConfirm => 'Sil';
+
+  @override
+  String get profileLoadFailed => 'Bilgiler yüklenemedi';
+
+  @override
+  String get profileLoadErrorDescription =>
+      'İnternet bağlantınızı kontrol edip tekrar deneyin.';
+
+  @override
+  String get profileRetry => 'Tekrar dene';
+
+  @override
+  String get patientCodeTitle => 'Hasta kodum';
+
+  @override
+  String get patientCodeCopied => 'Hasta kodu kopyalandı';
+
+  @override
+  String patientCodeShareText(String patientCode) {
+    return 'SağlamQal hasta kodum: $patientCode';
+  }
+
+  @override
+  String get patientCodeShareSubject => 'SağlamQal hasta kodu';
+
+  @override
+  String get patientCodeCopy => 'Kodu kopyala';
+
+  @override
+  String get patientCodeShare => 'Paylaş';
+
+  @override
+  String get patientCodeHeaderTitle => 'Diyetisyeniniz sizi bu kodla bulabilir';
+
+  @override
+  String get patientCodeHeaderDescription =>
+      'Aşağıdaki kodu diyetisyeninizle paylaşın. Bu kod sayesinde sizi bulup hasta olarak davet edebilir.';
+
+  @override
+  String get patientCodeLabel => 'Hasta kodu';
+
+  @override
+  String get patientCodePrivacyNote =>
+      'Kodunuzu yalnızca iletişim kurmak istediğiniz diyetisyenle paylaşın.';
+
+  @override
+  String get patientCodeNotFoundTitle => 'Hasta kodu bulunamadı';
+
+  @override
+  String get patientCodeNotFoundDescription =>
+      'Şu anda hesabınız için bir hasta kodu bulunmuyor.';
+
+  @override
+  String get profileEditTitle => 'Profil düzenleme';
+
+  @override
+  String get profileImageCaptureError => 'Fotoğraf çekilirken bir hata oluştu';
+
+  @override
+  String get profileImageSelectionError =>
+      'Fotoğraf seçilirken bir hata oluştu';
+
+  @override
+  String get profileNoChanges => 'Kaydedilecek değişiklik yok';
+
+  @override
+  String get profileAvatarUpdated => 'Profil fotoğrafı güncellendi';
+
+  @override
+  String get profileAvatarDeleted => 'Profil fotoğrafı silindi';
+
+  @override
+  String get profileSaved => 'Profil kaydedildi';
+
+  @override
+  String get aboutUsEmail => 'E-posta';
+
+  @override
+  String get aboutUsWebsite => 'Web sitesi';
+
+  @override
+  String aboutUsInvalidLink(String url) {
+    return 'Geçersiz bağlantı: $url';
+  }
+
+  @override
+  String aboutUsLinkOpenFailed(String url) {
+    return 'Bağlantı açılamadı: $url';
+  }
+
+  @override
+  String aboutUsLinkError(String error) {
+    return 'Bir hata oluştu: $error';
+  }
+
+  @override
+  String get profileEditPersonalInfo => 'Kişisel bilgiler';
+
+  @override
+  String get profileEditFirstName => 'Ad';
+
+  @override
+  String get profileEditFirstNameHint => 'Adınızı girin';
+
+  @override
+  String get profileEditLastName => 'Soyad';
+
+  @override
+  String get profileEditLastNameHint => 'Soyadınızı girin';
+
+  @override
+  String get profileEditEmail => 'E-posta';
+
+  @override
+  String get profileEditPhone => 'Telefon numarası';
+
+  @override
+  String get profileEditBirthday => 'Doğum tarihi';
+
+  @override
+  String get profileEditBirthdayHint => 'Doğum tarihinizi seçin';
+
+  @override
+  String get profileEditPhysicalInfo => 'Fiziksel bilgiler';
+
+  @override
+  String get profileEditHeight => 'Boy';
+
+  @override
+  String get profileEditCurrentWeight => 'Mevcut kilo';
+
+  @override
+  String get profileEditTargetWeight => 'Hedef kilo';
+
+  @override
+  String get profileEditUnitCm => 'cm';
+
+  @override
+  String get profileEditUnitKg => 'kg';
+
+  @override
+  String get profileEditProgressMessage => 'Harika gidiyorsun! Doğru yoldasın.';
+
+  @override
+  String get profileEditPreferences => 'Tercihler';
+
+  @override
+  String get profileEditGender => 'Cinsiyet';
+
+  @override
+  String get profileEditActivityLevel => 'Aktivite seviyesi';
+
+  @override
+  String get profileEditGoal => 'Hedefin';
+
+  @override
+  String get profileEditConsistencyHint =>
+      'Tutarlılık önemlidir. Küçük adımlar büyük değişimlere yol açar!';
+
+  @override
+  String get profileActivitySedentary => 'Hareketsiz';
+
+  @override
+  String get profileActivityLight => 'Az aktif';
+
+  @override
+  String get profileActivityModerate => 'Orta aktif';
+
+  @override
+  String get profileActivityActive => 'Aktif';
+
+  @override
+  String get profileActivityVeryActive => 'Çok aktif';
+
+  @override
+  String get profileGoalLoseWeight => 'Kilo vermek';
+
+  @override
+  String get profileGoalMaintainWeight => 'Kiloyu korumak';
+
+  @override
+  String get profileGoalGainWeight => 'Kilo almak';
+
+  @override
+  String get profileAvatarChangeTitle => 'Profil fotoğrafını değiştir';
+
+  @override
+  String get profileAvatarChangeSubtitle =>
+      'Yeni fotoğraf çek veya galeriden seç';
+
+  @override
+  String get profileAvatarCamera => 'Kamera';
+
+  @override
+  String get profileAvatarCameraSubtitle => 'Yeni fotoğraf çek';
+
+  @override
+  String get profileAvatarGallery => 'Galeri';
+
+  @override
+  String get profileAvatarGallerySubtitle => 'Fotoğraf seç';
+
+  @override
+  String get profileAvatarDelete => 'Profil fotoğrafını sil';
+
+  @override
+  String get profileAvatarCropTitle => 'Profil fotoğrafını seç';
+
+  @override
+  String get profileAvatarCropArea => 'Profil fotoğrafında görünecek alan';
+
+  @override
+  String get profileAvatarCropMoveHint =>
+      'Fotoğrafı hareket ettir ve yakınlaştır';
+
+  @override
+  String get profileAvatarCropDone => 'Hazır';
+
+  @override
+  String get profileAvatarCropError => 'Fotoğraf kırpılırken bir hata oluştu';
+
+  @override
+  String get profileAvatarImageOpenError => 'Fotoğraf açılamadı';
+
+  @override
+  String get profileAvatarImageOpenErrorDescription =>
+      'Başka bir fotoğraf seçip tekrar deneyin.';
+
+  @override
+  String get profileEditSaveChanges => 'Değişiklikleri kaydet';
 }
