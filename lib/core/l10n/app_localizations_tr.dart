@@ -1207,4 +1207,65 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get profileEditSaveChanges => 'Değişiklikleri kaydet';
+
+  @override
+  String get commonCancel => 'İptal';
+
+  @override
+  String get commonConfirm => 'Onayla';
+
+  @override
+  String get commonRetry => 'Tekrar dene';
+
+  @override
+  String get commonGoBack => 'Geri dön';
+
+  @override
+  String get commonLogin => 'Giriş yap';
+
+  @override
+  String get commonRegister => 'Kayıt ol';
+
+  @override
+  String get datePickerBirthDate => 'Doğum tarihi';
+
+  @override
+  String get refreshRefreshing => 'Yenileniyor...';
+
+  @override
+  String get refreshUpdated => 'Yenilendi';
+
+  @override
+  String get rulerTapValueToEdit => 'Değiştirmek için sayıya dokunun';
+
+  @override
+  String get rulerManualInput => 'Sayıyı manuel girin';
+
+  @override
+  String get errorPageNotFoundTitle => 'Sayfa bulunamadı';
+
+  @override
+  String get errorPageNotFoundSubtitle =>
+      'Aradığınız sayfa mevcut değil veya kaldırılmış.';
+
+  @override
+  String get errorPageNetworkTitle => 'Bağlantı hatası';
+
+  @override
+  String get errorPageNetworkSubtitle =>
+      'İnternet bağlantınızı kontrol edin ve tekrar deneyin.';
+
+  @override
+  String get errorPageServerTitle => 'Sunucu hatası';
+
+  @override
+  String get errorPageServerSubtitle =>
+      'Sunucuda bir sorun oluştu. Lütfen daha sonra tekrar deneyin.';
+
+  @override
+  String get errorPageUnknownTitle => 'Bir hata oluştu';
+
+  @override
+  String get errorPageUnknownSubtitle =>
+      'Beklenmeyen bir hata oluştu. Lütfen tekrar deneyin.';
 }

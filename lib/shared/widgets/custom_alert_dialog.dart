@@ -2,20 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_text_styles.dart';
+import '../../core/l10n/localization_extension.dart';
+import '../../core/utils/padding_extension.dart';
 import '../../core/utils/radius_extension.dart';
 import '../../core/utils/sized_box_extension.dart';
-import '../../core/utils/padding_extension.dart';
 
 class CustomAlertDialog extends StatelessWidget {
-  final Widget icon;
-  final String title;
-  final String message;
-  final String confirmText;
-  final String cancelText;
-  final VoidCallback onConfirm;
-  final VoidCallback? onCancel;
-  final Color? confirmColor;
-
   const CustomAlertDialog({
     super.key,
     required this.icon,
@@ -23,10 +15,19 @@ class CustomAlertDialog extends StatelessWidget {
     required this.message,
     required this.confirmText,
     required this.onConfirm,
-    this.cancelText = "Ləğv et",
+    this.cancelText,
     this.onCancel,
     this.confirmColor,
   });
+
+  final Widget icon;
+  final String title;
+  final String message;
+  final String confirmText;
+  final String? cancelText;
+  final VoidCallback onConfirm;
+  final VoidCallback? onCancel;
+  final Color? confirmColor;
 
   static Future<void> show(
     BuildContext context, {
@@ -35,7 +36,7 @@ class CustomAlertDialog extends StatelessWidget {
     required String message,
     required String confirmText,
     required VoidCallback onConfirm,
-    String cancelText = "Ləğv et",
+    String? cancelText,
     VoidCallback? onCancel,
     Color? confirmColor,
     bool barrierDismissible = false,
@@ -58,6 +59,8 @@ class CustomAlertDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final effectiveCancelText = cancelText ?? context.l10n.commonCancel;
+
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: 24.br),
       backgroundColor: AppColors.surface,
@@ -68,7 +71,9 @@ class CustomAlertDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             icon,
+
             16.hs,
+
             Text(
               title,
               style: AppTextStyles.h2.copyWith(
@@ -78,16 +83,20 @@ class CustomAlertDialog extends StatelessWidget {
               ),
               textAlign: TextAlign.center,
             ),
+
             8.hs,
+
             Text(
               message,
               style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.bodyText.withOpacity(0.6),
+                color: AppColors.bodyText.withValues(alpha: 0.6),
                 height: 1.5,
               ),
               textAlign: TextAlign.center,
             ),
+
             24.hs,
+
             Row(
               children: [
                 Expanded(
@@ -103,7 +112,7 @@ class CustomAlertDialog extends StatelessWidget {
                       padding: 14.py,
                     ),
                     child: Text(
-                      cancelText,
+                      effectiveCancelText,
                       style: AppTextStyles.bodyMedium.copyWith(
                         color: AppColors.bodyText,
                         fontWeight: FontWeight.w600,
@@ -111,7 +120,9 @@ class CustomAlertDialog extends StatelessWidget {
                     ),
                   ),
                 ),
+
                 12.ws,
+
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {

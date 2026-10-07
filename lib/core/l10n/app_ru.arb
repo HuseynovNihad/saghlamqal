@@ -454,5 +454,28 @@
   "profileAvatarImageOpenError": "Не удалось открыть фото",
   "profileAvatarImageOpenErrorDescription": "Выберите другое фото и попробуйте снова.",
 
-  "profileEditSaveChanges": "Сохранить изменения"
+  "profileEditSaveChanges": "Сохранить изменения",
+  "commonCancel": "Отмена",
+  "commonConfirm": "Подтвердить",
+  "commonRetry": "Повторить",
+  "commonGoBack": "Назад",
+  "commonLogin": "Войти",
+  "commonRegister": "Зарегистрироваться",
+
+  "datePickerBirthDate": "Дата рождения",
+
+  "refreshRefreshing": "Обновление...",
+  "refreshUpdated": "Обновлено",
+
+  "rulerTapValueToEdit": "Нажмите на число, чтобы изменить",
+  "rulerManualInput": "Ввести число вручную",
+
+  "errorPageNotFoundTitle": "Страница не найдена",
+  "errorPageNotFoundSubtitle": "Страница, которую вы ищете, не существует или была удалена.",
+  "errorPageNetworkTitle": "Ошибка подключения",
+  "errorPageNetworkSubtitle": "Проверьте подключение к интернету и попробуйте снова.",
+  "errorPageServerTitle": "Ошибка сервера",
+  "errorPageServerSubtitle": "На сервере возникла проблема. Попробуйте снова позже.",
+  "errorPageUnknownTitle": "Произошла ошибка",
+  "errorPageUnknownSubtitle": "Произошла непредвиденная ошибка. Попробуйте снова."
 }

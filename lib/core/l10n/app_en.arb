@@ -454,5 +454,28 @@
   "profileAvatarImageOpenError": "Could not open the photo",
   "profileAvatarImageOpenErrorDescription": "Choose another photo and try again.",
 
-  "profileEditSaveChanges": "Save changes"
+  "profileEditSaveChanges": "Save changes",
+  "commonCancel": "Cancel",
+  "commonConfirm": "Confirm",
+  "commonRetry": "Try again",
+  "commonGoBack": "Go back",
+  "commonLogin": "Log in",
+  "commonRegister": "Sign up",
+
+  "datePickerBirthDate": "Date of birth",
+
+  "refreshRefreshing": "Refreshing...",
+  "refreshUpdated": "Updated",
+
+  "rulerTapValueToEdit": "Tap the number to edit",
+  "rulerManualInput": "Enter number manually",
+
+  "errorPageNotFoundTitle": "Page not found",
+  "errorPageNotFoundSubtitle": "The page you are looking for does not exist or has been removed.",
+  "errorPageNetworkTitle": "Connection error",
+  "errorPageNetworkSubtitle": "Check your internet connection and try again.",
+  "errorPageServerTitle": "Server error",
+  "errorPageServerSubtitle": "There is a problem with the server. Please try again later.",
+  "errorPageUnknownTitle": "Something went wrong",
+  "errorPageUnknownSubtitle": "An unexpected error occurred. Please try again."
 }

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../../../../core/constants/app_colors.dart';
+import '../../core/constants/app_colors.dart';
+import '../../core/l10n/localization_extension.dart';
 
 Future<double?> showRulerPickerSheet({
   required BuildContext context,
@@ -21,7 +22,7 @@ Future<double?> showRulerPickerSheet({
     useSafeArea: true,
     enableDrag: true,
     backgroundColor: Colors.transparent,
-    barrierColor: Colors.black.withOpacity(0.35),
+    barrierColor: Colors.black.withValues(alpha: 0.35),
     builder: (context) {
       return _SmartValuePickerSheet(
         title: title,
@@ -66,6 +67,7 @@ class _SmartValuePickerSheetState extends State<_SmartValuePickerSheet> {
   late int _selectedIndex;
 
   late final TextEditingController _textController;
+
   late final FocusNode _focusNode;
 
   bool _isEditing = false;
@@ -477,10 +479,10 @@ class _SmartValuePickerSheetState extends State<_SmartValuePickerSheet> {
             if (widget.allowManualInput) ...[
               const SizedBox(height: 3),
 
-              const Text(
-                'Dəyişmək üçün rəqəmə toxunun',
+              Text(
+                context.l10n.rulerTapValueToEdit,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   color: AppColors.bodyText,
                   fontSize: 10,
                   fontWeight: FontWeight.w400,
@@ -502,16 +504,16 @@ class _SmartValuePickerSheetState extends State<_SmartValuePickerSheet> {
 
     return Row(
       children: [
-        for (int i = 0; i < values.length; i++) ...[
-          if (i > 0) const SizedBox(width: 8),
+        for (int index = 0; index < values.length; index++) ...[
+          if (index > 0) const SizedBox(width: 8),
 
           Expanded(
             child: _QuickValueChip(
-              value: _formatValue(values[i]),
+              value: _formatValue(values[index]),
               unit: widget.unit,
-              selected: (values[i] - _selectedValue).abs() < 0.000001,
+              selected: (values[index] - _selectedValue).abs() < 0.000001,
               onTap: () {
-                _selectQuickValue(values[i]);
+                _selectQuickValue(values[index]);
               },
             ),
           ),
@@ -526,16 +528,22 @@ class _SmartValuePickerSheetState extends State<_SmartValuePickerSheet> {
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
         onTap: _startManualInput,
-        child: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 9),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.edit_rounded, size: 15, color: AppColors.bodyText),
-              SizedBox(width: 6),
+              const Icon(
+                Icons.edit_rounded,
+                size: 15,
+                color: AppColors.bodyText,
+              ),
+
+              const SizedBox(width: 6),
+
               Text(
-                'Rəqəmi əl ilə daxil et',
-                style: TextStyle(
+                context.l10n.rulerManualInput,
+                style: const TextStyle(
                   color: AppColors.bodyText,
                   fontSize: 12,
                   fontWeight: FontWeight.w500,
@@ -562,9 +570,9 @@ class _SmartValuePickerSheetState extends State<_SmartValuePickerSheet> {
             borderRadius: BorderRadius.circular(15),
           ),
         ),
-        child: const Text(
-          'Təsdiqlə',
-          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+        child: Text(
+          context.l10n.commonConfirm,
+          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
         ),
       ),
     );
@@ -620,7 +628,7 @@ class _QuickValueChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: selected
-          ? AppColors.primary.withOpacity(0.08)
+          ? AppColors.primary.withValues(alpha: 0.08)
           : AppColors.textfieldColor,
       borderRadius: BorderRadius.circular(12),
       child: InkWell(

@@ -1223,4 +1223,65 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profileEditSaveChanges => 'Save changes';
+
+  @override
+  String get commonCancel => 'Cancel';
+
+  @override
+  String get commonConfirm => 'Confirm';
+
+  @override
+  String get commonRetry => 'Try again';
+
+  @override
+  String get commonGoBack => 'Go back';
+
+  @override
+  String get commonLogin => 'Log in';
+
+  @override
+  String get commonRegister => 'Sign up';
+
+  @override
+  String get datePickerBirthDate => 'Date of birth';
+
+  @override
+  String get refreshRefreshing => 'Refreshing...';
+
+  @override
+  String get refreshUpdated => 'Updated';
+
+  @override
+  String get rulerTapValueToEdit => 'Tap the number to edit';
+
+  @override
+  String get rulerManualInput => 'Enter number manually';
+
+  @override
+  String get errorPageNotFoundTitle => 'Page not found';
+
+  @override
+  String get errorPageNotFoundSubtitle =>
+      'The page you are looking for does not exist or has been removed.';
+
+  @override
+  String get errorPageNetworkTitle => 'Connection error';
+
+  @override
+  String get errorPageNetworkSubtitle =>
+      'Check your internet connection and try again.';
+
+  @override
+  String get errorPageServerTitle => 'Server error';
+
+  @override
+  String get errorPageServerSubtitle =>
+      'There is a problem with the server. Please try again later.';
+
+  @override
+  String get errorPageUnknownTitle => 'Something went wrong';
+
+  @override
+  String get errorPageUnknownSubtitle =>
+      'An unexpected error occurred. Please try again.';
 }

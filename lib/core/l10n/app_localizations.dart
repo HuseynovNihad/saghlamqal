@@ -2279,6 +2279,120 @@ abstract class AppLocalizations {
   /// In az, this message translates to:
   /// **'Yadda saxla'**
   String get profileEditSaveChanges;
+
+  /// No description provided for @commonCancel.
+  ///
+  /// In az, this message translates to:
+  /// **'Ləğv et'**
+  String get commonCancel;
+
+  /// No description provided for @commonConfirm.
+  ///
+  /// In az, this message translates to:
+  /// **'Təsdiqlə'**
+  String get commonConfirm;
+
+  /// No description provided for @commonRetry.
+  ///
+  /// In az, this message translates to:
+  /// **'Yenidən cəhd et'**
+  String get commonRetry;
+
+  /// No description provided for @commonGoBack.
+  ///
+  /// In az, this message translates to:
+  /// **'Geri qayıt'**
+  String get commonGoBack;
+
+  /// No description provided for @commonLogin.
+  ///
+  /// In az, this message translates to:
+  /// **'Daxil ol'**
+  String get commonLogin;
+
+  /// No description provided for @commonRegister.
+  ///
+  /// In az, this message translates to:
+  /// **'Qeydiyyatdan keç'**
+  String get commonRegister;
+
+  /// No description provided for @datePickerBirthDate.
+  ///
+  /// In az, this message translates to:
+  /// **'Doğum tarixi'**
+  String get datePickerBirthDate;
+
+  /// No description provided for @refreshRefreshing.
+  ///
+  /// In az, this message translates to:
+  /// **'Yenilənir...'**
+  String get refreshRefreshing;
+
+  /// No description provided for @refreshUpdated.
+  ///
+  /// In az, this message translates to:
+  /// **'Yeniləndi'**
+  String get refreshUpdated;
+
+  /// No description provided for @rulerTapValueToEdit.
+  ///
+  /// In az, this message translates to:
+  /// **'Dəyişmək üçün rəqəmə toxunun'**
+  String get rulerTapValueToEdit;
+
+  /// No description provided for @rulerManualInput.
+  ///
+  /// In az, this message translates to:
+  /// **'Rəqəmi əl ilə daxil et'**
+  String get rulerManualInput;
+
+  /// No description provided for @errorPageNotFoundTitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Səhifə tapılmadı'**
+  String get errorPageNotFoundTitle;
+
+  /// No description provided for @errorPageNotFoundSubtitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Axtardığınız səhifə mövcud deyil və ya silinib.'**
+  String get errorPageNotFoundSubtitle;
+
+  /// No description provided for @errorPageNetworkTitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Bağlantı xətası'**
+  String get errorPageNetworkTitle;
+
+  /// No description provided for @errorPageNetworkSubtitle.
+  ///
+  /// In az, this message translates to:
+  /// **'İnternet bağlantınızı yoxlayın və yenidən cəhd edin.'**
+  String get errorPageNetworkSubtitle;
+
+  /// No description provided for @errorPageServerTitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Server xətası'**
+  String get errorPageServerTitle;
+
+  /// No description provided for @errorPageServerSubtitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Serverdə problem baş verdi. Bir az sonra yenidən cəhd edin.'**
+  String get errorPageServerSubtitle;
+
+  /// No description provided for @errorPageUnknownTitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Xəta baş verdi'**
+  String get errorPageUnknownTitle;
+
+  /// No description provided for @errorPageUnknownSubtitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Gözlənilməz bir xəta baş verdi. Yenidən cəhd edin.'**
+  String get errorPageUnknownSubtitle;
 }
 
 class _AppLocalizationsDelegate

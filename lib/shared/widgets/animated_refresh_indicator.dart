@@ -3,16 +3,17 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import '../../core/constants/app_colors.dart';
+import '../../core/l10n/localization_extension.dart';
 
 class AnimatedRefreshIndicator extends StatefulWidget {
-  final Widget child;
-  final Future<void> Function() onRefresh;
-
   const AnimatedRefreshIndicator({
     super.key,
     required this.child,
     required this.onRefresh,
   });
+
+  final Widget child;
+  final Future<void> Function() onRefresh;
 
   @override
   State<AnimatedRefreshIndicator> createState() =>
@@ -93,6 +94,7 @@ class _AnimatedRefreshIndicatorState extends State<AnimatedRefreshIndicator>
   void dispose() {
     _rotationController.dispose();
     _pulseController.dispose();
+
     super.dispose();
   }
 
@@ -105,7 +107,6 @@ class _AnimatedRefreshIndicatorState extends State<AnimatedRefreshIndicator>
       child: Stack(
         children: [
           widget.child,
-
           if (_isRefreshing || _isCompleted)
             Positioned(
               top: 12,
@@ -139,14 +140,14 @@ class _AnimatedRefreshIndicatorState extends State<AnimatedRefreshIndicator>
 }
 
 class _RefreshingIndicator extends StatelessWidget {
-  final AnimationController rotationController;
-  final AnimationController pulseController;
-
   const _RefreshingIndicator({
     super.key,
     required this.rotationController,
     required this.pulseController,
   });
+
+  final AnimationController rotationController;
+  final AnimationController pulseController;
 
   @override
   Widget build(BuildContext context) {
@@ -193,9 +194,9 @@ class _RefreshingIndicator extends StatelessWidget {
 
             const SizedBox(width: 9),
 
-            const Text(
-              'Yenilənir...',
-              style: TextStyle(
+            Text(
+              context.l10n.refreshRefreshing,
+              style: const TextStyle(
                 color: AppColors.primary,
                 fontSize: 13,
                 fontWeight: FontWeight.w600,
@@ -226,14 +227,20 @@ class _CompletedIndicator extends StatelessWidget {
           ),
         ],
       ),
-      child: const Row(
+      child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.check_circle_rounded, color: AppColors.primary, size: 25),
-          SizedBox(width: 8),
+          const Icon(
+            Icons.check_circle_rounded,
+            color: AppColors.primary,
+            size: 25,
+          ),
+
+          const SizedBox(width: 8),
+
           Text(
-            'Yeniləndi',
-            style: TextStyle(
+            context.l10n.refreshUpdated,
+            style: const TextStyle(
               color: AppColors.primary,
               fontSize: 13,
               fontWeight: FontWeight.w600,

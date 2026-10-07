@@ -454,5 +454,28 @@
   "profileAvatarImageOpenError": "Fotoğraf açılamadı",
   "profileAvatarImageOpenErrorDescription": "Başka bir fotoğraf seçip tekrar deneyin.",
 
-  "profileEditSaveChanges": "Değişiklikleri kaydet"
+  "profileEditSaveChanges": "Değişiklikleri kaydet",
+  "commonCancel": "İptal",
+  "commonConfirm": "Onayla",
+  "commonRetry": "Tekrar dene",
+  "commonGoBack": "Geri dön",
+  "commonLogin": "Giriş yap",
+  "commonRegister": "Kayıt ol",
+
+  "datePickerBirthDate": "Doğum tarihi",
+
+  "refreshRefreshing": "Yenileniyor...",
+  "refreshUpdated": "Yenilendi",
+
+  "rulerTapValueToEdit": "Değiştirmek için sayıya dokunun",
+  "rulerManualInput": "Sayıyı manuel girin",
+
+  "errorPageNotFoundTitle": "Sayfa bulunamadı",
+  "errorPageNotFoundSubtitle": "Aradığınız sayfa mevcut değil veya kaldırılmış.",
+  "errorPageNetworkTitle": "Bağlantı hatası",
+  "errorPageNetworkSubtitle": "İnternet bağlantınızı kontrol edin ve tekrar deneyin.",
+  "errorPageServerTitle": "Sunucu hatası",
+  "errorPageServerSubtitle": "Sunucuda bir sorun oluştu. Lütfen daha sonra tekrar deneyin.",
+  "errorPageUnknownTitle": "Bir hata oluştu",
+  "errorPageUnknownSubtitle": "Beklenmeyen bir hata oluştu. Lütfen tekrar deneyin."
 }

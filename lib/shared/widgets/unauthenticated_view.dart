@@ -2,25 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../core/constants/app_colors.dart';
-import '../../../../core/constants/app_text_styles.dart';
+import '../../core/constants/app_colors.dart';
+import '../../core/constants/app_text_styles.dart';
+import '../../core/l10n/localization_extension.dart';
 import '../../core/router/app_routes.dart';
 import '../../core/utils/asset_extension.dart';
 import '../../core/utils/radius_extension.dart';
 
 class UnauthFeatureItem {
+  const UnauthFeatureItem({required this.icon, required this.label});
+
   final String icon;
   final String label;
-
-  const UnauthFeatureItem({required this.icon, required this.label});
 }
 
 class UnauthenticatedView extends StatelessWidget {
-  final String headerIcon;
-  final String title;
-  final String subtitle;
-  final List<UnauthFeatureItem> features;
-
   const UnauthenticatedView({
     super.key,
     required this.headerIcon,
@@ -28,6 +24,11 @@ class UnauthenticatedView extends StatelessWidget {
     required this.subtitle,
     required this.features,
   });
+
+  final String headerIcon;
+  final String title;
+  final String subtitle;
+  final List<UnauthFeatureItem> features;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,7 @@ class UnauthenticatedView extends StatelessWidget {
               width: 96,
               height: 96,
               decoration: BoxDecoration(
-                color: AppColors.primary.withOpacity(0.1),
+                color: AppColors.primary.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: Center(
@@ -52,31 +53,41 @@ class UnauthenticatedView extends StatelessWidget {
                 ),
               ),
             ),
+
             24.verticalSpace,
+
             Text(
               title,
               textAlign: TextAlign.center,
               style: AppTextStyles.h2.copyWith(height: 1.3),
             ),
+
             12.verticalSpace,
+
             Text(
               subtitle,
               textAlign: TextAlign.center,
               style: AppTextStyles.bodySmall,
             ),
+
             32.verticalSpace,
+
             ...features.map(
               (feature) => Padding(
                 padding: const EdgeInsets.only(bottom: 12),
                 child: _FeatureRow(icon: feature.icon, label: feature.label),
               ),
             ),
+
             28.verticalSpace,
+
             SizedBox(
               width: double.infinity,
               height: 52,
               child: ElevatedButton(
-                onPressed: () => context.go(AppRoutes.login),
+                onPressed: () {
+                  context.go(AppRoutes.login);
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
                   foregroundColor: Colors.white,
@@ -84,7 +95,7 @@ class UnauthenticatedView extends StatelessWidget {
                   shape: RoundedRectangleBorder(borderRadius: 16.br),
                 ),
                 child: Text(
-                  'Daxil ol',
+                  context.l10n.commonLogin,
                   style: AppTextStyles.bodyMedium.copyWith(
                     color: Colors.white,
                     fontWeight: FontWeight.w600,
@@ -92,19 +103,23 @@ class UnauthenticatedView extends StatelessWidget {
                 ),
               ),
             ),
+
             12.verticalSpace,
+
             SizedBox(
               width: double.infinity,
               height: 52,
               child: OutlinedButton(
-                onPressed: () => context.go(AppRoutes.register),
+                onPressed: () {
+                  context.go(AppRoutes.register);
+                },
                 style: OutlinedButton.styleFrom(
                   foregroundColor: AppColors.primary,
                   side: const BorderSide(color: AppColors.borderColor),
                   shape: RoundedRectangleBorder(borderRadius: 16.br),
                 ),
                 child: Text(
-                  'Qeydiyyatdan keç',
+                  context.l10n.commonRegister,
                   style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.primary,
                     fontWeight: FontWeight.w600,
@@ -120,10 +135,10 @@ class UnauthenticatedView extends StatelessWidget {
 }
 
 class _FeatureRow extends StatelessWidget {
+  const _FeatureRow({required this.icon, required this.label});
+
   final String icon;
   final String label;
-
-  const _FeatureRow({required this.icon, required this.label});
 
   @override
   Widget build(BuildContext context) {
@@ -144,12 +159,16 @@ class _FeatureRow extends StatelessWidget {
             ),
           ),
         ),
+
         12.horizontalSpace,
-        Text(
-          label,
-          style: AppTextStyles.bodySmall.copyWith(
-            color: AppColors.headline,
-            fontWeight: FontWeight.w500,
+
+        Expanded(
+          child: Text(
+            label,
+            style: AppTextStyles.bodySmall.copyWith(
+              color: AppColors.headline,
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ),
       ],

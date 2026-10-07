@@ -1205,4 +1205,65 @@ class AppLocalizationsAz extends AppLocalizations {
 
   @override
   String get profileEditSaveChanges => 'Yadda saxla';
+
+  @override
+  String get commonCancel => 'Ləğv et';
+
+  @override
+  String get commonConfirm => 'Təsdiqlə';
+
+  @override
+  String get commonRetry => 'Yenidən cəhd et';
+
+  @override
+  String get commonGoBack => 'Geri qayıt';
+
+  @override
+  String get commonLogin => 'Daxil ol';
+
+  @override
+  String get commonRegister => 'Qeydiyyatdan keç';
+
+  @override
+  String get datePickerBirthDate => 'Doğum tarixi';
+
+  @override
+  String get refreshRefreshing => 'Yenilənir...';
+
+  @override
+  String get refreshUpdated => 'Yeniləndi';
+
+  @override
+  String get rulerTapValueToEdit => 'Dəyişmək üçün rəqəmə toxunun';
+
+  @override
+  String get rulerManualInput => 'Rəqəmi əl ilə daxil et';
+
+  @override
+  String get errorPageNotFoundTitle => 'Səhifə tapılmadı';
+
+  @override
+  String get errorPageNotFoundSubtitle =>
+      'Axtardığınız səhifə mövcud deyil və ya silinib.';
+
+  @override
+  String get errorPageNetworkTitle => 'Bağlantı xətası';
+
+  @override
+  String get errorPageNetworkSubtitle =>
+      'İnternet bağlantınızı yoxlayın və yenidən cəhd edin.';
+
+  @override
+  String get errorPageServerTitle => 'Server xətası';
+
+  @override
+  String get errorPageServerSubtitle =>
+      'Serverdə problem baş verdi. Bir az sonra yenidən cəhd edin.';
+
+  @override
+  String get errorPageUnknownTitle => 'Xəta baş verdi';
+
+  @override
+  String get errorPageUnknownSubtitle =>
+      'Gözlənilməz bir xəta baş verdi. Yenidən cəhd edin.';
 }

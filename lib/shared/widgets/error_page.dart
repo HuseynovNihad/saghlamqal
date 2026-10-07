@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/constants/app_colors.dart';
-import '../../../../core/constants/app_text_styles.dart';
-import '../../../../core/utils/sized_box_extension.dart';
+import '../../core/constants/app_colors.dart';
+import '../../core/constants/app_text_styles.dart';
 import '../../core/enums/error_type.dart';
+import '../../core/l10n/localization_extension.dart';
 import '../../core/utils/padding_extension.dart';
 import '../../core/utils/radius_extension.dart';
+import '../../core/utils/sized_box_extension.dart';
 
 class ErrorPage extends StatelessWidget {
-  final ErrorType type;
-  final String? message;
-  final VoidCallback? onRetry;
-  final VoidCallback? onBack;
-
   const ErrorPage({
     super.key,
     this.type = ErrorType.unknown,
@@ -21,32 +17,37 @@ class ErrorPage extends StatelessWidget {
     this.onBack,
   });
 
-  _ErrorContent get _content => switch (type) {
-    ErrorType.notFound => const _ErrorContent(
+  final ErrorType type;
+  final String? message;
+  final VoidCallback? onRetry;
+  final VoidCallback? onBack;
+
+  _ErrorContent _content(BuildContext context) => switch (type) {
+    ErrorType.notFound => _ErrorContent(
       emoji: '🔍',
-      title: 'Səhifə tapılmadı',
-      subtitle: 'Axtardığınız səhifə mövcud deyil və ya silinib.',
+      title: context.l10n.errorPageNotFoundTitle,
+      subtitle: context.l10n.errorPageNotFoundSubtitle,
     ),
-    ErrorType.network => const _ErrorContent(
+    ErrorType.network => _ErrorContent(
       emoji: '📡',
-      title: 'Bağlantı xətası',
-      subtitle: 'İnternet bağlantınızı yoxlayın və yenidən cəhd edin.',
+      title: context.l10n.errorPageNetworkTitle,
+      subtitle: context.l10n.errorPageNetworkSubtitle,
     ),
-    ErrorType.server => const _ErrorContent(
+    ErrorType.server => _ErrorContent(
       emoji: '🛠️',
-      title: 'Server xətası',
-      subtitle: 'Serverdə problem baş verdi. Bir az sonra yenidən cəhd edin.',
+      title: context.l10n.errorPageServerTitle,
+      subtitle: context.l10n.errorPageServerSubtitle,
     ),
-    ErrorType.unknown => const _ErrorContent(
+    ErrorType.unknown => _ErrorContent(
       emoji: '⚠️',
-      title: 'Xəta baş verdi',
-      subtitle: 'Gözlənilməz bir xəta baş verdi. Yenidən cəhd edin.',
+      title: context.l10n.errorPageUnknownTitle,
+      subtitle: context.l10n.errorPageUnknownSubtitle,
     ),
   };
 
   @override
   Widget build(BuildContext context) {
-    final content = _content;
+    final content = _content(context);
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -57,6 +58,7 @@ class ErrorPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Spacer(),
+
               Container(
                 width: 120,
                 height: 120,
@@ -65,7 +67,7 @@ class ErrorPage extends StatelessWidget {
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.06),
+                      color: Colors.black.withValues(alpha: 0.06),
                       blurRadius: 24,
                       offset: const Offset(0, 8),
                     ),
@@ -78,17 +80,17 @@ class ErrorPage extends StatelessWidget {
                   ),
                 ),
               ),
+
               32.hs,
 
-              // Başlıq
               Text(
                 content.title,
                 style: AppTextStyles.h2.copyWith(fontWeight: FontWeight.w700),
                 textAlign: TextAlign.center,
               ),
+
               12.hs,
 
-              // Açıqlama
               Text(
                 message ?? content.subtitle,
                 style: AppTextStyles.bodyMedium.copyWith(
@@ -100,26 +102,28 @@ class ErrorPage extends StatelessWidget {
 
               const Spacer(),
 
-              // Düymələr
               Column(
                 children: [
                   if (onRetry != null)
                     _ErrorButton(
-                      label: "Yenidən cəhd et",
+                      label: context.l10n.commonRetry,
                       icon: Icons.refresh_rounded,
                       onTap: onRetry!,
                       isPrimary: true,
                     ),
+
                   if (onRetry != null && onBack != null) 12.hs,
+
                   if (onBack != null)
                     _ErrorButton(
-                      label: "Geri qayıt",
+                      label: context.l10n.commonGoBack,
                       icon: Icons.arrow_back_rounded,
                       onTap: onBack!,
                       isPrimary: false,
                     ),
                 ],
               ),
+
               24.hs,
             ],
           ),
@@ -130,29 +134,29 @@ class ErrorPage extends StatelessWidget {
 }
 
 class _ErrorContent {
-  final String emoji;
-  final String title;
-  final String subtitle;
-
   const _ErrorContent({
     required this.emoji,
     required this.title,
     required this.subtitle,
   });
+
+  final String emoji;
+  final String title;
+  final String subtitle;
 }
 
 class _ErrorButton extends StatelessWidget {
-  final String label;
-  final IconData icon;
-  final VoidCallback onTap;
-  final bool isPrimary;
-
   const _ErrorButton({
     required this.label,
     required this.icon,
     required this.onTap,
     required this.isPrimary,
   });
+
+  final String label;
+  final IconData icon;
+  final VoidCallback onTap;
+  final bool isPrimary;
 
   @override
   Widget build(BuildContext context) {
@@ -168,7 +172,7 @@ class _ErrorButton extends StatelessWidget {
           boxShadow: isPrimary
               ? [
                   BoxShadow(
-                    color: AppColors.primary.withOpacity(0.3),
+                    color: AppColors.primary.withValues(alpha: 0.3),
                     blurRadius: 12,
                     offset: const Offset(0, 4),
                   ),
@@ -183,11 +187,16 @@ class _ErrorButton extends StatelessWidget {
               size: 18,
               color: isPrimary ? Colors.white : AppColors.primary,
             ),
+
             8.ws,
-            Text(
-              label,
-              style: AppTextStyles.bodyMedium.copyWith(
-                color: isPrimary ? Colors.white : AppColors.primary,
+
+            Flexible(
+              child: Text(
+                label,
+                textAlign: TextAlign.center,
+                style: AppTextStyles.bodyMedium.copyWith(
+                  color: isPrimary ? Colors.white : AppColors.primary,
+                ),
               ),
             ),
           ],

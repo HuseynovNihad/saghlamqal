@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../core/constants/app_colors.dart';
-import '../../../../core/constants/app_text_styles.dart';
-import '../../../../core/router/app_routes.dart';
+import '../../core/constants/app_colors.dart';
+import '../../core/constants/app_text_styles.dart';
+import '../../core/l10n/localization_extension.dart';
+import '../../core/router/app_routes.dart';
 import '../../core/utils/padding_extension.dart';
 import '../../core/utils/radius_extension.dart';
 import '../../core/utils/sized_box_extension.dart';
 
 class GuestLockCard extends StatelessWidget {
+  const GuestLockCard({super.key, required this.title, required this.message});
+
   final String title;
   final String message;
-
-  const GuestLockCard({super.key, required this.title, required this.message});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +39,9 @@ class GuestLockCard extends StatelessWidget {
               size: 22,
             ),
           ),
+
           12.ws,
+
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,7 +52,9 @@ class GuestLockCard extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                4.ws,
+
+                4.hs,
+
                 Text(
                   message,
                   style: AppTextStyles.bodySmall.copyWith(
@@ -60,17 +65,21 @@ class GuestLockCard extends StatelessWidget {
               ],
             ),
           ),
+
           const SizedBox(width: 8),
+
           GestureDetector(
-            onTap: () => context.push(AppRoutes.login),
+            onTap: () {
+              context.push(AppRoutes.login);
+            },
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               decoration: BoxDecoration(
-                color: AppColors.primary.withOpacity(0.1),
+                color: AppColors.primary.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Text(
-                "Daxil ol",
+                context.l10n.commonLogin,
                 style: AppTextStyles.bodySmall.copyWith(
                   color: AppColors.primary,
                   fontWeight: FontWeight.w600,

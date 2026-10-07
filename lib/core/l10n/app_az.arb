@@ -582,5 +582,28 @@
   "profileAvatarImageOpenError": "Şəkil açıla bilmədi",
   "profileAvatarImageOpenErrorDescription": "Başqa bir şəkil seçərək yenidən cəhd et.",
 
-  "profileEditSaveChanges": "Yadda saxla"
+  "profileEditSaveChanges": "Yadda saxla",
+  "commonCancel": "Ləğv et",
+  "commonConfirm": "Təsdiqlə",
+  "commonRetry": "Yenidən cəhd et",
+  "commonGoBack": "Geri qayıt",
+  "commonLogin": "Daxil ol",
+  "commonRegister": "Qeydiyyatdan keç",
+
+  "datePickerBirthDate": "Doğum tarixi",
+
+  "refreshRefreshing": "Yenilənir...",
+  "refreshUpdated": "Yeniləndi",
+
+  "rulerTapValueToEdit": "Dəyişmək üçün rəqəmə toxunun",
+  "rulerManualInput": "Rəqəmi əl ilə daxil et",
+
+  "errorPageNotFoundTitle": "Səhifə tapılmadı",
+  "errorPageNotFoundSubtitle": "Axtardığınız səhifə mövcud deyil və ya silinib.",
+  "errorPageNetworkTitle": "Bağlantı xətası",
+  "errorPageNetworkSubtitle": "İnternet bağlantınızı yoxlayın və yenidən cəhd edin.",
+  "errorPageServerTitle": "Server xətası",
+  "errorPageServerSubtitle": "Serverdə problem baş verdi. Bir az sonra yenidən cəhd edin.",
+  "errorPageUnknownTitle": "Xəta baş verdi",
+  "errorPageUnknownSubtitle": "Gözlənilməz bir xəta baş verdi. Yenidən cəhd edin."
 }

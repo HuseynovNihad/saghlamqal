@@ -1229,4 +1229,65 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get profileEditSaveChanges => 'Сохранить изменения';
+
+  @override
+  String get commonCancel => 'Отмена';
+
+  @override
+  String get commonConfirm => 'Подтвердить';
+
+  @override
+  String get commonRetry => 'Повторить';
+
+  @override
+  String get commonGoBack => 'Назад';
+
+  @override
+  String get commonLogin => 'Войти';
+
+  @override
+  String get commonRegister => 'Зарегистрироваться';
+
+  @override
+  String get datePickerBirthDate => 'Дата рождения';
+
+  @override
+  String get refreshRefreshing => 'Обновление...';
+
+  @override
+  String get refreshUpdated => 'Обновлено';
+
+  @override
+  String get rulerTapValueToEdit => 'Нажмите на число, чтобы изменить';
+
+  @override
+  String get rulerManualInput => 'Ввести число вручную';
+
+  @override
+  String get errorPageNotFoundTitle => 'Страница не найдена';
+
+  @override
+  String get errorPageNotFoundSubtitle =>
+      'Страница, которую вы ищете, не существует или была удалена.';
+
+  @override
+  String get errorPageNetworkTitle => 'Ошибка подключения';
+
+  @override
+  String get errorPageNetworkSubtitle =>
+      'Проверьте подключение к интернету и попробуйте снова.';
+
+  @override
+  String get errorPageServerTitle => 'Ошибка сервера';
+
+  @override
+  String get errorPageServerSubtitle =>
+      'На сервере возникла проблема. Попробуйте снова позже.';
+
+  @override
+  String get errorPageUnknownTitle => 'Произошла ошибка';
+
+  @override
+  String get errorPageUnknownSubtitle =>
+      'Произошла непредвиденная ошибка. Попробуйте снова.';
 }
