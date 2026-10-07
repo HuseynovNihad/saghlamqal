@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../../core/constants/app_colors.dart';
 import '../../../../../core/constants/app_text_styles.dart';
+import '../../../../../core/l10n/localization_extension.dart';
 import '../../../../../core/utils/padding_extension.dart';
 import '../../../../../core/utils/radius_extension.dart';
 import '../../../../../core/utils/sized_box_extension.dart';
@@ -25,12 +26,20 @@ class PhotoSuccessView extends StatelessWidget {
   Widget build(BuildContext context) {
     final hasServing =
         product.servingSize != null && product.servingUnit != null;
+
     final adviceItems = product.advice
         .where((e) => e.trim().isNotEmpty)
         .toList();
+
     final hasVitamins =
         product.vitamins != null &&
-        product.vitamins!.values.any((v) => v != null);
+        product.vitamins!.values.any((value) => value != null);
+
+    final servingAmount = '${product.servingSize ?? 100}';
+
+    final servingUnit = product.servingUnit?.trim().isNotEmpty == true
+        ? product.servingUnit!.trim()
+        : context.l10n.unitGram;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,37 +49,44 @@ class PhotoSuccessView extends StatelessWidget {
           children: [
             if (product.icon != null) ...[
               Text(product.icon!, style: const TextStyle(fontSize: 44)),
+
               12.ws,
             ],
+
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     product.name,
-                    style: AppTextStyles.h3.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
                     textAlign: TextAlign.left,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.h3.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
+
                   if (hasServing) ...[
                     4.hs,
+
                     Text(
-                      '${product.servingSize} ${product.servingUnit}',
+                      '${product.servingSize} '
+                      '${product.servingUnit}',
+                      textAlign: TextAlign.left,
                       style: AppTextStyles.bodySmall.copyWith(
                         color: Colors.grey.shade500,
                         fontSize: 13,
                       ),
-                      textAlign: TextAlign.left,
                     ),
                   ],
                 ],
               ),
             ),
+
             if (onFavoriteToggle != null) ...[
               8.ws,
+
               GestureDetector(
                 onTap: onFavoriteToggle,
                 child: Container(
@@ -92,12 +108,14 @@ class PhotoSuccessView extends StatelessWidget {
             ],
           ],
         ),
+
         24.hs,
+
         Container(
           width: double.infinity,
           padding: 8.px + 16.py,
           decoration: BoxDecoration(
-            color: Color(0xFFFEFEFE),
+            color: const Color(0xFFFEFEFE),
             borderRadius: 16.br,
             border: Border.all(color: AppColors.borderColor, width: 0.5),
           ),
@@ -105,13 +123,18 @@ class PhotoSuccessView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                '${product.servingSize ?? 100} ${product.servingUnit ?? 'g'} üzrə qida dəyərləri',
+                context.l10n.photoScanNutritionValues(
+                  servingAmount,
+                  servingUnit,
+                ),
                 style: AppTextStyles.bodyMedium.copyWith(
                   fontWeight: FontWeight.w600,
                   fontSize: 15,
                 ),
               ),
+
               14.hs,
+
               Row(
                 children: [
                   Expanded(
@@ -119,43 +142,49 @@ class PhotoSuccessView extends StatelessWidget {
                       icon: Icons.local_fire_department_rounded,
                       iconBgColor: Colors.green.shade50,
                       iconColor: Colors.green,
-                      label: 'Kalori',
+                      label: context.l10n.photoScanCalories,
                       value: product.calories?.toStringAsFixed(0) ?? '-',
-                      unit: 'kkal',
+                      unit: context.l10n.unitKcal,
                       unitBelow: true,
                     ),
                   ),
+
                   8.ws,
+
                   Expanded(
                     child: PhotoNutrientItem(
                       icon: Icons.fitness_center_rounded,
                       iconBgColor: Colors.blue.shade50,
                       iconColor: Colors.blue,
-                      label: 'Zülal',
+                      label: context.l10n.macroProtein,
                       value: product.protein?.toStringAsFixed(1) ?? '-',
-                      unit: 'g',
+                      unit: context.l10n.unitGram,
                     ),
                   ),
+
                   8.ws,
+
                   Expanded(
                     child: PhotoNutrientItem(
                       icon: Icons.grain_rounded,
                       iconBgColor: Colors.orange.shade50,
                       iconColor: Colors.orange,
-                      label: 'Karbohidrat',
+                      label: context.l10n.macroCarbohydrate,
                       value: product.carbs?.toStringAsFixed(1) ?? '-',
-                      unit: 'g',
+                      unit: context.l10n.unitGram,
                     ),
                   ),
+
                   8.ws,
+
                   Expanded(
                     child: PhotoNutrientItem(
                       icon: Icons.water_drop_rounded,
                       iconBgColor: Colors.red.shade50,
                       iconColor: Colors.red,
-                      label: 'Yağ',
+                      label: context.l10n.macroFat,
                       value: product.fat?.toStringAsFixed(1) ?? '-',
-                      unit: 'g',
+                      unit: context.l10n.unitGram,
                     ),
                   ),
                 ],
@@ -163,23 +192,26 @@ class PhotoSuccessView extends StatelessWidget {
 
               if (hasVitamins) ...[
                 20.hs,
+
                 Text(
-                  'Vitaminlər',
+                  context.l10n.commonVitamins,
                   style: AppTextStyles.bodyMedium.copyWith(
                     fontWeight: FontWeight.w600,
                     fontSize: 14,
                   ),
                 ),
+
                 14.hs,
+
                 PhotoVitaminSection(vitamins: product.vitamins!),
               ],
             ],
           ),
         ),
 
-        // ---- Tövsiyə bloku (leaf ikonu + bullet list) ----
         if (adviceItems.isNotEmpty) ...[
           16.hs,
+
           Container(
             width: double.infinity,
             padding: 16.p,
@@ -203,7 +235,9 @@ class PhotoSuccessView extends StatelessWidget {
                     size: 20,
                   ),
                 ),
+
                 12.ws,
+
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -225,7 +259,9 @@ class PhotoSuccessView extends StatelessWidget {
                                     ),
                                   ),
                                 ),
+
                                 8.ws,
+
                                 Expanded(
                                   child: Text(
                                     item,

@@ -556,4 +556,89 @@ class AppLocalizationsAz extends AppLocalizations {
 
   @override
   String get homeBarcodeScanSubtitle => 'Məhsulun kalorisini dərhal öyrən';
+
+  @override
+  String get photoScanTitle => 'Şəkillə axtar';
+
+  @override
+  String get photoScanTipGoodLight => 'Yaxşı işıq';
+
+  @override
+  String get photoScanTipFitFrame => 'Çərçivəyə sığdırın';
+
+  @override
+  String get photoScanTipKeepSteady => 'Sabit saxlayın';
+
+  @override
+  String get photoScanAnalyzingTitle => 'Məhsul analiz edilir...';
+
+  @override
+  String get photoScanAnalyzingDuration => 'Bu adətən 10-15 saniyə çəkir';
+
+  @override
+  String get photoScanAnalyzingExtended =>
+      'Bir az da davam edir, xahiş edirik gözləyin...';
+
+  @override
+  String get photoScanStepCapturedTitle => 'Şəkil uğurla çəkildi';
+
+  @override
+  String get photoScanStepCapturedSubtitle => 'Keyfiyyət yoxlanıldı';
+
+  @override
+  String get photoScanStepAnalyzingTitle => 'Məhsul analiz edilir';
+
+  @override
+  String get photoScanStepAnalyzingSubtitle => 'AI görüntünü araşdırır';
+
+  @override
+  String get photoScanStepSearchingTitle => 'Uyğun məhsul axtarılır';
+
+  @override
+  String get photoScanStepSearchingSubtitle => 'Verilənlər bazasında axtarış';
+
+  @override
+  String get photoScanStepPreparingTitle => 'Nəticə hazırlanır';
+
+  @override
+  String get photoScanStepPreparingSubtitle => 'Məlumatlar hazırlanır';
+
+  @override
+  String get photoScanStepCompleted => 'Tamamlandı';
+
+  @override
+  String get photoScanErrorTitle => 'Xəta baş verdi';
+
+  @override
+  String get photoScanNotFoodTitle => 'Qida aşkarlanmadı';
+
+  @override
+  String get photoScanNotFoodDescription =>
+      'Zəhmət olmasa yeyəcək və ya içəcək şəklini çəkin.';
+
+  @override
+  String photoScanNutritionValues(String amount, String unit) {
+    return '$amount $unit üzrə qida dəyərləri';
+  }
+
+  @override
+  String get photoScanCalories => 'Kalori';
+
+  @override
+  String get photoScanAgain => 'Yenidən çək';
+
+  @override
+  String get unitMilligram => 'mq';
+
+  @override
+  String get networkTimeoutError => 'Bağlantı vaxtı bitdi. İnterneti yoxlayın.';
+
+  @override
+  String get networkServerError => 'Server xətası baş verdi.';
+
+  @override
+  String get networkNoConnectionError => 'İnternet bağlantısı yoxdur.';
+
+  @override
+  String get networkUnexpectedError => 'Gözlənilməz bir xəta baş verdi.';
 }

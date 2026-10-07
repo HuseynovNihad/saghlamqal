@@ -563,4 +563,90 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get homeBarcodeScanSubtitle =>
       'Instantly check the product\'s calories';
+
+  @override
+  String get photoScanTitle => 'Search by photo';
+
+  @override
+  String get photoScanTipGoodLight => 'Good lighting';
+
+  @override
+  String get photoScanTipFitFrame => 'Fit in frame';
+
+  @override
+  String get photoScanTipKeepSteady => 'Hold steady';
+
+  @override
+  String get photoScanAnalyzingTitle => 'Analyzing product...';
+
+  @override
+  String get photoScanAnalyzingDuration => 'This usually takes 10-15 seconds';
+
+  @override
+  String get photoScanAnalyzingExtended =>
+      'It\'s taking a little longer, please wait...';
+
+  @override
+  String get photoScanStepCapturedTitle => 'Photo captured successfully';
+
+  @override
+  String get photoScanStepCapturedSubtitle => 'Quality checked';
+
+  @override
+  String get photoScanStepAnalyzingTitle => 'Analyzing product';
+
+  @override
+  String get photoScanStepAnalyzingSubtitle => 'AI is analyzing the image';
+
+  @override
+  String get photoScanStepSearchingTitle => 'Searching for a matching product';
+
+  @override
+  String get photoScanStepSearchingSubtitle => 'Searching the database';
+
+  @override
+  String get photoScanStepPreparingTitle => 'Preparing result';
+
+  @override
+  String get photoScanStepPreparingSubtitle => 'Preparing information';
+
+  @override
+  String get photoScanStepCompleted => 'Completed';
+
+  @override
+  String get photoScanErrorTitle => 'An error occurred';
+
+  @override
+  String get photoScanNotFoodTitle => 'No food detected';
+
+  @override
+  String get photoScanNotFoodDescription =>
+      'Please take a photo of something to eat or drink.';
+
+  @override
+  String photoScanNutritionValues(String amount, String unit) {
+    return 'Nutrition values per $amount $unit';
+  }
+
+  @override
+  String get photoScanCalories => 'Calories';
+
+  @override
+  String get photoScanAgain => 'Retake photo';
+
+  @override
+  String get unitMilligram => 'mg';
+
+  @override
+  String get networkTimeoutError =>
+      'The connection timed out. Please check your internet connection.';
+
+  @override
+  String get networkServerError => 'A server error occurred.';
+
+  @override
+  String get networkNoConnectionError => 'No internet connection.';
+
+  @override
+  String get networkUnexpectedError => 'An unexpected error occurred.';
 }

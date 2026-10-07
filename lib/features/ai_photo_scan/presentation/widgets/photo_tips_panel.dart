@@ -1,14 +1,16 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import '../../../../core/utils/padding_extension.dart';
 
 import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/l10n/localization_extension.dart';
+import '../../../../core/utils/padding_extension.dart';
 import '../../../../core/utils/radius_extension.dart';
 import '../../../../core/utils/sized_box_extension.dart';
 
 class PhotoTipsPanel extends StatelessWidget {
   final double width;
+
   const PhotoTipsPanel({super.key, required this.width});
 
   @override
@@ -22,7 +24,7 @@ class PhotoTipsPanel extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
             decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.45),
+              color: Colors.black.withValues(alpha: 0.45),
               borderRadius: 16.br,
             ),
             child: Row(
@@ -30,21 +32,25 @@ class PhotoTipsPanel extends StatelessWidget {
                 Expanded(
                   child: _TipItem(
                     icon: Icons.wb_sunny_outlined,
-                    label: 'Yaxşı işıq',
+                    label: context.l10n.photoScanTipGoodLight,
                   ),
                 ),
-                _Divider(),
+
+                const _Divider(),
+
                 Expanded(
                   child: _TipItem(
                     icon: Icons.crop_outlined,
-                    label: 'Çərçivəyə sığdırın',
+                    label: context.l10n.photoScanTipFitFrame,
                   ),
                 ),
-                _Divider(),
+
+                const _Divider(),
+
                 Expanded(
                   child: _TipItem(
                     icon: Icons.stay_current_portrait_outlined,
-                    label: 'Sabit saxlayın',
+                    label: context.l10n.photoScanTipKeepSteady,
                   ),
                 ),
               ],
@@ -69,16 +75,18 @@ class _TipItem extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Icon(icon, color: Colors.white70, size: 22),
+
         6.hs,
+
         Text(
           label,
+          textAlign: TextAlign.center,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
           style: AppTextStyles.bodySmall.copyWith(
             color: Colors.white70,
             fontSize: 11,
           ),
-          textAlign: TextAlign.center,
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
         ),
       ],
     );
@@ -86,6 +94,8 @@ class _TipItem extends StatelessWidget {
 }
 
 class _Divider extends StatelessWidget {
+  const _Divider();
+
   @override
   Widget build(BuildContext context) {
     return Padding(

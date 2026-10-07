@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import '../../../../../core/constants/app_text_styles.dart';
+import '../../../../../core/l10n/localization_extension.dart';
 import '../../../../../core/utils/sized_box_extension.dart';
 
 class PhotoErrorView extends StatelessWidget {
@@ -15,7 +17,7 @@ class PhotoErrorView extends StatelessWidget {
           width: 64,
           height: 64,
           decoration: BoxDecoration(
-            color: Colors.red.withOpacity(0.1),
+            color: Colors.red.withValues(alpha: 0.1),
             shape: BoxShape.circle,
           ),
           child: const Icon(
@@ -24,19 +26,24 @@ class PhotoErrorView extends StatelessWidget {
             size: 32,
           ),
         ),
+
         16.hs,
+
         Text(
-          'Xəta baş verdi',
+          context.l10n.photoScanErrorTitle,
+          textAlign: TextAlign.center,
           style: AppTextStyles.h3.copyWith(fontWeight: FontWeight.w700),
         ),
+
         8.hs,
+
         Text(
           message,
+          textAlign: TextAlign.center,
           style: AppTextStyles.bodySmall.copyWith(
             color: Colors.grey,
             height: 1.5,
           ),
-          textAlign: TextAlign.center,
         ),
       ],
     );

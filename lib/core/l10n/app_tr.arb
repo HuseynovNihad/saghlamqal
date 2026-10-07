@@ -213,5 +213,40 @@
   "homeProductRemovedFavorite": "{product} favorilerden kaldırıldı",
 
   "homeBarcodeScanTitle": "Barkodu Tara",
-  "homeBarcodeScanSubtitle": "Ürünün kalorisini anında öğren"
+  "homeBarcodeScanSubtitle": "Ürünün kalorisini anında öğren",
+  "photoScanTitle": "Fotoğrafla ara",
+
+  "photoScanTipGoodLight": "İyi ışık",
+  "photoScanTipFitFrame": "Kadra sığdırın",
+  "photoScanTipKeepSteady": "Sabit tutun",
+
+  "photoScanAnalyzingTitle": "Ürün analiz ediliyor...",
+  "photoScanAnalyzingDuration": "Bu işlem genellikle 10-15 saniye sürer",
+  "photoScanAnalyzingExtended": "Biraz daha uzun sürüyor, lütfen bekleyin...",
+
+  "photoScanStepCapturedTitle": "Fotoğraf başarıyla çekildi",
+  "photoScanStepCapturedSubtitle": "Kalite kontrol edildi",
+  "photoScanStepAnalyzingTitle": "Ürün analiz ediliyor",
+  "photoScanStepAnalyzingSubtitle": "AI görüntüyü analiz ediyor",
+  "photoScanStepSearchingTitle": "Uygun ürün aranıyor",
+  "photoScanStepSearchingSubtitle": "Veritabanında aranıyor",
+  "photoScanStepPreparingTitle": "Sonuç hazırlanıyor",
+  "photoScanStepPreparingSubtitle": "Bilgiler hazırlanıyor",
+  "photoScanStepCompleted": "Tamamlandı",
+
+  "photoScanErrorTitle": "Bir hata oluştu",
+
+  "photoScanNotFoodTitle": "Yiyecek algılanmadı",
+  "photoScanNotFoodDescription": "Lütfen yiyecek veya içecek bir ürünün fotoğrafını çekin.",
+
+  "photoScanNutritionValues": "{amount} {unit} için besin değerleri",
+
+  "photoScanCalories": "Kalori",
+  "photoScanAgain": "Yeniden çek",
+
+  "unitMilligram": "mg",
+  "networkTimeoutError": "Bağlantı zaman aşımına uğradı. İnternet bağlantınızı kontrol edin.",
+  "networkServerError": "Bir sunucu hatası oluştu.",
+  "networkNoConnectionError": "İnternet bağlantısı yok.",
+  "networkUnexpectedError": "Beklenmeyen bir hata oluştu."
 }

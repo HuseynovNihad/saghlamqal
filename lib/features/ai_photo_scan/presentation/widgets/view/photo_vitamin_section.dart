@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../../core/constants/app_colors.dart';
 import '../../../../../core/constants/app_text_styles.dart';
+import '../../../../../core/l10n/localization_extension.dart';
 import '../../../../../core/utils/padding_extension.dart';
 import '../../../../../core/utils/radius_extension.dart';
 import '../../../../../core/utils/sized_box_extension.dart';
@@ -13,15 +14,20 @@ class PhotoVitaminSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final entries = vitamins.entries.where((e) => e.value != null).toList();
-    if (entries.isEmpty) return const SizedBox.shrink();
+    final entries = vitamins.entries
+        .where((entry) => entry.value != null)
+        .toList();
+
+    if (entries.isEmpty) {
+      return const SizedBox.shrink();
+    }
 
     return Column(
       children: entries
           .map(
-            (e) => Padding(
+            (entry) => Padding(
               padding: const EdgeInsets.only(bottom: 8),
-              child: _VitaminItem(name: e.key, amount: e.value!),
+              child: _VitaminItem(name: entry.key, amount: entry.value!),
             ),
           )
           .toList(),
@@ -35,11 +41,13 @@ class _VitaminItem extends StatelessWidget {
 
   const _VitaminItem({required this.name, required this.amount});
 
-  // Bazadan gələn ad üzrə ikon kimi göstəriləcək mətni çıxarır.
-  // "Vitamin C" -> "C", "Vitamin B12" -> "B12", tapılmasa ilk hərf.
   String get _iconText {
     final match = RegExp(r'([A-Za-z]+\d*)$').firstMatch(name.trim());
-    if (match != null) return match.group(0)!.toUpperCase();
+
+    if (match != null) {
+      return match.group(0)!.toUpperCase();
+    }
+
     return name.isNotEmpty ? name[0].toUpperCase() : '?';
   }
 
@@ -55,7 +63,6 @@ class _VitaminItem extends StatelessWidget {
       ),
       child: Row(
         children: [
-          // Solda bazadan gələn mətn ikon kimi
           Container(
             width: 36,
             height: 36,
@@ -66,16 +73,18 @@ class _VitaminItem extends StatelessWidget {
             ),
             child: Text(
               _iconText,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w800,
                 fontSize: 13,
               ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
             ),
           ),
+
           12.ws,
+
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,8 +95,10 @@ class _VitaminItem extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
+
                 Text(
-                  '${amount.toStringAsFixed(1)} mg',
+                  '${amount.toStringAsFixed(1)} '
+                  '${context.l10n.unitMilligram}',
                   style: AppTextStyles.bodySmall.copyWith(
                     color: Colors.grey.shade500,
                   ),
@@ -95,6 +106,7 @@ class _VitaminItem extends StatelessWidget {
               ],
             ),
           ),
+
           Icon(Icons.chevron_right_rounded, color: Colors.grey.shade400),
         ],
       ),

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/constants/app_colors.dart';
 import '../../../../../core/constants/app_text_styles.dart';
+import '../../../../../core/l10n/localization_extension.dart';
 import '../../../../../core/utils/padding_extension.dart';
 import '../../../../../core/utils/radius_extension.dart';
 import '../../../../../core/utils/sized_box_extension.dart';
@@ -37,6 +38,7 @@ class _PhotoResultSheetState extends State<PhotoResultSheet> {
       if (_favoriteId != null) {
         favoritesBloc.add(RemoveFavoriteEvent(_favoriteId));
       }
+
       setState(() {
         _isFavorite = false;
         _favoriteId = null;
@@ -56,13 +58,17 @@ class _PhotoResultSheetState extends State<PhotoResultSheet> {
           servingUnit: product.servingUnit,
         ),
       );
-      setState(() => _isFavorite = true);
+
+      setState(() {
+        _isFavorite = true;
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final maxHeight = MediaQuery.of(context).size.height * 0.9;
+
     final isLoggedIn = context.watch<AuthBloc>().state is AuthAuthenticated;
 
     return ConstrainedBox(
@@ -85,7 +91,9 @@ class _PhotoResultSheetState extends State<PhotoResultSheet> {
                 borderRadius: 2.br,
               ),
             ),
+
             18.hs,
+
             Flexible(
               child: SingleChildScrollView(
                 child: BlocConsumer<FavoritesBloc, FavoritesState>(
@@ -96,12 +104,15 @@ class _PhotoResultSheetState extends State<PhotoResultSheet> {
                       final added = favState.favorites.isNotEmpty
                           ? favState.favorites.last
                           : null;
+
                       if (added != null) {
-                        setState(() => _favoriteId = added.id);
+                        setState(() {
+                          _favoriteId = added.id;
+                        });
                       }
                     }
                   },
-                  builder: (context, favState) {
+                  builder: (context, _) {
                     return BlocBuilder<PhotoScanBloc, PhotoScanState>(
                       builder: (context, state) {
                         final isStillLoading =
@@ -111,7 +122,10 @@ class _PhotoResultSheetState extends State<PhotoResultSheet> {
                           return PhotoLoadingView(
                             onMinDurationElapsed: () {
                               if (!mounted) return;
-                              setState(() => _stepsAnimationDone = true);
+
+                              setState(() {
+                                _stepsAnimationDone = true;
+                              });
                             },
                           );
                         }
@@ -124,10 +138,13 @@ class _PhotoResultSheetState extends State<PhotoResultSheet> {
                                 ? () => _onFavoriteToggle(product)
                                 : null,
                           ),
+
                           PhotoScanNotFood() => const PhotoNotFoodView(),
+
                           PhotoScanError(:final message) => PhotoErrorView(
                             message: message,
                           ),
+
                           _ => const SizedBox.shrink(),
                         };
                       },
@@ -136,7 +153,9 @@ class _PhotoResultSheetState extends State<PhotoResultSheet> {
                 ),
               ),
             ),
+
             24.hs,
+
             GestureDetector(
               onTap: () {
                 setState(() {
@@ -144,6 +163,7 @@ class _PhotoResultSheetState extends State<PhotoResultSheet> {
                   _isFavorite = false;
                   _favoriteId = null;
                 });
+
                 widget.onScanAgain();
               },
               child: Container(
@@ -161,18 +181,25 @@ class _PhotoResultSheetState extends State<PhotoResultSheet> {
                       color: Colors.white,
                       size: 18,
                     ),
+
                     8.ws,
-                    Text(
-                      'Yenidən çək',
-                      style: AppTextStyles.bodyMedium.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
+
+                    Flexible(
+                      child: Text(
+                        context.l10n.photoScanAgain,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles.bodyMedium.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
             ),
+
             16.hs,
           ],
         ),

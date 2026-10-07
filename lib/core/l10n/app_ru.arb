@@ -213,5 +213,40 @@
   "homeProductRemovedFavorite": "{product} удалён из избранного",
 
   "homeBarcodeScanTitle": "Сканировать штрихкод",
-  "homeBarcodeScanSubtitle": "Мгновенно узнайте калорийность продукта"
+  "homeBarcodeScanSubtitle": "Мгновенно узнайте калорийность продукта",
+  "photoScanTitle": "Поиск по фото",
+
+  "photoScanTipGoodLight": "Хорошее освещение",
+  "photoScanTipFitFrame": "Поместите в кадр",
+  "photoScanTipKeepSteady": "Держите неподвижно",
+
+  "photoScanAnalyzingTitle": "Анализ продукта...",
+  "photoScanAnalyzingDuration": "Обычно это занимает 10–15 секунд",
+  "photoScanAnalyzingExtended": "Это занимает немного больше времени, пожалуйста, подождите...",
+
+  "photoScanStepCapturedTitle": "Фото успешно сделано",
+  "photoScanStepCapturedSubtitle": "Качество проверено",
+  "photoScanStepAnalyzingTitle": "Анализ продукта",
+  "photoScanStepAnalyzingSubtitle": "ИИ анализирует изображение",
+  "photoScanStepSearchingTitle": "Поиск подходящего продукта",
+  "photoScanStepSearchingSubtitle": "Поиск в базе данных",
+  "photoScanStepPreparingTitle": "Подготовка результата",
+  "photoScanStepPreparingSubtitle": "Подготовка информации",
+  "photoScanStepCompleted": "Завершено",
+
+  "photoScanErrorTitle": "Произошла ошибка",
+
+  "photoScanNotFoodTitle": "Еда не обнаружена",
+  "photoScanNotFoodDescription": "Пожалуйста, сфотографируйте еду или напиток.",
+
+  "photoScanNutritionValues": "Пищевая ценность на {amount} {unit}",
+
+  "photoScanCalories": "Калории",
+  "photoScanAgain": "Сделать фото снова",
+
+  "unitMilligram": "мг",
+  "networkTimeoutError": "Время ожидания соединения истекло. Проверьте подключение к интернету.",
+  "networkServerError": "Произошла ошибка сервера.",
+  "networkNoConnectionError": "Нет подключения к интернету.",
+  "networkUnexpectedError": "Произошла непредвиденная ошибка."
 }

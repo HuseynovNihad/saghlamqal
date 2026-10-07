@@ -1115,6 +1115,168 @@ abstract class AppLocalizations {
   /// In az, this message translates to:
   /// **'Məhsulun kalorisini dərhal öyrən'**
   String get homeBarcodeScanSubtitle;
+
+  /// No description provided for @photoScanTitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Şəkillə axtar'**
+  String get photoScanTitle;
+
+  /// No description provided for @photoScanTipGoodLight.
+  ///
+  /// In az, this message translates to:
+  /// **'Yaxşı işıq'**
+  String get photoScanTipGoodLight;
+
+  /// No description provided for @photoScanTipFitFrame.
+  ///
+  /// In az, this message translates to:
+  /// **'Çərçivəyə sığdırın'**
+  String get photoScanTipFitFrame;
+
+  /// No description provided for @photoScanTipKeepSteady.
+  ///
+  /// In az, this message translates to:
+  /// **'Sabit saxlayın'**
+  String get photoScanTipKeepSteady;
+
+  /// No description provided for @photoScanAnalyzingTitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Məhsul analiz edilir...'**
+  String get photoScanAnalyzingTitle;
+
+  /// No description provided for @photoScanAnalyzingDuration.
+  ///
+  /// In az, this message translates to:
+  /// **'Bu adətən 10-15 saniyə çəkir'**
+  String get photoScanAnalyzingDuration;
+
+  /// No description provided for @photoScanAnalyzingExtended.
+  ///
+  /// In az, this message translates to:
+  /// **'Bir az da davam edir, xahiş edirik gözləyin...'**
+  String get photoScanAnalyzingExtended;
+
+  /// No description provided for @photoScanStepCapturedTitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Şəkil uğurla çəkildi'**
+  String get photoScanStepCapturedTitle;
+
+  /// No description provided for @photoScanStepCapturedSubtitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Keyfiyyət yoxlanıldı'**
+  String get photoScanStepCapturedSubtitle;
+
+  /// No description provided for @photoScanStepAnalyzingTitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Məhsul analiz edilir'**
+  String get photoScanStepAnalyzingTitle;
+
+  /// No description provided for @photoScanStepAnalyzingSubtitle.
+  ///
+  /// In az, this message translates to:
+  /// **'AI görüntünü araşdırır'**
+  String get photoScanStepAnalyzingSubtitle;
+
+  /// No description provided for @photoScanStepSearchingTitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Uyğun məhsul axtarılır'**
+  String get photoScanStepSearchingTitle;
+
+  /// No description provided for @photoScanStepSearchingSubtitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Verilənlər bazasında axtarış'**
+  String get photoScanStepSearchingSubtitle;
+
+  /// No description provided for @photoScanStepPreparingTitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Nəticə hazırlanır'**
+  String get photoScanStepPreparingTitle;
+
+  /// No description provided for @photoScanStepPreparingSubtitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Məlumatlar hazırlanır'**
+  String get photoScanStepPreparingSubtitle;
+
+  /// No description provided for @photoScanStepCompleted.
+  ///
+  /// In az, this message translates to:
+  /// **'Tamamlandı'**
+  String get photoScanStepCompleted;
+
+  /// No description provided for @photoScanErrorTitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Xəta baş verdi'**
+  String get photoScanErrorTitle;
+
+  /// No description provided for @photoScanNotFoodTitle.
+  ///
+  /// In az, this message translates to:
+  /// **'Qida aşkarlanmadı'**
+  String get photoScanNotFoodTitle;
+
+  /// No description provided for @photoScanNotFoodDescription.
+  ///
+  /// In az, this message translates to:
+  /// **'Zəhmət olmasa yeyəcək və ya içəcək şəklini çəkin.'**
+  String get photoScanNotFoodDescription;
+
+  /// No description provided for @photoScanNutritionValues.
+  ///
+  /// In az, this message translates to:
+  /// **'{amount} {unit} üzrə qida dəyərləri'**
+  String photoScanNutritionValues(String amount, String unit);
+
+  /// No description provided for @photoScanCalories.
+  ///
+  /// In az, this message translates to:
+  /// **'Kalori'**
+  String get photoScanCalories;
+
+  /// No description provided for @photoScanAgain.
+  ///
+  /// In az, this message translates to:
+  /// **'Yenidən çək'**
+  String get photoScanAgain;
+
+  /// No description provided for @unitMilligram.
+  ///
+  /// In az, this message translates to:
+  /// **'mq'**
+  String get unitMilligram;
+
+  /// No description provided for @networkTimeoutError.
+  ///
+  /// In az, this message translates to:
+  /// **'Bağlantı vaxtı bitdi. İnterneti yoxlayın.'**
+  String get networkTimeoutError;
+
+  /// No description provided for @networkServerError.
+  ///
+  /// In az, this message translates to:
+  /// **'Server xətası baş verdi.'**
+  String get networkServerError;
+
+  /// No description provided for @networkNoConnectionError.
+  ///
+  /// In az, this message translates to:
+  /// **'İnternet bağlantısı yoxdur.'**
+  String get networkNoConnectionError;
+
+  /// No description provided for @networkUnexpectedError.
+  ///
+  /// In az, this message translates to:
+  /// **'Gözlənilməz bir xəta baş verdi.'**
+  String get networkUnexpectedError;
 }
 
 class _AppLocalizationsDelegate

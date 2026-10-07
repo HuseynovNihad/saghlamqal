@@ -213,5 +213,40 @@
   "homeProductRemovedFavorite": "{product} was removed from favorites",
 
   "homeBarcodeScanTitle": "Scan Barcode",
-  "homeBarcodeScanSubtitle": "Instantly check the product's calories"
+  "homeBarcodeScanSubtitle": "Instantly check the product's calories",
+  "photoScanTitle": "Search by photo",
+
+  "photoScanTipGoodLight": "Good lighting",
+  "photoScanTipFitFrame": "Fit in frame",
+  "photoScanTipKeepSteady": "Hold steady",
+
+  "photoScanAnalyzingTitle": "Analyzing product...",
+  "photoScanAnalyzingDuration": "This usually takes 10-15 seconds",
+  "photoScanAnalyzingExtended": "It's taking a little longer, please wait...",
+
+  "photoScanStepCapturedTitle": "Photo captured successfully",
+  "photoScanStepCapturedSubtitle": "Quality checked",
+  "photoScanStepAnalyzingTitle": "Analyzing product",
+  "photoScanStepAnalyzingSubtitle": "AI is analyzing the image",
+  "photoScanStepSearchingTitle": "Searching for a matching product",
+  "photoScanStepSearchingSubtitle": "Searching the database",
+  "photoScanStepPreparingTitle": "Preparing result",
+  "photoScanStepPreparingSubtitle": "Preparing information",
+  "photoScanStepCompleted": "Completed",
+
+  "photoScanErrorTitle": "An error occurred",
+
+  "photoScanNotFoodTitle": "No food detected",
+  "photoScanNotFoodDescription": "Please take a photo of something to eat or drink.",
+
+  "photoScanNutritionValues": "Nutrition values per {amount} {unit}",
+
+  "photoScanCalories": "Calories",
+  "photoScanAgain": "Retake photo",
+
+  "unitMilligram": "mg",
+  "networkTimeoutError": "The connection timed out. Please check your internet connection.",
+  "networkServerError": "A server error occurred.",
+  "networkNoConnectionError": "No internet connection.",
+  "networkUnexpectedError": "An unexpected error occurred."
 }

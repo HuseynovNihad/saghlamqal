@@ -257,5 +257,50 @@
   },
 
   "homeBarcodeScanTitle": "Barkod Oxut",
-  "homeBarcodeScanSubtitle": "Məhsulun kalorisini dərhal öyrən"
+  "homeBarcodeScanSubtitle": "Məhsulun kalorisini dərhal öyrən",
+  "photoScanTitle": "Şəkillə axtar",
+
+  "photoScanTipGoodLight": "Yaxşı işıq",
+  "photoScanTipFitFrame": "Çərçivəyə sığdırın",
+  "photoScanTipKeepSteady": "Sabit saxlayın",
+
+  "photoScanAnalyzingTitle": "Məhsul analiz edilir...",
+  "photoScanAnalyzingDuration": "Bu adətən 10-15 saniyə çəkir",
+  "photoScanAnalyzingExtended": "Bir az da davam edir, xahiş edirik gözləyin...",
+
+  "photoScanStepCapturedTitle": "Şəkil uğurla çəkildi",
+  "photoScanStepCapturedSubtitle": "Keyfiyyət yoxlanıldı",
+  "photoScanStepAnalyzingTitle": "Məhsul analiz edilir",
+  "photoScanStepAnalyzingSubtitle": "AI görüntünü araşdırır",
+  "photoScanStepSearchingTitle": "Uyğun məhsul axtarılır",
+  "photoScanStepSearchingSubtitle": "Verilənlər bazasında axtarış",
+  "photoScanStepPreparingTitle": "Nəticə hazırlanır",
+  "photoScanStepPreparingSubtitle": "Məlumatlar hazırlanır",
+  "photoScanStepCompleted": "Tamamlandı",
+
+  "photoScanErrorTitle": "Xəta baş verdi",
+
+  "photoScanNotFoodTitle": "Qida aşkarlanmadı",
+  "photoScanNotFoodDescription": "Zəhmət olmasa yeyəcək və ya içəcək şəklini çəkin.",
+
+  "photoScanNutritionValues": "{amount} {unit} üzrə qida dəyərləri",
+  "@photoScanNutritionValues": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+
+  "photoScanCalories": "Kalori",
+  "photoScanAgain": "Yenidən çək",
+
+  "unitMilligram": "mq",
+  "networkTimeoutError": "Bağlantı vaxtı bitdi. İnterneti yoxlayın.",
+  "networkServerError": "Server xətası baş verdi.",
+  "networkNoConnectionError": "İnternet bağlantısı yoxdur.",
+  "networkUnexpectedError": "Gözlənilməz bir xəta baş verdi."
 }

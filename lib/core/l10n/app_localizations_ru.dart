@@ -569,4 +569,90 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get homeBarcodeScanSubtitle =>
       'Мгновенно узнайте калорийность продукта';
+
+  @override
+  String get photoScanTitle => 'Поиск по фото';
+
+  @override
+  String get photoScanTipGoodLight => 'Хорошее освещение';
+
+  @override
+  String get photoScanTipFitFrame => 'Поместите в кадр';
+
+  @override
+  String get photoScanTipKeepSteady => 'Держите неподвижно';
+
+  @override
+  String get photoScanAnalyzingTitle => 'Анализ продукта...';
+
+  @override
+  String get photoScanAnalyzingDuration => 'Обычно это занимает 10–15 секунд';
+
+  @override
+  String get photoScanAnalyzingExtended =>
+      'Это занимает немного больше времени, пожалуйста, подождите...';
+
+  @override
+  String get photoScanStepCapturedTitle => 'Фото успешно сделано';
+
+  @override
+  String get photoScanStepCapturedSubtitle => 'Качество проверено';
+
+  @override
+  String get photoScanStepAnalyzingTitle => 'Анализ продукта';
+
+  @override
+  String get photoScanStepAnalyzingSubtitle => 'ИИ анализирует изображение';
+
+  @override
+  String get photoScanStepSearchingTitle => 'Поиск подходящего продукта';
+
+  @override
+  String get photoScanStepSearchingSubtitle => 'Поиск в базе данных';
+
+  @override
+  String get photoScanStepPreparingTitle => 'Подготовка результата';
+
+  @override
+  String get photoScanStepPreparingSubtitle => 'Подготовка информации';
+
+  @override
+  String get photoScanStepCompleted => 'Завершено';
+
+  @override
+  String get photoScanErrorTitle => 'Произошла ошибка';
+
+  @override
+  String get photoScanNotFoodTitle => 'Еда не обнаружена';
+
+  @override
+  String get photoScanNotFoodDescription =>
+      'Пожалуйста, сфотографируйте еду или напиток.';
+
+  @override
+  String photoScanNutritionValues(String amount, String unit) {
+    return 'Пищевая ценность на $amount $unit';
+  }
+
+  @override
+  String get photoScanCalories => 'Калории';
+
+  @override
+  String get photoScanAgain => 'Сделать фото снова';
+
+  @override
+  String get unitMilligram => 'мг';
+
+  @override
+  String get networkTimeoutError =>
+      'Время ожидания соединения истекло. Проверьте подключение к интернету.';
+
+  @override
+  String get networkServerError => 'Произошла ошибка сервера.';
+
+  @override
+  String get networkNoConnectionError => 'Нет подключения к интернету.';
+
+  @override
+  String get networkUnexpectedError => 'Произошла непредвиденная ошибка.';
 }

@@ -555,4 +555,91 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get homeBarcodeScanSubtitle => 'Ürünün kalorisini anında öğren';
+
+  @override
+  String get photoScanTitle => 'Fotoğrafla ara';
+
+  @override
+  String get photoScanTipGoodLight => 'İyi ışık';
+
+  @override
+  String get photoScanTipFitFrame => 'Kadra sığdırın';
+
+  @override
+  String get photoScanTipKeepSteady => 'Sabit tutun';
+
+  @override
+  String get photoScanAnalyzingTitle => 'Ürün analiz ediliyor...';
+
+  @override
+  String get photoScanAnalyzingDuration =>
+      'Bu işlem genellikle 10-15 saniye sürer';
+
+  @override
+  String get photoScanAnalyzingExtended =>
+      'Biraz daha uzun sürüyor, lütfen bekleyin...';
+
+  @override
+  String get photoScanStepCapturedTitle => 'Fotoğraf başarıyla çekildi';
+
+  @override
+  String get photoScanStepCapturedSubtitle => 'Kalite kontrol edildi';
+
+  @override
+  String get photoScanStepAnalyzingTitle => 'Ürün analiz ediliyor';
+
+  @override
+  String get photoScanStepAnalyzingSubtitle => 'AI görüntüyü analiz ediyor';
+
+  @override
+  String get photoScanStepSearchingTitle => 'Uygun ürün aranıyor';
+
+  @override
+  String get photoScanStepSearchingSubtitle => 'Veritabanında aranıyor';
+
+  @override
+  String get photoScanStepPreparingTitle => 'Sonuç hazırlanıyor';
+
+  @override
+  String get photoScanStepPreparingSubtitle => 'Bilgiler hazırlanıyor';
+
+  @override
+  String get photoScanStepCompleted => 'Tamamlandı';
+
+  @override
+  String get photoScanErrorTitle => 'Bir hata oluştu';
+
+  @override
+  String get photoScanNotFoodTitle => 'Yiyecek algılanmadı';
+
+  @override
+  String get photoScanNotFoodDescription =>
+      'Lütfen yiyecek veya içecek bir ürünün fotoğrafını çekin.';
+
+  @override
+  String photoScanNutritionValues(String amount, String unit) {
+    return '$amount $unit için besin değerleri';
+  }
+
+  @override
+  String get photoScanCalories => 'Kalori';
+
+  @override
+  String get photoScanAgain => 'Yeniden çek';
+
+  @override
+  String get unitMilligram => 'mg';
+
+  @override
+  String get networkTimeoutError =>
+      'Bağlantı zaman aşımına uğradı. İnternet bağlantınızı kontrol edin.';
+
+  @override
+  String get networkServerError => 'Bir sunucu hatası oluştu.';
+
+  @override
+  String get networkNoConnectionError => 'İnternet bağlantısı yok.';
+
+  @override
+  String get networkUnexpectedError => 'Beklenmeyen bir hata oluştu.';
 }

@@ -1,4 +1,8 @@
+import 'dart:ui';
+
 import 'package:dio/dio.dart';
+
+import '../../l10n/app_localizations.dart';
 
 class AppException implements Exception {
   final String message;
@@ -13,12 +17,16 @@ class AppException implements Exception {
 }
 
 class NetworkExceptions {
+  static const Set<String> _supportedLanguages = {'az', 'en', 'ru', 'tr'};
+
   static AppException handleException(DioException error) {
+    final l10n = _resolveLocalizations(error);
+
     switch (error.type) {
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.sendTimeout:
       case DioExceptionType.receiveTimeout:
-        return AppException('Bağlantı vaxtı bitdi. İnterneti yoxlayın.');
+        return AppException(l10n.networkTimeoutError);
 
       case DioExceptionType.badResponse:
         final data = error.response?.data;
@@ -27,36 +35,46 @@ class NetworkExceptions {
         if (data is Map) {
           final msg = data['message'];
 
-          // Nested hal:
-          // { message: { errorCode, message, email } }
+          // Nested response:
+          // {
+          //   message: {
+          //     errorCode,
+          //     message,
+          //     email
+          //   }
+          // }
           if (msg is Map) {
             final innerMessage = msg['message'];
 
             return AppException(
-              (innerMessage is String && innerMessage.isNotEmpty)
-                  ? innerMessage
-                  : 'Server xətası baş verdi.',
+              innerMessage is String && innerMessage.trim().isNotEmpty
+                  ? innerMessage.trim()
+                  : l10n.networkServerError,
               errorCode: msg['errorCode']?.toString(),
               extra: Map<String, dynamic>.from(msg),
               statusCode: statusCode,
             );
           }
 
-          // Flat hal:
-          // { errorCode, message, email }
+          // Flat response:
+          // {
+          //   errorCode,
+          //   message,
+          //   email
+          // }
           if (data['errorCode'] != null) {
             return AppException(
-              (msg is String && msg.isNotEmpty)
-                  ? msg
-                  : 'Server xətası baş verdi.',
+              msg is String && msg.trim().isNotEmpty
+                  ? msg.trim()
+                  : l10n.networkServerError,
               errorCode: data['errorCode']?.toString(),
               extra: Map<String, dynamic>.from(data),
               statusCode: statusCode,
             );
           }
 
-          if (msg is String && msg.isNotEmpty) {
-            return AppException(msg, statusCode: statusCode);
+          if (msg is String && msg.trim().isNotEmpty) {
+            return AppException(msg.trim(), statusCode: statusCode);
           }
 
           if (msg is List && msg.isNotEmpty) {
@@ -64,13 +82,49 @@ class NetworkExceptions {
           }
         }
 
-        return AppException('Server xətası baş verdi.', statusCode: statusCode);
+        return AppException(l10n.networkServerError, statusCode: statusCode);
 
       case DioExceptionType.connectionError:
-        return AppException('İnternet bağlantısı yoxdur.');
+        return AppException(l10n.networkNoConnectionError);
 
       default:
-        return AppException('Gözlənilməz bir xəta baş verdi.');
+        return AppException(l10n.networkUnexpectedError);
     }
+  }
+
+  static AppLocalizations _resolveLocalizations(DioException error) {
+    final headerLanguage = _extractLanguageCode(
+      error.requestOptions.headers['Accept-Language']?.toString(),
+    );
+
+    final lowercaseHeaderLanguage = _extractLanguageCode(
+      error.requestOptions.headers['accept-language']?.toString(),
+    );
+
+    final systemLanguage = PlatformDispatcher.instance.locale.languageCode
+        .toLowerCase();
+
+    final requestedLanguage =
+        headerLanguage ?? lowercaseHeaderLanguage ?? systemLanguage;
+
+    final languageCode = _supportedLanguages.contains(requestedLanguage)
+        ? requestedLanguage
+        : 'az';
+
+    return lookupAppLocalizations(Locale(languageCode));
+  }
+
+  static String? _extractLanguageCode(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return null;
+    }
+
+    final firstLanguage = value.split(',').first.trim().split(';').first.trim();
+
+    if (firstLanguage.isEmpty) {
+      return null;
+    }
+
+    return firstLanguage.split(RegExp('[-_]')).first.toLowerCase();
   }
 }
